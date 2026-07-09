@@ -20,270 +20,449 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/web_assets/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../web_assets/site_shell.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../web_assets/site_shell.css?v=3" />
   <style>
     body { margin: 0; background: var(--shell-bg); color: var(--shell-text); font-family: var(--shell-font); }
-    .wrap { max-width: 1560px; margin: 0 auto; padding: 46px 18px 80px; }
+    .wrap { max-width: 1560px; margin: 0 auto; padding: 0 22px; }
+    p { margin: 0 0 16px; color: var(--shell-sub); line-height: 1.65; }
+    img { max-width: 100%; }
 
-    .kicker {
-      font-family: var(--shell-mono);
-      font-size: 11px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #6B9B7F;
-      margin-bottom: 10px;
+    /* ── Hero: the object ─────────────────────────────────────────────── */
+    .con-hero {
+      position: relative;
+      border-bottom: 1px solid var(--shell-border);
+      overflow: hidden;
+    }
+    .con-hero .wrap {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 40px;
+      align-items: center;
+      min-height: min(78vh, 820px);
+      padding-top: 56px;
+      padding-bottom: 56px;
+    }
+    @media (max-width: 980px) { .con-hero .wrap { grid-template-columns: 1fr; min-height: 0; } }
+    .con-hero .beta {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-    }
-    .kicker::before {
-      content: "";
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: currentColor;
-      opacity: 0.9;
-    }
-    .kicker--orange { color: #D97757; }
-
-    h1 {
-      font-family: var(--shell-heading);
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin: 0;
-      font-size: clamp(28px, 3.2vw, 52px);
-      line-height: 1.08;
-      color: var(--shell-text);
-    }
-    .h2 {
-      font-family: var(--shell-heading);
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin: 0;
-      font-size: clamp(28px, 3.2vw, 52px);
-      line-height: 1.08;
-      color: var(--shell-text);
-    }
-    .sub {
-      margin: 14px 0 0;
-      font-family: var(--shell-heading);
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: clamp(12px, 1.2vw, 16px);
-      line-height: 1.55;
-      color: #6B9B7F;
-    }
-    .sub--orange { color: #D97757; }
-    p { margin: 12px 0 0; color: var(--shell-sub); line-height: 1.6; max-width: 70ch; }
-
-    .rail { margin-top: 18px; }
-
-    .block {
-      padding-top: 14px;
-      border-top: 1px solid rgba(255,255,255,0.10);
-    }
-    .block:first-child { border-top: none; padding-top: 0; }
-
-    .block h3 {
-      margin: 0 0 8px;
+      gap: 8px;
       font-family: var(--shell-mono);
       font-size: 10px;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: #6B9B7F;
+      background: rgba(226,104,60,0.14);
+      border: 1px solid rgba(226,104,60,0.45);
+      color: #FFB899;
+      padding: 4px 10px;
+      margin-left: 12px;
+      vertical-align: middle;
     }
-    .block h3.orange { color: #D97757; }
-    .block p { margin: 0 0 10px; color: var(--shell-sub); font-size: 12px; line-height: 1.55; }
-    .bullets { margin: 0; padding-left: 18px; color: var(--shell-sub); line-height: 1.6; font-size: 12px; }
-    .bullets li { margin: 6px 0; }
-    .bullets li::marker { color: var(--marker, #6B9B7F); }
+    .con-hero .eyebrow {
+      font-family: var(--shell-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--shell-accent);
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 26px;
+    }
+    .con-hero h1 {
+      font-family: var(--shell-serif);
+      font-weight: 480;
+      font-size: clamp(40px, 5.4vw, 84px);
+      line-height: 1.0;
+      letter-spacing: -0.015em;
+      margin: 0 0 24px;
+    }
+    .con-hero h1 em { font-style: italic; font-weight: 420; color: var(--shell-accent); }
+    .con-hero .sub {
+      font-family: var(--shell-mono);
+      font-size: clamp(12.5px, 1.1vw, 14px);
+      line-height: 1.75;
+      color: var(--shell-sub);
+      max-width: 50ch;
+      margin-bottom: 30px;
+    }
+    .con-hero .sub strong { color: var(--shell-text); font-weight: 500; }
+    .con-photo { position: relative; }
+    .con-photo img { width: 100%; height: auto; display: block; }
+    .con-photo .plate {
+      position: absolute;
+      left: 14px; bottom: 12px;
+      font-family: var(--shell-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(236,230,218,0.6);
+      background: rgba(11,11,10,0.7);
+      border: 1px solid var(--shell-border);
+      padding: 6px 10px;
+    }
+    .con-ghost { right: -1%; bottom: 2%; font-size: clamp(120px, 17vw, 300px); }
 
-
-    .pair-grid {
+    /* spec strip under hero */
+    .spec-strip {
+      border-bottom: 1px solid var(--shell-border);
+      overflow-x: auto;
+    }
+    .spec-strip .row {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-      margin-top: 14px;
+      grid-template-columns: repeat(4, minmax(180px, 1fr));
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 0 22px;
     }
-    @media (min-width: 1100px) {
-      .pair-grid {
-        grid-template-columns: 1fr 1px 1fr;
-        gap: 16px;
-        align-items: stretch;
-      }
+    .spec-cell {
+      padding: 20px 18px 18px 0;
+      border-right: 1px solid var(--shell-border);
+      margin-right: 18px;
     }
-    .pair-grid .sep {
-      display: none;
-      background: linear-gradient(
-        to bottom,
-        rgba(255,255,255,0),
-        rgba(255,255,255,0.06),
-        rgba(255,255,255,0)
-      );
-      width: 1px;
-      align-self: stretch;
+    .spec-cell:last-child { border-right: none; margin-right: 0; }
+    .spec-cell .k {
+      font-family: var(--shell-mono);
+      font-size: 9.5px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--shell-faint);
+      display: block;
+      margin-bottom: 6px;
     }
-    @media (min-width: 1100px) { .pair-grid .sep { display: block; } }
+    .spec-cell .v {
+      font-family: var(--shell-mono);
+      font-size: 13px;
+      color: var(--shell-text);
+    }
+    .spec-cell .v i { color: var(--shell-green); font-style: normal; }
 
-    .pair-grid .block { border-top: none; padding-top: 0; }
-    @media (min-width: 1100px) {
-      .pair-grid .block { padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.10); }
-    }
+    /* ── sections ─────────────────────────────────────────────────────── */
+    .sec { position: relative; padding: 90px 0 0; }
+    .sec-ghost { right: 0; top: -30px; font-size: clamp(110px, 15vw, 240px); }
 
-    .grid {
+    .build-grid {
       display: grid;
-      grid-template-columns: 0.5fr 0.5fr;
-      gap: 34px;
-      align-items: start;
-      margin-top: 18px;
+      grid-template-columns: repeat(2, 1fr);
+      border: 1px solid var(--shell-border);
     }
-    @media (max-width: 980px) { .grid { grid-template-columns: 1fr; } }
-    .right img { width: 100%; height: auto; display: block; }
-    .right .stack { display: grid; gap: 18px; }
-    .right .stack.dm-corners { --dm-acc: rgba(107,155,127,0.75); }
-
-    .section-sep {
-      margin-top: 34px;
-      margin-bottom: 16px;
-      height: 1px;
-      width: 100%;
-      background: rgba(255,255,255,0.10);
+    @media (max-width: 780px) { .build-grid { grid-template-columns: 1fr; } }
+    .build-cell {
+      padding: 28px 28px 24px;
+      border-right: 1px solid var(--shell-border);
+      border-bottom: 1px solid var(--shell-border);
     }
-
-    .below-grid {
-      display: grid;
-      grid-template-columns: 0.42fr 0.58fr;
-      gap: 34px;
-      align-items: start;
-      margin-top: 8px;
-    }
-    @media (max-width: 980px) { .below-grid { grid-template-columns: 1fr; } }
-    .below-left img { width: 100%; height: auto; display: block; }
-    .below-left .dm-corners { --dm-acc: rgba(217,119,87,0.75); }
-    .below-right {
+    .build-cell:nth-child(2n) { border-right: none; }
+    @media (max-width: 780px) { .build-cell { border-right: none !important; } }
+    .build-cell h3 {
+      margin: 0 0 12px;
+      font-family: var(--shell-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--shell-accent);
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-height: 100%;
+      align-items: baseline;
+      gap: 10px;
     }
+    .build-cell h3 .i { color: var(--shell-faint); }
+    .build-cell p { font-size: 13px; margin-bottom: 10px; }
+    .build-cell ul {
+      margin: 0; padding: 0; list-style: none;
+      font-family: var(--shell-mono);
+      font-size: 12px;
+      line-height: 1.95;
+      color: var(--shell-sub);
+    }
+    .build-cell li { display: flex; gap: 10px; align-items: baseline; }
+    .build-cell li::before { content: "—"; color: var(--shell-accent); flex: 0 0 auto; }
+
+    /* system image = terminal card */
+    .flash-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 48px;
+      align-items: center;
+    }
+    @media (max-width: 980px) { .flash-grid { grid-template-columns: 1fr; } }
+    .term {
+      border: 1px solid var(--shell-border-strong);
+      background: var(--shell-bg-elev);
+      font-family: var(--shell-mono);
+    }
+    .term-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--shell-border);
+      font-size: 11px; letter-spacing: 0.1em;
+      color: var(--shell-faint); text-transform: uppercase;
+    }
+    .term-bar .dots { display: inline-flex; gap: 6px; }
+    .term-bar .dots i { width: 9px; height: 9px; border-radius: 999px; display: block; }
+    .term-bar .dots i:nth-child(1) { background: var(--shell-accent); }
+    .term-bar .dots i:nth-child(2) { background: var(--shell-gold); }
+    .term-bar .dots i:nth-child(3) { background: var(--shell-green); }
+    .term-body { padding: 20px; font-size: 12.5px; line-height: 2.0; color: var(--shell-sub); }
+    .term-body .p { color: var(--shell-green); }
+    .term-body .c { color: var(--shell-faint); }
+    .term-body .ok { color: var(--shell-green); }
+    .term-body .hot { color: var(--shell-accent); }
+
+    .steps { margin-top: 26px; display: grid; border-top: 1px solid var(--shell-border); }
+    .step {
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--shell-border);
+      align-items: baseline;
+    }
+    .step .n { font-family: var(--shell-serif); font-style: italic; font-size: 26px; color: var(--shell-accent); }
+    .step h3 { margin: 0 0 3px; font-family: var(--shell-heading); font-weight: 600; font-size: 13.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--shell-text); }
+    .step p { margin: 0; font-size: 13px; }
+
+    /* cartridge — paper band */
+    .cart-band { margin-top: 100px; padding: 84px 0 90px; }
+    .cart-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 56px;
+      align-items: center;
+    }
+    @media (max-width: 980px) { .cart-grid { grid-template-columns: 1fr; } }
+    .cart-figure { text-align: center; margin: 0; }
+    .cart-figure img { width: min(100%, 480px); mix-blend-mode: multiply; transform: rotate(-2deg); }
+    .cart-figure figcaption {
+      font-family: var(--shell-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(23,21,15,0.55);
+      margin-top: 12px;
+    }
+    .cart-list {
+      margin: 26px 0 0; padding: 0; list-style: none;
+      font-family: var(--shell-mono);
+      font-size: 12.5px;
+      line-height: 2.1;
+      color: var(--shell-paper-sub);
+    }
+    .cart-list li { display: flex; gap: 12px; align-items: baseline; }
+    .cart-list li::before { content: "▸"; color: var(--shell-accent-dark); }
+    .dm-paper .fine { font-size: 13px; margin-top: 20px; }
+
+    /* gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 44px;
+    }
+    @media (max-width: 780px) { .gallery { grid-template-columns: 1fr; } }
+    .gallery figure { margin: 0; border: 1px solid var(--shell-border-strong); background: #000; overflow: hidden; }
+    .gallery img { width: 100%; height: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+    .gallery figure:hover img { transform: scale(1.04); }
+
+    /* open source strip */
+    .os-strip {
+      margin-top: 90px;
+      border-top: 1px solid var(--shell-border);
+      border-bottom: 1px solid var(--shell-border);
+      padding: 34px 0;
+    }
+    .os-strip .wrap { display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: center; justify-content: space-between; }
+    .os-strip .txt { font-family: var(--shell-mono); font-size: 12.5px; line-height: 1.7; color: var(--shell-sub); max-width: 74ch; margin: 0; }
+    .os-strip .txt strong { color: var(--shell-text); font-weight: 500; }
   </style>
 </head>
 <body class="dm-surface">
   <div id="site-nav"></div>
-  <main class="wrap">
-    <div class="kicker">Console <span style="display:inline-flex;align-items:center;gap:6px;margin-left:8px;font-family:var(--shell-mono);font-size:10px;letter-spacing:0.10em;text-transform:uppercase;background:rgba(217,119,87,0.18);border:1px solid rgba(217,119,87,0.45);color:#D97757;padding:2px 8px;border-radius:999px;">Beta</span></div>
-    <div class="grid">
-      <div class="left">
-        <h1>An experience you can feel, build &amp; collect</h1>
-        <p class="sub">Dungeon Mastron, made physical.</p>
-        <div class="dm-rule" aria-hidden="true"></div>
 
-        <div class="rail">
-          <div class="pair-grid">
-            <section class="block">
-              <h3>What it’s made of</h3>
-              <p>The Dungeon Mastron Console is a DIY build made from accessible parts and simple electronics.</p>
-              <ul class="bullets">
-                <li>A 3D-printed enclosure</li>
-                <li>Physical buttons and LEDs for tactile input and feedback</li>
-                <li>A Raspberry Pi at the core</li>
-                <li>Official Raspberry Pi 7'' Screen</li>
-                <li>Plus basic electronic parts</li>
-              </ul>
-              <p>No custom chips, no locked-down hardware, everything is understandable and replaceable.</p>
-            </section>
-
-            <div class="sep" aria-hidden="true"></div>
-
-            <section class="block">
-              <h3>Same Games, Everywhere</h3>
-              <p>One game format. Two ways to play.</p>
-              <p>Every Dungeon Mastron game works the same way on both the physical console and the web player.</p>
-              <ul class="bullets">
-                <li>Build once</li>
-                <li>Play instantly in the web player</li>
-                <li>Load the exact same game onto the physical console</li>
-              </ul>
-              <p>The platform doesn’t fork or downgrade experiences. The difference is not what you play, it’s how it feels to play.</p>
-            </section>
+  <header class="con-hero" aria-label="The Dungeon Mastron console">
+    <span class="dm-ghost con-ghost" aria-hidden="true">PI</span>
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">Hardware · DIY build <span class="beta">Beta</span></span>
+        <h1>A story you can<br /><em>hold in your hands.</em></h1>
+        <p class="sub">The Dungeon Mastron console is Dungeon Mastron, <strong>made physical</strong>: a 3D-printed, Raspberry-Pi-powered machine with real buttons, real LEDs, and cartridges you label yourself. Built from parts anyone can buy — everything understandable, everything replaceable.</p>
+        <div style="display:flex; gap:14px; flex-wrap:wrap;">
+          <a class="dm-btn dm-btn--primary" href="https://github.com/coburn2716/dungeonmastron_app" target="_blank" rel="noopener noreferrer">Get the build files →</a>
+          <a class="dm-btn" href="/guides/">Read the guides</a>
         </div>
+      </div>
+      <div class="con-photo dm-corners" data-reveal>
+        <img src="../web_assets/console_pictures/Images_web/console_side_web1.jpg" alt="The Dungeon Mastron console with a cartridge inserted, screen lit" fetchpriority="high" />
+        <span class="plate">Unit 001 · reference build</span>
+      </div>
+    </div>
+  </header>
 
-          <div class="pair-grid">
-            <section class="block">
-              <h3>The System Image</h3>
-              <p>Dungeon Mastron provides a complete, ready-to-use system image.</p>
-              <ul class="bullets">
-                <li>Download a single IMG file</li>
-                <li>Flash it to an SD card</li>
-                <li>Insert it into the Pi and power on</li>
-              </ul>
-              <p>No manual setup, no operating system configuration, no guesswork. The console boots directly into Dungeon Mastron.</p>
-            </section>
+  <div class="spec-strip" aria-label="Key specifications">
+    <div class="row">
+      <div class="spec-cell"><span class="k">Brain</span><span class="v">Raspberry Pi</span></div>
+      <div class="spec-cell"><span class="k">Display</span><span class="v">Official 7″ touchscreen</span></div>
+      <div class="spec-cell"><span class="k">Enclosure</span><span class="v">3D-printed · remixable</span></div>
+      <div class="spec-cell"><span class="k">Status</span><span class="v"><i>● open beta</i></span></div>
+    </div>
+  </div>
 
-            <div class="sep" aria-hidden="true"></div>
-
-            <section class="block">
-              <h3>Files &amp; Availability</h3>
-              <p>Open and accessible</p>
-              <p>All build files and resources are freely available:</p>
-              <ul class="bullets">
-                <li>Here</li>
-                <li>MakerWorld</li>
-              </ul>
-              <p>You’re free to print, tweak, remix, and rebuild, whether you follow the reference design or go your own way.</p>
-            </section>
+  <main>
+    <!-- 01 · THE BUILD -->
+    <section class="sec" aria-label="What it's made of">
+      <div class="wrap">
+        <span class="dm-ghost dm-ghost--fill sec-ghost" aria-hidden="true">01</span>
+        <div class="dm-eyebrow" data-reveal>
+          <span class="dm-num">01</span>
+          <span class="dm-label">The build</span>
+        </div>
+        <h2 class="dm-h dm-h--lg" data-reveal style="margin-bottom:40px;">No custom chips.<br /><em>No locked doors.</em></h2>
+        <div class="build-grid">
+          <div class="build-cell" data-reveal>
+            <h3><span class="i">A /</span> What it's made of</h3>
+            <p>A DIY build from accessible parts and simple electronics.</p>
+            <ul>
+              <li>3D-printed enclosure</li>
+              <li>Physical buttons + LEDs for tactile feedback</li>
+              <li>Raspberry Pi at the core</li>
+              <li>Official Raspberry Pi 7″ screen</li>
+              <li>Basic electronic parts — that's it</li>
+            </ul>
           </div>
-
-          <section class="block" style="border-top: 1px solid rgba(255,255,255,0.10); padding-top: 14px; margin-top: 14px;">
-            <h3>Open Source &amp; Community Beta</h3>
-            <p>The Dungeon Mastron console is an open-source DIY project in active beta. All hardware designs, the system image, and the Python runtime are freely available on GitHub. Build one, remix it, improve it — and share feedback so we can make it better together.</p>
-            <p style="margin-top: 8px;"><a href="https://github.com/coburn2716/dungeonmastron_app" target="_blank" rel="noopener noreferrer" style="color: #6B9B7F;">View on GitHub →</a></p>
-          </section>
+          <div class="build-cell" data-reveal="2">
+            <h3><span class="i">B /</span> Same games, everywhere</h3>
+            <p>One game format. Two ways to play. Every game runs identically on console and web player.</p>
+            <ul>
+              <li>Build once</li>
+              <li>Play instantly in the web player</li>
+              <li>Load the exact same file onto the console</li>
+              <li>No forks, no downgraded experiences</li>
+            </ul>
+          </div>
+          <div class="build-cell" data-reveal>
+            <h3><span class="i">C /</span> Files &amp; availability</h3>
+            <p>All build files and resources are freely available:</p>
+            <ul>
+              <li>Right here, on GitHub</li>
+              <li>On MakerWorld</li>
+              <li>Print it, tweak it, remix it, rebuild it</li>
+            </ul>
+          </div>
+          <div class="build-cell" data-reveal="2">
+            <h3><span class="i">D /</span> The difference</h3>
+            <p>The platform doesn't change what you play between screen and shelf.</p>
+            <ul>
+              <li>The web is the invitation</li>
+              <li>The console is the aspiration</li>
+              <li>The difference is how it <em>feels</em> to play</li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div class="right" aria-label="Console image">
-        <div class="stack dm-corners">
-          <img src="../web_assets/console_pictures/console_side_noCart_grey_BG.jpg" alt="" />
-        </div>
-      </div>
-    </div>
-
-    <div class="dm-sechead dm-sechead--orange">
-      <span class="dm-label">Cartridge</span>
-    </div>
-
-    <section class="below-grid" aria-label="Cartridge">
-      <div class="below-left">
-        <div class="dm-corners">
-          <img src="../web_assets/console_pictures/cart_front_toweroftheblackstar_grey_bg.png" alt="" />
-        </div>
-      </div>
-      <div class="below-right">
-        <h2 class="h2">One story. One cartridge</h2>
-        <p class="sub sub--orange">A complete world, made physical.</p>
-
-        <section class="block" style="border-top: none; padding-top: 0; margin-top: 18px;">
-          <h3 class="orange">Built for creators</h3>
-          <p>Every game you create can live on its own cartridge.</p>
-          <ul class="bullets" style="--marker: #D97757;">
-            <li>3D-printed cartridges, designed to be reused and re-labeled</li>
-            <li>Each cartridge houses a USB drive that holds the complete game</li>
-            <li>One adventure per cartridge</li>
-            <li>Easy to swap, store, and share</li>
-            <li>Works on any Dungeon Mastron console</li>
-          </ul>
-          <p>The same game file that runs in the web player can be loaded onto a cartridge without modification.</p>
-        </section>
       </div>
     </section>
+
+    <!-- 02 · SYSTEM IMAGE -->
+    <section class="sec" aria-label="The system image">
+      <div class="wrap">
+        <span class="dm-ghost dm-ghost--fill sec-ghost" aria-hidden="true">02</span>
+        <div class="dm-eyebrow dm-eyebrow--green" data-reveal>
+          <span class="dm-num">02</span>
+          <span class="dm-label">The system image</span>
+        </div>
+        <div class="flash-grid">
+          <div>
+            <h2 class="dm-h dm-h--lg" data-reveal>Flash it.<br /><em>Power on. Play.</em></h2>
+            <div class="steps" data-reveal="2">
+              <div class="step">
+                <span class="n">01</span>
+                <div>
+                  <h3>Download one IMG file</h3>
+                  <p>A complete, ready-to-use system image. No OS configuration, no guesswork.</p>
+                </div>
+              </div>
+              <div class="step">
+                <span class="n">02</span>
+                <div>
+                  <h3>Flash it to an SD card</h3>
+                  <p>Any standard flashing tool works.</p>
+                </div>
+              </div>
+              <div class="step">
+                <span class="n">03</span>
+                <div>
+                  <h3>Insert &amp; power on</h3>
+                  <p>The console boots directly into Dungeon Mastron. Slot a cartridge, and the story begins.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div data-reveal="2">
+            <div class="term dm-corners">
+              <div class="term-bar">
+                <span class="dots"><i></i><i></i><i></i></span>
+                <span>mastron-os — boot</span>
+                <span>sd://</span>
+              </div>
+              <div class="term-body">
+                <span class="c">[0.000]</span> mastron-os image detected<br />
+                <span class="c">[0.412]</span> screen · 7" touchscreen <span class="ok">ok</span><br />
+                <span class="c">[0.688]</span> buttons · 4 mapped <span class="ok">ok</span><br />
+                <span class="c">[0.941]</span> LEDs · narrative signals armed <span class="ok">ok</span><br />
+                <span class="c">[1.203]</span> cartridge inserted — <span class="hot">"Tower of the Black Star"</span><br />
+                <span class="c">[1.204]</span> game.json validated <span class="ok">✓</span><br />
+                <br />
+                <span class="p">&gt;</span> press any button to begin ▮
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery" aria-label="Console photos">
+          <figure class="dm-corners" data-reveal><img src="../web_assets/console_pictures/console_front_whatgetsthrough.jpg" alt="Console front view running What Gets Through" loading="lazy" /></figure>
+          <figure class="dm-corners" data-reveal="2"><img src="../web_assets/console_pictures/console_side_whatgetsthrough.jpg" alt="Console side view with cartridge inserted" loading="lazy" /></figure>
+          <figure class="dm-corners" data-reveal="3"><img src="../web_assets/console_pictures/console_front_noCart.jpg" alt="Console front view, lights on, no cartridge" loading="lazy" /></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 · CARTRIDGE (paper) -->
+    <section class="dm-paper cart-band" aria-label="Cartridges">
+      <div class="wrap">
+        <div class="dm-eyebrow dm-eyebrow--gold" data-reveal>
+          <span class="dm-num">03</span>
+          <span class="dm-label">The cartridge</span>
+        </div>
+        <div class="cart-grid">
+          <figure class="cart-figure" data-reveal>
+            <img src="../web_assets/console_pictures/cart_front_toweroftheblackstar_grey_bg.png" alt="A Dungeon Mastron cartridge labelled Tower of the Black Star" loading="lazy" />
+            <figcaption>Fig. 03 — one story, one cartridge</figcaption>
+          </figure>
+          <div>
+            <h2 class="dm-h dm-h--lg" data-reveal>One story.<br /><em>One cartridge.</em></h2>
+            <p class="fine" data-reveal>A complete world, made physical. Every game you create can live on its own cartridge — swap them, shelve them, trade them.</p>
+            <ul class="cart-list" data-reveal="2">
+              <li>3D-printed, designed to be reused and re-labeled</li>
+              <li>Houses a USB drive holding the complete game</li>
+              <li>One adventure per cartridge</li>
+              <li>Easy to swap, store, and share</li>
+              <li>Works on any Dungeon Mastron console</li>
+            </ul>
+            <p class="fine" data-reveal="3">The same game file that runs in the web player loads onto a cartridge without modification.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- open source strip -->
+    <div class="os-strip" aria-label="Open source and community beta">
+      <div class="wrap">
+        <p class="txt"><strong>Open source &amp; community beta.</strong> All hardware designs, the system image, and the Python runtime are freely available on GitHub. Build one, remix it, improve it — and share feedback so we can make it better together.</p>
+        <a class="dm-btn dm-btn--ember dm-btn--sm" href="https://github.com/coburn2716/dungeonmastron_app" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+      </div>
+    </div>
   </main>
 
   <div id="site-footer"></div>
 
-  <script src="../web_assets/site_shell.js?v=2" defer></script>
+  <script src="../web_assets/site_shell.js?v=3" defer></script>
 </body>
 </html>
