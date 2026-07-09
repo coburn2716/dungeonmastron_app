@@ -313,8 +313,14 @@ html { scrollbar-gutter: stable; }
 }
 
 /* Open Source & Support: two-card grid + text fallback for missing logos */
-.community-grid--two { grid-template-columns: repeat(2, 1fr); }
-@media (max-width: 720px) { .community-grid--two { grid-template-columns: 1fr; } }
+.community-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 380px));
+  justify-content: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (max-width: 720px) { .community-grid--two { grid-template-columns: minmax(0, 420px); } }
 .community-tile-text {
   font-family: var(--shell-heading, sans-serif);
   font-weight: 700; letter-spacing: 0.04em;
