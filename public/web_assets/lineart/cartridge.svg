@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 452 490" role="img" aria-label="Technical line drawing of a blank Dungeon Mastron game cartridge, label area waiting for a title">
+<style>
+  .note { font: 500 9px ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace; letter-spacing: .14em; fill: #17150F; fill-opacity: .55; }
+  .note.title { fill-opacity: .42; letter-spacing: .18em; }
+  .lead { stroke: #17150F; stroke-opacity: .32; stroke-width: .7; fill: none; }
+  .ext, .dim { stroke: #17150F; stroke-opacity: .28; stroke-width: .7; fill: none; }
+  .arr { fill: #17150F; fill-opacity: .38; }
+  .shine { stroke-dasharray: 4 96; opacity: 0; animation: cartShine 13s linear infinite; animation-delay: -6s; }
+  @keyframes cartShine {
+    0% { stroke-dashoffset: 100; opacity: 0; }
+    4% { opacity: .8; }
+    40% { opacity: .8; }
+    44% { stroke-dashoffset: 0; opacity: 0; }
+    100% { stroke-dashoffset: 0; opacity: 0; }
+  }
+  .mark { animation: markBreath 7s ease-in-out infinite; }
+  @keyframes markBreath { 0%,100% { stroke-opacity: .55; } 50% { stroke-opacity: 1; } }
+  .cursor { animation: curBlink 1.4s steps(1) infinite; }
+  @keyframes curBlink { 0%,55% { opacity: 1; } 56%,100% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .shine, .mark, .cursor { animation: none !important; }
+    .shine { opacity: 0; }
+  }
+</style>
+  <path d="M165,20 V416" stroke="#17150F" stroke-opacity=".14" stroke-width=".7" stroke-dasharray="5 5" fill="none"/>
+  <path d="M72,46 h186 a12,12 0 0 1 12,12 v306 a12,12 0 0 1 -12,12 h-186 a12,12 0 0 1 -12,-12 v-306 a12,12 0 0 1 12,-12 Z" stroke="#17150F" stroke-opacity=".80" stroke-width="1.5" fill="none"/>
+  <rect x="65" y="51" width="200" height="320" rx="7" stroke="#17150F" stroke-opacity=".22" stroke-width=".8" fill="none"/>
+  <path class="shine" d="M72,46 h186 a12,12 0 0 1 12,12 v306 a12,12 0 0 1 -12,12 h-186 a12,12 0 0 1 -12,-12 v-306 a12,12 0 0 1 12,-12 Z" pathLength="100" stroke="#C4552E" stroke-width="1.6" fill="none"/>
+  <path d="M123,64 v16 M137,64 v16 M151,64 v16 M165,64 v16 M179,64 v16 M193,64 v16 M207,64 v16" stroke="#17150F" stroke-opacity=".45" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <rect x="86" y="108" width="158" height="222" rx="5" stroke="#17150F" stroke-opacity=".60" stroke-width="1.1" fill="none"/>
+  <rect x="90" y="112" width="150" height="214" rx="3" stroke="#17150F" stroke-opacity=".20" stroke-width=".8" fill="none"/>
+  <path class="mark" d="M165,160 L175,172 L165,184 L155,172 Z" stroke="#C4552E" stroke-width="1.2" fill="none"/>
+  <path d="M165,167 L169.2,172 L165,177 L160.8,172 Z" stroke="#C4552E" stroke-opacity=".5" stroke-width=".8" fill="none"/>
+  <path d="M98,127 v-7 h7 M225,120 h7 v7 M98,259 v7 h7 M225,266 h7 v-7" stroke="#17150F" stroke-opacity=".30" stroke-width="1" fill="none"/>
+  <path d="M109,292 h112" stroke="#17150F" stroke-opacity=".38" stroke-width="1" fill="none"/>
+  <path d="M131,306 h58" stroke="#17150F" stroke-opacity=".24" stroke-width="1" fill="none"/>
+  <path class="cursor" d="M193,306 h7" stroke="#C4552E" stroke-width="2.4" fill="none"/>
+  <path d="M60,256 h6 v34 h-6 M270,256 h-6 v34 h6" stroke="#17150F" stroke-opacity=".40" stroke-width="1" fill="none"/>
+  <path d="M98,376 v20 h134 v-20" stroke="#17150F" stroke-opacity=".35" stroke-width="1" stroke-dasharray="4 3" fill="none"/>
+  <path d="M106,381 v10 M116.72727272727272,381 v10 M127.45454545454545,381 v10 M138.1818181818182,381 v10 M148.9090909090909,381 v10 M159.63636363636363,381 v10 M170.36363636363637,381 v10 M181.0909090909091,381 v10 M191.8181818181818,381 v10 M202.54545454545453,381 v10 M213.27272727272725,381 v10 M224,381 v10" stroke="#17150F" stroke-opacity=".22" stroke-width="1" fill="none"/>
+  <path d="M314,130 L286,142 L246,150" class="lead"/>
+  <text x="318" y="128" class="note">LABEL — YOURS</text>
+  <path d="M26,420 L76,406 L100,388" class="lead"/>
+  <text x="24" y="432" class="note">EDGE CONNECTOR · HIDDEN</text>
+  <path d="M60,42 V22 M270,42 V22" class="ext"/>
+  <path d="M60,28 H270" class="dim"/>
+  <path d="M60,28 l6,-2.4 v4.8 Z M270,28 l-6,-2.4 v4.8 Z" class="arr"/>
+  <text x="165" y="22" text-anchor="middle" class="note">ONE STORY PER CART</text>
+  <text x="24" y="458" class="note title">DM·K1 — GAME CARTRIDGE · WRITE ONCE, PLAY FOREVER</text>
+</svg>

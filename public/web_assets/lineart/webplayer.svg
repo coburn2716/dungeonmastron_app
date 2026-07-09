@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 0 442 612" role="img" aria-label="Technical line drawing of the Dungeon Mastron web player interface">
+<style>
+  .note { font: 500 9px ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace; letter-spacing: .14em; fill: #ECE6DA; fill-opacity: .55; }
+  .note.title { fill-opacity: .40; letter-spacing: .18em; }
+  .keycap { font: 600 10px ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace; fill: #ECE6DA; fill-opacity: .65; }
+  .chip { font: 500 9px ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace; fill: #E2683C; fill-opacity: .8; }
+  .stats { font: 500 8px ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace; letter-spacing: .12em; fill: #ECE6DA; fill-opacity: .30; }
+  .lead { stroke: #ECE6DA; stroke-opacity: .30; stroke-width: .7; fill: none; }
+  .ext, .dim { stroke: #ECE6DA; stroke-opacity: .25; stroke-width: .7; fill: none; }
+  .arr { fill: #ECE6DA; fill-opacity: .35; }
+  .shine { stroke-dasharray: 4 96; opacity: 0; animation: wpShine 9s linear infinite; animation-delay: -3s; }
+  .shine2 { stroke-dasharray: 1.6 98.4; animation-delay: -2.94s; }
+  @keyframes wpShine {
+    0% { stroke-dashoffset: 100; opacity: 0; }
+    4% { opacity: .9; }
+    46% { opacity: .9; }
+    50% { stroke-dashoffset: 0; opacity: 0; }
+    100% { stroke-dashoffset: 0; opacity: 0; }
+  }
+  .led { opacity: .35; animation: ledPulse 5.6s ease-in-out infinite; }
+  .led-0 { animation-delay: .4s; } .led-1 { animation-delay: 1.8s; }
+  .led-2 { animation-delay: 3.2s; } .led-3 { animation-delay: 4.6s; }
+  .ledB.led-0 { animation-delay: 1.1s; } .ledB.led-1 { animation-delay: 2.5s; }
+  .ledB.led-2 { animation-delay: 3.9s; } .ledB.led-3 { animation-delay: 5.3s; }
+  @keyframes ledPulse { 0%,100% { opacity: .3; } 50% { opacity: 1; } }
+  .cursor { animation: curBlink 1.3s steps(1) infinite; animation-delay: -.5s; }
+  @keyframes curBlink { 0%,55% { opacity: 1; } 56%,100% { opacity: 0; } }
+  .scan { animation: scanDrift 8s linear infinite; animation-delay: -2s; }
+  @keyframes scanDrift { from { transform: translateY(0); } to { transform: translateY(-356px); } }
+  @media (prefers-reduced-motion: reduce) {
+    .shine, .shine2, .led, .cursor, .scan { animation: none !important; }
+    .shine, .shine2 { opacity: 0; } .led { opacity: .75; }
+  }
+</style>
+  <path d="M190,18 L190,582" stroke="#ECE6DA" stroke-opacity=".12" stroke-width=".7" stroke-dasharray="5 5" fill="none"/>
+  <path d="M76,40 h228 a26,26 0 0 1 26,26 v468 a26,26 0 0 1 -26,26 h-228 a26,26 0 0 1 -26,-26 v-468 a26,26 0 0 1 26,-26 Z" stroke="#ECE6DA" stroke-opacity=".78" stroke-width="1.5" fill="none"/>
+  <rect x="56" y="46" width="268" height="508" rx="20" stroke="#ECE6DA" stroke-opacity=".22" stroke-width=".8" fill="none"/>
+  <path class="shine" d="M76,40 h228 a26,26 0 0 1 26,26 v468 a26,26 0 0 1 -26,26 h-228 a26,26 0 0 1 -26,-26 v-468 a26,26 0 0 1 26,-26 Z" pathLength="100" stroke="#E2683C" stroke-width="1.6" fill="none"/>
+  <path class="shine shine2" d="M76,40 h228 a26,26 0 0 1 26,26 v468 a26,26 0 0 1 -26,26 h-228 a26,26 0 0 1 -26,-26 v-468 a26,26 0 0 1 26,-26 Z" pathLength="100" stroke="#FFF6EC" stroke-width="1" fill="none"/>
+  <rect x="96" y="66" width="188" height="372" rx="10" stroke="#ECE6DA" stroke-opacity=".62" stroke-width="1.1" fill="none"/>
+  <rect x="101" y="71" width="178" height="362" rx="6" stroke="#ECE6DA" stroke-opacity=".28" stroke-width=".8" fill="none"/>
+  <path d="M110,82 h44 M240,82 h30" stroke="#ECE6DA" stroke-opacity=".28" stroke-width="1" fill="none"/>
+  <path d="M130,210.56 L162,152.56 L184,186.56 L208,140.56 L250,210.56" stroke="#ECE6DA" stroke-opacity=".40" stroke-width="1" fill="none" stroke-linejoin="round"/>
+  <circle cx="237" cy="122.56" r="9" stroke="#ECE6DA" stroke-opacity=".40" stroke-width="1" fill="none"/>
+  <path d="M103,244.56 h174" stroke="#ECE6DA" stroke-opacity=".25" stroke-width=".8" stroke-dasharray="3 4" fill="none"/>
+  <path d="M112,262.56 h156" stroke="#ECE6DA" stroke-opacity=".28" stroke-width="1" fill="none"/>
+  <path d="M112,274.56 h142" stroke="#ECE6DA" stroke-opacity=".28" stroke-width="1" fill="none"/>
+  <path d="M112,286.56 h112" stroke="#ECE6DA" stroke-opacity=".28" stroke-width="1" fill="none"/>
+  <text x="112" y="319.56" class="chip">[1]</text>
+  <path d="M140,316.56 h90" stroke="#ECE6DA" stroke-opacity=".34" stroke-width="1" fill="none"/>
+  <text x="112" y="343.56" class="chip">[2]</text>
+  <path d="M140,340.56 h64" stroke="#ECE6DA" stroke-opacity=".34" stroke-width="1" fill="none"/>
+  <path class="cursor" d="M210,340.56 h7" stroke="#E2683C" stroke-width="2.6" fill="none"/>
+  <text x="190" y="408" text-anchor="middle" class="stats">HP·100  STR·1  LCK·2</text>
+  <path d="M136,420 h108" stroke="#ECE6DA" stroke-opacity=".18" stroke-width="1" fill="none"/>
+  <clipPath id="wpClip"><rect x="101" y="71" width="178" height="362" rx="6"/></clipPath>
+  <g clip-path="url(#wpClip)"><path class="scan" d="M96,430 h188" stroke="#ECE6DA" stroke-opacity=".10" stroke-width="2" fill="none"/></g>
+  <circle cx="73" cy="207" r="6" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-0 " cx="73" cy="207" r="3.4" fill="#B85C4E"/>
+  <circle cx="73" cy="237" r="6" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-1 " cx="73" cy="237" r="3.4" fill="#E8A356"/>
+  <circle cx="73" cy="267" r="6" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-2 " cx="73" cy="267" r="3.4" fill="#7B93A8"/>
+  <circle cx="73" cy="297" r="6" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-3 " cx="73" cy="297" r="3.4" fill="#6B9B7F"/>
+  <circle cx="307" cy="207" r="6" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-0 ledB" cx="307" cy="207" r="3.4" fill="#B85C4E"/>
+  <circle cx="307" cy="237" r="6" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-1 ledB" cx="307" cy="237" r="3.4" fill="#E8A356"/>
+  <circle cx="307" cy="267" r="6" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-2 ledB" cx="307" cy="267" r="3.4" fill="#7B93A8"/>
+  <circle cx="307" cy="297" r="6" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-3 ledB" cx="307" cy="297" r="3.4" fill="#6B9B7F"/>
+  <rect x="88" y="468" width="44" height="30" rx="4" stroke="#ECE6DA" stroke-opacity=".55" stroke-width="1" fill="none"/>
+  <text x="110" y="486.4" text-anchor="middle" class="keycap">I</text>
+  <rect x="144" y="468" width="44" height="30" rx="4" stroke="#ECE6DA" stroke-opacity=".55" stroke-width="1" fill="none"/>
+  <text x="166" y="486.4" text-anchor="middle" class="keycap">II</text>
+  <rect x="200" y="468" width="44" height="30" rx="4" stroke="#ECE6DA" stroke-opacity=".55" stroke-width="1" fill="none"/>
+  <text x="222" y="486.4" text-anchor="middle" class="keycap">III</text>
+  <circle cx="282" cy="483" r="21" stroke="#ECE6DA" stroke-opacity=".55" stroke-width="1" fill="none"/>
+  <circle cx="282" cy="483" r="16" stroke="#ECE6DA" stroke-opacity=".25" stroke-width=".8" fill="none"/>
+  <path d="M50,36 V18 M330,36 V18" class="ext"/>
+  <path d="M50,24 H330" class="dim"/>
+  <path d="M50,24 l6,-2.4 v4.8 Z M330,24 l-6,-2.4 v4.8 Z" class="arr"/>
+  <text x="190" y="18" text-anchor="middle" class="note">VIEWPORT · RESPONSIVE</text>
+  <path d="M10,164 L10,200 L67,201" class="lead"/>
+  <text x="6" y="156" class="note">LED ARRAY ×4</text>
+  <path d="M346,517 L316,501 L306,491" class="lead"/>
+  <text x="350" y="521" class="note">ACTION</text>
+  <path d="M292,66 H354 M292,438 H354" class="ext"/>
+  <path d="M348,66 V438" class="dim"/>
+  <path d="M348,66 l-2.4,6 h4.8 Z M348,438 l-2.4,-6 h4.8 Z" class="arr"/>
+  <text x="357" y="252" class="note" transform="rotate(90 357 252)" text-anchor="middle">PORTRAIT 9:16</text>
+  <text x="6" y="596" class="note title">DM·W1 — WEB PLAYER · RUNS game.json · ANY BROWSER</text>
+</svg>

@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-150 -478 560 528" role="img" aria-label="Technical line drawing of the Dungeon Mastron console with a cartridge inserted">
+<style>
+  .note { font: 500 9px ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace; letter-spacing: .14em; fill: #ECE6DA; fill-opacity: .55; }
+  .note.title { fill-opacity: .40; letter-spacing: .18em; }
+  .keycap { font: 600 9px ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace; fill: #ECE6DA; fill-opacity: .65; }
+  .lead { stroke: #ECE6DA; stroke-opacity: .30; stroke-width: .7; fill: none; }
+  .ext, .dim { stroke: #ECE6DA; stroke-opacity: .25; stroke-width: .7; fill: none; }
+  .arr { fill: #ECE6DA; fill-opacity: .35; }
+  .shine { stroke-dasharray: 4 96; stroke-dashoffset: 0; opacity: 0; animation: consoleShine 11s linear infinite; }
+  .shine2 { stroke-dasharray: 1.6 98.4; animation-delay: .06s; }
+  @keyframes consoleShine {
+    0% { stroke-dashoffset: 100; opacity: 0; }
+    4% { opacity: .9; }
+    46% { opacity: .9; }
+    50% { stroke-dashoffset: 0; opacity: 0; }
+    100% { stroke-dashoffset: 0; opacity: 0; }
+  }
+  .led { opacity: .35; animation: ledPulse 5.2s ease-in-out infinite; }
+  .led-0 { animation-delay: 0s; } .led-1 { animation-delay: 1.3s; }
+  .led-2 { animation-delay: 2.6s; } .led-3 { animation-delay: 3.9s; }
+  .ledB.led-0 { animation-delay: .65s; } .ledB.led-1 { animation-delay: 1.95s; }
+  .ledB.led-2 { animation-delay: 3.25s; } .ledB.led-3 { animation-delay: 4.55s; }
+  @keyframes ledPulse { 0%,100% { opacity: .3; } 50% { opacity: 1; } }
+  .cursor { animation: curBlink 1.3s steps(1) infinite; }
+  @keyframes curBlink { 0%,55% { opacity: 1; } 56%,100% { opacity: 0; } }
+  .scan { animation: scanDrift 7s linear infinite; }
+  @keyframes scanDrift { from { transform: translateY(0); } to { transform: translateY(-168px); } }
+  .mark { animation: markBreath 6s ease-in-out infinite; }
+  @keyframes markBreath { 0%,100% { stroke-opacity: .5; } 50% { stroke-opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) {
+    .shine, .shine2, .led, .cursor, .scan, .mark { animation: none !important; }
+    .shine, .shine2 { opacity: 0; } .led { opacity: .75; }
+  }
+</style>
+  <path d="M140.3,-97.2 L173.6,-322.5 L177.9,-417" stroke="#ECE6DA" stroke-opacity=".14" stroke-width=".7" stroke-dasharray="5 5" fill="none"/>
+  <path d="M207.8,-8.5 L214.7,-42.5 M219.5,-15.2 L226.4,-49.2 M231.2,-22 L238.1,-56 M242.9,-28.7 L249.8,-62.7 M254.6,-35.5 L261.5,-69.5 M266.2,-42.2 L273.2,-76.2 M277.9,-49 L284.9,-83" stroke="#ECE6DA" stroke-opacity=".13" stroke-width=".7" fill="none"/>
+  <path id="silhouette" d="M0,0 L0,-58 L39,-88.5 L73.6,-322.5 L90.9,-332.5 L290.9,-332.5 L290.9,-52.5 L200,0 Z" stroke="#ECE6DA" stroke-opacity=".78" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+  <path class="shine" d="M0,0 L0,-58 L39,-88.5 L73.6,-322.5 L90.9,-332.5 L290.9,-332.5 L290.9,-52.5 L200,0 Z" pathLength="100" stroke="#E2683C" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+  <path class="shine shine2" d="M0,0 L0,-58 L39,-88.5 L73.6,-322.5 L90.9,-332.5 L290.9,-332.5 L290.9,-52.5 L200,0 Z" pathLength="100" stroke="#FFF6EC" stroke-width="1" fill="none" stroke-linejoin="round"/>
+  <path d="M0,-58 L200,-58 M200,0 L200,-58 M200,-58 L239,-88.5 M39,-88.5 L239,-88.5 M239,-88.5 L273.6,-322.5 M73.6,-322.5 L273.6,-322.5 M273.6,-322.5 L290.9,-332.5" stroke="#ECE6DA" stroke-opacity=".42" stroke-width="1" fill="none"/>
+  <polygon points="84.4,-111.9 200.4,-111.9 226.8,-289.7 110.8,-289.7" stroke="#ECE6DA" stroke-opacity=".62" stroke-width="1.1" fill="none"/>
+  <polygon points="90.3,-117.7 196.3,-117.7 220.9,-283.9 114.9,-283.9" stroke="#ECE6DA" stroke-opacity=".30" stroke-width=".8" fill="none"/>
+  <path d="M103.3,-205.5 L209.3,-205.5" stroke="#ECE6DA" stroke-opacity=".25" stroke-width=".8" stroke-dasharray="3 4" fill="none"/>
+  <path d="M120.4,-219.5 L147.2,-252.3 L159.3,-232.4 L179,-264 L196.4,-219.5" stroke="#ECE6DA" stroke-opacity=".40" stroke-width="1" fill="none" stroke-linejoin="round"/>
+  <circle cx="192.8" cy="-269.8" r="6" stroke="#ECE6DA" stroke-opacity=".40" stroke-width="1" fill="none"/>
+  <path d="M105.5,-186.8 L201.5,-186.8" stroke="#ECE6DA" stroke-opacity=".28" stroke-width="1" fill="none"/>
+  <path d="M103.4,-172.7 L187.4,-172.7" stroke="#ECE6DA" stroke-opacity=".28" stroke-width="1" fill="none"/>
+  <path d="M101.4,-158.7 L193.4,-158.7" stroke="#ECE6DA" stroke-opacity=".28" stroke-width="1" fill="none"/>
+  <path d="M99.3,-144.7 L157.3,-144.7" stroke="#ECE6DA" stroke-opacity=".28" stroke-width="1" fill="none"/>
+  <path class="cursor" d="M161.3,-144.7 L167.3,-144.7" stroke="#E2683C" stroke-width="2.4" fill="none"/>
+  <clipPath id="scrClip"><polygon points="90.3,-117.7 196.3,-117.7 220.9,-283.9 114.9,-283.9"/></clipPath>
+  <g clip-path="url(#scrClip)"><path class="scan" d="M55.5,-118.9 L231.5,-118.9" stroke="#ECE6DA" stroke-opacity=".10" stroke-width="2" fill="none"/></g>
+  <circle cx="82.7" cy="-241.8" r="5.2" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-0 " cx="82.7" cy="-241.8" r="3" fill="#B85C4E"/>
+  <circle cx="79" cy="-217.2" r="5.2" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-1 " cx="79" cy="-217.2" r="3" fill="#E8A356"/>
+  <circle cx="75.4" cy="-192.6" r="5.2" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-2 " cx="75.4" cy="-192.6" r="3" fill="#7B93A8"/>
+  <circle cx="71.7" cy="-168.1" r="5.2" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-3 " cx="71.7" cy="-168.1" r="3" fill="#6B9B7F"/>
+  <circle cx="240.7" cy="-241.8" r="5.2" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-0 ledB" cx="240.7" cy="-241.8" r="3" fill="#B85C4E"/>
+  <circle cx="237" cy="-217.2" r="5.2" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-1 ledB" cx="237" cy="-217.2" r="3" fill="#E8A356"/>
+  <circle cx="233.4" cy="-192.6" r="5.2" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-2 ledB" cx="233.4" cy="-192.6" r="3" fill="#7B93A8"/>
+  <circle cx="229.7" cy="-168.1" r="5.2" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-3 ledB" cx="229.7" cy="-168.1" r="3" fill="#6B9B7F"/>
+  <path d="M50,-95.5 L76,-95.5 M50.6,-99.3 L76.6,-99.3 M51.1,-103 L77.1,-103 M51.7,-106.8 L77.7,-106.8" stroke="#ECE6DA" stroke-opacity=".38" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+  <polygon points="39.3,-76.8 69.3,-76.8 82.2,-87 52.2,-87" stroke="#ECE6DA" stroke-opacity=".55" stroke-width="1" fill="none" stroke-linejoin="round"/>
+  <path d="M39.3,-66.8 L69.3,-66.8 L69.3,-76.8 M39.3,-66.8 L39.3,-76.8" stroke="#ECE6DA" stroke-opacity=".45" stroke-width="1" fill="none"/>
+  <path d="M82.2,-77 L82.2,-87" stroke="#ECE6DA" stroke-opacity=".30" stroke-width=".9" fill="none"/>
+  <text x="60.8" y="-79.3" text-anchor="middle" class="keycap">I</text>
+  <polygon points="77.3,-76.8 107.3,-76.8 120.2,-87 90.2,-87" stroke="#ECE6DA" stroke-opacity=".55" stroke-width="1" fill="none" stroke-linejoin="round"/>
+  <path d="M77.3,-66.8 L107.3,-66.8 L107.3,-76.8 M77.3,-66.8 L77.3,-76.8" stroke="#ECE6DA" stroke-opacity=".45" stroke-width="1" fill="none"/>
+  <path d="M120.2,-77 L120.2,-87" stroke="#ECE6DA" stroke-opacity=".30" stroke-width=".9" fill="none"/>
+  <text x="98.8" y="-79.3" text-anchor="middle" class="keycap">II</text>
+  <polygon points="115.3,-76.8 145.3,-76.8 158.2,-87 128.2,-87" stroke="#ECE6DA" stroke-opacity=".55" stroke-width="1" fill="none" stroke-linejoin="round"/>
+  <path d="M115.3,-66.8 L145.3,-66.8 L145.3,-76.8 M115.3,-66.8 L115.3,-76.8" stroke="#ECE6DA" stroke-opacity=".45" stroke-width="1" fill="none"/>
+  <path d="M158.2,-77 L158.2,-87" stroke="#ECE6DA" stroke-opacity=".30" stroke-width=".9" fill="none"/>
+  <text x="136.8" y="-79.3" text-anchor="middle" class="keycap">III</text>
+  <circle r="17" transform="matrix(1 0 0.433 -0.339 180.8 -81.9)" stroke="#ECE6DA" stroke-opacity="0.55" stroke-width="1" fill="none"/>
+  <path d="M199.3,-73.6 L199.3,-83.6 M162.2,-70.2 L162.2,-80.2" stroke="#ECE6DA" stroke-opacity=".45" stroke-width="1" fill="none"/>
+  <circle r="17" transform="matrix(1 0 0.433 -0.339 180.8 -71.9)" stroke="#ECE6DA" stroke-opacity="0.25" stroke-width="0.8" fill="none"/>
+  <polygon points="120.2,-324 232.2,-324 241.7,-329.5 129.7,-329.5" stroke="#ECE6DA" stroke-opacity=".45" stroke-width="1" fill="none"/>
+  <path d="M129.9,-325 L129.9,-403 Q129.9,-409 135.9,-409 L219.9,-409 Q225.9,-409 225.9,-403 L225.9,-325" stroke="#ECE6DA" stroke-opacity=".70" stroke-width="1.2" fill="none"/>
+  <path d="M135.9,-409 L142,-412.5 L226,-412.5 M219.9,-409 L226,-412.5" stroke="#ECE6DA" stroke-opacity=".38" stroke-width=".9" fill="none"/>
+  <path d="M226,-412.5 Q232,-412.5 232,-406.5 L232,-330.5" stroke="#ECE6DA" stroke-opacity=".38" stroke-width=".9" fill="none"/>
+  <path d="M137.9,-333 L217.9,-333 L217.9,-395 L137.9,-395 Z" stroke="#ECE6DA" stroke-opacity=".40" stroke-width=".9" fill="none"/>
+  <path class="mark" d="M177.9,-384 L183.9,-377 L177.9,-370 L171.9,-377 Z" stroke="#E2683C" stroke-width="1" fill="none"/>
+  <path d="M151.9,-351 L203.9,-351 M161.9,-343 L193.9,-343" stroke="#ECE6DA" stroke-opacity=".30" stroke-width="1" fill="none"/>
+  <path d="M149.9,-405 L149.9,-399 M157.9,-405 L157.9,-399 M165.9,-405 L165.9,-399 M173.9,-405 L173.9,-399 M181.9,-405 L181.9,-399 M189.9,-405 L189.9,-399" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <path d="M289,-372.7 L249,-332.7 L235,-328.7" class="lead"/>
+  <text x="293" y="-376.7" class="note">CARTRIDGE PORT</text>
+  <path d="M13.3,-231.5 L51.3,-209.5 L69.3,-207.5" class="lead"/>
+  <text x="11.3" y="-236.5" text-anchor="end" class="note">LED ARRAY ×4</text>
+  <path d="M-20.7,-75.8 L17.3,-75.8 L35.3,-71.8" class="lead"/>
+  <text x="-24.7" y="-72.8" text-anchor="end" class="note">KEYS I·II·III</text>
+  <path d="M294.9,-332.5 L322.9,-332.5 M294.9,-52.5 L322.9,-52.5" class="ext"/>
+  <path d="M316.9,-332.5 L316.9,-52.5" class="dim"/>
+  <path d="M316.9,-332.5 l-2.4,6 l4.8,0 Z M316.9,-52.5 l-2.4,-6 l4.8,0 Z" class="arr"/>
+  <text x="324.9" y="-192.5" class="note" transform="rotate(90 324.9 -192.5)" text-anchor="middle">280 MM</text>
+  <text x="-26" y="34" class="note title">DM·C1 — CONSOLE · CARTRIDGE MEDIA · SCALE 1:4</text>
+</svg>
