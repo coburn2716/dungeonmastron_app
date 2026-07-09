@@ -80,3 +80,32 @@ export async function submitUrlsIndexNow(urls) {
     return false;
   }
 }
+
+/**
+ * CLI entry: submit every URL in public/sitemap.xml to IndexNow.
+ * Usage: node --env-file=.env.local scripts/seo/indexnow.mjs [--sitemap]
+ */
+import { fileURLToPath } from "node:url";
+import { readFileSync } from "node:fs";
+import path from "node:path";
+
+const __filename = fileURLToPath(import.meta.url);
+if (process.argv[1] === __filename) {
+  const APP_ROOT = path.resolve(path.dirname(__filename), "..", "..");
+  const sitemapPath = path.join(APP_ROOT, "public", "sitemap.xml");
+  let urls = [];
+  try {
+    const xml = readFileSync(sitemapPath, "utf8");
+    urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim());
+  } catch (e) {
+    console.error(`Could not read sitemap at ${sitemapPath}: ${e.message}`);
+    process.exit(1);
+  }
+  if (!urls.length) {
+    console.error("No <loc> URLs found in sitemap.");
+    process.exit(1);
+  }
+  console.log(`Submitting ${urls.length} URLs from sitemap to IndexNow...`);
+  const ok = await submitUrlsIndexNow(urls);
+  process.exit(ok ? 0 : 1);
+}

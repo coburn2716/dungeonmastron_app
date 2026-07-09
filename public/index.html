@@ -533,35 +533,26 @@
 
     <div class="section-sep" style="margin-top: 16px;" aria-hidden="true"></div>
 
-    <div class="kicker kicker--yellow" style="margin-top: 26px;">Communities</div>
+    <div class="kicker kicker--yellow" style="margin-top: 26px;">Open Source &amp; Support</div>
 
-    <section class="community-grid" aria-label="Community links">
+    <section class="community-grid community-grid--two" aria-label="Open source and support">
       <div class="community-card">
         <div class="community-tile">
-          <a href="https://discord.gg/QFdWE9Bm" target="_blank" rel="noopener noreferrer">
-            <img src="web_assets/logos/discord_logo.png" alt="Discord" />
+          <a href="https://github.com/coburn2716/dungeonmastron_app" target="_blank" rel="noopener noreferrer" aria-label="Dungeon Mastron on GitHub">
+            <img src="web_assets/logos/github_logo.png" alt="GitHub" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'GitHub',className:'community-tile-text'}))" />
           </a>
         </div>
-        <p class="community-tag">Where creators share, test, and build together.</p>
-        <p class="community-copy">Share worlds, get feedback, test ideas, and help shape the platform together with other creators and players.</p>
+        <p class="community-tag">Open source, MIT licensed.</p>
+        <p class="community-copy">The whole platform is open on GitHub. Contributions, forks, and community builds are welcome. Read the code, file an issue, or build your own version. The source is yours.</p>
       </div>
       <div class="community-card">
         <div class="community-tile">
-          <a href="https://www.patreon.com/Artifextron" target="_blank" rel="noopener noreferrer">
-            <img src="web_assets/logos/patreon_logo.png" alt="Patreon" />
+          <a href="https://ko-fi.com/dungeonmastron" target="_blank" rel="noopener noreferrer" aria-label="Support Dungeon Mastron on Ko-fi">
+            <img src="web_assets/logos/kofi_logo.png" alt="Ko-fi" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'Ko-fi \u2615',className:'community-tile-text'}))" />
           </a>
         </div>
-        <p class="community-tag">Support development. Shape the future.</p>
-        <p class="community-copy">Help fund ongoing development and influence what comes next. Get early access, behind-the-scenes updates, and a direct voice in the direction of Dungeon Mastron.</p>
-      </div>
-      <div class="community-card">
-        <div class="community-tile">
-          <a href="https://www.youtube.com/@Artifextron" target="_blank" rel="noopener noreferrer">
-            <img src="web_assets/logos/youtube_logo.png" alt="YouTube" />
-          </a>
-        </div>
-        <p class="community-tag">Watch tools, worlds, and ideas evolve.</p>
-        <p class="community-copy">Follow development updates, deep dives, and story experiments. See new features, example worlds, and ideas evolve over time.</p>
+        <p class="community-tag">Support the project. Keep it free.</p>
+        <p class="community-copy">Dungeon Mastron is a one-person passion project, free and open for everyone. If it brings you joy, a coffee helps keep it growing with new tools, worlds, and console builds.</p>
       </div>
     </section>
 
@@ -581,46 +572,9 @@
       </div>
     </section>
 
-    <div class="section-sep" aria-hidden="true"></div>
-
-    <section aria-label="Open source" style="margin-top: 26px; padding-top: 6px;">
-      <div class="kicker">Open Source</div>
-      <p style="margin: 0; font-family: var(--shell-heading); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; font-size: clamp(18px, 2vw, 28px); line-height: 1.15; color: var(--shell-text);">Dungeon Mastron is open source &mdash; MIT licensed.</p>
-      <p style="margin: 10px 0 0; color: var(--shell-sub); line-height: 1.6; font-size: 13px; max-width: 60ch;">Build with us on GitHub. Contributions, forks, and community builds are welcome. The source is yours.</p>
-      <div class="cta" style="margin-top: 14px;">
-        <a class="btn orange" href="https://github.com/coburn2716/dungeonmastron_app" target="_blank" rel="noopener noreferrer">View on GitHub</a>
-        <a class="btn" href="/library/">Browse Games</a>
-      </div>
-    </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="inner">
-      <div class="left">© 2026 Artifextron</div>
-
-      <form
-        action="https://buttondown.com/api/emails/embed-subscribe/Dungeon_Mastron"
-        method="post"
-        class="newsletter"
-      >
-        <label for="bd-email">Get project updates</label>
-        <p class="desc">Occasional updates as Dungeon Mastron evolves.</p>
-        <div class="row">
-          <input type="email" name="email" id="bd-email" placeholder="Enter your email" required />
-          <input type="submit" value="Subscribe" />
-        </div>
-      </form>
-
-      <div class="links">
-        <a href="https://discord.gg/QFdWE9Bm" target="_blank" rel="noopener noreferrer">Discord</a>
-        <a href="https://www.patreon.com/Artifextron" target="_blank" rel="noopener noreferrer">Patreon</a>
-        <a href="https://www.youtube.com/@Artifextron" target="_blank" rel="noopener noreferrer">YouTube</a>
-        <a href="https://github.com/coburn2716/dungeonmastron_app" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a href="https://ko-fi.com/dungeonmastron" target="_blank" rel="noopener noreferrer">Support ☕</a>
-        <a href="LICENSE.txt" target="_blank" rel="noopener noreferrer">License</a>
-      </div>
-    </div>
-  </footer>
+  <div id="site-footer"></div>
 
   <script src="web_assets/site_shell.js?v=2" defer></script>
   <script>

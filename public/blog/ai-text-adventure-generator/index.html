@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Use AI to Generate a Text Adventure — Dungeon Mastron</title>
-  <meta name="description" content="How to use ChatGPT or Claude with the Dungeon Mastron AI Companion to generate a complete, playable text adventure game — plus an honest look at AI's limits." />
+  <title>Use AI to Generate a Complete Text Adventure Game — Dungeon Mastron</title>
+  <meta name="description" content="How to use ChatGPT or Claude with the Dungeon Mastron AI Companion to generate a complete, playable text adventure game — plus an honest look at AI&#39;s limits." />
   <link rel="canonical" href="https://www.dungeonmastron.com/blog/ai-text-adventure-generator/" />
   <meta property="og:site_name" content="Dungeon Mastron" />
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Use AI to Generate a Complete Text Adventure Game" />
-  <meta property="og:description" content="Paste one template into ChatGPT or Claude and get back a playable game file. How it works — and where AI still needs you." />
+  <meta property="og:description" content="How to use ChatGPT or Claude with the Dungeon Mastron AI Companion to generate a complete, playable text adventure game — plus an honest look at AI&#39;s limits." />
   <meta property="og:url" content="https://www.dungeonmastron.com/blog/ai-text-adventure-generator/" />
   <meta property="og:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Use AI to Generate a Complete Text Adventure Game" />
-  <meta name="twitter:description" content="Paste one template into ChatGPT or Claude and get back a playable game file. How it works — and where AI still needs you." />
+  <meta name="twitter:description" content="How to use ChatGPT or Claude with the Dungeon Mastron AI Companion to generate a complete, playable text adventure game — plus an honest look at AI&#39;s limits." />
   <meta name="twitter:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
   <link rel="icon" type="image/png" sizes="32x32" href="/web_assets/favicon-32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/web_assets/apple-touch-icon.png" />
@@ -24,6 +24,14 @@
     "@type": "WebPage",
     "url": "https://www.dungeonmastron.com/blog/ai-text-adventure-generator/",
     "name": "Use AI to Generate a Complete Text Adventure Game",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.dungeonmastron.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.dungeonmastron.com/blog/" },
+        { "@type": "ListItem", "position": 3, "name": "Use AI to Generate a Complete Text Adventure Game", "item": "https://www.dungeonmastron.com/blog/ai-text-adventure-generator/" }
+      ]
+    },
     "mainEntity": {
       "@type": "BlogPosting",
       "headline": "Use AI to Generate a Complete Text Adventure Game",
@@ -34,13 +42,6 @@
       "image": "https://www.dungeonmastron.com/web_assets/og-image.jpg",
       "author": { "@type": "Organization", "name": "Dungeon Mastron", "url": "https://www.dungeonmastron.com/" },
       "publisher": { "@type": "Organization", "name": "Dungeon Mastron", "url": "https://www.dungeonmastron.com/" }
-    },
-    "breadcrumb": {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Blog", "item": "https://www.dungeonmastron.com/blog/" },
-        { "@type": "ListItem", "position": 2, "name": "Use AI to Generate a Complete Text Adventure Game", "item": "https://www.dungeonmastron.com/blog/ai-text-adventure-generator/" }
-      ]
     }
   }
   </script>
@@ -49,120 +50,211 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/web_assets/site_shell.css" />
   <style>
+    /* ── Post page scoped styles ───────────────────────────────────────────────── */
     body { margin: 0; background: var(--shell-bg); color: var(--shell-text); font-family: var(--shell-font); }
-    .wrap { max-width: 760px; margin: 0 auto; padding: 46px 18px 80px; }
-    .kicker {
-      font-family: var(--shell-mono); font-size: 11px; letter-spacing: 0.14em;
-      text-transform: uppercase; color: rgba(232,227,217,0.70); margin-bottom: 10px;
-      display: inline-flex; align-items: center; gap: 10px;
+    .post-breadcrumb {
+      max-width: 780px; margin: 0 auto; padding: 22px 18px 0;
+      display: flex; align-items: center; gap: 6px;
+      font-family: var(--shell-mono); font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase;
+      color: rgba(232,227,217,0.40);
     }
-    .kicker::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: #e8a356; opacity: 0.95; }
-    h1 {
-      font-family: var(--shell-heading); font-weight: 600; letter-spacing: 0.02em;
-      margin: 0 0 8px; font-size: clamp(26px, 3vw, 38px); line-height: 1.15; color: var(--shell-text);
+    .post-breadcrumb a { color: rgba(232,227,217,0.45); text-decoration: none; transition: color 0.15s; }
+    .post-breadcrumb a:hover { color: #d4900a; }
+    .post-breadcrumb .sep { opacity: 0.4; }
+    .post-header-wrap { max-width: 780px; margin: 20px auto 0; padding: 0 18px; }
+    .post-header {
+      position: relative; border-radius: 16px;
+      border: 1px solid rgba(124,58,237,0.25);
+      background: linear-gradient(135deg, rgba(124,58,237,0.10) 0%, rgba(212,144,10,0.06) 60%, transparent 100%);
+      padding: 32px 36px 28px; overflow: hidden;
     }
-    .meta { font-family: var(--shell-mono); font-size: 12px; color: rgba(232,227,217,0.55); margin: 0 0 34px; }
-    article h2 { font-family: var(--shell-heading); font-weight: 600; font-size: 23px; margin: 38px 0 12px; color: var(--shell-text); }
-    article h3 { font-family: var(--shell-heading); font-weight: 600; font-size: 17px; margin: 26px 0 8px; color: var(--shell-text); }
-    article p, article li { color: var(--shell-sub); line-height: 1.7; }
-    article p { margin: 0 0 16px; }
-    article ul, article ol { margin: 0 0 16px; padding-left: 22px; }
-    article li { margin-bottom: 6px; }
-    article a { color: #6B9B7F; }
-    article strong { color: var(--shell-text); }
-    code { font-family: var(--shell-mono); font-size: 0.9em; background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 5px; color: #e8a356; }
-    .backlink { display: inline-block; margin: 40px 0 0; font-family: var(--shell-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #D97757; text-decoration: none; }
-    .backlink:hover { text-decoration: underline; }
-    .cta { border: 1px solid var(--shell-border); border-radius: 12px; background: rgba(0,0,0,0.18); padding: 20px 22px; margin-top: 34px; }
-    .cta p { margin: 0 0 10px; }
+    .post-header::before {
+      content: ""; position: absolute; top: -60px; right: -60px;
+      width: 220px; height: 220px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    @media (max-width: 640px) { .post-header { padding: 22px 18px 20px; } }
+    .post-cat {
+      font-family: var(--shell-mono); font-size: 10.5px; letter-spacing: 0.13em;
+      text-transform: uppercase; color: #a78bfa; display: inline-block; margin-bottom: 14px;
+    }
+    .post-header h1 {
+      font-family: var(--shell-heading); font-weight: 700;
+      font-size: clamp(1.6rem, 3.8vw, 2.4rem); line-height: 1.18;
+      letter-spacing: 0.01em; margin: 0 0 12px; color: var(--shell-text);
+    }
+    .post-lede { font-size: 1.05rem; line-height: 1.65; color: var(--shell-sub); margin: 0 0 20px; }
+    .post-meta-row {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 10px 16px;
+      font-family: var(--shell-mono); font-size: 11px; letter-spacing: 0.08em;
+      color: rgba(232,227,217,0.45); text-transform: uppercase;
+    }
+    .post-meta-row .meta-author { color: rgba(232,227,217,0.6); }
+    .post-meta-row .sep { opacity: 0.4; }
+    .post-prose-wrap { max-width: 780px; margin: 0 auto; padding: 0 18px 80px; }
+    .post-prose { margin-top: 36px; }
+    .post-prose h2 {
+      font-family: var(--shell-heading); font-weight: 700; font-size: 1.4rem; line-height: 1.25;
+      margin: 46px 0 14px; color: var(--shell-text);
+      border-left: 3px solid #d4900a; padding-left: 14px;
+    }
+    .post-prose h3 {
+      font-family: var(--shell-heading); font-weight: 600; font-size: 1.1rem; line-height: 1.3;
+      margin: 32px 0 10px; color: var(--shell-text);
+    }
+    .post-prose p { font-size: 1rem; line-height: 1.78; color: var(--shell-sub); margin: 0 0 18px; }
+    .post-prose ul, .post-prose ol { margin: 0 0 18px; padding-left: 24px; color: var(--shell-sub); }
+    .post-prose li { line-height: 1.72; margin-bottom: 8px; }
+    .post-prose a { color: #6B9B7F; text-decoration: underline; text-underline-offset: 2px; }
+    .post-prose a:hover { color: #8fbfaa; }
+    .post-prose strong { color: var(--shell-text); font-weight: 600; }
+    .post-prose em { color: rgba(232,227,217,0.80); }
+    .post-prose blockquote {
+      border-left: 3px solid #d4900a; margin: 24px 0;
+      padding: 10px 0 10px 22px; color: rgba(232,227,217,0.75);
+      font-style: italic; font-size: 1.05rem; line-height: 1.7;
+    }
+    .post-prose code {
+      font-family: var(--shell-mono); font-size: 0.875em;
+      background: rgba(0,0,0,0.35); padding: 2px 7px; border-radius: 5px; color: #e8a356;
+    }
+    .post-prose pre {
+      background: rgba(0,0,0,0.45); border: 1px solid var(--shell-border);
+      border-radius: 10px; padding: 18px 20px; overflow-x: auto; margin: 0 0 20px;
+    }
+    .post-prose pre code { background: none; padding: 0; font-size: 0.875rem; color: #b8b3a9; }
+    .post-prose hr { border: none; border-top: 1px solid var(--shell-border); margin: 36px 0; }
+    .post-prose .cta {
+      border: 1px solid rgba(212,144,10,0.35); border-radius: 14px;
+      background: rgba(212,144,10,0.06); padding: 22px 26px; margin: 32px 0;
+    }
+    .post-prose .cta p { margin: 0; color: var(--shell-sub); }
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0 0 22px; }
+    @media (max-width: 620px) { .compare { grid-template-columns: 1fr; } }
+    .compare .col { border: 1px solid var(--shell-border); border-radius: 12px; background: rgba(0,0,0,0.22); padding: 18px 20px; }
+    .compare .col h3 { margin: 0 0 10px; font-family: var(--shell-heading); font-weight: 700; font-size: 1rem; color: var(--shell-text); }
+    .compare .col ul { margin: 0; font-size: 0.9rem; }
+    .post-tags { margin-top: 44px; padding-top: 24px; border-top: 1px solid var(--shell-border); display: flex; flex-wrap: wrap; gap: 8px; }
+    .post-tag {
+      font-family: var(--shell-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(232,227,217,0.50); border: 1px solid var(--shell-border); border-radius: 999px;
+      padding: 5px 12px; text-decoration: none; transition: color 0.15s, border-color 0.15s;
+    }
+    .post-tag:hover { color: #a78bfa; border-color: rgba(167,139,250,0.45); }
+    .post-cta-panel {
+      margin-top: 44px; padding: 28px 30px;
+      border: 1px solid rgba(124,58,237,0.30); border-radius: 16px;
+      background: linear-gradient(135deg, rgba(124,58,237,0.08) 0%, rgba(0,0,0,0.20) 100%);
+      text-align: center;
+    }
+    .post-cta-panel h3 { font-family: var(--shell-heading); font-weight: 700; font-size: 1.25rem; margin: 0 0 10px; color: var(--shell-text); }
+    .post-cta-panel p { margin: 0 0 18px; color: var(--shell-sub); font-size: 0.9375rem; line-height: 1.6; }
+    .post-cta-btn {
+      display: inline-block; padding: 11px 24px; border-radius: 10px;
+      border: 1px solid rgba(212,144,10,0.6); background: rgba(212,144,10,0.14);
+      color: #f0b429; font-family: var(--shell-mono); font-size: 12px;
+      letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .post-cta-btn:hover { background: rgba(212,144,10,0.24); border-color: rgba(212,144,10,0.8); }
+    .post-back {
+      display: inline-flex; align-items: center; gap: 6px; margin-top: 40px;
+      font-family: var(--shell-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: #d4900a; text-decoration: none; transition: color 0.15s;
+    }
+    .post-back:hover { color: #f0b429; }
   </style>
 </head>
 <body>
   <div id="site-nav"></div>
-  <main class="wrap">
-    <span class="kicker">Guide</span>
-    <h1>Use AI to Generate a Complete Text Adventure Game</h1>
-    <p class="meta">July 9, 2026 · 7 min read</p>
 
-    <article>
-      <p>Here's a thing that genuinely wasn't possible a few years ago: you can describe a story idea to an AI, and ten minutes later be <em>playing</em> it — real choices, real branches, real endings — in your browser. Not a chat transcript that pretends to be a game, but an actual structured game file you can save, edit, and share.</p>
-      <p>This post explains exactly how the <a href="/ai/">Dungeon Mastron AI Companion</a> workflow works, and — because we'd rather be useful than hype-y — an honest accounting of what AI does well and badly when it writes interactive fiction.</p>
+  <nav class="post-breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span class="sep">/</span>
+    <a href="/blog/">Blog</a>
+    <span class="sep">/</span>
+    <span>Guide</span>
+  </nav>
 
-      <h2>The core idea: a template, not an app</h2>
-      <p>The AI Companion isn't a chatbot we built, and it doesn't require an API key or a subscription to anything of ours. It's a carefully engineered <strong>prompt template</strong>. The workflow:</p>
-      <ol>
-        <li><strong>Copy the template</strong> from the <a href="/ai/">AI Companion page</a>. It contains the full specification of Dungeon Mastron's game format, the structural rules of a good branching story, and instructions for the AI.</li>
-        <li><strong>Paste it into ChatGPT, Claude, or any capable LLM</strong> — whichever you already use and pay for (or use free).</li>
-        <li><strong>Describe your game.</strong> A premise, a tone, maybe a setting: "a melancholy mystery on an arctic research station, 20 scenes, three endings."</li>
-        <li><strong>Receive a complete <code>game.json</code> file.</strong> The AI writes every scene, every choice, every branch, in valid Dungeon Mastron format.</li>
-        <li><strong>Play it immediately</strong> in the <a href="/play/">Web Player</a> — drop the file in and go. Or open it in the <a href="/builder/">Visual Builder</a> to see the whole branching map and start editing.</li>
-      </ol>
-      <p>That's the whole trick. The template does the heavy lifting: it teaches the AI the format and, just as importantly, the <em>craft rules</em> — branch-and-merge structure, meaningful choices, consequence tracking — so what comes back is a game, not a linear story with decorative buttons.</p>
-      <p>Because the output is plain JSON, you own it completely. Hand-edit it, regenerate one branch, or rebuild half of it in the builder. There's no lock-in and no black box.</p>
+  <div class="post-header-wrap">
+    <header class="post-header">
+      <span class="post-cat">Guide</span>
+      <h1>Use AI to Generate a Complete Text Adventure Game</h1>
+      <p class="post-lede">How to use ChatGPT or Claude with the Dungeon Mastron AI Companion to generate a complete, playable text adventure game — plus an honest look at AI's limits.</p>
+      <div class="post-meta-row">
+        <span class="meta-author">Dungeon Mastron</span>
+        <span class="sep">·</span>
+        <span>July 9, 2026</span>
+        <span class="sep">·</span>
+        <span>5 min read</span>
+      </div>
+    </header>
+  </div>
 
-      <h2>What AI is genuinely good at</h2>
-      <ul>
-        <li><strong>Structure and scaffolding.</strong> Modern LLMs are excellent at producing a valid, well-formed branching skeleton. Twenty connected scenes with sensible choice architecture, in minutes — this used to be an afternoon of tedious wiring.</li>
-        <li><strong>First-draft prose volume.</strong> Getting from blank page to "everything has words in it" is where most first-time creators quit. AI removes that wall entirely.</li>
-        <li><strong>Genre competence.</strong> Ask for noir, cozy fantasy, or survival horror and you'll get scenes that reliably hit the expected notes. For a first game or a game-jam entry, that's plenty.</li>
-        <li><strong>Iteration speed.</strong> "Make the middle act darker." "Add a branch where the player trusts the stranger." Regenerating a section costs nothing but a prompt.</li>
-      </ul>
+  <div class="post-prose-wrap">
+    <article class="post-prose">
+      <p>Here&#39;s a thing that genuinely wasn&#39;t possible a few years ago: you can describe a story idea to an AI, and ten minutes later be <em>playing</em> it — real choices, real branches, real endings — in your browser. Not a chat transcript that pretends to be a game, but an actual structured game file you can save, edit, and share.</p>
+<p>This post explains exactly how the <a href="/ai/">Dungeon Mastron AI Companion</a> workflow works, and — because we&#39;d rather be useful than hype-y — an honest accounting of what AI does well and badly when it writes interactive fiction.</p>
+<h2>The core idea: a template, not an app</h2>
+<p>The AI Companion isn&#39;t a chatbot we built, and it doesn&#39;t require an API key or a subscription to anything of ours. It&#39;s a carefully engineered <strong>prompt template</strong>. The workflow:</p>
+<ol>
+<li><strong>Copy the template</strong> from the <a href="/ai/">AI Companion page</a>. It contains the full specification of Dungeon Mastron&#39;s game format, the structural rules of a good branching story, and instructions for the AI.</li>
+<li><strong>Paste it into ChatGPT, Claude, or any capable LLM</strong> — whichever you already use and pay for (or use free).</li>
+<li><strong>Describe your game.</strong> A premise, a tone, maybe a setting: &quot;a melancholy mystery on an arctic research station, 20 scenes, three endings.&quot;</li>
+<li><strong>Receive a complete <code>game.json</code> file.</strong> The AI writes every scene, every choice, every branch, in valid Dungeon Mastron format.</li>
+<li><strong>Play it immediately</strong> in the <a href="/play/">Web Player</a> — drop the file in and go. Or open it in the <a href="/builder/">Visual Builder</a> to see the whole branching map and start editing.</li>
+</ol>
+<p>That&#39;s the whole trick. The template does the heavy lifting: it teaches the AI the format and, just as importantly, the <em>craft rules</em> — branch-and-merge structure, meaningful choices, consequence tracking — so what comes back is a game, not a linear story with decorative buttons.</p>
+<p>Because the output is plain JSON, you own it completely. Hand-edit it, regenerate one branch, or rebuild half of it in the builder. There&#39;s no lock-in and no black box.</p>
+<h2>What AI is genuinely good at</h2>
+<ul>
+<li><strong>Structure and scaffolding.</strong> Modern LLMs are excellent at producing a valid, well-formed branching skeleton. Twenty connected scenes with sensible choice architecture, in minutes — this used to be an afternoon of tedious wiring.</li>
+<li><strong>First-draft prose volume.</strong> Getting from blank page to &quot;everything has words in it&quot; is where most first-time creators quit. AI removes that wall entirely.</li>
+<li><strong>Genre competence.</strong> Ask for noir, cozy fantasy, or survival horror and you&#39;ll get scenes that reliably hit the expected notes. For a first game or a game-jam entry, that&#39;s plenty.</li>
+<li><strong>Iteration speed.</strong> &quot;Make the middle act darker.&quot; &quot;Add a branch where the player trusts the stranger.&quot; Regenerating a section costs nothing but a prompt.</li>
+</ul>
+<h2>What AI is honestly bad at</h2>
+<p>We&#39;d be lying if we stopped at the previous section. Here&#39;s what you should expect to fix:</p>
+<ul>
+<li><strong>Sameness.</strong> AI prose gravitates to the statistical middle. Every door &quot;creaks ominously&quot;; every stranger has &quot;eyes that betray a hidden sorrow.&quot; A game full of unedited AI text reads competent and forgettable. Your weirdness is the asset AI can&#39;t supply.</li>
+<li><strong>Choices that don&#39;t really differ.</strong> AIs sometimes generate three choices that lead to nearly identical outcomes — the structure of choice without the substance. Play every path and check that branches actually diverge.</li>
+<li><strong>Endings.</strong> AI endings tend to resolve too neatly and too quickly. The last scene of every path deserves a human rewrite; it&#39;s what players remember.</li>
+<li><strong>Long-range consequence.</strong> An LLM writing scene 18 has fuzzy awareness of the promise it made in scene 3. Continuity across branches — items, injuries, relationships — is where you&#39;ll find the most bugs.</li>
+<li><strong>Occasional format slips.</strong> Rarely, a model will produce slightly malformed JSON or reference a scene that doesn&#39;t exist. The Web Player and Builder will surface these fast, and a quick regenerate-or-patch fixes them.</li>
+</ul>
+<h2>The workflow that actually works: AI drafts, you direct</h2>
+<p>After watching a lot of games get made this way, the pattern that produces things worth playing is:</p>
+<ol>
+<li><strong>Generate the skeleton with AI.</strong> Get a complete, playable draft in one shot.</li>
+<li><strong>Play it twice</strong> — once following your instincts, once deliberately choosing &quot;wrong.&quot;</li>
+<li><strong>Open it in the <a href="/builder/">builder</a></strong> and look at the map. Prune fake choices, merge redundant scenes, add one branch the AI didn&#39;t dare to.</li>
+<li><strong>Rewrite the scenes that matter by hand:</strong> the opening, every ending, and the two or three pivotal decision scenes. Maybe 20% of the text — the 20% that carries the whole game.</li>
+</ol>
+<p>Think of the AI as an enthusiastic collaborator who types fast and never gets writer&#39;s block, but has read too many of the same books. You&#39;re the director. (If you&#39;d rather build from scratch and skip AI entirely, our <a href="/blog/make-a-choose-your-own-adventure-game/">no-code tutorial</a> covers that path.)</p>
+<h2>A design tip for your prompt</h2>
+<p>One instruction dramatically improves AI-generated games: tell it that <strong>failure should wound the story, not end it</strong>. Ask for branches where bad choices cost the player something they carry forward — an injury, a lost ally, a burned bridge — instead of &quot;game over&quot; screens. The Companion template bakes this philosophy in, and it&#39;s the single biggest difference between AI games that feel cheap and ones that feel authored. We wrote about why this works: <a href="/blog/wounds-not-death-game-design/">Wounds, Not Death</a>.</p>
+<h2>Where this goes next</h2>
+<p>Games made this way aren&#39;t stuck in a browser tab, either. Any game.json — AI-generated or handmade — runs on the <a href="/console/">DIY Raspberry Pi console</a>, which is a strange and delightful thing: a story you described to a chatbot on Tuesday, playable on physical arcade buttons by the weekend.</p>
+<div class="cta">
+<p><strong>Try it:</strong> grab the template on the <a href="/ai/">AI Companion page</a>, generate something, and play it in the <a href="/play/">Web Player</a>. If your AI produces something wonderful or hilariously broken, we genuinely want to see it — share it on <a href="https://discord.gg/QFdWE9Bm" target="_blank" rel="noopener noreferrer">Discord</a>.</p>
+</div>
 
-      <h2>What AI is honestly bad at</h2>
-      <p>We'd be lying if we stopped at the previous section. Here's what you should expect to fix:</p>
-      <ul>
-        <li><strong>Sameness.</strong> AI prose gravitates to the statistical middle. Every door "creaks ominously"; every stranger has "eyes that betray a hidden sorrow." A game full of unedited AI text reads competent and forgettable. Your weirdness is the asset AI can't supply.</li>
-        <li><strong>Choices that don't really differ.</strong> AIs sometimes generate three choices that lead to nearly identical outcomes — the structure of choice without the substance. Play every path and check that branches actually diverge.</li>
-        <li><strong>Endings.</strong> AI endings tend to resolve too neatly and too quickly. The last scene of every path deserves a human rewrite; it's what players remember.</li>
-        <li><strong>Long-range consequence.</strong> An LLM writing scene 18 has fuzzy awareness of the promise it made in scene 3. Continuity across branches — items, injuries, relationships — is where you'll find the most bugs.</li>
-        <li><strong>Occasional format slips.</strong> Rarely, a model will produce slightly malformed JSON or reference a scene that doesn't exist. The Web Player and Builder will surface these fast, and a quick regenerate-or-patch fixes them.</li>
-      </ul>
-
-      <h2>The workflow that actually works: AI drafts, you direct</h2>
-      <p>After watching a lot of games get made this way, the pattern that produces things worth playing is:</p>
-      <ol>
-        <li><strong>Generate the skeleton with AI.</strong> Get a complete, playable draft in one shot.</li>
-        <li><strong>Play it twice</strong> — once following your instincts, once deliberately choosing "wrong."</li>
-        <li><strong>Open it in the <a href="/builder/">builder</a></strong> and look at the map. Prune fake choices, merge redundant scenes, add one branch the AI didn't dare to.</li>
-        <li><strong>Rewrite the scenes that matter by hand:</strong> the opening, every ending, and the two or three pivotal decision scenes. Maybe 20% of the text — the 20% that carries the whole game.</li>
-      </ol>
-      <p>Think of the AI as an enthusiastic collaborator who types fast and never gets writer's block, but has read too many of the same books. You're the director. (If you'd rather build from scratch and skip AI entirely, our <a href="/blog/make-a-choose-your-own-adventure-game/">no-code tutorial</a> covers that path.)</p>
-
-      <h2>A design tip for your prompt</h2>
-      <p>One instruction dramatically improves AI-generated games: tell it that <strong>failure should wound the story, not end it</strong>. Ask for branches where bad choices cost the player something they carry forward — an injury, a lost ally, a burned bridge — instead of "game over" screens. The Companion template bakes this philosophy in, and it's the single biggest difference between AI games that feel cheap and ones that feel authored. We wrote about why this works: <a href="/blog/wounds-not-death-game-design/">Wounds, Not Death</a>.</p>
-
-      <h2>Where this goes next</h2>
-      <p>Games made this way aren't stuck in a browser tab, either. Any game.json — AI-generated or handmade — runs on the <a href="/console/">DIY Raspberry Pi console</a>, which is a strange and delightful thing: a story you described to a chatbot on Tuesday, playable on physical arcade buttons by the weekend.</p>
-
-      <div class="cta">
-        <p><strong>Try it:</strong> grab the template on the <a href="/ai/">AI Companion page</a>, generate something, and play it in the <a href="/play/">Web Player</a>. If your AI produces something wonderful or hilariously broken, we genuinely want to see it — share it on <a href="https://discord.gg/QFdWE9Bm" target="_blank" rel="noopener noreferrer">Discord</a>.</p>
+      
+      <div class="post-tags"><a class="post-tag" href="/blog/?tag=ai">#ai</a><a class="post-tag" href="/blog/?tag=guide">#guide</a><a class="post-tag" href="/blog/?tag=text-adventure">#text-adventure</a><a class="post-tag" href="/blog/?tag=cyoa">#cyoa</a><a class="post-tag" href="/blog/?tag=chatgpt">#chatgpt</a>
       </div>
 
-      <a class="backlink" href="/blog/">← Back to blog</a>
+      <div class="post-cta-panel">
+        <h3>Build your own story game</h3>
+        <p>The Visual Builder is free, open source, and runs in your browser. No account needed.</p>
+        <a class="post-cta-btn" href="/builder/">Open the Visual Builder</a>
+      </div>
+
+      <a class="post-back" href="/blog/">← Back to all posts</a>
     </article>
-  </main>
+  </div>
 
-  <footer class="site-footer">
-    <div class="inner">
-      <div class="left">© 2026 Artifextron</div>
-      <form action="https://buttondown.com/api/emails/embed-subscribe/Dungeon_Mastron" method="post" class="newsletter">
-        <label for="bd-email">Get project updates</label>
-        <p class="desc">Occasional updates as Dungeon Mastron evolves.</p>
-        <div class="row">
-          <input type="email" name="email" id="bd-email" placeholder="Enter your email" required />
-          <input type="submit" value="Subscribe" />
-        </div>
-      </form>
-      <div class="links">
-        <a href="https://discord.gg/QFdWE9Bm" target="_blank" rel="noopener noreferrer">Discord</a>
-        <a href="https://www.patreon.com/Artifextron" target="_blank" rel="noopener noreferrer">Patreon</a>
-        <a href="https://www.youtube.com/@Artifextron" target="_blank" rel="noopener noreferrer">YouTube</a>
-        <a href="https://github.com/coburn2716/dungeonmastron_app" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a href="https://ko-fi.com/dungeonmastron" target="_blank" rel="noopener noreferrer">Support ☕</a>
-        <a href="/LICENSE.txt" target="_blank" rel="noopener noreferrer">License</a>
-      </div>
-    </div>
-  </footer>
+  <div id="site-footer"></div>
 
   <script src="/web_assets/site_shell.js?v=2" defer></script>
 </body>

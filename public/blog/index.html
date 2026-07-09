@@ -43,142 +43,299 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/web_assets/site_shell.css" />
   <style>
+    /* ── Blog listing scoped styles ───────────────────────────────────────── */
     body { margin: 0; background: var(--shell-bg); color: var(--shell-text); font-family: var(--shell-font); }
-    .wrap { max-width: 900px; margin: 0 auto; padding: 46px 18px 80px; }
 
-    .kicker {
+    /* ── Hero ─────────────────────────────────────────────────────────────── */
+    .blog-hero {
+      position: relative;
+      padding: 64px 18px 52px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .blog-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(124,58,237,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 110%, rgba(212,144,10,0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .blog-hero-inner {
+      position: relative;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .blog-hero .kicker {
       font-family: var(--shell-mono);
       font-size: 11px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: rgba(232,227,217,0.70);
-      margin-bottom: 10px;
+      margin-bottom: 16px;
       display: inline-flex;
       align-items: center;
       gap: 10px;
     }
-    .kicker::before {
+    .blog-hero .kicker::before {
       content: "";
       width: 6px;
       height: 6px;
       border-radius: 999px;
-      background: #6B9B7F;
-      opacity: 0.9;
+      background: #d4900a;
+      opacity: 0.95;
+      animation: dm-dot-pulse 3.6s ease-in-out infinite;
     }
-
-    h1 {
+    .blog-hero h1 {
       font-family: var(--shell-heading);
-      font-weight: 600;
-      letter-spacing: 0.06em;
+      font-weight: 700;
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      margin: 0 0 10px;
-      font-size: clamp(28px, 3.2vw, 44px);
-      line-height: 1.08;
+      margin: 0 0 14px;
       color: var(--shell-text);
     }
-    .sub { color: var(--shell-sub); line-height: 1.6; margin: 0 0 38px; max-width: 640px; }
-
-    .post-card {
-      border: 1px solid var(--shell-border);
-      border-radius: 12px;
-      background: rgba(0,0,0,0.18);
-      padding: 24px 26px;
-      margin-bottom: 18px;
-      transition: border-color 0.15s ease;
+    .blog-hero h1 em {
+      font-style: normal;
+      color: #d4900a;
     }
-    .post-card:hover { border-color: #6B9B7F; }
-    .post-card .date {
+    .blog-hero .lead {
+      font-size: 1.0625rem;
+      line-height: 1.65;
+      color: var(--shell-sub);
+      margin: 0;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── Category filter strip ────────────────────────────────────────────── */
+    .blog-filters {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 18px 32px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .blog-filter-chip {
       font-family: var(--shell-mono);
       font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--shell-border);
+      background: rgba(0,0,0,0.22);
+      color: var(--shell-sub);
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .blog-filter-chip:hover,
+    .blog-filter-chip.active {
+      border-color: #d4900a;
+      color: #d4900a;
+      background: rgba(212,144,10,0.08);
+    }
+    .blog-filter-label {
+      font-family: var(--shell-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(232,227,217,0.45);
+      margin-right: 4px;
+    }
+
+    /* ── Card grid ────────────────────────────────────────────────────────── */
+    .blog-grid-wrap {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 18px 80px;
+    }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 22px;
+    }
+    @media (max-width: 680px) {
+      .blog-grid { grid-template-columns: 1fr; gap: 16px; }
+    }
+
+    /* ── Post card ────────────────────────────────────────────────────────── */
+    .post-card {
+      border: 1px solid var(--shell-border);
+      border-radius: 14px;
+      background: rgba(13,13,18,0.72);
+      padding: 28px 26px 22px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .post-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      background: radial-gradient(ellipse 90% 60% at 50% 0%, rgba(212,144,10,0.07) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+    .post-card:hover {
+      border-color: rgba(212,144,10,0.55);
+      box-shadow: 0 0 28px rgba(212,144,10,0.10), 0 4px 24px rgba(0,0,0,0.32);
+      transform: translateY(-2px);
+    }
+    .post-card:hover::before { opacity: 1; }
+
+    .post-card .card-cat {
+      font-family: var(--shell-mono);
+      font-size: 10.5px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(232,227,217,0.55);
-      margin: 0 0 8px;
+      color: #a78bfa;
+      margin-bottom: 12px;
+      display: inline-block;
     }
     .post-card h2 {
       font-family: var(--shell-heading);
-      font-weight: 600;
-      font-size: 21px;
-      line-height: 1.25;
-      margin: 0 0 8px;
+      font-weight: 700;
+      font-size: 1.125rem;
+      line-height: 1.3;
+      margin: 0 0 10px;
+      color: var(--shell-text);
     }
-    .post-card h2 a { color: var(--shell-text); text-decoration: none; }
-    .post-card h2 a:hover { color: #6B9B7F; }
-    .post-card p { margin: 0 0 12px; color: var(--shell-sub); line-height: 1.6; }
-    .post-card .more {
+    .post-card .card-excerpt {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--shell-sub);
+      margin: 0 0 18px;
+      flex: 1;
+    }
+    .post-card .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       font-family: var(--shell-mono);
-      font-size: 12px;
+      font-size: 10.5px;
+      letter-spacing: 0.08em;
+      color: rgba(232,227,217,0.45);
+      text-transform: uppercase;
+      flex-wrap: wrap;
+    }
+    .post-card .card-meta .sep {
+      opacity: 0.4;
+    }
+    .post-card .card-read {
+      margin-top: 16px;
+      font-family: var(--shell-mono);
+      font-size: 11px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #D97757;
+      color: #d4900a;
       text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: color 0.15s;
     }
-    .post-card .more:hover { text-decoration: underline; }
+    .post-card:hover .card-read { color: #f0b429; }
+    .card-arrow {
+      display: inline-block;
+      transition: transform 0.15s;
+    }
+    .post-card:hover .card-arrow { transform: translateX(3px); }
   </style>
 </head>
 <body>
   <div id="site-nav"></div>
-  <main class="wrap">
-    <span class="kicker">From the workshop</span>
-    <h1>Dungeon Mastron Blog</h1>
-    <p class="sub">Essays and tutorials on interactive fiction: how to build choose-your-own-adventure games, how AI fits into storytelling, and the design ideas behind Dungeon Mastron.</p>
 
-    <article class="post-card">
-      <p class="date">July 9, 2026</p>
-      <h2><a href="/blog/make-a-choose-your-own-adventure-game/">How to Make a Choose Your Own Adventure Game (Free, No Code)</a></h2>
-      <p>A practical, start-to-finish tutorial: turn one story idea into a branching map and a playable browser game — without writing a line of code.</p>
-      <a class="more" href="/blog/make-a-choose-your-own-adventure-game/">Read the tutorial →</a>
-    </article>
-
-    <article class="post-card">
-      <p class="date">July 9, 2026</p>
-      <h2><a href="/blog/twine-vs-dungeon-mastron/">Twine vs Dungeon Mastron: Which CYOA Tool Is Right for You?</a></h2>
-      <p>An honest comparison of two very different tools for interactive fiction — where Twine shines, where Dungeon Mastron fits, and how to pick.</p>
-      <a class="more" href="/blog/twine-vs-dungeon-mastron/">Read the comparison →</a>
-    </article>
-
-    <article class="post-card">
-      <p class="date">July 9, 2026</p>
-      <h2><a href="/blog/ai-text-adventure-generator/">Use AI to Generate a Complete Text Adventure Game</a></h2>
-      <p>Paste one template into ChatGPT or Claude and get back a playable game file. Here's exactly how the AI Companion workflow works — and where AI still needs you.</p>
-      <a class="more" href="/blog/ai-text-adventure-generator/">Read the guide →</a>
-    </article>
-
-    <article class="post-card">
-      <p class="date">July 9, 2026</p>
-      <h2><a href="/blog/wounds-not-death-game-design/">Wounds, Not Death: A Better Way to Handle Failure in Story Games</a></h2>
-      <p>A design essay on why "game over" is the least interesting thing failure can do — and how letting failure bend the story makes branching games worth replaying.</p>
-      <a class="more" href="/blog/wounds-not-death-game-design/">Read the essay →</a>
-    </article>
-  </main>
-
-  <footer class="site-footer">
-    <div class="inner">
-      <div class="left">© 2026 Artifextron</div>
-
-      <form
-        action="https://buttondown.com/api/emails/embed-subscribe/Dungeon_Mastron"
-        method="post"
-        class="newsletter"
-      >
-        <label for="bd-email">Get project updates</label>
-        <p class="desc">Occasional updates as Dungeon Mastron evolves.</p>
-        <div class="row">
-          <input type="email" name="email" id="bd-email" placeholder="Enter your email" required />
-          <input type="submit" value="Subscribe" />
-        </div>
-      </form>
-
-      <div class="links">
-        <a href="https://discord.gg/QFdWE9Bm" target="_blank" rel="noopener noreferrer">Discord</a>
-        <a href="https://www.patreon.com/Artifextron" target="_blank" rel="noopener noreferrer">Patreon</a>
-        <a href="https://www.youtube.com/@Artifextron" target="_blank" rel="noopener noreferrer">YouTube</a>
-        <a href="https://github.com/coburn2716/dungeonmastron_app" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a href="https://ko-fi.com/dungeonmastron" target="_blank" rel="noopener noreferrer">Support ☕</a>
-        <a href="/LICENSE.txt" target="_blank" rel="noopener noreferrer">License</a>
-      </div>
+  <!-- Hero -->
+  <section class="blog-hero">
+    <div class="blog-hero-inner">
+      <span class="kicker">From the workshop</span>
+      <h1>The <em>Dungeon Mastron</em> Blog</h1>
+      <p class="lead">Essays and tutorials on interactive fiction: how to build choose-your-own-adventure games, how AI fits into storytelling, and the design philosophy behind Dungeon Mastron.</p>
     </div>
-  </footer>
+  </section>
+
+  <!-- Category filter -->
+  <div class="blog-filters">
+    <span class="blog-filter-label">Filter:</span>
+    <a class="blog-filter-chip active" href="/blog/" data-cat="all">All</a>
+    <a class="blog-filter-chip" href="/blog/?cat=tutorial" data-cat="tutorial">Tutorial</a>
+    <a class="blog-filter-chip" href="/blog/?cat=comparison" data-cat="comparison">Comparison</a>
+    <a class="blog-filter-chip" href="/blog/?cat=guide" data-cat="guide">Guide</a>
+    <a class="blog-filter-chip" href="/blog/?cat=design-essay" data-cat="design-essay">Design Essay</a>
+  </div>
+
+  <!-- Post grid -->
+  <div class="blog-grid-wrap">
+    <div class="blog-grid" id="blog-post-grid">
+
+    <!-- POSTS_START -->
+    <article class="post-card">
+      <span class="card-cat">Tutorial</span>
+      <h2><a href="/blog/make-a-choose-your-own-adventure-game/" style="color:inherit;text-decoration:none;">How to Make a Choose Your Own Adventure Game (Free, No Code)</a></h2>
+      <p class="card-excerpt">A practical, start-to-finish tutorial: turn one story idea into a branching map and a playable browser game — without writing a line of code.</p>
+      <div class="card-meta">
+        <span>Jul 9, 2026</span>
+        <span class="sep">·</span>
+        <span>8 min read</span>
+      </div>
+      <a class="card-read" href="/blog/make-a-choose-your-own-adventure-game/">Read the tutorial <span class="card-arrow">→</span></a>
+    </article>
+
+    <article class="post-card">
+      <span class="card-cat">Comparison</span>
+      <h2><a href="/blog/twine-vs-dungeon-mastron/" style="color:inherit;text-decoration:none;">Twine vs Dungeon Mastron: Which CYOA Tool Is Right for You?</a></h2>
+      <p class="card-excerpt">An honest comparison of two very different tools for interactive fiction — where Twine shines, where Dungeon Mastron fits, and how to pick.</p>
+      <div class="card-meta">
+        <span>Jul 9, 2026</span>
+        <span class="sep">·</span>
+        <span>7 min read</span>
+      </div>
+      <a class="card-read" href="/blog/twine-vs-dungeon-mastron/">Read the comparison <span class="card-arrow">→</span></a>
+    </article>
+
+    <article class="post-card">
+      <span class="card-cat">Guide</span>
+      <h2><a href="/blog/ai-text-adventure-generator/" style="color:inherit;text-decoration:none;">Use AI to Generate a Complete Text Adventure Game</a></h2>
+      <p class="card-excerpt">Paste one template into ChatGPT or Claude and get back a playable game file. Here's exactly how the AI Companion workflow works — and where AI still needs you.</p>
+      <div class="card-meta">
+        <span>Jul 9, 2026</span>
+        <span class="sep">·</span>
+        <span>7 min read</span>
+      </div>
+      <a class="card-read" href="/blog/ai-text-adventure-generator/">Read the guide <span class="card-arrow">→</span></a>
+    </article>
+
+    <article class="post-card">
+      <span class="card-cat">Design Essay</span>
+      <h2><a href="/blog/wounds-not-death-game-design/" style="color:inherit;text-decoration:none;">Wounds, Not Death: A Better Way to Handle Failure in Story Games</a></h2>
+      <p class="card-excerpt">A design essay on why "game over" is the least interesting thing failure can do — and how letting failure bend the story makes branching games worth replaying.</p>
+      <div class="card-meta">
+        <span>Jul 9, 2026</span>
+        <span class="sep">·</span>
+        <span>8 min read</span>
+      </div>
+      <a class="card-read" href="/blog/wounds-not-death-game-design/">Read the essay <span class="card-arrow">→</span></a>
+    </article>
+    <!-- POSTS_END -->
+
+    </div><!-- /blog-grid -->
+  </div><!-- /blog-grid-wrap -->
+
+  <div id="site-footer"></div>
 
   <script src="/web_assets/site_shell.js?v=2" defer></script>
 </body>
