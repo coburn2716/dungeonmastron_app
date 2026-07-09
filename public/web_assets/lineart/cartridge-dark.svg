@@ -40,16 +40,17 @@
   <path d="M144,206 h112" stroke="#ECE6DA" stroke-opacity=".38" stroke-width="1" fill="none"/>
   <path d="M168,220 h58" stroke="#ECE6DA" stroke-opacity=".24" stroke-width="1" fill="none"/>
   <path class="cursor" d="M230,220 h7" stroke="#E2683C" stroke-width="2.4" fill="none"/>
-  <!-- edge connector, hidden under the flat base -->
-  <path d="M120,332 v18 h160 v-18" stroke="#ECE6DA" stroke-opacity=".35" stroke-width="1" stroke-dasharray="4 3" fill="none"/>
-  <path d="M128,337 v10 M141.1,337 v10 M154.2,337 v10 M167.3,337 v10 M180.4,337 v10 M193.5,337 v10 M206.5,337 v10 M219.6,337 v10 M232.7,337 v10 M245.8,337 v10 M258.9,337 v10 M272,337 v10" stroke="#ECE6DA" stroke-opacity=".22" stroke-width="1" fill="none"/>
+  <!-- USB drive mounted inside, bottom centre (hidden - dashed) -->
+  <path d="M186,272 h28 a5,5 0 0 1 5,5 v27 h-38 v-27 a5,5 0 0 1 5,-5 Z" stroke="#ECE6DA" stroke-opacity=".40" stroke-width="1" stroke-dasharray="4 3" fill="none"/>
+  <rect x="188" y="304" width="24" height="19" stroke="#ECE6DA" stroke-opacity=".40" stroke-width="1" stroke-dasharray="4 3" fill="none"/>
+  <path d="M194,309 v6 M206,309 v6" stroke="#ECE6DA" stroke-opacity=".28" stroke-width="1" fill="none"/>
   <!-- annotations -->
   <path d="M34,82 L52,98 L62,114" class="lead"/>
   <text x="24" y="72" class="note">GRIP GROOVES ×4</text>
   <path d="M348,170 L320,176 L302,180" class="lead"/>
   <text x="344" y="166" class="note">LABEL — YOURS</text>
-  <path d="M26,420 L86,392 L118,354" class="lead"/>
-  <text x="24" y="432" class="note">EDGE CONNECTOR · HIDDEN</text>
+  <path d="M26,420 L112,388 L182,306" class="lead"/>
+  <text x="24" y="432" class="note">USB DRIVE · MOUNTED INSIDE</text>
   <path d="M60,88 V56 M340,88 V56" class="ext"/>
   <path d="M60,62 H340" class="dim"/>
   <path d="M60,62 l6,-2.4 v4.8 Z M340,62 l-6,-2.4 v4.8 Z" class="arr"/>
