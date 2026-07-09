@@ -4,18 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Use AI to Generate a Complete Text Adventure Game — Dungeon Mastron</title>
-  <meta name="description" content="How to use ChatGPT or Claude with the Dungeon Mastron AI Companion to generate a complete, playable text adventure game — plus an honest look at AI&#39;s limits." />
+  <meta name="description" content="How to use ChatGPT or Claude with the Dungeon Mastron AI Companion to generate a complete, playable text adventure game - plus an honest look at AI&#39;s limits." />
   <link rel="canonical" href="https://www.dungeonmastron.com/blog/ai-text-adventure-generator/" />
   <meta property="og:site_name" content="Dungeon Mastron" />
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Use AI to Generate a Complete Text Adventure Game" />
-  <meta property="og:description" content="How to use ChatGPT or Claude with the Dungeon Mastron AI Companion to generate a complete, playable text adventure game — plus an honest look at AI&#39;s limits." />
+  <meta property="og:description" content="How to use ChatGPT or Claude with the Dungeon Mastron AI Companion to generate a complete, playable text adventure game - plus an honest look at AI&#39;s limits." />
   <meta property="og:url" content="https://www.dungeonmastron.com/blog/ai-text-adventure-generator/" />
-  <meta property="og:image" content="https://wppcbpbrustgcdqhfuqs.supabase.co/storage/v1/object/public/blog-images/ai-text-adventure-generator/header-1783616907933.png" />
+  <meta property="og:image" content="https://wppcbpbrustgcdqhfuqs.supabase.co/storage/v1/object/public/blog-images/ai-text-adventure-generator/header-1783632576263.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Use AI to Generate a Complete Text Adventure Game" />
-  <meta name="twitter:description" content="How to use ChatGPT or Claude with the Dungeon Mastron AI Companion to generate a complete, playable text adventure game — plus an honest look at AI&#39;s limits." />
-  <meta name="twitter:image" content="https://wppcbpbrustgcdqhfuqs.supabase.co/storage/v1/object/public/blog-images/ai-text-adventure-generator/header-1783616907933.png" />
+  <meta name="twitter:description" content="How to use ChatGPT or Claude with the Dungeon Mastron AI Companion to generate a complete, playable text adventure game - plus an honest look at AI&#39;s limits." />
+  <meta name="twitter:image" content="https://wppcbpbrustgcdqhfuqs.supabase.co/storage/v1/object/public/blog-images/ai-text-adventure-generator/header-1783632576263.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/web_assets/favicon-32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/web_assets/apple-touch-icon.png" />
   <script type="application/ld+json">
@@ -35,11 +35,11 @@
     "mainEntity": {
       "@type": "BlogPosting",
       "headline": "Use AI to Generate a Complete Text Adventure Game",
-      "description": "How to use ChatGPT or Claude with the Dungeon Mastron AI Companion to generate a complete, playable text adventure game — plus an honest look at AI's limits.",
+      "description": "How to use ChatGPT or Claude with the Dungeon Mastron AI Companion to generate a complete, playable text adventure game - plus an honest look at AI's limits.",
       "url": "https://www.dungeonmastron.com/blog/ai-text-adventure-generator/",
       "datePublished": "2026-07-09",
       "dateModified": "2026-07-09",
-      "image": "https://wppcbpbrustgcdqhfuqs.supabase.co/storage/v1/object/public/blog-images/ai-text-adventure-generator/header-1783616907933.png",
+      "image": "https://wppcbpbrustgcdqhfuqs.supabase.co/storage/v1/object/public/blog-images/ai-text-adventure-generator/header-1783632576263.png",
       "author": { "@type": "Organization", "name": "Dungeon Mastron", "url": "https://www.dungeonmastron.com/" },
       "publisher": { "@type": "Organization", "name": "Dungeon Mastron", "url": "https://www.dungeonmastron.com/" }
     }
@@ -93,6 +93,13 @@
     }
     .post-meta-row .meta-author { color: var(--shell-sub); }
     .post-meta-row .sep { opacity: 0.4; }
+    /* NOTE: keep .post-hero styles in sync with scripts/blog/sync-header-images.mjs (HERO_CSS) */
+    .post-hero-wrap { max-width: 800px; margin: 30px auto 0; padding: 0 18px; }
+    .post-hero { position: relative; margin: 0; }
+    .post-hero img { display: block; width: 100%; height: auto; border: 1px solid var(--shell-border-strong); filter: saturate(0.97); }
+    .post-hero::before, .post-hero::after { content: ""; position: absolute; width: 16px; height: 16px; pointer-events: none; border: 0 solid rgba(226,104,60,0.6); }
+    .post-hero::before { top: -6px; left: -6px; border-top-width: 1px; border-left-width: 1px; }
+    .post-hero::after { bottom: -6px; right: -6px; border-bottom-width: 1px; border-right-width: 1px; }
     .post-prose-wrap { max-width: 800px; margin: 0 auto; padding: 0 18px 80px; }
     .post-prose { margin-top: 38px; counter-reset: dm-h2; }
     .post-prose h2 {
@@ -184,14 +191,6 @@
     }
     .post-back:hover { color: #8fbfaa; }
   </style>
-  <style id="dm-post-hero-css">
-    .post-hero-wrap { max-width: 800px; margin: 30px auto 0; padding: 0 18px; }
-    .post-hero { position: relative; margin: 0; }
-    .post-hero img { display: block; width: 100%; height: auto; border: 1px solid var(--shell-border-strong); filter: saturate(0.97); }
-    .post-hero::before, .post-hero::after { content: ""; position: absolute; width: 16px; height: 16px; pointer-events: none; border: 0 solid rgba(226,104,60,0.6); }
-    .post-hero::before { top: -6px; left: -6px; border-top-width: 1px; border-left-width: 1px; }
-    .post-hero::after { bottom: -6px; right: -6px; border-bottom-width: 1px; border-right-width: 1px; }
-  </style>
 </head>
 <body class="dm-surface">
   <div id="site-nav"></div>
@@ -208,7 +207,7 @@
     <header class="post-header">
       <span class="post-cat">Guide</span>
       <h1>Use AI to Generate a Complete Text Adventure Game</h1>
-      <p class="post-lede">How to use ChatGPT or Claude with the Dungeon Mastron AI Companion to generate a complete, playable text adventure game — plus an honest look at AI's limits.</p>
+      <p class="post-lede">How to use ChatGPT or Claude with the Dungeon Mastron AI Companion to generate a complete, playable text adventure game - plus an honest look at AI's limits.</p>
       <div class="post-meta-row">
         <span class="meta-author">Dungeon Mastron</span>
         <span class="sep">·</span>
@@ -221,7 +220,7 @@
 
   <!-- POST_HERO_START -->
   <div class="post-hero-wrap">
-    <figure class="post-hero"><img src="https://wppcbpbrustgcdqhfuqs.supabase.co/storage/v1/object/public/blog-images/ai-text-adventure-generator/header-1783616907933.png" alt="Use AI to Generate a Complete Text Adventure Game" width="1536" height="1024" fetchpriority="high" /></figure>
+    <figure class="post-hero"><img src="https://wppcbpbrustgcdqhfuqs.supabase.co/storage/v1/object/public/blog-images/ai-text-adventure-generator/header-1783632576263.png" alt="Use AI to Generate a Complete Text Adventure Game" width="1536" height="1024" fetchpriority="high" /></figure>
   </div>
   <!-- POST_HERO_END -->
 
