@@ -40,30 +40,30 @@ Community-shared source files. Official development and releases remain with Art
         }
 
         header {
-            background: #0f0e0d;
-            color: #FFFCF7;
+            background: rgba(11,11,10,.92);
+            backdrop-filter: blur(12px);
+            color: #ECE6DA;
             padding: 2px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             box-shadow: none;
-            border-bottom: 1px solid #2f2f2f;
+            border-bottom: 1px solid rgba(236,230,218,.10);
             box-sizing: border-box;
             position: sticky;
             top: 0;
             z-index: 10;
         }
 
-        /* Match play/index.html app-nav separator */
+        /* Subtle top-edge ember accent line */
         header::before {
             content: "";
             position: absolute;
             top: 0;
-            /* 20px outer header padding + 10px internal link padding */
-            right: 30px;
-            width: 925px;
+            left: 0;
+            right: 0;
             height: 1px;
-            background: rgba(255,255,255,0.12);
+            background: linear-gradient(90deg, rgba(226,104,60,.4) 0%, rgba(226,104,60,.1) 30%, transparent 60%);
             pointer-events: none;
         }
 
@@ -72,7 +72,7 @@ Community-shared source files. Official development and releases remain with Art
             font-weight: 600;
             letter-spacing: -0.02em;
             font-family: 'Outfit', sans-serif;
-            color: #D97757;
+            color: #ECE6DA;
         }
 
         .brand-stack {
@@ -84,33 +84,39 @@ Community-shared source files. Official development and releases remain with Art
             font-family: 'JetBrains Mono', monospace;
             font-size: 8px;
             line-height: 1;
-            color: #D97757;
+            color: #ECE6DA;
             margin: 0;
             padding: 0;
             white-space: pre;
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(217, 119, 87, 0.3);
+            font-weight: 700;
+            text-shadow: none;
+            transition: color 0.2s ease;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: geometricPrecision;
         }
+        .ascii-logo:hover, .brand-stack:hover .ascii-logo { color: #E2683C; }
 
         .logo-subtitle {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
-            color: #D97757;
-            font-weight: bold;
+            color: #A39D91;
+            font-weight: 500;
             margin-top: 4px;
             margin-left: 2px;
             white-space: pre;
-            text-shadow: 0 0 10px rgba(217, 119, 87, 0.3);
+            text-shadow: none;
             line-height: 1;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
         }
 
         .logo-subtitle--compact { display: none; }
 
         .badge {
-            background: #2c2c2c;
-            color: #D97757;
+            background: #141312;
+            color: #E2683C;
             padding: 4px 12px;
-            border-radius: 12px;
+            border-radius: 0;
             font-size: 0.7em;
             font-weight: 700;
             margin-left: 10px;
@@ -131,7 +137,7 @@ Community-shared source files. Official development and releases remain with Art
             background: transparent !important;
             color: rgba(255,255,255,0.78) !important;
             border: 1px solid transparent !important;
-            border-radius: 10px;
+            border-radius: 2px;
             padding: 6px 10px;
             font-size: 12px;
             font-weight: 500;
@@ -145,7 +151,7 @@ Community-shared source files. Official development and releases remain with Art
 
         .toolbar .btn:hover,
         .toolbar button:hover {
-            color: #D97757 !important;
+            color: #E2683C !important;
             background: transparent !important;
         }
 
@@ -232,11 +238,11 @@ Community-shared source files. Official development and releases remain with Art
         }
 
         .toolbar .btn {
-            background: #2c2c2c !important;
-            color: #D97757 !important;
+            background: #141312 !important;
+            color: #E2683C !important;
             padding: 8px 12px;
-            border: 1px solid #3D3D3D;
-            border-radius: 6px;
+            border: 1px solid rgba(236,230,218,.10);
+            border-radius: 2px;
             font-family: 'Inter', sans-serif;
             font-weight: 500;
             cursor: pointer;
@@ -254,28 +260,31 @@ Community-shared source files. Official development and releases remain with Art
         }
 
         .toolbar .btn:hover {
-            background: #3D3D3D !important;
+            background: #1e1b19 !important;
         }
 
         .toolbar .btn-accent {
-            background: #D97757 !important;
-            color: #2c2c2c !important;
+            /* Ember-bordered ghost button for key actions */
+            background: rgba(226,104,60,.12) !important;
+            color: #E2683C !important;
+            border: 1px solid rgba(226,104,60,.4) !important;
         }
 
         .toolbar .btn-accent:hover {
-            background: #C65D3B !important;
-            color: #1A1A1A !important;
+            background: rgba(226,104,60,.22) !important;
+            color: #FFD0B8 !important;
+            border-color: #E2683C !important;
         }
 
         .toolbar .btn-danger {
-            background: #B54A4A !important;
-            color: #FFFFFF !important;
-            border-color: #B54A4A;
+            background: rgba(139,48,48,.18) !important;
+            color: #e07070 !important;
+            border-color: rgba(139,48,48,.4) !important;
         }
 
         .toolbar .btn-danger:hover {
-            background: #963a3a !important;
-            border-color: #963a3a;
+            background: rgba(139,48,48,.32) !important;
+            border-color: rgba(139,48,48,.7) !important;
         }
 
         /* Override legacy builder button styles so the header toolbar matches play/index.html */
@@ -284,7 +293,7 @@ Community-shared source files. Official development and releases remain with Art
             background: transparent !important;
             color: #E8E3D9 !important;
             border: 1px solid transparent !important;
-            border-radius: 10px !important;
+            border-radius: 2px !important;
             padding: 6px 10px !important;
             font-size: 12px !important;
             font-weight: 500 !important;
@@ -298,7 +307,7 @@ Community-shared source files. Official development and releases remain with Art
 
         header .toolbar .btn:hover,
         header .toolbar button:hover {
-            color: #6B9B7F !important;
+            color: #E2683C !important;
             background: transparent !important;
             border-color: transparent !important;
             transform: none !important;
@@ -319,7 +328,7 @@ Community-shared source files. Official development and releases remain with Art
         header .toolbar .btn-warning:hover {
             background: transparent !important;
             border-color: transparent !important;
-            color: #6B9B7F !important;
+            color: #E2683C !important;
             transform: none !important;
         }
 
@@ -327,7 +336,7 @@ Community-shared source files. Official development and releases remain with Art
         header .toolbar .layout-select {
             background: transparent !important;
             border: 1px solid transparent !important;
-            border-radius: 10px !important;
+            border-radius: 2px !important;
             color: #E8E3D9 !important;
             font-family: 'JetBrains Mono', monospace !important;
             font-size: 12px !important;
@@ -349,18 +358,18 @@ Community-shared source files. Official development and releases remain with Art
         }
 
         header .toolbar .layout-select:hover {
-            color: #6B9B7F !important;
+            color: #E2683C !important;
             background-color: transparent !important;
             background-position: right 10px center !important;
             background-repeat: no-repeat !important;
             background-size: 12px 8px !important;
-            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%236B9B7F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23E2683C' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") !important;
         }
 
         .btn {
             padding: 8px 16px;
             border: none;
-            border-radius: 6px;
+            border-radius: 2px;
             font-weight: 600;
             cursor: pointer;
             font-size: 14px;
@@ -368,22 +377,37 @@ Community-shared source files. Official development and releases remain with Art
         }
 
         .btn-primary {
-            background: #6B9B7F;
-            color: white;
+            background: #ECE6DA;
+            color: #131210;
+            border: 1px solid #ECE6DA;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.10em;
+            text-transform: uppercase;
+            font-weight: 600;
         }
 
         .btn-primary:hover {
-            background: #5A8A6E;
-            transform: translateY(-1px);
+            background: #FFFDF7;
+            border-color: #FFFDF7;
+            transform: none;
+            box-shadow: 0 0 20px rgba(236,230,218,.14);
         }
 
         .btn-secondary {
-            background: #3D3D3D;
-            color: #E8E3D9;
+            background: transparent;
+            color: #A39D91;
+            border: 1px solid rgba(236,230,218,.12);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.10em;
+            text-transform: uppercase;
         }
 
         .btn-secondary:hover {
-            background: #4D4D4D;
+            background: rgba(236,230,218,.04);
+            border-color: rgba(236,230,218,.22);
+            color: #ECE6DA;
         }
 
         .main-layout {
@@ -396,7 +420,7 @@ Community-shared source files. Official development and releases remain with Art
         .canvas-container {
             flex: 1;
             position: relative;
-            background: #252525;
+            background: #0d0c0b;
             overflow: hidden;
         }
 
@@ -412,32 +436,44 @@ Community-shared source files. Official development and releases remain with Art
 
         .properties-panel {
             width: 450px;
-            background: #2C2C2C;
-            border-left: 1px solid #3D3D3D;
+            background: #141312;
+            border-left: 1px solid rgba(236,230,218,.10);
             overflow-y: auto;
             padding: 20px;
         }
 
         .no-selection {
             text-align: center;
-            color: #888;
+            color: #A39D91;
             padding: 40px 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
         }
-
         .no-selection h3 {
             margin-bottom: 10px;
+            color: rgba(236,230,218,.6);
+            font-size: 13px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+        }
+        .no-selection p {
+            font-size: 11px;
+            color: rgba(236,230,218,.35);
+            line-height: 1.5;
         }
 
         .section-title {
-            font-size: 1.2em;
-            color: #D97757;
-            border-bottom: 2px solid #D97757;
-            padding-bottom: 5px;
-            margin-bottom: 15px;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            color: #E2683C;
+            border-bottom: 1px solid rgba(236,230,218,.10);
+            padding-bottom: 6px;
+            margin-bottom: 14px;
+            font-weight: 500;
+            letter-spacing: 0.16em;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
         }
+        .section-title::before { content: '● '; opacity: 0.7; }
 
         .form-group {
             margin-bottom: 18px;
@@ -446,43 +482,32 @@ Community-shared source files. Official development and releases remain with Art
         label {
             display: block;
             margin-bottom: 6px;
-            font-weight: 500;
-            color: #B8B3A9;
-            font-size: 13px;
-            letter-spacing: 0.01em;
-        }
-
-        /* Panel Styling Updates */
-        .section-title {
-            font-size: 1.1em;
-            color: #D97757;
-            border-bottom: 2px solid #D97757;
-            padding-bottom: 5px;
-            margin-bottom: 15px;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            font-family: 'Outfit', sans-serif;
+            font-weight: 400;
+            color: #A39D91;
+            font-size: 11px;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .subsection-title {
             font-size: 0.85em;
-            color: #B8B3A9;
+            color: #A39D91;
             margin: 15px 0 8px 0;
             font-weight: 600;
             padding-top: 10px;
-            border-top: 1px solid #3D3D3D;
+            border-top: 1px solid rgba(236,230,218,.10);
             text-transform: uppercase;
             letter-spacing: 0.05em;
             font-family: 'JetBrains Mono', monospace;
         }
 
         .btn-panel-action {
-            background: #D97757;
+            background: #E2683C;
             color: #2c2c2c;
             padding: 8px 12px;
             border: none;
-            border-radius: 6px;
+            border-radius: 2px;
             cursor: pointer;
             font-weight: 600;
             font-size: 12px;
@@ -495,8 +520,9 @@ Community-shared source files. Official development and releases remain with Art
         }
 
         .btn-panel-action:hover {
-            background: #C65D3B;
-            transform: translateY(-1px);
+            background: #B8422A;
+            transform: none;
+            box-shadow: 0 0 16px rgba(226,104,60,0.2);
         }
 
         .properties-panel input[type="text"],
@@ -513,17 +539,17 @@ Community-shared source files. Official development and releases remain with Art
         }
 
         .choice-item {
-            background: #242424;
-            border: 1px solid #3D3D3D;
+            background: #121110;
+            border: 1px solid rgba(236,230,218,.10);
         }
 
         .properties-panel input[type="checkbox"],
         .properties-panel input[type="radio"] {
             appearance: none;
             -webkit-appearance: none;
-            background-color: #2A2A2A;
+            background-color: #141312;
             margin: 0;
-            border: 1px solid #404040;
+            border: 1px solid rgba(236,230,218,.10);
             cursor: pointer;
             display: grid;
             place-content: center;
@@ -532,7 +558,7 @@ Community-shared source files. Official development and releases remain with Art
 
         .properties-panel input[type="checkbox"]:hover,
         .properties-panel input[type="radio"]:hover {
-            border-color: #D97757;
+            border-color: #E2683C;
         }
 
         .properties-panel input[type="checkbox"]::before {
@@ -541,7 +567,7 @@ Community-shared source files. Official development and releases remain with Art
             height: 10px;
             transform: scale(0);
             transition: 120ms transform ease-in-out;
-            box-shadow: inset 1em 1em #D97757; /* Check color */
+            box-shadow: inset 1em 1em #E2683C; /* Check color */
             transform-origin: center;
             clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
         }
@@ -561,7 +587,7 @@ Community-shared source files. Official development and releases remain with Art
             border-radius: 50%;
             transform: scale(0);
             transition: 120ms transform ease-in-out;
-            box-shadow: inset 1em 1em #D97757; /* Radio dot color */
+            box-shadow: inset 1em 1em #E2683C; /* Radio dot color */
         }
 
         .properties-panel input[type="radio"]:checked::before {
@@ -570,7 +596,7 @@ Community-shared source files. Official development and releases remain with Art
         
         .properties-panel input[type="radio"]:checked,
         .properties-panel input[type="checkbox"]:checked {
-             border-color: #D97757;
+             border-color: #E2683C;
         }
 
         input[type="text"],
@@ -579,51 +605,63 @@ Community-shared source files. Official development and releases remain with Art
         select,
         textarea {
             width: 100%;
-            padding: 12px 14px;
-            background: #2A2A2A;
-            border: 1px solid #404040;
-            border-radius: 6px;
-            color: #E8E3D9;
+            padding: 10px 12px;
+            background: #141312;
+            border: 1px solid rgba(236,230,218,.10);
+            border-radius: 0;
+            color: #ECE6DA;
             font-family: inherit;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 400;
-            transition: all 0.2s ease;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            transition: border-color 0.16s ease, box-shadow 0.16s ease;
+            box-shadow: none;
         }
 
         input[type="color"] {
-            height: 50px;
+            height: 42px;
             cursor: pointer;
-            padding: 6px;
-            border: 2px solid #404040;
-            transition: all 0.2s ease;
+            padding: 4px;
+            border: 1px solid rgba(236,230,218,.18);
+            border-radius: 0;
+            background: #0B0B0A;
+            transition: border-color 0.16s ease;
+            -webkit-appearance: none;
+            appearance: none;
         }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 2px; }
+        input[type="color"]::-webkit-color-swatch { border: none; border-radius: 0; }
+        input[type="color"]::-moz-color-swatch { border: none; border-radius: 0; }
 
         input[type="color"]:hover {
-            border-color: #D97757;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-color: rgba(236,230,218,.35);
+            transform: none;
+            box-shadow: none;
         }
 
         input[type="color"]:focus {
-            border-color: #D97757;
-            box-shadow: 0 0 0 3px rgba(217, 119, 87, 0.25);
+            border-color: #E2683C;
+            box-shadow: 0 0 0 2px rgba(226,104,60,.18);
         }
 
         input:hover,
         select:hover,
         textarea:hover {
-            background: #2F2F2F;
-            border-color: #4A4A4A;
+            background: #161514;
+            border-color: rgba(236,230,218,.18);
         }
 
         input:focus,
         select:focus,
         textarea:focus {
             outline: none;
-            background: #323232;
-            border-color: #D97757;
-            box-shadow: 0 0 0 3px rgba(217, 119, 87, 0.15);
+            background: #141312;
+            border-color: #E2683C;
+            box-shadow: 0 0 0 2px rgba(226,104,60,.18);
+        }
+
+        :focus-visible {
+            outline: 1px solid #E2683C;
+            outline-offset: 2px;
         }
 
         select {
@@ -647,20 +685,20 @@ Community-shared source files. Official development and releases remain with Art
             appearance: none;
             width: 100%;
             height: 6px;
-            background: #2A2A2A;
-            border-radius: 3px;
+            background: #141312;
+            border-radius: 2px;
             outline: none;
             padding: 0;
             margin: 10px 0;
             cursor: pointer;
-            border: 1px solid #404040;
+            border: 1px solid rgba(236,230,218,.10);
         }
 
         input[type="range"]::-webkit-slider-track {
             width: 100%;
             height: 6px;
             background: linear-gradient(to right, #2A2A2A 0%, #2A2A2A 100%);
-            border-radius: 3px;
+            border-radius: 2px;
         }
 
         input[type="range"]::-webkit-slider-thumb {
@@ -668,16 +706,16 @@ Community-shared source files. Official development and releases remain with Art
             appearance: none;
             width: 18px;
             height: 18px;
-            background: linear-gradient(135deg, #D97757 0%, #C65D3B 100%);
+            background: linear-gradient(135deg, #E2683C 0%, #C4552E 100%);
             border-radius: 50%;
             cursor: pointer;
-            border: 2px solid #D97757;
+            border: 1px solid rgba(236,230,218,.18);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             transition: all 0.2s ease;
         }
 
         input[type="range"]::-webkit-slider-thumb:hover {
-            background: linear-gradient(135deg, #E08A6A 0%, #D97757 100%);
+            background: linear-gradient(135deg, #e8794f 0%, #E2683C 100%);
             transform: scale(1.1);
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
         }
@@ -689,18 +727,18 @@ Community-shared source files. Official development and releases remain with Art
         input[type="range"]::-moz-range-track {
             width: 100%;
             height: 6px;
-            background: #2A2A2A;
-            border-radius: 3px;
-            border: 1px solid #404040;
+            background: #141312;
+            border-radius: 2px;
+            border: 1px solid rgba(236,230,218,.10);
         }
 
         input[type="range"]::-moz-range-thumb {
             width: 18px;
             height: 18px;
-            background: linear-gradient(135deg, #D97757 0%, #C65D3B 100%);
+            background: linear-gradient(135deg, #E2683C 0%, #C4552E 100%);
             border-radius: 50%;
             cursor: pointer;
-            border: 2px solid #D97757;
+            border: 1px solid rgba(236,230,218,.18);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             transition: all 0.2s ease;
         }
@@ -716,7 +754,7 @@ Community-shared source files. Official development and releases remain with Art
         }
 
         input[type="range"]::-moz-range-thumb:hover {
-            background: linear-gradient(135deg, #E08A6A 0%, #D97757 100%);
+            background: linear-gradient(135deg, #e8794f 0%, #E2683C 100%);
             transform: scale(1.1);
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
         }
@@ -727,64 +765,78 @@ Community-shared source files. Official development and releases remain with Art
 
         input[type="range"]:focus {
             outline: none;
-            background: #2F2F2F;
+            background: #1a1917;
         }
 
         input[type="range"]:focus::-webkit-slider-thumb {
-            box-shadow: 0 0 0 3px rgba(217, 119, 87, 0.3);
+            box-shadow: 0 0 0 3px rgba(226, 104, 60, 0.3);
         }
 
         input[type="range"]:focus::-moz-range-thumb {
-            box-shadow: 0 0 0 3px rgba(217, 119, 87, 0.3);
+            box-shadow: 0 0 0 3px rgba(226, 104, 60, 0.3);
         }
 
-        /* Styled file inputs */
-        .upload-btn::-webkit-file-upload-button {
-            background: #6B9B7F;
-            color: #fff;
+        /* Styled file inputs — Ink & Ember */
+        input[type="file"],
+        .upload-btn {
+            padding: 0;
+            background: transparent;
+            border: 1px solid rgba(236,230,218,.10);
+            color: #A39D91;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+        }
+        .upload-btn::file-selector-button,
+        .upload-btn::-webkit-file-upload-button,
+        input[type="file"]::file-selector-button,
+        input[type="file"]::-webkit-file-upload-button {
+            background: rgba(226,104,60,.12);
+            color: #E2683C;
             border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-weight: 600;
+            border-right: 1px solid rgba(226,104,60,.3);
+            padding: 7px 12px;
+            border-radius: 0;
+            font-weight: 500;
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
             cursor: pointer;
+            transition: background 0.15s ease;
         }
-        .upload-btn::-webkit-file-upload-button:hover {
-            background: #5A8A6E;
-        }
-        .upload-btn::file-selector-button {
-            background: #6B9B7F;
-            color: #fff;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        .upload-btn:hover::file-selector-button {
-            background: #5A8A6E;
+        .upload-btn:hover::file-selector-button,
+        .upload-btn:hover::-webkit-file-upload-button,
+        input[type="file"]:hover::file-selector-button,
+        input[type="file"]:hover::-webkit-file-upload-button {
+            background: rgba(226,104,60,.22);
         }
 
         small {
             display: block;
-            margin-top: 3px;
-            color: #888;
-            font-size: 11px;
+            margin-top: 4px;
+            color: rgba(236,230,218,.38);
+            font-size: 10px;
             font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.06em;
+            line-height: 1.4;
+            font-style: normal;
         }
+        small em, small i { font-style: normal; }
+        code { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: rgba(236,230,218,.5); }
 
         .choice-item {
-            background: #2A2A2A;
-            padding: 14px;
-            margin: 10px 0;
-            border-radius: 6px;
-            border: 1px solid #404040;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-            transition: all 0.2s ease;
+            background: #141312;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 0;
+            border: 1px solid rgba(236,230,218,.08);
+            box-shadow: none;
+            transition: border-color 0.15s ease;
         }
 
         .choice-item:hover {
-            background: #2F2F2F;
-            border-color: #4A4A4A;
+            background: #161514;
+            border-color: rgba(236,230,218,.16);
         }
 
         .choice-header {
@@ -797,7 +849,7 @@ Community-shared source files. Official development and releases remain with Art
         .btn-small {
             padding: 6px 12px;
             font-size: 12px;
-            border-radius: 4px;
+            border-radius: 2px;
             transition: all 0.2s;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -805,79 +857,91 @@ Community-shared source files. Official development and releases remain with Art
         }
 
         .btn-danger {
-            background: #B54A4A;
-            color: white;
-            border: none;
+            background: rgba(139,48,48,.25);
+            color: #e07070;
+            border: 1px solid rgba(139,48,48,.5);
             cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 600;
-            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.10em;
+            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            transition: background 0.15s ease, border-color 0.15s ease;
         }
 
         .btn-danger:hover {
-            background: #963a3a;
-            transform: translateY(-1px);
+            background: rgba(139,48,48,.45);
+            border-color: rgba(139,48,48,.8);
+            transform: none;
         }
 
         .btn-success {
-            background: #6B9B7F;
-            color: white;
+            background: rgba(107,155,127,.18);
+            color: #6B9B7F;
+            border: 1px solid rgba(107,155,127,.35);
             padding: 10px 16px;
-            border: none;
-            border-radius: 6px;
+            border-radius: 0;
             cursor: pointer;
-            font-weight: 600;
-            font-size: 13px;
+            font-weight: 500;
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.10em;
+            text-transform: uppercase;
             width: 100%;
             margin-bottom: 12px;
-            transition: all 0.2s;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            transition: background 0.15s ease, border-color 0.15s ease;
         }
 
         .btn-success:hover {
-            background: #5A8A6E;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            background: rgba(107,155,127,.3);
+            border-color: rgba(107,155,127,.6);
+            transform: none;
+            box-shadow: none;
         }
 
         .btn-warning {
-            background: #E8A356;
-            color: white;
+            background: rgba(232,163,86,.18);
+            color: #E8A356;
+            border: 1px solid rgba(232,163,86,.35);
             padding: 10px 16px;
-            border: none;
-            border-radius: 6px;
+            border-radius: 0;
             cursor: pointer;
-            font-weight: 600;
-            font-size: 13px;
-            transition: all 0.2s;
+            font-weight: 500;
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.10em;
+            text-transform: uppercase;
+            transition: background 0.15s ease, border-color 0.15s ease;
         }
 
         .btn-warning:hover {
-            background: #D97757;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            background: rgba(232,163,86,.30);
+            border-color: rgba(232,163,86,.6);
+            transform: none;
+            box-shadow: none;
         }
 
         .btn-build {
-            background: #e8a356 !important;
-            color: #2c2c2c !important;
+            background: rgba(226,104,60,.14) !important;
+            color: #e8794f !important;
+            border: 1px solid rgba(226,104,60,.35) !important;
             width: 100%;
             margin-top: 10px;
-            font-family: 'Inter', sans-serif;
+            font-family: 'JetBrains Mono', monospace !important;
             font-weight: 500;
             padding: 8px;
-            border-radius: 6px;
-            border: 1px solid #3D3D3D;
+            border-radius: 0;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: background 0.15s ease, border-color 0.15s ease;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.10em;
+            font-size: 11px !important;
         }
 
         .btn-build:hover {
-            background: #d48f45 !important;
-            color: #1A1A1A !important;
+            background: rgba(226,104,60,.24) !important;
+            border-color: rgba(226,104,60,.6) !important;
+            color: #ECE6DA !important;
         }
 
         /* Override for toolbar buttons */
@@ -896,11 +960,11 @@ Community-shared source files. Official development and releases remain with Art
 
         .subsection-title {
             font-size: 0.95em;
-            color: #B8B3A9;
+            color: #A39D91;
             margin: 15px 0 8px 0;
             font-weight: 600;
             padding-top: 10px;
-            border-top: 1px solid #3D3D3D;
+            border-top: 1px solid rgba(236,230,218,.10);
         }
 
         .subsection-title:first-child {
@@ -937,7 +1001,7 @@ Community-shared source files. Official development and releases remain with Art
         }
 
         .collapsible:hover {
-            color: #D97757;
+            color: #E2683C;
         }
 
         .collapsible-content {
@@ -959,23 +1023,30 @@ Community-shared source files. Official development and releases remain with Art
         }
 
         .alert-info {
-            background: rgba(107, 155, 127, 0.1);
-            border-left: 3px solid #6B9B7F;
-            padding: 10px;
+            background: rgba(107,155,127,.06);
+            border-left: 2px solid rgba(107,155,127,.5);
+            padding: 10px 12px;
             margin: 10px 0;
-            font-size: 12px;
-            border-radius: 4px;
+            font-size: 11px;
+            border-radius: 0;
             font-family: 'JetBrains Mono', monospace;
+            color: #A39D91;
+            letter-spacing: 0.04em;
+            line-height: 1.5;
         }
 
         .feature-box {
-            background: rgba(217, 119, 87, 0.1);
-            border: 1px solid #D97757;
-            padding: 10px;
+            background: rgba(226,104,60,.05);
+            border: 1px solid rgba(226,104,60,.2);
+            border-left: 2px solid rgba(226,104,60,.4);
+            padding: 10px 12px;
             margin: 10px 0;
-            border-radius: 4px;
-            font-size: 12px;
+            border-radius: 0;
+            font-size: 11px;
             font-family: 'JetBrains Mono', monospace;
+            color: #A39D91;
+            letter-spacing: 0.04em;
+            line-height: 1.5;
         }
 
         .checkbox-group {
@@ -1005,33 +1076,36 @@ Community-shared source files. Official development and releases remain with Art
         }
 
         .canvas-btn {
-            background: rgba(44, 44, 44, 0.9);
-            border: 1px solid #3D3D3D;
-            color: #D97757;
-            padding: 10px 15px;
-            border-radius: 6px;
+            background: rgba(11,11,10,0.9);
+            border: 1px solid rgba(236,230,218,.12);
+            color: #A39D91;
+            padding: 8px 12px;
+            border-radius: 0;
             cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            backdrop-filter: blur(10px);
+            font-size: 11px;
+            font-weight: 500;
+            backdrop-filter: blur(8px);
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.12em;
+            font-family: 'JetBrains Mono', monospace;
+            transition: border-color 0.15s ease, color 0.15s ease;
         }
 
         .canvas-btn:hover {
-            background: rgba(61, 61, 61, 0.9);
+            border-color: rgba(236,230,218,.25);
+            color: #ECE6DA;
+            background: rgba(20,19,18,0.92);
         }
 
         .node-legend {
             position: absolute;
             top: 20px;
             left: 20px;
-            background: rgba(44, 44, 44, 0.9);
-            border: 1px solid #3D3D3D;
-            border-radius: 6px;
+            background: rgba(11,11,10,0.9);
+            border: 1px solid rgba(236,230,218,.10);
+            border-radius: 2px;
             padding: 15px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
             z-index: 10;
             font-family: 'JetBrains Mono', monospace;
             max-height: calc(100vh - 120px);
@@ -1044,7 +1118,7 @@ Community-shared source files. Official development and releases remain with Art
             grid-template-columns: repeat(3, 1fr);
             gap: 4px;
             font-size: 11px;
-            color: #B8B3A9;
+            color: #A39D91;
             margin-top: 6px;
             text-align: center;
             overflow: hidden;
@@ -1053,10 +1127,10 @@ Community-shared source files. Official development and releases remain with Art
         .marker-tooltip {
             position: fixed;
             padding: 8px 12px;
-            background: rgba(26, 26, 26, 0.92);
-            border: 1px solid #4F6D7A;
+            background: rgba(11,11,10,0.92);
+            border: 1px solid rgba(236,230,218,.18);
             color: #E8E3D9;
-            border-radius: 6px;
+            border-radius: 2px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
             pointer-events: none;
@@ -1066,10 +1140,13 @@ Community-shared source files. Official development and releases remain with Art
         }
 
         .legend-header {
-            font-weight: 600;
-            color: #D97757;
+            font-weight: 500;
+            color: #A39D91;
             margin-bottom: 8px;
             font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
         }
 
         body.build-mode .node-legend {
@@ -1090,8 +1167,8 @@ Community-shared source files. Official development and releases remain with Art
             position: sticky;
             bottom: 0;
             padding-top: 10px;
-            background: rgba(44, 44, 44, 0.92);
-            backdrop-filter: blur(10px);
+            background: rgba(11,11,10,0.92);
+            backdrop-filter: blur(8px);
         }
 
         .legend-item {
@@ -1105,7 +1182,7 @@ Community-shared source files. Official development and releases remain with Art
         .legend-color {
             width: 20px;
             height: 20px;
-            border-radius: 4px;
+            border-radius: 2px;
             border: none;
         }
 
@@ -1128,7 +1205,7 @@ Community-shared source files. Official development and releases remain with Art
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0,0,0,.65); backdrop-filter: blur(4px);;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1143,7 +1220,7 @@ Community-shared source files. Official development and releases remain with Art
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0,0,0,.65); backdrop-filter: blur(4px);;
             display: none;
             align-items: center;
             justify-content: center;
@@ -1170,7 +1247,7 @@ Community-shared source files. Official development and releases remain with Art
             padding: 14px 16px;
             background: rgba(0,0,0,0.25);
             border: 1px solid rgba(255,255,255,0.10);
-            border-radius: 10px;
+            border-radius: 2px;
             color: #E8E3D9;
             font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
@@ -1180,63 +1257,91 @@ Community-shared source files. Official development and releases remain with Art
         }
 
         .modal-content {
-            background: #2C2C2C;
-            border-radius: 12px;
+            background: #141312;
+            border-radius: 0;
             padding: 0;
             max-width: 1400px;
             width: 95%;
             max-height: 90vh;
-            border: 2px solid #D97757;
+            border: 1px solid rgba(236,230,218,.18);
             position: relative;
             display: flex;
             flex-direction: row;
             overflow: hidden;
-            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+            box-shadow: 0 12px 60px rgba(0,0,0,.8);
         }
+        /* Corner-tick registration marks on modals */
+        .modal-content::before, .modal-content::after {
+            content: "";
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            pointer-events: none;
+            border: 0 solid rgba(226,104,60,.5);
+            z-index: 10;
+        }
+        .modal-content::before { top: -1px; left: -1px; border-top-width: 2px; border-left-width: 2px; }
+        .modal-content::after  { bottom: -1px; right: -1px; border-bottom-width: 2px; border-right-width: 2px; }
 
         .modal-left {
             width: 420px;
             min-width: 420px;
-            background: #1e1c1c;
+            background: #0B0B0A;
             padding: 30px;
             overflow-y: auto;
-            border-right: 1px solid #3D3D3D;
+            border-right: 1px solid rgba(236,230,218,.10);
         }
 
         .modal-right {
             flex: 1;
             padding: 30px;
             overflow-y: auto;
-            background: #2C2C2C;
+            background: #141312;
         }
 
         .modal-header {
-            font-family: 'Outfit', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            color: #D97757;
-            margin-bottom: 24px;
-            border-bottom: 2px solid #D97757;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 600;
+            color: #ECE6DA;
+            margin-bottom: 22px;
+            border-bottom: 1px solid rgba(236,230,218,.12);
             padding-bottom: 12px;
             text-transform: uppercase;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.18em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .modal-header::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #E2683C;
+            flex-shrink: 0;
+            box-shadow: 0 0 8px rgba(226,104,60,.6);
         }
 
         .modal-section {
-            margin: 24px 0;
+            margin: 22px 0;
         }
 
         .modal-section h3 {
-            font-family: 'Outfit', sans-serif;
-            color: #D97757;
-            margin-bottom: 16px;
-            font-size: 16px;
-            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            color: #E2683C;
+            margin-bottom: 14px;
+            font-size: 10px;
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-bottom: 1px solid #3D3D3D;
+            letter-spacing: 0.16em;
+            border-bottom: 1px solid rgba(236,230,218,.08);
             padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
+        .modal-section h3::before { content: "—"; opacity: 0.4; font-size: 9px; }
 
         .modal-buttons {
             display: flex;
@@ -1244,12 +1349,12 @@ Community-shared source files. Official development and releases remain with Art
             justify-content: flex-end;
             margin-top: 30px;
             padding-top: 20px;
-            border-top: 1px solid #3D3D3D;
+            border-top: 1px solid rgba(236,230,218,.10);
         }
 
         .modal-buttons .btn {
             padding: 10px 20px;
-            border-radius: 6px;
+            border-radius: 2px;
             font-family: 'Inter', sans-serif;
             font-weight: 600;
             font-size: 13px;
@@ -1261,31 +1366,31 @@ Community-shared source files. Official development and releases remain with Art
         }
 
         .modal-buttons .btn-secondary {
-            background: #2C2C2C;
-            border: 1px solid #3D3D3D;
-            color: #B8B3A9;
+            background: #141312;
+            border: 1px solid rgba(236,230,218,.10);
+            color: #A39D91;
         }
 
         .modal-buttons .btn-secondary:hover {
-            background: #3D3D3D;
+            background: #1e1b19;
             color: #E8E3D9;
         }
 
         .modal-buttons .btn-primary {
-            background: #D97757;
-            color: #1A1A1A;
-            border: 1px solid #D97757;
+            background: #ECE6DA;
+            color: #131210;
+            border: 1px solid #ECE6DA;
         }
 
         .modal-buttons .btn-primary:hover {
-            background: #C65D3B;
+            background: #B8422A;
             color: #FFFFFF;
         }
         
         .modal .form-group label {
             font-family: 'Inter', sans-serif;
             font-weight: 500;
-            color: #B8B3A9;
+            color: #A39D91;
             font-size: 13px;
             margin-bottom: 6px;
             display: block;
@@ -1295,11 +1400,11 @@ Community-shared source files. Official development and releases remain with Art
         .modal input[type="number"],
         .modal select,
         .modal textarea {
-            background: #2A2A2A;
-            border: 1px solid #505050;
+            background: #141312;
+            border: 1px solid rgba(236,230,218,.18);
             color: #E8E3D9;
             padding: 8px 12px;
-            border-radius: 4px;
+            border-radius: 2px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
             transition: border-color 0.2s;
@@ -1309,17 +1414,17 @@ Community-shared source files. Official development and releases remain with Art
         .modal input:focus,
         .modal select:focus,
         .modal textarea:focus {
-            border-color: #D97757;
+            border-color: #E2683C;
             outline: none;
         }
 
         .modal input[type="color"] {
-            background: #2A2A2A;
-            border: 1px solid #505050;
+            background: #141312;
+            border: 1px solid rgba(236,230,218,.18);
             height: 36px;
             width: 100%;
             padding: 2px;
-            border-radius: 4px;
+            border-radius: 2px;
             cursor: pointer;
         }
         .modal small {
@@ -1329,7 +1434,7 @@ Community-shared source files. Official development and releases remain with Art
         }
         
 .modal input[type="range"] {
-            accent-color: #D97757;
+            accent-color: #E2683C;
         }
         .modal input[type="range"]::-webkit-slider-thumb {
             border: none;
@@ -1341,27 +1446,16 @@ Community-shared source files. Official development and releases remain with Art
             margin-bottom: 8px;
         }
 
-        /* Scrollbar styling to match theme */
-        ::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1A1A1A;
-            border-radius: 6px;
-        }
+        /* Scrollbar styling — Ink & Ember */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb {
-            background: #6B9B7F;
-            border-radius: 6px;
-            border: 2px solid #1A1A1A;
+            background: rgba(226,104,60,.35);
+            border-radius: 0;
+            border: 2px solid rgba(0,0,0,.4);
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #5A8A6E;
-        }
-        * {
-            scrollbar-color: #6B9B7F #1A1A1A;
-            scrollbar-width: thin;
-        }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(226,104,60,.65); }
+        * { scrollbar-color: rgba(226,104,60,.35) transparent; scrollbar-width: thin; }
 
         /* Auto-scroll animation for overflow text */
         @keyframes scroll-text {
@@ -1404,49 +1498,52 @@ Community-shared source files. Official development and releases remain with Art
             gap: 8px;
             padding: 0 30px;
             margin: 0;
-            background: #1A1A1A;
-            border-bottom: 2px solid #3D3D3D;
+            background: #0B0B0A;
+            border-bottom: 1px solid rgba(236,230,218,.10);
         }
 
         .validation-tab {
-            padding: 14px 28px;
+            padding: 12px 22px;
             background: transparent;
             border: none;
-            color: #999;
-            font-weight: 600;
-            font-size: 15px;
+            color: rgba(236,230,218,.45);
+            font-weight: 500;
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: color 0.15s ease;
             border-radius: 0;
             position: relative;
             white-space: nowrap;
         }
 
         .validation-tab:hover {
-            color: #E8E3D9;
-            background: rgba(217, 119, 87, 0.1);
+            color: #ECE6DA;
+            background: transparent;
         }
 
         .validation-tab.active {
-            color: #D97757;
-            background: #2C2C2C;
+            color: #E2683C;
+            background: transparent;
         }
 
         .validation-tab.active::after {
             content: '';
             position: absolute;
-            bottom: -2px;
+            bottom: -1px;
             left: 0;
             right: 0;
-            height: 3px;
-            background: #D97757;
+            height: 1px;
+            background: #E2683C;
         }
 
         .validation-tab-content-wrapper {
             flex: 1;
             overflow-y: auto;
             padding: 30px;
-            background: #2C2C2C;
+            background: #141312;
         }
 
         .validation-content {
@@ -1458,12 +1555,15 @@ Community-shared source files. Official development and releases remain with Art
         }
 
         .validation-content h3 {
-            color: #D97757;
-            font-size: 20px;
-            margin-bottom: 20px;
-            font-weight: 600;
-            border-bottom: 2px solid #3D3D3D;
+            color: #ECE6DA;
+            font-size: 12px;
+            margin-bottom: 16px;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(236,230,218,.08);
             padding-bottom: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
         }
 
         .stat-grid {
@@ -1474,106 +1574,112 @@ Community-shared source files. Official development and releases remain with Art
         }
 
         .stat-card {
-            background: linear-gradient(135deg, #1A1A1A 0%, #242424 100%);
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #3D3D3D;
-            transition: all 0.2s;
+            background: #121110;
+            padding: 16px;
+            border-radius: 0;
+            border: 1px solid rgba(236,230,218,.08);
+            transition: border-color 0.15s ease;
         }
 
         .stat-card:hover {
-            border-color: #D97757;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(217, 119, 87, 0.2);
+            border-color: rgba(226,104,60,.3);
+            transform: none;
+            box-shadow: none;
         }
 
         .stat-card h4 {
-            color: #D97757;
-            font-size: 13px;
+            color: #A39D91;
+            font-size: 10px;
             margin-bottom: 12px;
-            font-weight: 600;
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.14em;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .stat-value {
             font-size: 36px;
             font-weight: 700;
-            color: #6B9B7F;
+            color: #ECE6DA;
             line-height: 1;
             margin-bottom: 8px;
+            font-family: 'Outfit', sans-serif;
         }
 
         .stat-label {
-            font-size: 12px;
-            color: #999;
+            font-size: 11px;
+            color: rgba(236,230,218,.4);
             margin-top: 8px;
             line-height: 1.4;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .validation-error {
-            background: linear-gradient(135deg, rgba(178, 34, 34, 0.15) 0%, rgba(178, 34, 34, 0.05) 100%);
-            border-left: 4px solid #B22222;
-            padding: 18px 20px;
-            margin: 16px 0;
-            border-radius: 6px;
+            background: rgba(139,48,48,.08);
+            border-left: 2px solid rgba(139,48,48,.6);
+            padding: 14px 16px;
+            margin: 12px 0;
+            border-radius: 0;
         }
-
         .validation-error h4 {
-            color: #FF6B6B;
-            font-size: 16px;
-            margin-bottom: 12px;
-            font-weight: 600;
+            color: #e07070;
+            font-size: 11px;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
         }
-
         .validation-error p {
-            margin: 8px 0;
-            font-size: 14px;
-            line-height: 1.6;
-            color: #E8E3D9;
+            margin: 6px 0;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #A39D91;
         }
 
         .validation-warning {
-            background: linear-gradient(135deg, rgba(217, 119, 87, 0.15) 0%, rgba(217, 119, 87, 0.05) 100%);
-            border-left: 4px solid #D97757;
-            padding: 18px 20px;
-            margin: 16px 0;
-            border-radius: 6px;
+            background: rgba(226,104,60,.06);
+            border-left: 2px solid rgba(226,104,60,.5);
+            padding: 14px 16px;
+            margin: 12px 0;
+            border-radius: 0;
         }
-
         .validation-warning h4 {
-            color: #FF9966;
-            font-size: 16px;
-            margin-bottom: 12px;
-            font-weight: 600;
+            color: #E2683C;
+            font-size: 11px;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
         }
-
         .validation-warning p {
-            margin: 8px 0;
-            font-size: 14px;
-            line-height: 1.6;
-            color: #E8E3D9;
+            margin: 6px 0;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #A39D91;
         }
 
         .validation-success {
-            background: linear-gradient(135deg, rgba(107, 155, 127, 0.15) 0%, rgba(107, 155, 127, 0.05) 100%);
-            border-left: 4px solid #6B9B7F;
-            padding: 18px 20px;
-            margin: 16px 0;
-            border-radius: 6px;
+            background: rgba(107,155,127,.06);
+            border-left: 2px solid rgba(107,155,127,.5);
+            padding: 14px 16px;
+            margin: 12px 0;
+            border-radius: 0;
         }
-
         .validation-success h4 {
-            color: #7FD9A8;
-            font-size: 16px;
-            margin-bottom: 10px;
-            font-weight: 600;
+            color: #6B9B7F;
+            font-size: 11px;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
         }
-
         .validation-success p {
             margin: 0;
-            font-size: 14px;
-            color: #B8B3A9;
+            font-size: 13px;
+            color: #A39D91;
         }
 
         .item-list {
@@ -1584,119 +1690,119 @@ Community-shared source files. Official development and releases remain with Art
         }
 
         .item-card {
-            background: linear-gradient(135deg, #1A1A1A 0%, #242424 100%);
-            padding: 16px;
-            border-radius: 8px;
-            border: 1px solid #3D3D3D;
-            transition: all 0.2s;
+            background: rgba(20,19,18,.8);
+            padding: 14px;
+            border-radius: 0;
+            border: 1px solid rgba(236,230,218,.08);
+            transition: border-color 0.15s ease;
         }
-
         .item-card:hover {
-            border-color: #6B9B7F;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(107, 155, 127, 0.2);
+            border-color: rgba(107,155,127,.3);
+            transform: none;
+            box-shadow: none;
         }
-
         .item-name {
-            color: #D97757;
-            font-weight: 600;
-            font-size: 15px;
-            margin-bottom: 10px;
-        }
-
-        .item-stats {
+            color: #ECE6DA;
+            font-weight: 500;
             font-size: 13px;
+            margin-bottom: 8px;
+            font-family: 'Outfit', sans-serif;
+        }
+        .item-stats {
+            font-size: 11px;
             color: #6B9B7F;
             font-weight: 500;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+            font-family: 'JetBrains Mono', monospace;
         }
-
         .item-location {
-            font-size: 11px;
-            color: #999;
-            line-height: 1.5;
+            font-size: 10px;
+            color: rgba(236,230,218,.35);
+            line-height: 1.4;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .boss-card {
-            background: linear-gradient(135deg, rgba(178, 34, 34, 0.2) 0%, rgba(178, 34, 34, 0.05) 100%);
-            border: 2px solid #B22222;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 16px 0;
-            transition: all 0.2s;
+            background: rgba(139,48,48,.08);
+            border: 1px solid rgba(139,48,48,.3);
+            border-left: 2px solid rgba(139,48,48,.7);
+            padding: 16px;
+            border-radius: 0;
+            margin: 12px 0;
+            transition: border-color 0.15s ease;
         }
-
         .boss-card:hover {
-            border-color: #FF6B6B;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(178, 34, 34, 0.3);
+            border-color: rgba(139,48,48,.5);
+            transform: none;
+            box-shadow: none;
         }
-
         .boss-name {
-            color: #FF6B6B;
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 12px;
+            color: #e07070;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-family: 'Outfit', sans-serif;
         }
-
         .boss-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-top: 12px;
-            font-size: 14px;
-            color: #E8E3D9;
+            gap: 10px;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #A39D91;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .encounter-card {
-            background: linear-gradient(135deg, #1A1A1A 0%, #242424 100%);
-            padding: 16px;
-            border-radius: 8px;
-            border: 1px solid #3D3D3D;
-            transition: all 0.2s;
+            background: rgba(20,19,18,.8);
+            padding: 14px;
+            border-radius: 0;
+            border: 1px solid rgba(236,230,218,.08);
+            transition: border-color 0.15s ease;
         }
-
         .encounter-card:hover {
-            border-color: #D97757;
-            transform: translateY(-1px);
+            border-color: rgba(226,104,60,.25);
+            transform: none;
         }
-
         .encounter-name {
-            color: #D97757;
-            font-weight: 600;
-            font-size: 15px;
-            margin-bottom: 10px;
+            color: #ECE6DA;
+            font-weight: 500;
+            font-size: 13px;
+            margin-bottom: 8px;
+            font-family: 'Outfit', sans-serif;
         }
-
         .encounter-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            font-size: 13px;
-            color: #B8B3A9;
-            margin-bottom: 8px;
+            gap: 8px;
+            font-size: 11px;
+            color: #A39D91;
+            margin-bottom: 6px;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .path-analysis {
-            background: linear-gradient(135deg, #1A1A1A 0%, #242424 100%);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border: 1px solid #3D3D3D;
+            background: rgba(20,19,18,.8);
+            padding: 16px;
+            border-radius: 0;
+            margin: 16px 0;
+            border: 1px solid rgba(236,230,218,.08);
+            border-left: 2px solid rgba(107,155,127,.4);
         }
-
         .path-analysis h4 {
             color: #6B9B7F;
-            font-size: 16px;
-            margin-bottom: 12px;
-            font-weight: 600;
+            font-size: 11px;
+            margin-bottom: 10px;
+            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
         }
-
         .path-analysis p {
-            margin: 8px 0;
-            font-size: 14px;
-            line-height: 1.6;
-            color: #B8B3A9;
+            margin: 6px 0;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #A39D91;
         }
 
         .no-data-message {
@@ -1708,39 +1814,36 @@ Community-shared source files. Official development and releases remain with Art
     
         .layout-select {
             margin-left: 0;
-            padding: 0 44px 0 12px; /* leave room for custom arrow */
-            border-radius: 6px;
-            border: 1px solid #3D3D3D;
-            background: #2c2c2c;
-            color: #D97757;
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
+            padding: 0 40px 0 12px;
+            border-radius: 0;
+            border: 1px solid rgba(236,230,218,.10);
+            background: #141312;
+            color: #A39D91;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
             font-weight: 500;
             outline: none;
             width: 176px;
-            height: 36px;
-            transition: all 0.2s;
+            height: 34px;
+            transition: border-color 0.15s ease, color 0.15s ease;
             cursor: pointer;
-            /* Custom arrow matching button text color #D97757 */
-            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23D97757' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23A39D91' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 14px center;
+            background-position: right 12px center;
             -webkit-appearance: none;
             appearance: none;
-            line-height: 1;
-            display: flex;
-            align-items: center;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.10em;
         }
 
         .layout-select:hover {
-            background: #3D3D3D;
+            border-color: rgba(236,230,218,.20);
+            color: #ECE6DA;
         }
 
         .layout-select option {
-            background: #2c2c2c;
-            color: #D97757;
+            background: #141312;
+            color: #ECE6DA;
             padding: 10px;
         }
 
@@ -1755,26 +1858,26 @@ Community-shared source files. Official development and releases remain with Art
 
         /* Lane Builder Specific Sliders */
         #lbRowsContainer input[type="range"]::-webkit-slider-track {
-            background: #D97757;
+            background: #E2683C;
         }
         #lbRowsContainer input[type="range"]::-webkit-slider-thumb {
-            background: #2c2c2c;
-            border: 2px solid #D97757;
+            background: #141312;
+            border: 1px solid rgba(236,230,218,.18);
         }
         #lbRowsContainer input[type="range"]::-moz-range-track {
-            background: #D97757;
+            background: #E2683C;
         }
         #lbRowsContainer input[type="range"]::-moz-range-thumb {
-            background: #2c2c2c;
-            border: 2px solid #D97757;
+            background: #141312;
+            border: 1px solid rgba(236,230,218,.18);
         }
 
         /* Top Rows Slider Border Fix */
         #lbRows::-webkit-slider-thumb {
-            border-color: #D97757 !important;
+            border-color: #E2683C !important;
         }
         #lbRows::-moz-range-thumb {
-            border-color: #D97757 !important;
+            border-color: #E2683C !important;
         }
 
         /* Shared checkbox for Mark as Ready + Show arrowheads */
@@ -1783,9 +1886,9 @@ Community-shared source files. Official development and releases remain with Art
             -webkit-appearance: none;
             width: 20px;                 /* outer box: 20×20 */
             height: 20px;
-            background-color: #2C2C2C;   /* dark panel color */
-            border: 1px solid #3D3D3D;   /* thin neutral border when unchecked */
-            border-radius: 2px;
+            background-color: #141312;   /* dark panel color */
+            border: 1px solid rgba(236,230,218,.14);   /* thin neutral border when unchecked */
+            border-radius: 0;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -1798,7 +1901,7 @@ Community-shared source files. Official development and releases remain with Art
             content: "";
             width: 11px;                 /* inner check size */
             height: 11px;
-            box-shadow: inset 1em 1em #D97757; /* orange fill */
+            box-shadow: inset 1em 1em #E2683C; /* orange fill */
             transform: scale(0) rotate(8deg);  /* hidden by default */
             transform-origin: center;
             transition: transform 120ms ease-in-out;
@@ -1813,7 +1916,7 @@ Community-shared source files. Official development and releases remain with Art
         }
 
         .dm-checkbox:checked {
-            border-color: #D97757;       /* orange border when checked */
+            border-color: #E2683C;       /* orange border when checked */
         }
 
         .dm-checkbox:checked::before {
@@ -1944,7 +2047,7 @@ Community-shared source files. Official development and releases remain with Art
             background: transparent !important;
             color: #E8E3D9 !important;
             border: 1px solid transparent !important;
-            border-radius: 10px !important;
+            border-radius: 2px !important;
             padding: 6px 10px !important;
             font-size: 12px !important;
             font-weight: 500 !important;
@@ -1967,14 +2070,14 @@ Community-shared source files. Official development and releases remain with Art
         header .toolbar .btn-warning:hover {
             background: transparent !important;
             border-color: transparent !important;
-            color: #6B9B7F !important;
+            color: #E2683C !important;
             transform: none !important;
         }
 
         header .toolbar .layout-select {
             background: transparent !important;
             border: 1px solid transparent !important;
-            border-radius: 10px !important;
+            border-radius: 2px !important;
             color: #E8E3D9 !important;
             font-family: 'JetBrains Mono', monospace !important;
             font-size: 12px !important;
@@ -1996,22 +2099,22 @@ Community-shared source files. Official development and releases remain with Art
         }
 
         header .toolbar .layout-select:hover {
-            color: #6B9B7F !important;
+            color: #E2683C !important;
             background-color: transparent !important;
             background-repeat: no-repeat !important;
             background-position: right 10px center !important;
             background-size: 12px 8px !important;
-            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%236B9B7F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23E2683C' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") !important;
         }
 
         header .app-subtitle {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             letter-spacing: 0.32em;
-            color: #6B9B7F;
+            color: rgba(236,230,218,.4);
             white-space: pre;
             line-height: 1;
-            opacity: 0.85;
+            opacity: 1;
             align-self: flex-start;
             margin-top: 0;
             margin-left: 47px;
@@ -2034,10 +2137,10 @@ Community-shared source files. Official development and releases remain with Art
 <div id="site-nav"></div>
 <header>
 <div id="statusStack" style="position: fixed; bottom: 12px; left: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: flex-start;">
-  <div id="lastSaved" style="font-size: 11px; color: #6B9B7F; font-weight: 600; font-family: 'JetBrains Mono', monospace; background: rgba(0,0,0,0.6); padding: 4px 10px; border-radius: 4px; border: 1px solid #3D3D3D;">Auto-save enabled</div>
+  <div id="lastSaved" style="font-size: 11px; color: #6B9B7F; font-weight: 600; font-family: 'JetBrains Mono', monospace; background: rgba(0,0,0,0.6); padding: 4px 10px; border-radius: 2px; border: 1px solid rgba(236,230,218,.12);">Auto-save enabled</div>
   <div id="statusBottomRow" style="display:flex; gap: 10px; align-items: center;">
-    <button id="copyrightBadge" type="button" onclick="showLicense()" style="font-size: 11px; color: #A9A9A9; font-weight: 600; font-family: 'JetBrains Mono', monospace; background: rgba(0,0,0,0.6); padding: 4px 10px; border-radius: 4px; border: 1px solid #3D3D3D; line-height: 1.1; cursor: pointer;"><span style="font-size: 15px; position: relative; top: 1px;">©</span> 2026 Artifextron</button>
-    <div id="versionBadge" style="font-size: 11px; color: #D97757; font-weight: 600; font-family: 'JetBrains Mono', monospace; background: rgba(0,0,0,0.6); padding: 4px 8px; border-radius: 4px; border: 1px solid #3D3D3D;">V1.2</div>
+    <button id="copyrightBadge" type="button" onclick="showLicense()" style="font-size: 11px; color: #A39D91; font-weight: 600; font-family: 'JetBrains Mono', monospace; background: rgba(0,0,0,0.6); padding: 4px 10px; border-radius: 2px; border: 1px solid rgba(236,230,218,.12); line-height: 1.1; cursor: pointer;"><span style="font-size: 15px; position: relative; top: 1px;">©</span> 2026 Artifextron</button>
+    <div id="versionBadge" style="font-size: 11px; color: #A39D91; font-weight: 600; font-family: 'JetBrains Mono', monospace; background: rgba(0,0,0,0.6); padding: 4px 8px; border-radius: 2px; border: 1px solid rgba(236,230,218,.12);">V1.2</div>
   </div>
 </div>
 
@@ -2075,64 +2178,64 @@ Community-shared source files. Official development and releases remain with Art
 </div>
 <div id="legendView">
 <div class="legend-item">
-<div class="legend-color" style="background: #6B9B7F;"></div>
+<div class="legend-color" style="background: #355C4A;"></div>
 <span>Start Page</span>
 </div>
 <div class="legend-item">
-<div class="legend-color" style="background: #80A9C9;"></div>
+<div class="legend-color" style="background: #2A4E68;"></div>
 <span>Normal Page</span>
 </div>
 <div class="legend-item">
-<div class="legend-color" style="background: #E8A287;"></div>
+<div class="legend-color" style="background: #7A4E38;"></div>
 <span>Action Dice Roll</span>
 </div>
 <div class="legend-item">
-<div class="legend-color" style="background: #D97757;"></div>
+<div class="legend-color" style="background: #B8422A;"></div>
 <span>Action Combat</span>
 </div>
 <div class="legend-item">
-<div class="legend-color" style="background: #EBA1AC;"></div>
+<div class="legend-color" style="background: #5C3040;"></div>
 <span>Sanctuary</span>
 </div>
 <div class="legend-item">
-<div class="legend-color" style="background: #8C7062;"></div>
+<div class="legend-color" style="background: #503C34;"></div>
 <span>Armory</span>
 </div>
 <div class="legend-item">
-<div class="legend-color" style="background: #DDD1BA;"></div>
+<div class="legend-color" style="background: #4E4435;"></div>
 <span>Locked</span>
 </div>
 <div class="legend-item">
-<div class="legend-color" style="background: #e8a356;"></div>
+<div class="legend-color" style="background: #8A5C20;"></div>
 <span>Ending</span>
 </div>
 <div class="legend-item">
-<div class="legend-color" style="background: #B54A4A;"></div>
+<div class="legend-color" style="background: #5C2020;"></div>
 <span>Boss</span>
 </div>
 <div class="legend-item">
-<div class="legend-color" style="background: #1e1c1c;"></div>
+<div class="legend-color" style="background: #1e1c1c; border: 1px solid rgba(236,230,218,.12);"></div>
 <span>Game Over</span>
 </div>
-<div class="legend-item" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1);">
-<div class="legend-color" style="background: #80A9C9; border-left: 4px solid #CE9BCF;"></div>
-<span>Special Page (lilac border)</span>
+<div class="legend-item" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(236,230,218,.08);">
+<div class="legend-color" style="background: #2A4E68; border-left: 3px solid #3A2050;"></div>
+<span>Special Page (purple strip)</span>
 </div>
 
 <!-- Connection Legend -->
-<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1);">
+<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(236,230,218,.08);">
   <div class="legend-header">Connections</div>
 
   <div class="legend-item">
-    <div class="legend-line" style="border-top-color:#80A9C9;"></div>
+    <div class="legend-line" style="border-top-color:#4A8EC0;"></div>
     <span>Choice link (A)</span>
   </div>
   <div class="legend-item">
-    <div class="legend-line" style="border-top-color:#EBA1AC;"></div>
+    <div class="legend-line" style="border-top-color:#9B6070;"></div>
     <span>Choice link (B)</span>
   </div>
   <div class="legend-item">
-    <div class="legend-line" style="border-top-color:#e8a356;"></div>
+    <div class="legend-line" style="border-top-color:#B87A30;"></div>
     <span>Choice link (C)</span>
   </div>
 
@@ -2141,16 +2244,16 @@ Community-shared source files. Official development and releases remain with Art
     <span>Action success</span>
   </div>
   <div class="legend-item">
-    <div class="legend-line dashed" style="border-top-color:#B54A4A;"></div>
+    <div class="legend-line dashed" style="border-top-color:#8B3030;"></div>
     <span>Action failure</span>
   </div>
   <div class="legend-item">
-    <div class="legend-line" style="border-top-color:#B54A4A; border-top-width:4px; position:relative; padding-right:8px;">
-      <span style="position:absolute; left:10px; top:-6px; width:8px; height:8px; background:#B54A4A; transform:rotate(45deg); border-radius:1px;"></span>
+    <div class="legend-line" style="border-top-color:#8B3030; border-top-width:4px; position:relative; padding-right:8px;">
+      <span style="position:absolute; left:10px; top:-6px; width:8px; height:8px; background:#8B3030; transform:rotate(45deg); border-radius:1px;"></span>
     </div>
     <span>Boss stage link</span>
   </div>
-  <div style="margin: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1);"></div>
+  <div style="margin: 10px 0; border-bottom: 1px solid rgba(236,230,218,.08);"></div>
 
   <div class="legend-header">Connections View</div>
   <div style="padding: 6px 2px 0 2px;">
@@ -2166,7 +2269,7 @@ Community-shared source files. Official development and releases remain with Art
     </div>
   </div>
 
-  <div style="margin: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1);"></div>
+  <div style="margin: 10px 0; border-bottom: 1px solid rgba(236,230,218,.08);"></div>
 
   <div class="legend-header">Markers</div>
   <div class="legend-item">
@@ -2188,7 +2291,7 @@ Community-shared source files. Official development and releases remain with Art
   </div>
 </div>
 <!-- Ready Progress Counter -->
-<div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+<div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(236,230,218,.08);">
 <div class="legend-header"> Progress</div>
 <div id="readyCounter">
   <div class="legend-item" style="margin:4px 0 0 0; justify-content: flex-start;">
@@ -2198,12 +2301,12 @@ Community-shared source files. Official development and releases remain with Art
   </div>
 </div>
 <!-- Build Button -->
-<div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1);">
+<div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(236,230,218,.08);">
 <button id="buildToggleBtn" class="btn btn-build" style="width: 140px;" onclick="toggleBuildMode()"> Build Mode</button>
 </div>
 
 <!-- Shortcuts Panel (foldable, like Checks) -->
-<div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+<div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(236,230,218,.08);">
     <div class="legend-header" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="toggleShortcutsPanel()">
         <span>Shortcuts</span>
         <span id="shortcutsToggleIcon" style="font-size:12px; color:#B8B3A9;">▶</span>
@@ -2211,36 +2314,36 @@ Community-shared source files. Official development and releases remain with Art
     <div id="shortcutsPanel" style="display:none; margin-top:8px; font-size: 11px; color: rgba(255,255,255,0.8); line-height: 1.6;">
         <div style="margin-bottom: 4px;">Hold key & Drag between nodes:</div>
         <div style="display: grid; grid-template-columns: auto 1fr; gap: 4px 8px;">
-            <span style="color: #80A9C9; font-weight: 700;">1-3</span> <span>Choice A/B/C</span>
-            <span style="color: #6B9B7F; font-weight: 700;">4</span> <span>Action Success</span>
-            <span style="color: #B54A4A; font-weight: 700;">5</span> <span>Action Failure</span>
-            <span style="color: #B54A4A; font-weight: 700;">6</span> <span>Boss Stage</span>
-            <span style="color: #999; font-weight: 700;">7</span> <span>Remove Link</span>
-            <span style="color: #FFD700; font-weight: 700;">8</span> <span>Mark Ready</span>
-            <span style="color: #E8E3D9; font-weight: 700;">9</span> <span>Add Page</span>
-            <span style="color: #E8E3D9; font-weight: 700;">0</span> <span>Delete Selected Page</span>
+            <span style="color: #4A8EC0; font-weight: 600;">1-3</span> <span>Choice A/B/C</span>
+            <span style="color: #6B9B7F; font-weight: 600;">4</span> <span>Action Success</span>
+            <span style="color: #8B3030; font-weight: 600;">5</span> <span>Action Failure</span>
+            <span style="color: #8B3030; font-weight: 600;">6</span> <span>Boss Stage</span>
+            <span style="color: #555250; font-weight: 600;">7</span> <span>Remove Link</span>
+            <span style="color: #B87A30; font-weight: 600;">8</span> <span>Mark Ready</span>
+            <span style="color: #ECE6DA; font-weight: 600;">9</span> <span>Add Page</span>
+            <span style="color: #ECE6DA; font-weight: 600;">0</span> <span>Delete Selected Page</span>
         </div>
     </div>
 </div>
 
 <!-- Diagnostics Panel -->
-<div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+<div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(236,230,218,.08);">
     <div class="legend-header" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="toggleDiagPanel()">
         <span>Checks</span>
         <span id="diagToggleIcon" style="font-size:12px; color:#B8B3A9;">▶</span>
     </div>
     <div id="diagPanel" style="display:none; margin-top:8px; font-size:12px; color:#E8E3D9; line-height:1.4; max-height: 220px; overflow-y: auto;">
         <div style="margin-bottom:8px;"><strong>Unlinked Nodes</strong>
-            <div id="diagUnlinked" style="color:#D97757; margin-top:4px; display:flex; flex-wrap:wrap; gap:4px;">-</div>
+            <div id="diagUnlinked" style="color:#e8794f; margin-top:4px; display:flex; flex-wrap:wrap; gap:4px;">-</div>
         </div>
         <div style="margin-bottom:8px;"><strong>Backtrack (cycles)</strong>
-            <div id="diagCycles" style="color:#D97757; margin-top:4px; display:flex; flex-wrap:wrap; gap:4px;">-</div>
+            <div id="diagCycles" style="color:#e8794f; margin-top:4px; display:flex; flex-wrap:wrap; gap:4px;">-</div>
         </div>
         <div style="margin-bottom:8px;"><strong>Unlinked Action Nodes</strong>
-            <div id="diagActions" style="color:#D97757; margin-top:4px; display:flex; flex-wrap:wrap; gap:4px;">-</div>
+            <div id="diagActions" style="color:#e8794f; margin-top:4px; display:flex; flex-wrap:wrap; gap:4px;">-</div>
         </div>
         <div style="margin-bottom:8px;"><strong>Unreachable from Start</strong>
-            <div id="diagUnreachable" style="color:#D97757; margin-top:4px; display:flex; flex-wrap:wrap; gap:4px;">-</div>
+            <div id="diagUnreachable" style="color:#e8794f; margin-top:4px; display:flex; flex-wrap:wrap; gap:4px;">-</div>
         </div>
     </div>
 </div>
@@ -2258,8 +2361,8 @@ Community-shared source files. Official development and releases remain with Art
   <div id="lbRowsContainer" style="max-height: calc(100vh - 320px); overflow:auto; padding-right:6px;"></div>
 
   <div id="lbStickyActions" style="margin-top:12px; display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-    <button class="btn btn-success" onclick="lbApply()" style="background: #D97757; color: #2c2c2c; border: none; height: 36px;"> Apply</button>
-    <button class="btn btn-warning" onclick="lbReset()" style="background: #D97757; color: #2c2c2c; border: none; height: 36px;"> Reset</button>
+    <button class="btn btn-success" onclick="lbApply()" style="background: #E2683C; color: #2c2c2c; border: none; height: 36px;"> Apply</button>
+    <button class="btn btn-warning" onclick="lbReset()" style="background: #E2683C; color: #2c2c2c; border: none; height: 36px;"> Reset</button>
   </div>
 
   <div style="margin-top:10px; font-size:11px; color:rgba(255,255,255,0.65); line-height:1.25;">
@@ -2461,7 +2564,7 @@ Project website: www.dungeonmastron.com
                 theme: { preset: "fantasy" },
                 player_stats: { health: 100, strength: 1, luck: 0 },
                 font_sizes: { main: 20, choices: 20, stats: 20, items: 20 },
-                font_colors: { main: '#e8e3d9', choices: '#d97757', stats: '#e8e3d9', items: '#e8e3d9' },
+                font_colors: { main: '#e8e3d9', choices: '#E2683C', stats: '#e8e3d9', items: '#e8e3d9' },
                 font_positions: { choices: 52, main: 61 },
                 bottom_pixel_positions: { stats: 122, separator: 81, items: 41 },
                 main_text_padding: 11,
@@ -2469,7 +2572,7 @@ Project website: www.dungeonmastron.com
                 text_area_rows: 14,
                 main_text_max_height: 800,
                 action_colors: {
-                    border: '#D97757', background: '#1C1C1C', dice: '#FFFFFF',
+                    border: '#E2683C', background: '#1C1C1C', dice: '#FFFFFF',
                     dice_text: '#000000', victory: '#228B22', failure: '#B22222'
                 },
                 settings: { image_animation: true },
@@ -2716,7 +2819,7 @@ Project website: www.dungeonmastron.com
             },
             font_colors: {
                 main: '#e8e3d9',
-                choices: '#d97757',
+                choices: '#E2683C',
                 stats: '#e8e3d9',
                 items: '#e8e3d9'
             },
@@ -2734,7 +2837,7 @@ Project website: www.dungeonmastron.com
             text_area_rows: 14,  // Number of text rows (controls vertical space)
             main_text_max_height: 800,  // High default, text area controlled by stats position
             action_colors: {
-                border: '#D97757',
+                border: '#E2683C',
                 background: '#1C1C1C',
                 dice: '#FFFFFF',
                 dice_text: '#000000',
@@ -2881,33 +2984,33 @@ Project website: www.dungeonmastron.com
         // Get node color based on type
         function getNodeColor(pageId, page) {
             // Priority 1: Start page - always green (page_type ignored)
-            if (pageId === gameData.start_page) return '#6B9B7F'; // Green
+            if (pageId === gameData.start_page) return '#355C4A'; // Ink & Ember start (dark muted green)
 
             // Priority 2: Action pages
             if (page.action && typeof page.action === 'object') {
-                if (page.action.type === 'boss') return '#B54A4A'; // Boss: solid red
-                if (page.action.type === 'dice') return '#E8A287'; // Action Dice Roll nodes
-                if (page.action.type === 'combat') return '#D97757'; // Combat nodes
-                return '#D97757'; // Fallback for other action types
+                if (page.action.type === 'boss') return '#5C2020'; // Boss: very dark muted red
+                if (page.action.type === 'dice') return '#7A4E38'; // Action Dice Roll: dark amber-brown
+                if (page.action.type === 'combat') return '#B8422A'; // Combat: ember-dark fill
+                return '#B8422A'; // Fallback: ember-dark
             }
 
             // Priority 3: Check page_type property
             if (page.page_type) {
                 switch (page.page_type) {
                     case 'ending':
-                        return '#e8a356'; // Yellow-Orange
+                        return '#8A5C20'; // Ending: deep gold
                     case 'sanctuary':
-                        return '#EBA1AC'; // Soft pink
+                        return '#5C3040'; // Sanctuary: deep muted rose
                     case 'armory':
-                        return '#8C7062'; // Brown (items/loot)
+                        return '#503C34'; // Armory: very dark brown
                     case 'locked':
-                        return '#DDD1BA'; // Sand (gated)
+                        return '#4E4435'; // Locked: dark warm tan
                     case 'game_over':
-                        return '#1e1c1c'; // Dark with red border in legend
+                        return '#1e1c1c'; // Near-black
                     case 'normal':
-                        return '#80A9C9'; // Blue
+                        return '#2A4E68'; // Normal: deep steel blue
                     default:
-                        return '#80A9C9'; // Blue (fallback)
+                        return '#2A4E68'; // Normal: deep steel blue (fallback)
                 }
             }
 
@@ -2919,19 +3022,19 @@ Project website: www.dungeonmastron.com
 
             // Ending by special_page + no choices OR name includes "ending"
             if (pageId.includes('ending') || page.text?.includes('THE END')) {
-                return '#e8a356'; // Yellow-Orange
+                return '#8A5C20'; // Ending: deep gold
             }
 
             // Sanctuary by positive health stat_mods
             if (page.stat_mods && page.stat_mods.health && page.stat_mods.health > 0) {
-                return '#EBA1AC'; // Soft pink
+                return '#5C3040'; // Sanctuary: deep muted rose (sanctuary)
             }
 
-            // Special story pages: Purple (legacy)
-            if (page.special_page) return '#CE9BCF'; // Purple
+            // Special story pages: Muted purple (legacy)
+            if (page.special_page) return '#3A2050'; // Special: very dark purple
 
-            // Default: Blue for normal story pages
-            return '#80A9C9'; // Blue
+            // Default: Dark steel blue for normal story pages
+            return '#2A4E68'; // Normal: deep steel blue
         }
 
         // Get page type for icon and border display
@@ -3970,15 +4073,15 @@ Project website: www.dungeonmastron.com
             const fromScreen = worldToScreen(pos.x, pos.y);
             const toScreen = { x: connectionMode.currentMouse.x, y: connectionMode.currentMouse.y };
 
-            // Color based on key
-            let color = '#FFF';
-            if (connectionMode.key === '1') color = '#80A9C9'; // Blue (A)
-            if (connectionMode.key === '2') color = '#EBA1AC'; // Pink (B)
-            if (connectionMode.key === '3') color = '#e8a356'; // Orange (C)
+            // Color based on key (Ink & Ember palette)
+            let color = '#ECE6DA';
+            if (connectionMode.key === '1') color = '#4A8EC0'; // Steel blue (A)
+            if (connectionMode.key === '2') color = '#9B6070'; // Muted rose (B)
+            if (connectionMode.key === '3') color = '#B87A30'; // Gold (C)
             if (connectionMode.key === '4') color = '#6B9B7F'; // Green (Success)
-            if (connectionMode.key === '5') color = '#B54A4A'; // Red (Failure)
-            if (connectionMode.key === '6') color = '#B54A4A'; // Boss Stage Link
-            if (connectionMode.key === '7') color = '#999999'; // Remove
+            if (connectionMode.key === '5') color = '#8B3030'; // Dark red (Failure)
+            if (connectionMode.key === '6') color = '#8B3030'; // Boss Stage Link
+            if (connectionMode.key === '7') color = '#555250'; // Remove (faint)
 
             ctx.beginPath();
             ctx.moveTo(fromScreen.x, fromScreen.y);
@@ -3998,14 +4101,14 @@ Project website: www.dungeonmastron.com
             let text = "";
             let color = "#FFF";
 
-            if (key === '1') { text = "Choice A (Blue)"; color = "#80A9C9"; }
-            else if (key === '2') { text = "Choice B (Pink)"; color = "#EBA1AC"; }
-            else if (key === '3') { text = "Choice C (Orange)"; color = "#e8a356"; }
-            else if (key === '4') { text = "Action Success (Green)"; color = "#6B9B7F"; }
-            else if (key === '5') { text = "Action Failure (Red)"; color = "#B54A4A"; }
-            else if (key === '6') { text = "Boss Stage Link"; color = "#B54A4A"; }
-            else if (key === '7') { text = "Remove Connection"; color = "#E8E3D9"; }
-            else if (key === '8') { text = "Set Ready"; color = "#FFD700"; }
+            if (key === '1') { text = "Choice A"; color = "#4A8EC0"; }
+            else if (key === '2') { text = "Choice B"; color = "#9B6070"; }
+            else if (key === '3') { text = "Choice C"; color = "#B87A30"; }
+            else if (key === '4') { text = "Action Success"; color = "#6B9B7F"; }
+            else if (key === '5') { text = "Action Failure"; color = "#8B3030"; }
+            else if (key === '6') { text = "Boss Stage Link"; color = "#8B3030"; }
+            else if (key === '7') { text = "Remove Connection"; color = "#A39D91"; }
+            else if (key === '8') { text = "Set Ready"; color = "#B87A30"; }
 
             if (text) {
                 const mouse = connectionMode.currentMouse || { x: 0, y: 0 };
@@ -4017,7 +4120,7 @@ Project website: www.dungeonmastron.com
                 const x = lastMousePos.x + 15;
                 const y = lastMousePos.y + 15;
 
-                ctx.fillStyle = "rgba(44, 44, 44, 0.9)";
+                ctx.fillStyle = "rgba(11,11,10,0.92)";
                 ctx.strokeStyle = color;
                 ctx.lineWidth = 1;
                 const padding = 12;
@@ -4029,7 +4132,7 @@ Project website: www.dungeonmastron.com
                 const height = 32;
 
                 ctx.beginPath();
-                ctx.roundRect(x, y, width, height, 4);
+                ctx.roundRect(x, y, width, height, 0); // Square tooltip
                 ctx.fill();
                 ctx.stroke();
 
@@ -4223,31 +4326,31 @@ Project website: www.dungeonmastron.com
                 : selectedNode === pageId;
             
             if (isSelected) {
-                ctx.strokeStyle = '#E8D26A'; // Yellow
+                ctx.strokeStyle = '#E2683C'; // Ember (selected)
                 ctx.lineWidth = 3;
             } else if (page.page_type === 'game_over' || pageId === 'game_over' || pageId.includes('game_over')) {
-                ctx.strokeStyle = '#242424'; // Default dark border for game over
+                ctx.strokeStyle = '#0d0c0b'; // Near-black border
                 ctx.lineWidth = 2;
             } else if (isReady) {
-                ctx.strokeStyle = '#FFFFFF'; // White
+                ctx.strokeStyle = '#6B9B7F'; // Green (ready)
                 ctx.lineWidth = 3;
             } else {
-                ctx.strokeStyle = '#242424'; // Dark Grey
-                ctx.lineWidth = 2;
+                ctx.strokeStyle = 'rgba(0,0,0,0.6)'; // Subtle dark edge
+                ctx.lineWidth = 1;
             }
 
             ctx.beginPath();
-            ctx.roundRect(x, y, width, height, 8 * zoomLevel);
+            ctx.roundRect(x, y, width, height, 2); // Ink & Ember: near-square corners
             ctx.fill();
             ctx.stroke();
 
             // Get page type for icon display
             const pageType = getPageType(pageId, page);
 
-            // Draw lilac border for special pages
+            // Draw accent left stripe for special pages
             if (page.special_page === true) {
-                ctx.fillStyle = '#CE9BCF'; // Lilac
-                ctx.fillRect(x, y + 4 * zoomLevel, 12 * zoomLevel, height - 8 * zoomLevel);
+                ctx.fillStyle = '#5A3A68'; // Dark purple stripe
+                ctx.fillRect(x, y + 2 * zoomLevel, 4 * zoomLevel, height - 4 * zoomLevel);
             }
 
             // Draw icon based on page type
@@ -4256,22 +4359,22 @@ Project website: www.dungeonmastron.com
 
             if (pageType === 'start') {
                 icon = '';
-                iconColor = '#6B9B7F'; // Green
+                iconColor = '#ECE6DA'; // Cream (bright on dark fill)
             } else if (pageType === 'ending') {
                 icon = '';
-                iconColor = '#e8a356'; // Yellow-Orange
+                iconColor = '#E8C870'; // Bright gold
             } else if (pageType === 'sanctuary') {
                 icon = '';
-                iconColor = '#EBA1AC'; // Pink
+                iconColor = '#EBA1AC'; // Keep pink for contrast
             } else if (pageType === 'armory') {
                 icon = '';
-                iconColor = '#8C7062'; // Brown
+                iconColor = '#C4A882'; // Light sand
             } else if (pageType === 'locked') {
                 icon = '';
-                iconColor = '#DDD1BA'; // Sand
+                iconColor = '#B8A878'; // Light sand
             } else if (pageType === 'game_over') {
                 icon = '';
-                iconColor = '#B54A4A'; // Red
+                iconColor = '#E07070'; // Muted red
             }
 
             // Draw icon if present
@@ -4289,8 +4392,8 @@ Project website: www.dungeonmastron.com
             }
 
             // Node text
-            ctx.fillStyle = '#FFFFFF';
-            ctx.font = `bold ${14 * zoomLevel}px 'JetBrains Mono', monospace`;
+            ctx.fillStyle = '#ECE6DA'; // Warm cream
+            ctx.font = `600 ${13 * zoomLevel}px 'JetBrains Mono', monospace`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'top';
 
@@ -4301,7 +4404,7 @@ Project website: www.dungeonmastron.com
 
             // Page info
             ctx.font = `${11 * zoomLevel}px 'JetBrains Mono', monospace`;
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            ctx.fillStyle = 'rgba(236, 230, 218, 0.65)'; // Faint cream
             const choiceCount = page.choices?.length || 0;
             let infoText = `${choiceCount} choices`;
             if (page.action) {
@@ -4312,7 +4415,7 @@ Project website: www.dungeonmastron.com
 
             // Display name row
             if (page.display_name && page.display_name.trim()) {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                ctx.fillStyle = 'rgba(236, 230, 218, 0.5)'; // Even fainter cream
                 ctx.fillText(truncateText(page.display_name.trim(), maxWidth), screenPos.x + textOffset / 2, y + 50 * zoomLevel);
             }
 
@@ -4395,7 +4498,7 @@ Project website: www.dungeonmastron.com
                     const fromPos = gameData.node_positions[link.from];
                     const toPos = gameData.node_positions[link.to];
                     if (!fromPos || !toPos) return;
-                    drawConnection(fromPos, toPos, '#C4B14F', false, 2, null, true, true);
+                    drawConnection(fromPos, toPos, '#B89A30', false, 2, null, true, true); // Key items: muted gold
                 });
                 return;
             }
@@ -4405,7 +4508,7 @@ Project website: www.dungeonmastron.com
                     const fromPos = gameData.node_positions[link.from];
                     const toPos = gameData.node_positions[link.to];
                     if (!fromPos || !toPos) return;
-                    drawConnection(fromPos, toPos, '#4FD1C5', false, 2, null, true, true);
+                    drawConnection(fromPos, toPos, '#3A9E8A', false, 2, null, true, true); // Flags: muted teal
                 });
                 return;
             }
@@ -4423,7 +4526,7 @@ Project website: www.dungeonmastron.com
                         const targetPage = choice.target || choice.next_page;
                         if (targetPage && gameData.node_positions[targetPage]) {
                             const toPos = gameData.node_positions[targetPage];
-                            const color = ['#80A9C9', '#EBA1AC', '#e8a356'][index % 3];
+                            const color = ['#4A8EC0', '#9B6070', '#B87A30'][index % 3]; // Steel blue / Muted rose / Gold
                             drawConnection(fromPos, toPos, color, false, null, null, connectionDisplayMode === 2, connectionDisplayMode === 2);
                         }
                     });
@@ -4437,11 +4540,11 @@ Project website: www.dungeonmastron.com
                     }
                     if (page.action.failure_page && gameData.node_positions[page.action.failure_page]) {
                         const toPos = gameData.node_positions[page.action.failure_page];
-                        drawConnection(fromPos, toPos, '#B54A4A', true, null, null, connectionDisplayMode === 2, connectionDisplayMode === 2);
+                        drawConnection(fromPos, toPos, '#8B3030', true, null, null, connectionDisplayMode === 2, connectionDisplayMode === 2); // Failure: dark red
                     }
                     if (page.action.type === 'boss' && page.action.stage_page && gameData.node_positions[page.action.stage_page]) {
                         const toPos = gameData.node_positions[page.action.stage_page];
-                        drawConnection(fromPos, toPos, '#B54A4A', false, 5, 18, true, true);
+                        drawConnection(fromPos, toPos, '#8B3030', false, 5, 18, true, true); // Boss stage: dark red
                     }
                 }
             }
@@ -4889,7 +4992,7 @@ layers.forEach((layer, layerIndex) => {
                 <div class="section-title"> Page: ${pageId}</div>
                 
                 <!-- Ready Checkbox -->
-                <div class="form-group" style="background: rgba(180, 167, 214, 0.1); border-left: 4px solid #CE9BCF; padding: 12px; border-radius: 6px; margin-bottom: 15px;">
+                <div class="form-group" style="background: rgba(180,167,214,.08); border-left: 2px solid #CE9BCF; padding: 12px; border-radius: 2px; margin-bottom: 15px;">
                     <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 16px; font-weight: 600;">
                         <input type="checkbox" class="dm-checkbox" id="propReady" ${page.ready ? 'checked' : ''} onchange="updatePageProp('ready')">
                         <span> Mark as Ready</span>
@@ -4898,7 +5001,7 @@ layers.forEach((layer, layerIndex) => {
                 </div>
                 
                 <!-- Page Type -->
-                <div class="form-group" style="background: rgba(107, 155, 127, 0.1); border-left: 4px solid #6B9B7F; padding: 12px; border-radius: 6px; margin-bottom: 15px;">
+                <div class="form-group" style="background: rgba(107,155,127,.08); border-left: 2px solid #6B9B7F; padding: 12px; border-radius: 2px; margin-bottom: 15px;">
                     <label style="font-size: 16px; font-weight: 600; margin-bottom: 10px; display: block;"> Page Type</label>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
                         <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 4px;">
@@ -4930,14 +5033,14 @@ layers.forEach((layer, layerIndex) => {
                 </div>
                 
                 <!-- Special Page -->
-                <div class="form-group" style="background: rgba(180, 167, 214, 0.1); border-left: 4px solid #CE9BCF; padding: 12px; border-radius: 6px; margin-bottom: 15px;">
+                <div class="form-group" style="background: rgba(180,167,214,.08); border-left: 2px solid #CE9BCF; padding: 12px; border-radius: 2px; margin-bottom: 15px;">
                     <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 16px; font-weight: 600;">
                         <input type="checkbox" id="propSpecialPage" ${page.special_page ? 'checked' : ''} onchange="toggleSpecialPage()" style="width: 20px; height: 20px; cursor: pointer;">
                         <span> Special Page</span>
                     </label>
                     <small style="display: block; margin-top: 8px; opacity: 0.8;">Enables full-screen background and large text box. Useful for prologue, epilogue, endings, etc.</small>
                     
-                    <div id="specialPageSettings" style="display: ${page.special_page ? 'block' : 'none'}; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <div id="specialPageSettings" style="display: ${page.special_page ? 'block' : 'none'}; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(236,230,218,.08);">
                         <div class="form-group">
                             <label>Next Page</label>
                             <select id="propSpecialNextPage" onchange="updateSpecialNextPage()">
@@ -4968,7 +5071,7 @@ layers.forEach((layer, layerIndex) => {
                         <div class="stats-grid" style="margin-top: 10px;">
                             <div class="form-group">
                                 <label>Continue Text Color</label>
-                                <input type="color" id="propContinueTextColor" value="${page.continue_text_color || (gameData.font_colors?.choices || '#D97757')}" onchange="updatePageProp('continue_text_color')">
+                                <input type="color" id="propContinueTextColor" value="${page.continue_text_color || (gameData.font_colors?.choices || '#E2683C')}" onchange="updatePageProp('continue_text_color')">
                                 <small>Default: theme choices color</small>
                             </div>
                             <div class="form-group">
@@ -5021,7 +5124,7 @@ layers.forEach((layer, layerIndex) => {
                         The system automatically looks for files matching <strong>${pageId}</strong>. 
                         Override the fields below only if you need to use different files.
                     </p>
-                    <div style="display: grid; grid-template-columns: 60px 1fr; gap: 4px; background: rgba(0,0,0,0.2); padding: 8px; border-radius: 4px;">
+                    <div style="display: grid; grid-template-columns: 60px 1fr; gap: 4px; background: rgba(0,0,0,0.2); padding: 8px; border-radius: 2px;">
                         <span style="color: #888;">Image:</span> <span style="color: #E8E3D9;">${pageId}.jpg</span>
                         <span style="color: #888;">Audio:</span> <span style="color: #E8E3D9;">${pageId}.wav</span>
                         <span style="color: #888;">SFX:</span> <span style="color: #E8E3D9;">${pageId}_sfx.wav</span>
@@ -5348,7 +5451,7 @@ layers.forEach((layer, layerIndex) => {
                 page.continue_text = document.getElementById('propContinueText').value;
             } else if (prop === 'continue_text_color') {
                 const v = document.getElementById('propContinueTextColor').value;
-                const def = (gameData.font_colors && gameData.font_colors.choices) ? gameData.font_colors.choices : '#D97757';
+                const def = (gameData.font_colors && gameData.font_colors.choices) ? gameData.font_colors.choices : '#E2683C';
                 if (v && v.toLowerCase() !== def.toLowerCase()) page.continue_text_color = v;
                 else delete page.continue_text_color;
             } else if (prop === 'continue_text_size') {
@@ -6808,14 +6911,14 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
                         theme: uploadedData.theme || { preset: "fantasy" },
                         player_stats: uploadedData.player_stats || { health: 100, strength: 1, luck: 0 },
                         font_sizes: uploadedData.font_sizes || { main: 20, choices: 20, stats: 20, items: 20 },
-                        font_colors: uploadedData.font_colors || { main: '#e8e3d9', choices: '#d97757', stats: '#e8e3d9', items: '#e8e3d9' },
+                        font_colors: uploadedData.font_colors || { main: '#e8e3d9', choices: '#E2683C', stats: '#e8e3d9', items: '#e8e3d9' },
                         font_positions: uploadedData.font_positions || { choices: 52, main: 61 },
                         bottom_pixel_positions: uploadedData.bottom_pixel_positions || { stats: 122, separator: 81, items: 41 },
                         main_text_padding: uploadedData.main_text_padding !== undefined ? uploadedData.main_text_padding : 11,
                         main_text_top_padding: uploadedData.main_text_top_padding !== undefined ? uploadedData.main_text_top_padding : 0,
                         text_area_rows: uploadedData.text_area_rows !== undefined ? uploadedData.text_area_rows : 14,
                         main_text_max_height: uploadedData.main_text_max_height !== undefined ? uploadedData.main_text_max_height : 800,
-                        action_colors: uploadedData.action_colors || { border: '#D97757', background: '#1C1C1C', dice: '#FFFFFF', dice_text: '#000000', victory: '#228B22', failure: '#B22222' },
+                        action_colors: uploadedData.action_colors || { border: '#E2683C', background: '#1C1C1C', dice: '#FFFFFF', dice_text: '#000000', victory: '#228B22', failure: '#B22222' },
                         action_bezel: uploadedData.action_bezel || undefined,
                         bezels: uploadedData.bezels || undefined,
                         font_file: uploadedData.font_file || undefined,
@@ -6988,7 +7091,7 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
             // Populate custom theme colors if present, otherwise load from preset
             if (gameData.theme?.custom) {
                 document.getElementById('settingsColorPrimary').value = gameData.theme.custom.primary_color || '#E8E3D9';
-                document.getElementById('settingsColorAccent').value = gameData.theme.custom.accent_color || '#D97757';
+                document.getElementById('settingsColorAccent').value = gameData.theme.custom.accent_color || '#E2683C';
                 document.getElementById('settingsColorBackground').value = gameData.theme.custom.background_color || '#1C1C1C';
                 document.getElementById('settingsColorSecondary').value = gameData.theme.custom.secondary_color || '#B8B3A9';
             } else {
@@ -7002,16 +7105,16 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
             const ac = gameData.action_colors || {};
 
             // If no custom action border set, use theme's accent color
-            let defaultActionBorder = '#D97757'; // Fantasy default
+            let defaultActionBorder = '#E2683C'; // Fantasy default
             if (!ac.border) {
                 const currentTheme = gameData.theme?.preset || 'fantasy';
                 const themeAccents = {
-                    fantasy: '#D97757',
+                    fantasy: '#E2683C',
                     scifi: '#0088FF',
                     horror: '#8B0000',
                     steampunk: '#B8860B'
                 };
-                defaultActionBorder = themeAccents[currentTheme] || '#D97757';
+                defaultActionBorder = themeAccents[currentTheme] || '#E2683C';
             }
 
             // Border/background deprecated - bezels handle this now
@@ -7092,7 +7195,7 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
             document.getElementById('settingsFontSizeItems').value = fs.items || 20;
             const fc = gameData.font_colors || {};
             document.getElementById('settingsFontColorMain').value = fc.main || '#e8e3d9';
-            document.getElementById('settingsFontColorChoices').value = fc.choices || '#d97757';
+            document.getElementById('settingsFontColorChoices').value = fc.choices || '#E2683C';
             document.getElementById('settingsFontColorStats').value = fc.stats || '#e8e3d9';
             document.getElementById('settingsFontColorItems').value = fc.items || '#e8e3d9';
             document.getElementById('settingsFontColorSeparator').value = fc.separator || '#e8e3d9';
@@ -8201,8 +8304,8 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
                             <div class="stat-label">Player bonus + Enemy bonus</div>
                         </div>
                     </div>
-                    <div style="background: rgba(217, 119, 87, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 25px; border-left: 3px solid #D97757;">
-                        <h4 style="color: #D97757; margin-bottom: 8px; font-size: 14px;">ℹ Combat Mechanics</h4>
+                    <div style="background: rgba(226, 104, 60, 0.08); padding: 15px; border-radius: 2px; margin-bottom: 25px; border-left: 2px solid #E2683C;">
+                        <h4 style="color: #E2683C; margin-bottom: 8px; font-size: 14px;">ℹ Combat Mechanics</h4>
                         <p style="font-size: 13px; line-height: 1.6; color: #B8B3A9; margin: 0;">
                             <strong>Combat:</strong> Roll D20 + Player Bonus vs Enemy Bonus<br>
                             <strong>Difficulty:</strong> Player Bonus + Enemy Bonus (combined challenge)<br>
@@ -8240,7 +8343,7 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
                                     ${stages.length} stages • Total damage on failures: ${totalDamage} HP
                                 </div>
                                 ${stages.map(stage => `
-                                    <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; margin: 8px 0;">
+                                    <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 2px; margin: 8px 0;">
                                         <div style="font-weight: 600; color: #FF9966; margin-bottom: 6px;">Stage ${stage.stage}/${stage.totalStages}</div>
                                         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-size: 13px;">
                                             <div>${stage.actionType === 'dice' ? ' Dice Roll' : ' Combat'}</div>
@@ -8326,7 +8429,7 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
             // ============================================
             const pathAnalysis = document.getElementById('pathAnalysis');
             let pathHTML = `
-                <div style="background: rgba(107, 155, 127, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 25px; border-left: 3px solid #6B9B7F;">
+                <div style="background: rgba(107, 155, 127, 0.1); padding: 15px; border-radius: 2px; margin-bottom: 25px; border-left: 3px solid #6B9B7F;">
                     <h4 style="color: #6B9B7F; margin-bottom: 8px; font-size: 14px;">ℹ Path Analysis Explained</h4>
                     <p style="font-size: 13px; line-height: 1.6; color: #B8B3A9; margin: 0;">
                         <strong>Maximum Depth:</strong> The longest chain of pages from start to any ending<br>
@@ -8390,7 +8493,7 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
             const presetColors = {
                 fantasy: {
                     primary: '#E8E3D9',
-                    accent: '#D97757',
+                    accent: '#E2683C',
                     background: '#1C1C1C',
                     secondary: '#B8B3A9'
                 },
@@ -8600,7 +8703,7 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
             // Save action colors
             gameData.action_colors = {
                 // border/background deprecated - bezels handle this now
-                // border: document.getElementById('settingsActionBorder')?.value || '#D97757',
+                // border: document.getElementById('settingsActionBorder')?.value || '#E2683C',
                 // background: document.getElementById('settingsActionBackground')?.value || '#1C1C1C',
                 dice: document.getElementById('settingsActionDice')?.value || '#FFFFFF',
                 dice_text: document.getElementById('settingsActionDiceText')?.value || '#000000'
@@ -8679,7 +8782,7 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
             };
             gameData.font_colors = {
                 main: document.getElementById('settingsFontColorMain')?.value || '#e8e3d9',
-                choices: document.getElementById('settingsFontColorChoices')?.value || '#d97757',
+                choices: document.getElementById('settingsFontColorChoices')?.value || '#E2683C',
                 stats: document.getElementById('settingsFontColorStats')?.value || '#e8e3d9',
                 items: document.getElementById('settingsFontColorItems')?.value || '#e8e3d9',
                 separator: document.getElementById('settingsFontColorSeparator')?.value || '#e8e3d9'
@@ -9357,35 +9460,35 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
 <small style="opacity:.8;">Only for browser preview</small>
 </div>
 </div>
-<div style="margin-bottom: 12px; padding: 10px; background: rgba(217, 119, 87, 0.1); border-radius: 6px; border: 1px solid rgba(217, 119, 87, 0.3);">
-<label style="display: block; font-size: 12px; font-weight: 600; color: #D97757; margin-bottom: 8px;">
+<div style="margin-bottom: 12px; padding: 10px; background: rgba(226, 104, 60, 0.08); border-radius: 2px; border: 1px solid rgba(226, 104, 60, 0.3);">
+<label style="display: block; font-size: 12px; font-weight: 600; color: #E2683C; margin-bottom: 8px;">
                                     Action State Preview
                                 </label>
-<input id="actionStateSlider" max="3" min="0" oninput="updateActionPreview(this.value)" step="1" style="width: 100%; accent-color: #D97757;" type="range" value="0"/>
+<input id="actionStateSlider" max="3" min="0" oninput="updateActionPreview(this.value)" step="1" style="width: 100%; accent-color: #E2683C;" type="range" value="0"/>
 <div style="display: flex; justify-content: space-between; font-size: 11px; color: #999; margin-top: 4px;">
 <span>Game</span>
 <span> Rolling</span>
 <span> Failure</span>
 <span> Victory</span>
 </div>
-<div id="actionStateLabel" style="font-size: 11px; color: #D97757; font-weight: 600; text-align: center; margin-top: 10px;">
+<div id="actionStateLabel" style="font-size: 11px; color: #E2683C; font-weight: 600; text-align: center; margin-top: 10px;">
                                     Normal Game View
                                 </div>
 </div>
 </div>
 <div style="width:360px; max-width:100%;">
 <!-- Monitor PPI Input for Accurate Preview -->
-<div id="ppiControl" style="margin-bottom: 12px; padding: 12px; background: rgba(217, 119, 87, 0.1); border-radius: 6px; border: 1px solid rgba(217, 119, 87, 0.3); display: none;">
-<label style="display: block; font-size: 12px; font-weight: 600; color: #D97757; margin-bottom: 8px;">
+<div id="ppiControl" style="margin-bottom: 12px; padding: 12px; background: rgba(226, 104, 60, 0.08); border-radius: 2px; border: 1px solid rgba(226, 104, 60, 0.3); display: none;">
+<label style="display: block; font-size: 12px; font-weight: 600; color: #E2683C; margin-bottom: 8px;">
                                     Your Monitor PPI / 2
                                 </label>
 <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 6px;">
-<input id="monitorPPI" max="150" min="36" oninput="updatePPIInfo(); updatePreview();" step="0.5" style="width: 80px; padding: 6px; font-size: 14px; background: #2C2C2C; color: #E8E3D9; border: 1px solid #555; border-radius: 4px;" type="number" value="82"/>
+<input id="monitorPPI" max="150" min="36" oninput="updatePPIInfo(); updatePreview();" step="0.5" style="width: 80px; padding: 6px; font-size: 14px; background: #2C2C2C; color: #E8E3D9; border: 1px solid #555; border-radius: 2px;" type="number" value="82"/>
 <span style="font-size: 11px; color: #999;">
                                         Default: 82 (BenQ 27" 4K)
                                     </span>
 </div>
-<div id="ppiInfo" style="font-size: 10px; color: #D97757; margin-top: 6px;">
+<div id="ppiInfo" style="font-size: 10px; color: #E2683C; margin-top: 6px;">
                                     Text multiplier: 0.39× (82 ÷ 210)
                                 </div>
 <div style="font-size: 10px; color: #999; margin-top: 4px; line-height: 1.4;">
@@ -9393,7 +9496,7 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
 <em>BenQ 27" 4K: 163/2 = 82 | MacBook Pro: 254/2 = 127</em>
 </div>
 </div>
-<div id="previewFrame" style="width:100%; aspect-ratio: 720 / 1280; border-radius:14px; overflow:hidden; border:1px solid rgba(255,255,255,.12); position:relative; background:#111;">
+<div id="previewFrame" style="width:100%; aspect-ratio: 720 / 1280; border-radius: 2px; overflow:hidden; border:1px solid rgba(236,230,218,.12); position:relative; background:#111;">
 <div id="previewImage" style="position:absolute; left:0; top:0; right:0; height:50%; background:#000 center/cover no-repeat; z-index:1;">
 </div>
 <div id="previewStatFloatLayer" style="position:absolute; left:0; top:0; right:0; height:50%; z-index:9; pointer-events:none;"></div>
@@ -9402,7 +9505,7 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
 </div>
 <div id="previewActionBezel" style="position:absolute; left:0; top:0; right:0; bottom:0; background-size:contain; background-repeat:no-repeat; background-position:center; z-index:2; display:none;">
 </div>
-<div id="previewChoices" style="position:absolute; top:52%; left:0; right:0; text-align:center; font-size:12px; line-height:1.25; text-shadow:0 2px 8px rgba(0,0,0,.8); color:#d97757; z-index:10;">
+<div id="previewChoices" style="position:absolute; top:52%; left:0; right:0; text-align:center; font-size:12px; line-height:1.25; text-shadow:0 2px 8px rgba(0,0,0,.8); color:#E2683C; z-index:10;">
                                     [1] Look Around<br/>[2] Go Right In!</div>
 <div id="previewMainText" style="position:absolute; left:11%; right:11%; top:61%; font-size:12px; line-height:1.35; text-align:left; text-shadow:0 2px 8px rgba(0,0,0,.85); overflow:hidden; color:#e8e3d9; z-index:10;">
                                     The black tower stands tall before you.</div>
@@ -9492,7 +9595,7 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
 </div>
 <div class="form-group">
 <label>Accent Color</label>
-<input id="settingsColorAccent" type="color" value="#D97757"/>
+<input id="settingsColorAccent" type="color" value="#E2683C"/>
 <small>Highlights &amp; borders</small>
 </div>
 </div>
@@ -9528,7 +9631,7 @@ Upload customized bezels. If left empty the preset themed bezels will be used.
 <small>Filename in <code>/home/dm/dungeon_mastron/console_assets/fonts/</code> or USB
                                 <code>/fonts/</code></small>
 </div>
-<h3 style="margin: 12px 0 12px 0; color: #D97757; border-bottom: 1px solid #3D3D3D; padding-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'Outfit', sans-serif; font-weight: 700;"> COLORS</h3>
+<h3 style="margin: 12px 0 12px 0; color: #E2683C; border-bottom: 1px solid rgba(236,230,218,.12); padding-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'Outfit', sans-serif; font-weight: 700;"> COLORS</h3>
 <div class="stats-grid" style="grid-template-columns: 1fr 1fr;">
 <div class="form-group">
 <label>Main Text Color</label>
@@ -9536,7 +9639,7 @@ Upload customized bezels. If left empty the preset themed bezels will be used.
 </div>
 <div class="form-group">
 <label>Choices Color</label>
-<input id="settingsFontColorChoices" type="color" value="#d97757"/>
+<input id="settingsFontColorChoices" type="color" value="#E2683C"/>
 </div>
 </div>
 <div class="stats-grid" style="grid-template-columns: 1fr 1fr;">
@@ -9569,7 +9672,7 @@ Upload customized bezels. If left empty the preset themed bezels will be used.
 <input id="settingsActionDiceText" type="color" value="#000000"/>
 </div>
 </div>
-<h3 style="margin: 22px 0 12px 0; color: #D97757; border-bottom: 1px solid #3D3D3D; padding-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'Outfit', sans-serif; font-weight: 700;">FONT SIZES</h3>
+<h3 style="margin: 22px 0 12px 0; color: #E2683C; border-bottom: 1px solid rgba(236,230,218,.12); padding-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'Outfit', sans-serif; font-weight: 700;">FONT SIZES</h3>
 <div class="stats-grid" style="grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 6px;">
 <div class="form-group">
 <label>Main Text Size</label>
@@ -9603,7 +9706,7 @@ Upload customized bezels. If left empty the preset themed bezels will be used.
     <button class="btn btn-warning" style="width:100%; height:40px; padding:10px 12px; font-family:'Inter', sans-serif; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; font-size:14px;" onclick="setSettingsMode('web')" id="modeWebBtn">Web Preview</button>
   </div>
 </div>
-<h3 style="margin: 22px 0 12px 0; color: #D97757; border-bottom: 1px solid #3D3D3D; padding-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'Outfit', sans-serif; font-weight: 700;">FONT POSITIONS</h3>
+<h3 style="margin: 22px 0 12px 0; color: #E2683C; border-bottom: 1px solid rgba(236,230,218,.12); padding-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'Outfit', sans-serif; font-weight: 700;">FONT POSITIONS</h3>
 <div class="stats-grid" style="grid-template-columns: 1fr 1fr;">
 <div class="form-group">
 <label>Choices Y-Position (% from bottom)</label>
@@ -9641,7 +9744,7 @@ Upload customized bezels. If left empty the preset themed bezels will be used.
 </div>
 <div class="form-group"></div>
 </div>
-<h3 style="margin: 22px 0 12px 0; color: #D97757; border-bottom: 1px solid #3D3D3D; padding-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'Outfit', sans-serif; font-weight: 700;">TEXT PADDING</h3>
+<h3 style="margin: 22px 0 12px 0; color: #E2683C; border-bottom: 1px solid rgba(236,230,218,.12); padding-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'Outfit', sans-serif; font-weight: 700;">TEXT PADDING</h3>
 <div class="stats-grid" style="grid-template-columns: 1fr 1fr;">
 <div class="form-group">
 <label>Main Text Left/Right Padding (%)</label>
@@ -9676,7 +9779,7 @@ Upload customized bezels. If left empty the preset themed bezels will be used.
 </div>
 </div>
 <div class="modal-section">
-<h3 style="margin: 12px 0 10px 0; color: #D97757; border-bottom: 1px solid #3D3D3D; padding-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'Outfit', sans-serif; font-weight: 700;">ACTION ELEMENT POSITIONS</h3>
+<h3 style="margin: 12px 0 10px 0; color: #E2683C; border-bottom: 1px solid rgba(236,230,218,.12); padding-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'Outfit', sans-serif; font-weight: 700;">ACTION ELEMENT POSITIONS</h3>
 <div class="stats-grid" style="margin-top: 6px;">
 <div class="form-group">
 <label>Rolling Text Y Position (% from bottom)</label>
@@ -9705,7 +9808,7 @@ Upload customized bezels. If left empty the preset themed bezels will be used.
 </div>
 
 <div class="modal-section">
-  <h3 style="margin: 12px 0 10px 0; color: #D97757; border-bottom: 1px solid #3D3D3D; padding-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'Outfit', sans-serif; font-weight: 700;">STAT POPUP (GAIN / LOSS)</h3>
+  <h3 style="margin: 12px 0 10px 0; color: #E2683C; border-bottom: 1px solid rgba(236,230,218,.12); padding-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'Outfit', sans-serif; font-weight: 700;">STAT POPUP (GAIN / LOSS)</h3>
   <div class="stats-grid" style="grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 6px;">
     <div class="form-group">
       <label>Font Size (px)</label>
@@ -9902,8 +10005,8 @@ Project website: www.dungeonmastron.com
             if (!mainTextEl) return;
 
             // Show border and subtle background to highlight full area
-            mainTextEl.style.border = '2px dashed rgba(217, 119, 87, 0.8)';
-            mainTextEl.style.backgroundColor = 'rgba(217, 119, 87, 0.05)';
+            mainTextEl.style.border = '2px dashed rgba(226, 104, 60, 0.8)';
+            mainTextEl.style.backgroundColor = 'rgba(226, 104, 60, 0.05)';
             mainTextEl.style.transition = 'border 0.3s ease, background-color 0.3s ease';
 
             // Clear existing timeout
@@ -9962,7 +10065,7 @@ Project website: www.dungeonmastron.com
 
             // Get colors
             const cMain = document.getElementById('settingsFontColorMain')?.value || '#e8e3d9';
-            const cChoices = document.getElementById('settingsFontColorChoices')?.value || '#d97757';
+            const cChoices = document.getElementById('settingsFontColorChoices')?.value || '#E2683C';
             const cStats = document.getElementById('settingsFontColorStats')?.value || '#e8e3d9';
             const cItems = document.getElementById('settingsFontColorItems')?.value || '#e8e3d9';
             const cSeparator = document.getElementById('settingsFontColorSeparator')?.value || '#e8e3d9';
