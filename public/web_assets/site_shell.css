@@ -298,7 +298,7 @@ html { scrollbar-gutter: stable; }
   transition: color 0.15s ease, transform 0.15s ease;
 }
 #site-footer .footer-socials a:hover {
-  color: var(--shell-accent, #f0b429);
+  color: var(--shell-accent, #6B9B7F);
   transform: translateY(-1px);
 }
 #site-footer .footer-license a {

@@ -59,25 +59,25 @@
       color: rgba(232,227,217,0.40);
     }
     .post-breadcrumb a { color: rgba(232,227,217,0.45); text-decoration: none; transition: color 0.15s; }
-    .post-breadcrumb a:hover { color: #d4900a; }
+    .post-breadcrumb a:hover { color: #6B9B7F; }
     .post-breadcrumb .sep { opacity: 0.4; }
     .post-header-wrap { max-width: 780px; margin: 20px auto 0; padding: 0 18px; }
     .post-header {
       position: relative; border-radius: 16px;
-      border: 1px solid rgba(124,58,237,0.25);
-      background: linear-gradient(135deg, rgba(124,58,237,0.10) 0%, rgba(212,144,10,0.06) 60%, transparent 100%);
+      border: 1px solid rgba(217,119,87,0.25);
+      background: linear-gradient(135deg, rgba(217,119,87,0.10) 0%, rgba(107,155,127,0.06) 60%, transparent 100%);
       padding: 32px 36px 28px; overflow: hidden;
     }
     .post-header::before {
       content: ""; position: absolute; top: -60px; right: -60px;
       width: 220px; height: 220px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(217,119,87,0.15) 0%, transparent 70%);
       pointer-events: none;
     }
     @media (max-width: 640px) { .post-header { padding: 22px 18px 20px; } }
     .post-cat {
       font-family: var(--shell-mono); font-size: 10.5px; letter-spacing: 0.13em;
-      text-transform: uppercase; color: #a78bfa; display: inline-block; margin-bottom: 14px;
+      text-transform: uppercase; color: #D97757; display: inline-block; margin-bottom: 14px;
     }
     .post-header h1 {
       font-family: var(--shell-heading); font-weight: 700;
@@ -97,7 +97,7 @@
     .post-prose h2 {
       font-family: var(--shell-heading); font-weight: 700; font-size: 1.4rem; line-height: 1.25;
       margin: 46px 0 14px; color: var(--shell-text);
-      border-left: 3px solid #d4900a; padding-left: 14px;
+      border-left: 3px solid #D97757; padding-left: 14px;
     }
     .post-prose h3 {
       font-family: var(--shell-heading); font-weight: 600; font-size: 1.1rem; line-height: 1.3;
@@ -111,13 +111,13 @@
     .post-prose strong { color: var(--shell-text); font-weight: 600; }
     .post-prose em { color: rgba(232,227,217,0.80); }
     .post-prose blockquote {
-      border-left: 3px solid #d4900a; margin: 24px 0;
+      border-left: 3px solid #D97757; margin: 24px 0;
       padding: 10px 0 10px 22px; color: rgba(232,227,217,0.75);
       font-style: italic; font-size: 1.05rem; line-height: 1.7;
     }
     .post-prose code {
       font-family: var(--shell-mono); font-size: 0.875em;
-      background: rgba(0,0,0,0.35); padding: 2px 7px; border-radius: 5px; color: #e8a356;
+      background: rgba(0,0,0,0.35); padding: 2px 7px; border-radius: 5px; color: #D97757;
     }
     .post-prose pre {
       background: rgba(0,0,0,0.45); border: 1px solid var(--shell-border);
@@ -126,8 +126,8 @@
     .post-prose pre code { background: none; padding: 0; font-size: 0.875rem; color: #b8b3a9; }
     .post-prose hr { border: none; border-top: 1px solid var(--shell-border); margin: 36px 0; }
     .post-prose .cta {
-      border: 1px solid rgba(212,144,10,0.35); border-radius: 14px;
-      background: rgba(212,144,10,0.06); padding: 22px 26px; margin: 32px 0;
+      border: 1px solid rgba(217,119,87,0.35); border-radius: 14px;
+      background: rgba(217,119,87,0.06); padding: 22px 26px; margin: 32px 0;
     }
     .post-prose .cta p { margin: 0; color: var(--shell-sub); }
     .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0 0 22px; }
@@ -141,29 +141,29 @@
       color: rgba(232,227,217,0.50); border: 1px solid var(--shell-border); border-radius: 999px;
       padding: 5px 12px; text-decoration: none; transition: color 0.15s, border-color 0.15s;
     }
-    .post-tag:hover { color: #a78bfa; border-color: rgba(167,139,250,0.45); }
+    .post-tag:hover { color: #6B9B7F; border-color: rgba(107,155,127,0.45); }
     .post-cta-panel {
       margin-top: 44px; padding: 28px 30px;
-      border: 1px solid rgba(124,58,237,0.30); border-radius: 16px;
-      background: linear-gradient(135deg, rgba(124,58,237,0.08) 0%, rgba(0,0,0,0.20) 100%);
+      border: 1px solid rgba(217,119,87,0.30); border-radius: 16px;
+      background: linear-gradient(135deg, rgba(217,119,87,0.08) 0%, rgba(0,0,0,0.20) 100%);
       text-align: center;
     }
     .post-cta-panel h3 { font-family: var(--shell-heading); font-weight: 700; font-size: 1.25rem; margin: 0 0 10px; color: var(--shell-text); }
     .post-cta-panel p { margin: 0 0 18px; color: var(--shell-sub); font-size: 0.9375rem; line-height: 1.6; }
     .post-cta-btn {
       display: inline-block; padding: 11px 24px; border-radius: 10px;
-      border: 1px solid rgba(212,144,10,0.6); background: rgba(212,144,10,0.14);
-      color: #f0b429; font-family: var(--shell-mono); font-size: 12px;
+      border: 1px solid rgba(217,119,87,0.55); background: rgba(217,119,87,0.22);
+      color: #FFFCF7; font-family: var(--shell-mono); font-size: 12px;
       letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none;
       transition: background 0.15s, border-color 0.15s;
     }
-    .post-cta-btn:hover { background: rgba(212,144,10,0.24); border-color: rgba(212,144,10,0.8); }
+    .post-cta-btn:hover { background: rgba(217,119,87,0.30); border-color: rgba(217,119,87,0.80); }
     .post-back {
       display: inline-flex; align-items: center; gap: 6px; margin-top: 40px;
       font-family: var(--shell-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
-      color: #d4900a; text-decoration: none; transition: color 0.15s;
+      color: #6B9B7F; text-decoration: none; transition: color 0.15s;
     }
-    .post-back:hover { color: #f0b429; }
+    .post-back:hover { color: #8fbfaa; }
   </style>
 </head>
 <body>
