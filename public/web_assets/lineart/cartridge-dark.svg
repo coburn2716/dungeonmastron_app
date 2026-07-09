@@ -22,29 +22,37 @@
     .shine { opacity: 0; }
   }
 </style>
-  <path d="M165,20 V416" stroke="#ECE6DA" stroke-opacity=".14" stroke-width=".7" stroke-dasharray="5 5" fill="none"/>
-  <path d="M72,46 h186 a12,12 0 0 1 12,12 v306 a12,12 0 0 1 -12,12 h-186 a12,12 0 0 1 -12,-12 v-306 a12,12 0 0 1 12,-12 Z" stroke="#ECE6DA" stroke-opacity=".80" stroke-width="1.5" fill="none"/>
-  <rect x="65" y="51" width="200" height="320" rx="7" stroke="#ECE6DA" stroke-opacity=".22" stroke-width=".8" fill="none"/>
-  <path class="shine" d="M72,46 h186 a12,12 0 0 1 12,12 v306 a12,12 0 0 1 -12,12 h-186 a12,12 0 0 1 -12,-12 v-306 a12,12 0 0 1 12,-12 Z" pathLength="100" stroke="#E2683C" stroke-width="1.6" fill="none"/>
-  <path d="M123,64 v16 M137,64 v16 M151,64 v16 M165,64 v16 M179,64 v16 M193,64 v16 M207,64 v16" stroke="#ECE6DA" stroke-opacity=".45" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-  <rect x="86" y="108" width="158" height="222" rx="5" stroke="#ECE6DA" stroke-opacity=".60" stroke-width="1.1" fill="none"/>
-  <rect x="90" y="112" width="150" height="214" rx="3" stroke="#ECE6DA" stroke-opacity=".20" stroke-width=".8" fill="none"/>
-  <path class="mark" d="M165,160 L175,172 L165,184 L155,172 Z" stroke="#E2683C" stroke-width="1.2" fill="none"/>
-  <path d="M165,167 L169.2,172 L165,177 L160.8,172 Z" stroke="#E2683C" stroke-opacity=".5" stroke-width=".8" fill="none"/>
-  <path d="M98,127 v-7 h7 M225,120 h7 v7 M98,259 v7 h7 M225,266 h7 v-7" stroke="#ECE6DA" stroke-opacity=".30" stroke-width="1" fill="none"/>
-  <path d="M109,292 h112" stroke="#ECE6DA" stroke-opacity=".38" stroke-width="1" fill="none"/>
-  <path d="M131,306 h58" stroke="#ECE6DA" stroke-opacity=".24" stroke-width="1" fill="none"/>
-  <path class="cursor" d="M193,306 h7" stroke="#E2683C" stroke-width="2.4" fill="none"/>
-  <path d="M60,256 h6 v34 h-6 M270,256 h-6 v34 h6" stroke="#ECE6DA" stroke-opacity=".40" stroke-width="1" fill="none"/>
-  <path d="M98,376 v20 h134 v-20" stroke="#ECE6DA" stroke-opacity=".35" stroke-width="1" stroke-dasharray="4 3" fill="none"/>
-  <path d="M106,381 v10 M116.72727272727272,381 v10 M127.45454545454545,381 v10 M138.1818181818182,381 v10 M148.9090909090909,381 v10 M159.63636363636363,381 v10 M170.36363636363637,381 v10 M181.0909090909091,381 v10 M191.8181818181818,381 v10 M202.54545454545453,381 v10 M213.27272727272725,381 v10 M224,381 v10" stroke="#ECE6DA" stroke-opacity=".22" stroke-width="1" fill="none"/>
-  <path d="M314,130 L286,142 L246,150" class="lead"/>
-  <text x="318" y="128" class="note">LABEL — YOURS</text>
-  <path d="M26,420 L76,406 L100,388" class="lead"/>
+  <!-- centreline -->
+  <path d="M200,34 V444" stroke="#ECE6DA" stroke-opacity=".14" stroke-width=".7" stroke-dasharray="5 5" fill="none"/>
+  <!-- cartridge body: near-square landscape slab, rounded corners -->
+  <path d="M76,92 h248 a16,16 0 0 1 16,16 v208 a16,16 0 0 1 -16,16 h-248 a16,16 0 0 1 -16,-16 v-208 a16,16 0 0 1 16,-16 Z" stroke="#ECE6DA" stroke-opacity=".80" stroke-width="1.5" fill="none"/>
+  <rect x="65" y="97" width="270" height="230" rx="11" stroke="#ECE6DA" stroke-opacity=".22" stroke-width=".8" fill="none"/>
+  <path class="shine" d="M76,92 h248 a16,16 0 0 1 16,16 v208 a16,16 0 0 1 -16,16 h-248 a16,16 0 0 1 -16,-16 v-208 a16,16 0 0 1 16,-16 Z" pathLength="100" stroke="#E2683C" stroke-width="1.6" fill="none"/>
+  <!-- grip grooves, both side edges near the top corners -->
+  <path d="M64,116 h22 M64,128 h22 M64,140 h22 M64,152 h22" stroke="#ECE6DA" stroke-opacity=".45" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <path d="M336,116 h-22 M336,128 h-22 M336,140 h-22 M336,152 h-22" stroke="#ECE6DA" stroke-opacity=".45" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <!-- recessed label panel, upper two-thirds -->
+  <rect x="100" y="114" width="200" height="134" rx="7" stroke="#ECE6DA" stroke-opacity=".60" stroke-width="1.1" fill="none"/>
+  <rect x="104" y="118" width="192" height="126" rx="5" stroke="#ECE6DA" stroke-opacity=".20" stroke-width=".8" fill="none"/>
+  <path class="mark" d="M200,150 L211,164 L200,178 L189,164 Z" stroke="#E2683C" stroke-width="1.2" fill="none"/>
+  <path d="M200,158 L204.6,164 L200,170 L195.4,164 Z" stroke="#E2683C" stroke-opacity=".5" stroke-width=".8" fill="none"/>
+  <path d="M112,134 v-9 h9 M279,125 h9 v9 M112,228 v9 h9 M279,237 h9 v-9" stroke="#ECE6DA" stroke-opacity=".30" stroke-width="1" fill="none"/>
+  <path d="M144,206 h112" stroke="#ECE6DA" stroke-opacity=".38" stroke-width="1" fill="none"/>
+  <path d="M168,220 h58" stroke="#ECE6DA" stroke-opacity=".24" stroke-width="1" fill="none"/>
+  <path class="cursor" d="M230,220 h7" stroke="#E2683C" stroke-width="2.4" fill="none"/>
+  <!-- edge connector, hidden under the flat base -->
+  <path d="M120,332 v18 h160 v-18" stroke="#ECE6DA" stroke-opacity=".35" stroke-width="1" stroke-dasharray="4 3" fill="none"/>
+  <path d="M128,337 v10 M141.1,337 v10 M154.2,337 v10 M167.3,337 v10 M180.4,337 v10 M193.5,337 v10 M206.5,337 v10 M219.6,337 v10 M232.7,337 v10 M245.8,337 v10 M258.9,337 v10 M272,337 v10" stroke="#ECE6DA" stroke-opacity=".22" stroke-width="1" fill="none"/>
+  <!-- annotations -->
+  <path d="M34,82 L52,98 L62,114" class="lead"/>
+  <text x="24" y="72" class="note">GRIP GROOVES ×4</text>
+  <path d="M348,170 L320,176 L302,180" class="lead"/>
+  <text x="344" y="166" class="note">LABEL — YOURS</text>
+  <path d="M26,420 L86,392 L118,354" class="lead"/>
   <text x="24" y="432" class="note">EDGE CONNECTOR · HIDDEN</text>
-  <path d="M60,42 V22 M270,42 V22" class="ext"/>
-  <path d="M60,28 H270" class="dim"/>
-  <path d="M60,28 l6,-2.4 v4.8 Z M270,28 l-6,-2.4 v4.8 Z" class="arr"/>
-  <text x="165" y="22" text-anchor="middle" class="note">ONE STORY PER CART</text>
+  <path d="M60,88 V56 M340,88 V56" class="ext"/>
+  <path d="M60,62 H340" class="dim"/>
+  <path d="M60,62 l6,-2.4 v4.8 Z M340,62 l-6,-2.4 v4.8 Z" class="arr"/>
+  <text x="200" y="56" text-anchor="middle" class="note">ONE STORY PER CART</text>
   <text x="24" y="458" class="note title">DM·K1 — GAME CARTRIDGE · WRITE ONCE, PLAY FOREVER</text>
 </svg>
