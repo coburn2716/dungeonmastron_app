@@ -21,7 +21,8 @@
   <style>
     body { margin: 0; background: var(--shell-bg); color: var(--shell-text); font-family: var(--shell-font); }
     .wrap { max-width: 1560px; margin: 0 auto; padding: 46px 18px 80px; }
-    h1 { font-family: var(--shell-heading); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin: 0 0 12px; font-size: clamp(24px, 3.2vw, 44px); }
+    h1 { font-family: var(--shell-heading); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin: 0 0 12px; font-size: clamp(28px, 3.2vw, 52px); line-height: 1.08; color: var(--shell-text); }
+    h1 .ver { font-size: 0.5em; font-weight: 400; color: #6B9B7F; letter-spacing: 0.1em; }
     p { margin: 0 0 12px; color: var(--shell-sub); line-height: 1.6; }
     .panel { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.10); border-radius: 16px; padding: 16px; }
     .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: var(--shell-text); text-decoration: none; font-family: var(--shell-mono); }
@@ -30,9 +31,9 @@
     .kicker {
       font-family: var(--shell-mono);
       font-size: 11px;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(232,227,217,0.70);
+      color: #6B9B7F;
       margin-bottom: 10px;
       display: inline-flex;
       align-items: center;
@@ -43,10 +44,10 @@
       width: 6px;
       height: 6px;
       border-radius: 999px;
-      background: #6B9B7F;
+      background: currentColor;
       opacity: 0.9;
     }
-    .kicker--orange::before { background: #D97757; }
+    .kicker--orange { color: #D97757; }
     .lead { max-width: 62ch; font-size: 14px; }
 
     .terminal {
@@ -322,23 +323,25 @@
     .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
   </style>
 </head>
-<body>
+<body class="dm-surface">
   <div id="site-nav"></div>
   <main class="wrap">
-    <h1 class="kicker" style="font-family:var(--shell-heading);font-size:clamp(28px,4vw,52px);font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin:0 0 6px;">AI Companion <span style="font-size:0.55em;opacity:0.55;font-weight:400;">V7.2</span></h1>
-    <p class="lead" style="margin:0 0 28px;">Paste-and-play AI prompt for ChatGPT or Claude. Generates complete, validated Dungeon Mastron game&nbsp;files with enforced narrative structure, hardware-accurate LED rules, and built-in verification.</p>
+    <h1>AI Companion <span class="ver">V7.2</span></h1>
+    <p class="lead" style="margin:0;">Paste-and-play AI prompt for ChatGPT or Claude. Generates complete, validated Dungeon Mastron game&nbsp;files with enforced narrative structure, hardware-accurate LED rules, and built-in verification.</p>
+    <div class="dm-rule" aria-hidden="true" style="margin-bottom: 28px;"></div>
 
     <section class="grid">
       <div>
         <div class="terminal" aria-label="AI Companion template">
           <div class="terminal-bar">
-            <div class="terminal-title"><span class="accent">AI</span> Companion — Template</div>
+            <div class="terminal-title dm-cursor"><span class="accent">AI</span> Companion — Template</div>
             <div class="terminal-actions">
               <a class="btn" href="../LICENSE.txt" download="LICENSE.txt">License</a>
               <a class="btn" href="../guides/ai_companion.md" download="ai_companion.md">Open raw</a>
             </div>
           </div>
           <pre id="aiTemplate" class="terminal-body terminal-body--green">Loading…</pre>
+          <div class="dm-termstatus" aria-hidden="true"><span class="dm-live">Template loaded</span><span id="aiTemplateLines"></span></div>
         </div>
 
         <div class="terminal-note">
@@ -431,9 +434,9 @@
       </aside>
     </section>
 
-    <div class="section-sep" aria-hidden="true"></div>
-
-    <div id="ai-game-balancer" class="kicker kicker--orange" style="margin-top: 26px;">AI GAME BALANCER</div>
+    <div id="ai-game-balancer" class="dm-sechead dm-sechead--orange">
+      <span class="dm-label">AI GAME BALANCER</span>
+    </div>
 
     <section class="balancer-grid">
       <div class="balancer-left-rail">
@@ -501,13 +504,14 @@
       <div>
         <div class="terminal" aria-label="AI Game Balancer template">
           <div class="terminal-bar">
-            <div class="terminal-title"><span class="accent">AI</span> Game Balancer — Template</div>
+            <div class="terminal-title dm-cursor dm-cursor--orange"><span class="accent">AI</span> Game Balancer — Template</div>
             <div class="terminal-actions">
               <a class="btn" href="../LICENSE.txt" download="LICENSE.txt">License</a>
               <a class="btn" href="../guides/ai_game_balancer.md" download="ai_game_balancer.md">Open raw</a>
             </div>
           </div>
           <pre id="aiBalancerTemplate" class="terminal-body terminal-body--orange">Loading…</pre>
+          <div class="dm-termstatus dm-termstatus--orange" aria-hidden="true"><span class="dm-live">Template loaded</span><span id="aiBalancerLines"></span></div>
         </div>
       </div>
     </section>
@@ -558,6 +562,8 @@
 
         text = text.replace(/^\s+/, '');
         el.textContent = text;
+        const lc = document.getElementById('aiTemplateLines');
+        if (lc) lc.textContent = `${text.split('\n').length} lines`;
       } catch (e) {
         el.textContent = `Failed to load guides/ai_companion.md\n\n${String(e)}`;
       }
@@ -571,7 +577,10 @@
           '../guides/ai_game_balancer.md',
           '../guides/ai_game_balancer.md',
         ]);
-        el.textContent = text.replace(/^\s+/, '');
+        const cleaned = text.replace(/^\s+/, '');
+        el.textContent = cleaned;
+        const lc = document.getElementById('aiBalancerLines');
+        if (lc) lc.textContent = `${cleaned.split('\n').length} lines`;
       } catch (e) {
         el.textContent = `Failed to load guides/ai_game_balancer.md\n\n${String(e)}`;
       }

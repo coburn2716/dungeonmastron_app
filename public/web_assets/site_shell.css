@@ -330,3 +330,152 @@ html { scrollbar-gutter: stable; }
 
 /* Homepage GitHub/Ko-fi card logos (white SVGs on dark tiles) */
 .community-tile-logo { max-width: 62%; max-height: 46px; width: auto; height: auto; object-fit: contain; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DM DESIGN SYSTEM v2 — shared page furniture (opt-in classes, additive only)
+   Used by the marketing pages (home/console/ai/tools/blog/guides/library).
+   Play & Builder apps never reference these class names.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes dm-cursor-blink {
+  0%, 55% { opacity: 1; }
+  56%, 100% { opacity: 0; }
+}
+
+/* Industrial graph-paper surface + faint warm glow at the top of the page.
+   Opt-in: <body class="dm-surface"> */
+body.dm-surface {
+  background-color: var(--shell-bg);
+  background-image:
+    radial-gradient(ellipse 90% 380px at 50% 0%, rgba(217,119,87,0.055), transparent 70%),
+    linear-gradient(rgba(255,255,255,0.017) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.017) 1px, transparent 1px);
+  background-size: 100% 100%, 44px 44px, 44px 44px;
+  background-attachment: fixed;
+}
+
+/* Section header component: [NN] ● LABEL ─────────────
+   <div class="dm-sechead dm-sechead--orange">
+     <span class="dm-num">01</span><span class="dm-label">Label</span>
+   </div> */
+.dm-sechead {
+  --dm-acc: #6B9B7F;
+  --dm-acc-soft: rgba(107,155,127,0.45);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 58px 0 24px;
+  font-family: var(--shell-mono);
+  text-transform: uppercase;
+}
+.dm-sechead--orange { --dm-acc: #D97757; --dm-acc-soft: rgba(217,119,87,0.45); }
+.dm-sechead--yellow { --dm-acc: #e8a356; --dm-acc-soft: rgba(232,163,86,0.45); }
+.dm-sechead .dm-num {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  color: rgba(232,227,217,0.45);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 6px;
+  padding: 4px 7px;
+  background: rgba(255,255,255,0.02);
+}
+.dm-sechead .dm-label {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--dm-acc);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.dm-sechead .dm-label::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+  animation: dm-dot-pulse 3.6s ease-in-out infinite;
+}
+.dm-sechead::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--dm-acc-soft), rgba(255,255,255,0.05) 55%, transparent);
+}
+
+/* Glowing accent rule under page h1s: <div class="dm-rule dm-rule--orange"></div> */
+.dm-rule {
+  --dm-acc: #6B9B7F;
+  --dm-acc-soft: rgba(107,155,127,0.5);
+  width: 72px;
+  height: 2px;
+  border-radius: 2px;
+  margin: 18px 0 0;
+  background: linear-gradient(90deg, var(--dm-acc), transparent);
+  box-shadow: 0 0 14px var(--dm-acc-soft);
+}
+.dm-rule--orange { --dm-acc: #D97757; --dm-acc-soft: rgba(217,119,87,0.5); }
+.dm-rule--yellow { --dm-acc: #e8a356; --dm-acc-soft: rgba(232,163,86,0.5); }
+
+/* Registration-mark corner brackets, floated just outside the panel: ⌜ ⌟ */
+.dm-corners { position: relative; }
+.dm-corners::before,
+.dm-corners::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  border: 0 solid rgba(232,227,217,0.28);
+  transition: border-color 0.22s ease;
+}
+.dm-corners::before { top: -6px; left: -6px; border-top-width: 1px; border-left-width: 1px; }
+.dm-corners::after { bottom: -6px; right: -6px; border-bottom-width: 1px; border-right-width: 1px; }
+.dm-corners:hover::before,
+.dm-corners:hover::after,
+*:hover > .dm-corners::before,
+*:hover > .dm-corners::after { border-color: var(--dm-acc, rgba(232,163,86,0.75)); }
+
+/* Terminal window status bar (goes after .terminal-body inside .terminal):
+   <div class="dm-termstatus"><span class="dm-live">ready</span><span data-dm-lines></span></div> */
+.dm-termstatus {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 12px;
+  border-top: 1px solid rgba(255,255,255,0.10);
+  background: rgba(0,0,0,0.28);
+  font-family: var(--shell-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(232,227,217,0.45);
+}
+.dm-termstatus .dm-live {
+  color: var(--dm-acc, #6B9B7F);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.dm-termstatus .dm-live::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: currentColor;
+  animation: dm-dot-pulse 2.4s ease-in-out infinite;
+}
+.dm-termstatus--orange .dm-live { color: #D97757; }
+.dm-termstatus--yellow .dm-live { color: #e8a356; }
+
+/* Blinking block cursor after terminal titles: add .dm-cursor to .terminal-title */
+.dm-cursor::after {
+  content: "▮";
+  margin-left: 7px;
+  font-size: 0.9em;
+  color: var(--dm-acc, #6B9B7F);
+  animation: dm-cursor-blink 1.15s steps(1) infinite;
+}
+.dm-cursor--orange::after { color: #D97757; }
+.dm-cursor--yellow::after { color: #e8a356; }

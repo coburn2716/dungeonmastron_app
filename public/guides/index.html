@@ -29,9 +29,9 @@
     .kicker {
       font-family: var(--shell-mono);
       font-size: 11px;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(232,227,217,0.70);
+      color: #6B9B7F;
       margin-bottom: 10px;
       display: inline-flex;
       align-items: center;
@@ -42,10 +42,10 @@
       width: 6px;
       height: 6px;
       border-radius: 999px;
-      background: #6B9B7F;
+      background: currentColor;
       opacity: 0.9;
     }
-    .kicker--orange::before { background: #D97757; opacity: 0.95; }
+    .kicker--orange { color: #D97757; }
 
     h1 {
       font-family: var(--shell-heading);
@@ -221,7 +221,7 @@
     }
     .manual-left {
       display: grid;
-      grid-template-rows: auto 1fr;
+      grid-template-rows: 1fr;
       min-height: 100%;
     }
     .manual-center {
@@ -268,12 +268,13 @@
     .terminal-body::-webkit-scrollbar-thumb:hover { background: rgba(107,155,127,1); }
   </style>
 </head>
-<body>
+<body class="dm-surface">
   <div id="site-nav"></div>
   <main class="wrap">
     <div class="kicker">Guides</div>
     <h1>All stories begin on an empty page.</h1>
     <p class="sub">Start with structure. Connect moments. Add systems only when they serve the story.</p>
+    <div class="dm-rule" aria-hidden="true"></div>
 
     <section class="cards" aria-label="Guides grid">
       <section class="card card--topsep">
@@ -430,11 +431,12 @@
 
     </section>
 
-    <div class="section-sep" aria-hidden="true"></div>
+    <div class="dm-sechead dm-sechead--orange">
+      <span class="dm-label">Manual</span>
+    </div>
 
     <section class="manual-grid" aria-label="Game creation manual">
       <div class="manual-left">
-        <div class="kicker kicker--orange">Manual</div>
         <div class="manual-center">
           <p class="big-copy">Creators manual.</p>
           <p class="sub--orange">A deeper look into how games are built.</p>
@@ -443,7 +445,7 @@
       <div>
         <div class="terminal" aria-label="Game creation manual">
           <div class="terminal-bar">
-            <div class="terminal-title">GAME_CREATION_MANUAL.md</div>
+            <div class="terminal-title dm-cursor">GAME_CREATION_MANUAL.md</div>
           </div>
           <pre id="gameCreationManual" class="terminal-body">Loading…</pre>
         </div>

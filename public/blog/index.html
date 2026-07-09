@@ -70,9 +70,9 @@
     .blog-hero .kicker {
       font-family: var(--shell-mono);
       font-size: 11px;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(232,227,217,0.70);
+      color: #D97757;
       margin-bottom: 16px;
       display: inline-flex;
       align-items: center;
@@ -83,7 +83,7 @@
       width: 6px;
       height: 6px;
       border-radius: 999px;
-      background: #D97757;
+      background: currentColor;
       opacity: 0.95;
       animation: dm-dot-pulse 3.6s ease-in-out infinite;
     }
@@ -204,7 +204,17 @@
       text-transform: uppercase;
       color: #D97757;
       margin-bottom: 12px;
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .post-card .card-cat::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: currentColor;
+      animation: dm-dot-pulse 3.6s ease-in-out infinite;
     }
     .post-card h2 {
       font-family: var(--shell-heading);
@@ -256,7 +266,7 @@
     .post-card:hover .card-arrow { transform: translateX(3px); }
   </style>
 </head>
-<body>
+<body class="dm-surface">
   <div id="site-nav"></div>
 
   <!-- Hero -->

@@ -29,9 +29,9 @@
     .kicker {
       font-family: var(--shell-mono);
       font-size: 11px;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(232,227,217,0.70);
+      color: #6B9B7F;
       margin-bottom: 10px;
       display: inline-flex;
       align-items: center;
@@ -42,10 +42,10 @@
       width: 6px;
       height: 6px;
       border-radius: 999px;
-      background: #6B9B7F;
+      background: currentColor;
       opacity: 0.9;
     }
-    .kicker--orange::before { background: #D97757; opacity: 0.95; }
+    .kicker--orange { color: #D97757; }
 
     h1 {
       font-family: var(--shell-heading);
@@ -144,6 +144,7 @@
     @media (max-width: 980px) { .grid { grid-template-columns: 1fr; } }
     .right img { width: 100%; height: auto; display: block; }
     .right .stack { display: grid; gap: 18px; }
+    .right .stack.dm-corners { --dm-acc: rgba(107,155,127,0.75); }
 
     .section-sep {
       margin-top: 34px;
@@ -158,10 +159,11 @@
       grid-template-columns: 0.42fr 0.58fr;
       gap: 34px;
       align-items: start;
-      margin-top: 26px;
+      margin-top: 8px;
     }
     @media (max-width: 980px) { .below-grid { grid-template-columns: 1fr; } }
     .below-left img { width: 100%; height: auto; display: block; }
+    .below-left .dm-corners { --dm-acc: rgba(217,119,87,0.75); }
     .below-right {
       display: flex;
       flex-direction: column;
@@ -170,7 +172,7 @@
     }
   </style>
 </head>
-<body>
+<body class="dm-surface">
   <div id="site-nav"></div>
   <main class="wrap">
     <div class="kicker">Console <span style="display:inline-flex;align-items:center;gap:6px;margin-left:8px;font-family:var(--shell-mono);font-size:10px;letter-spacing:0.10em;text-transform:uppercase;background:rgba(217,119,87,0.18);border:1px solid rgba(217,119,87,0.45);color:#D97757;padding:2px 8px;border-radius:999px;">Beta</span></div>
@@ -178,6 +180,7 @@
       <div class="left">
         <h1>An experience you can feel, build &amp; collect</h1>
         <p class="sub">Dungeon Mastron, made physical.</p>
+        <div class="dm-rule" aria-hidden="true"></div>
 
         <div class="rail">
           <div class="pair-grid">
@@ -243,18 +246,21 @@
         </div>
       </div>
       <div class="right" aria-label="Console image">
-        <div class="stack">
+        <div class="stack dm-corners">
           <img src="../web_assets/console_pictures/console_side_noCart_grey_BG.jpg" alt="" />
         </div>
       </div>
     </div>
 
-    <div class="section-sep" aria-hidden="true"></div>
+    <div class="dm-sechead dm-sechead--orange">
+      <span class="dm-label">Cartridge</span>
+    </div>
 
     <section class="below-grid" aria-label="Cartridge">
       <div class="below-left">
-        <div class="kicker kicker--orange">Cartridge</div>
-        <img src="../web_assets/console_pictures/cart_front_toweroftheblackstar_grey_bg.png" alt="" />
+        <div class="dm-corners">
+          <img src="../web_assets/console_pictures/cart_front_toweroftheblackstar_grey_bg.png" alt="" />
+        </div>
       </div>
       <div class="below-right">
         <h2 class="h2">One story. One cartridge</h2>
