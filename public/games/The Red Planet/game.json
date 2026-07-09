@@ -1,0 +1,465 @@
+{
+  "license_lines": [
+    "DUNGEON MASTRON LICENSE",
+    "",
+    "Copyright (c) 2026 Artifextron, Henrik Åberg",
+    "All Rights Reserved.",
+    "",
+    "================================================================================",
+    "TERMS AND CONDITIONS",
+    "================================================================================",
+    "",
+    "This software and content (Dungeon Mastron Console, Web Player, Game Builder, ",
+    "and AI Companion) is proprietary material made available in source ",
+    "form for transparency and personal use.",
+    "",
+    "PERMISSIONS",
+    "-----------",
+    "You are permitted to:",
+    "",
+    "  ✓ Use this software to play games",
+    "  ✓ Use this software to create games with the included Game Builder",
+    "  ✓ Use the AI Companion to create games with AI assistants",
+    "  ✓ Modify this software and templates for personal, private, non-commercial use",
+    "  ✓ Study and learn from the source code and templates",
+    "  ✓ Create, distribute, and sell games made with the Game Builder or AI Companion",
+    "    (you own full rights to your created games)",
+    "",
+    "RESTRICTIONS",
+    "------------",
+    "You may NOT:",
+    "",
+    "  ✗ Distribute this software or templates (original or modified versions)",
+    "  ✗ Publish, share, or make available any fork, derivative, or modified template",
+    "  ✗ Use this software or templates for commercial purposes",
+    "  ✗ Sublicense, sell, rent, or lease this software or templates",
+    "  ✗ Remove or modify this license or copyright notices",
+    "  ✗ Use this software to create competing products or services",
+    "  ✗ Reverse engineer this software (beyond what's visible in source)",
+    "",
+    "GAME OWNERSHIP AND PLAYBACK",
+    "---------------------------",
+    "Games created using the Dungeon Mastron Game Builder or AI Companion ",
+    "are owned entirely by their creators. You may distribute, sell, or license ",
+    "your games freely.",
+    "",
+    "However, games are designed to be played using official Dungeon Mastron players:",
+    "- Dungeon Mastron Web Player (free)",
+    "- Dungeon Mastron Console (console.py on Raspberry Pi)",
+    "",
+    "Creating alternative players or software that executes Dungeon Mastron game ",
+    "files requires written permission from the copyright holder.",
+    "",
+    "Attribution to Dungeon Mastron is appreciated but not required when ",
+    "distributing your games.",
+    "",
+    "ATTRIBUTION",
+    "-----------",
+    "When sharing games or content created with this software, you should credit:",
+    "\"Created with Dungeon Mastron / www.dungeonmastron.com\"",
+    "",
+    "DISCLAIMER",
+    "----------",
+    "THIS SOFTWARE IS PROVIDED \"AS IS\" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR",
+    "IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS",
+    "FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT",
+    "HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE",
+    "USE OF THIS SOFTWARE.",
+    "",
+    "ENFORCEMENT",
+    "-----------",
+    "Violations of this license may result in:",
+    "- DMCA takedown notices",
+    "- Cease and desist orders",
+    "- Legal action for damages",
+    "",
+    "If you're unsure whether your use case is permitted, please contact the",
+    "copyright holder before proceeding.",
+    "",
+    "================================================================================",
+    "For questions or licensing inquiries: [dungeonmastron@gmail.com / Henrik Åberg]",
+    "Project website: www.dungeonmastron.com",
+    "================================================================================"
+  ],
+  "title": "The Red Planet",
+  "logo": "logo.jpg",
+  "start_page": "p1_landing",
+  "theme": {
+    "preset": "fantasy",
+    "custom": {
+      "primary_color": "#e8e3d9",
+      "accent_color": "#d97757",
+      "background_color": "#1c1c1c",
+      "secondary_color": "#b8b3a9"
+    }
+  },
+  "player_stats": {
+    "health": 100,
+    "strength": 1,
+    "luck": 1
+  },
+  "font_sizes": {
+    "main": 20,
+    "choices": 20,
+    "stats": 20,
+    "items": 16
+  },
+  "font_colors": {
+    "main": "#c89989",
+    "choices": "#d97757",
+    "stats": "#c89989",
+    "items": "#c89989",
+    "separator": "#c89989"
+  },
+  "font_positions": {
+    "choices": 52,
+    "main": 61,
+    "stats": 9.53125,
+    "items": 41,
+    "separator": 81
+  },
+  "main_text_padding": 11,
+  "main_text_top_padding": 0,
+  "text_area_rows": 12,
+  "main_text_max_height": 820,
+  "action_colors": {
+    "dice": "#ffffff",
+    "dice_text": "#000000"
+  },
+  "pages": {
+    "p1_landing": {
+      "page_type": "normal",
+      "text": "The lander settles into the Martian dust with a dull, heavy thump. Inside your helmet, the sound feels closer than it should, as if the planet itself is listening. Outside the small window stretches a red landscape shaped by wind, cold, and time. This mission is not about speed or heroics. It is about learning how Mars works, and how to survive by understanding it.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Step out onto the surface and begin the mission",
+          "target": "p2_radiation_lesson",
+          "next_page": "p2_radiation_lesson"
+        }
+      ],
+      "special_page": true,
+      "special_padding": {
+        "top": 200,
+        "bottom": 150,
+        "left": 40,
+        "right": 350
+      },
+      "special_bg": "p1_landing.jpg",
+      "continue_y": 1100,
+      "continue_text": "CONTINUE"
+    },
+    "p2_radiation_lesson": {
+      "page_type": "normal",
+      "text": "Before moving far from the lander, you review one of Mars’ most serious dangers: radiation. Unlike Earth, Mars has a very thin atmosphere and no strong global magnetic field. These two features normally help block high-energy particles from space. On Mars, much more radiation reaches the surface, slowly damaging living tissue and electronics over time.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Continue and prepare your equipment",
+          "target": "p3_armory",
+          "next_page": "p3_armory"
+        }
+      ]
+    },
+    "p3_armory": {
+      "page_type": "armory",
+      "text": "Inside the compact storage locker, everything is strapped down and labeled. On Mars, you don’t carry extra gear for fun, every item adds weight, complexity, and risk. You run a quick mental checklist instead: suit integrity, air pressure, exposure time, and route discipline. This mission isn’t about having the ‘best item’… it’s about having the right knowledge.",
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Close the locker and follow your safety checklist",
+          "target": "p4_atmosphere_lesson",
+          "next_page": "p4_atmosphere_lesson"
+        }
+      ]
+    },
+    "p4_atmosphere_lesson": {
+      "page_type": "normal",
+      "text": "As you seal your helmet, you are reminded that Mars’ atmosphere is extremely thin and mostly carbon dioxide. There is almost no breathable oxygen and far too little pressure for the human body. This is why habitats and suits are not optional, they are the only reason you can stand here at all.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Walk toward the distant ridge",
+          "target": "p5_walk",
+          "next_page": "p5_walk"
+        }
+      ]
+    },
+    "p5_walk": {
+      "page_type": "normal",
+      "text": "Each step kicks up fine red dust that takes longer than expected to fall back down. The ridge ahead offers a good place to deploy a sensor mast. As you walk, you repeat earlier lessons in your head. On Mars, memory is a survival tool, not trivia.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Pause and review what you know about radiation",
+          "target": "p6_radiation_check",
+          "next_page": "p6_radiation_check"
+        }
+      ]
+    },
+    "p6_radiation_check": {
+      "page_type": "normal",
+      "text": "Training mode activates. The system asks you to confirm your understanding:\n\nWhy is radiation exposure on Mars higher than on Earth?",
+      "led_effect": {
+        "type": "solid",
+        "color": "red"
+      },
+      "choices": [
+        {
+          "text": "Because Mars is closer to the Sun than Earth",
+          "target": "p8_radiation_failure",
+          "next_page": "p8_radiation_failure"
+        },
+        {
+          "text": "Because Mars has a thinner atmosphere and lacks a strong magnetic field",
+          "target": "p7_radiation_success",
+          "next_page": "p7_radiation_success"
+        },
+        {
+          "text": "Because Mars rotates more slowly than Earth",
+          "target": "p8_radiation_failure",
+          "next_page": "p8_radiation_failure"
+        }
+      ]
+    },
+    "p7_radiation_success": {
+      "page_type": "normal",
+      "text": "Nice job, you are correct. Mars does not have the thick atmosphere or global magnetic field that helps protect Earth. As a result, more cosmic rays and solar radiation reach the surface. Knowing this helps you plan exposure time and seek shelter when possible.",
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Continue toward the ridge",
+          "target": "p9_gravity_check",
+          "next_page": "p9_gravity_check"
+        }
+      ],
+      "add_item": {
+        "name": "key_radiation_knowledge",
+        "display_name": "Radiation Badge Knowledge",
+        "quantity": 1
+      }
+    },
+    "p8_radiation_failure": {
+      "page_type": "normal",
+      "text": "Here’s the key idea to remember: Mars receives more radiation because its atmosphere is very thin and it lacks a strong global magnetic field. These normally act as shields on Earth. Keeping this in mind helps reduce long-term risk during surface missions.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Continue toward the ridge",
+          "target": "p9_gravity_check",
+          "next_page": "p9_gravity_check"
+        }
+      ]
+    },
+    "p9_gravity_check": {
+      "page_type": "normal",
+      "text": "As the terrain becomes uneven, your movement feels different than it would on Earth. Training mode asks another question:\n\nMars gravity is about 38% of Earth’s. What does this mean for how you move?",
+      "led_effect": {
+        "type": "solid",
+        "color": "red"
+      },
+      "choices": [
+        {
+          "text": "You weigh less, but your mass and momentum stay the same",
+          "target": "p10_gravity_success",
+          "next_page": "p10_gravity_success"
+        },
+        {
+          "text": "You float effortlessly and can stop instantly",
+          "target": "p11_gravity_failure",
+          "next_page": "p11_gravity_failure"
+        },
+        {
+          "text": "Your body becomes lighter and smaller",
+          "target": "p11_gravity_failure",
+          "next_page": "p11_gravity_failure"
+        }
+      ]
+    },
+    "p10_gravity_success": {
+      "page_type": "normal",
+      "text": "Nice job, you are correct. Lower gravity means you weigh less and can lift more, but your mass does not change. Once you start moving, momentum still applies. This is why careful movement is important on slopes and loose ground.",
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Continue to Mission Control checkout",
+          "target": "p11b_safety_checkout",
+          "next_page": "p11b_safety_checkout"
+        }
+      ],
+      "add_item": {
+        "name": "key_low_g_gravity_rule",
+        "display_name": "Low-G Gravity Rule",
+        "quantity": 1
+      }
+    },
+    "p11_gravity_failure": {
+      "page_type": "normal",
+      "text": "The important takeaway is this: Mars’ gravity makes you lighter, but it does not remove momentum. You still need to control your movement carefully, especially on uneven terrain, because stopping is not instant.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Continue to Mission Control checkout",
+          "target": "p11b_safety_checkout",
+          "next_page": "p11b_safety_checkout"
+        }
+      ]
+    },
+    "p12_ending": {
+      "page_type": "ending",
+      "text": "Just before the ridge top, Mission Control pings your headset: a quick safety checkout. It’s not meant to catch you out, it’s a standard procedure. On Mars, misunderstandings become emergencies.\n\nIf you answered every knowledge check correctly, you can proceed to the certified deployment. Otherwise, you can still finish the mission, but you’ll receive a short review outcome.",
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Continue",
+          "reset_game": true,
+          "next_page": "p1_landing",
+          "target": "p1_landing"
+        }
+      ],
+      "special_page": true,
+      "special_padding": {
+        "top": 50,
+        "bottom": 150,
+        "left": 125,
+        "right": 125
+      },
+      "special_bg": "p12_ending.jpg",
+      "continue_y": 1100,
+      "continue_text": "PLAY AGAIN"
+    },
+    "p11b_safety_checkout": {
+      "page_type": "locked",
+      "text": "Just before the ridge top, Mission Control pings your headset: a quick safety checkout. It’s not meant to catch you out—it’s a standard procedure. On Mars, misunderstandings become emergencies.\n\nIf you answered every knowledge check correctly, you can proceed to the certified deployment. Otherwise, you can still finish the mission, but you’ll receive a short review outcome.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Proceed to certified deployment (requires correct answers)",
+          "requires_items": [
+            "key_radiation_knowledge",
+            "key_low_g_gravity_rule"
+          ],
+          "target": "p12_ending",
+          "next_page": "p12_ending"
+        },
+        {
+          "text": "Proceed with review outcome",
+          "target": "p13_ending_review",
+          "next_page": "p13_ending_review"
+        }
+      ]
+    },
+    "p13_ending_review": {
+      "page_type": "ending",
+      "text": "Review ending — You deploy the sensor mast successfully, but Mission Control flags your checkout as ‘Needs Review.’ That doesn’t mean you failed the mission. It means Mars is demanding, and the basics must become automatic.\n\nQuick recap:\n- Radiation is higher on Mars because the atmosphere is thin and there is no strong global magnetic field.\n- Mars gravity is about 38% of Earth’s: you weigh less, but your mass and momentum still matter.\n\nYou head back to the lander with good data, and a clear plan to study and try again.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Continue",
+          "reset_game": true,
+          "next_page": "p1_landing",
+          "target": "p1_landing"
+        }
+      ],
+      "special_page": true,
+      "special_padding": {
+        "top": 50,
+        "bottom": 150,
+        "left": 125,
+        "right": 125
+      },
+      "special_bg": "p13_ending_review.jpg",
+      "continue_y": 1100,
+      "continue_text": "PLAY AGAIN"
+    }
+  },
+  "action_positions_percent": {
+    "text": 90,
+    "dice": 82,
+    "result": 85
+  },
+  "action_positions_percent_web": {
+    "text": 90,
+    "dice": 82,
+    "result": 85
+  },
+  "action_styles": {
+    "dice_size": 120
+  },
+  "action_styles_web": {
+    "dice_size": 120
+  },
+  "stat_popup": {
+    "font_size": 24,
+    "positive_color": "#86efac",
+    "negative_color": "#fca5a5",
+    "duration_ms": 900,
+    "move_px": 26
+  },
+  "stat_popup_web": {
+    "font_size": 24,
+    "positive_color": "#86efac",
+    "negative_color": "#fca5a5",
+    "duration_ms": 900,
+    "move_px": 26
+  },
+  "action_text_color": "#ffffff",
+  "action_text_size": 20,
+  "font_positions_web": {
+    "choices": 43,
+    "main": 34,
+    "stats": 7.5,
+    "items": 3,
+    "separator": 6
+  },
+  "bottom_positions_percent": {
+    "stats": 9.53125,
+    "separator": 81,
+    "items": 41
+  },
+  "bottom_positions_percent_web": {
+    "stats": 7.5,
+    "separator": 6,
+    "items": 3
+  },
+  "text_shadow_opacity": 20,
+  "bezels": {
+    "bottom": "story_bezel.png"
+  }
+}

@@ -1,0 +1,3513 @@
+<!--
+Dungeon Mastron © Artifextron
+Browser game player (bezel-enabled variant). Based on web_player.html.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Player — Dungeon Mastron</title>
+  <meta name="description" content="Play Dungeon Mastron games in the browser with bezel-style UI, featured games, and cart/folder loading." />
+  <meta name="robots" content="noindex,follow" />
+  <link rel="canonical" href="https://dungeonmastron.com/play/" />
+  <meta property="og:site_name" content="Dungeon Mastron" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Web Player — Dungeon Mastron" />
+  <meta property="og:description" content="Play Dungeon Mastron games in the browser with bezel-style UI." />
+  <meta property="og:url" content="https://dungeonmastron.com/play/" />
+  <meta property="og:image" content="https://dungeonmastron.com/web_assets/splash.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../web_assets/site_shell.css" />
+  <style>
+    /* --- Site shell overrides (kept here since you're iterating in play/index.html) --- */
+    .site-nav { background: #1e1c1c; border-bottom: none; box-shadow: none; }
+    .site-nav .inner { padding: 6px 20px; }
+    .site-nav a { padding: 6px 10px; }
+
+    :root {
+      --bg: #1a1a1a;
+      --panel: #222;
+      --panel-alt: #2c2c2c;
+      --text: #e8e3d9;
+      --subtext: #b8b3a9;
+      --accent: #d97757;
+      --accent-dark: #c65d3b;
+      --nav-accent: #6B9B7F;
+
+      /* UI (site chrome) fonts: fixed to match game_builder.html */
+      --ui-font: "Inter", system-ui, sans-serif;
+      --ui-heading: "Outfit", system-ui, sans-serif;
+      --ui-mono: "JetBrains Mono", monospace;
+
+      /* Game fonts: these are overridden by game.json */
+      --font-main: "Inter", system-ui, sans-serif;
+      --font-heading: "Outfit", system-ui, sans-serif;
+      --font-mono: "JetBrains Mono", monospace;
+
+      /* Stat popup defaults */
+      --stat-popup-font-size: 24px;
+      --stat-popup-positive: #86efac;
+      --stat-popup-negative: #fca5a5;
+      --stat-popup-duration: 900ms;
+      --stat-popup-move: 26px;
+    }
+    * { box-sizing: border-box; }
+    html, body { overflow: hidden; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--ui-font); height: 100vh; display: flex; flex-direction: column; }
+    header { background: #1e1c1c; padding: 6px 20px; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; border-bottom: 1px solid #2f2f2f; box-shadow: none; position: sticky; top: 0; z-index: 10; box-sizing: border-box; }
+    /* Top-right separator line: fixed right edge at 100px from window */
+    header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      /* Match the right edge of the text inside the last header "link" (100px + 10px internal padding). */
+      /* 20px outer header padding + 10px internal link padding */
+      right: 30px;
+      width: 275px;
+      height: 1px;
+      background: rgba(255,255,255,0.12);
+      pointer-events: none;
+    }
+    .title { font-family: var(--ui-heading); font-weight: 700; letter-spacing: 0.02em; color: var(--accent); display: flex; align-items: center; gap: 10px; }
+    .badge { background: #2c2c2c; color: var(--accent); padding: 4px 10px; border-radius: 10px; font-size: 12px; font-family: var(--ui-mono); letter-spacing: 0.02em; }
+    .ascii-logo { font-family: 'JetBrains Mono', monospace; font-size: 8px; line-height: 1; color: #D97757; margin: 0; padding: 0; white-space: pre; font-weight: bold; text-shadow: 0 0 10px rgba(217, 119, 87, 0.3); }
+    .logo-subtitle { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #D97757; letter-spacing: 0.32em; margin-top: 4px; margin-left: 2px; white-space: pre; text-shadow: 0 0 10px rgba(217, 119, 87, 0.3); line-height: 1; }
+    .led-stack { position: absolute; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 14px; pointer-events: none; z-index: 10; }
+    /* Centered in the open bezel space:
+       Screen Edge: 0
+       Inner Line: -20px
+       Outer Edge: -90px
+       Center: -55px
+       Socket width: 24px (half 12px) -> Left pos: -67px
+    */
+    .led-stack.left { left: -67px; }
+    .led-stack.right { right: -67px; }
+    @media (max-width: 600px) {
+      /* Mobile:
+         Inner Line: -10px
+         Outer Edge: -50px
+         Center: -30px
+         Socket half: 12px -> Left pos: -42px
+      */
+      .led-stack.left { left: -42px; }
+      .led-stack.right { right: -42px; }
+    }
+    
+    .led-socket {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #111;
+      border: 2px solid #3a3a3a;
+      box-shadow: 
+        inset 1px 1px 2px rgba(0,0,0,0.9), 
+        0 1px 1px rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .led-indicator { width: 12px; height: 12px; border-radius: 50%; border: 1px solid #555; box-shadow: 0 0 8px rgba(0,0,0,0.8); background: #2f2f2f; flex-shrink: 0; opacity: 0.5; }
+    @keyframes led-pulse { 0% { opacity: 0.3; transform: scale(0.9);} 50% { opacity: 1; transform: scale(1.1);} 100% { opacity: 0.3; transform: scale(0.9);} }
+    @keyframes led-blink { 0%,50% { opacity: 1;} 51%,100% { opacity: 0.15;} }
+    .controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-left: auto; align-self: center; }
+
+    header .app-subtitle {
+      font-family: var(--ui-mono);
+      font-size: 11px;
+      letter-spacing: 0.32em;
+      color: var(--nav-accent);
+      white-space: pre;
+      line-height: 1;
+      opacity: 0.85;
+      align-self: flex-start;
+      margin-top: 0;
+      margin-left: 69px;
+    }
+
+    @media (max-width: 900px) {
+      header .app-subtitle { display: none; }
+    }
+    button, label.btn-like {
+      background: transparent;
+      color: #E8E3D9;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: color 0.15s ease;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      font-family: var(--ui-mono);
+    }
+    button:hover, label.btn-like:hover { color: var(--nav-accent); background: transparent; }
+    /* Keep "Insert Cart" styled like the other header links (no special primary styling). */
+    button.primary, label.btn-like.primary { color: #E8E3D9; }
+    button.primary:hover, label.btn-like.primary:hover { color: var(--nav-accent); }
+
+    /* Featured fold-down */
+    .featured-menu {
+      position: fixed;
+      left: 14px;
+      top: calc(var(--app-top-h, 88px) + 10px);
+      z-index: 12;
+      pointer-events: auto;
+    }
+    .featured-toggle {
+      background: rgba(255,255,255,0.04);
+      color: #E8E3D9;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 7px 10px;
+      font-size: 11px;
+      font-family: var(--ui-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .featured-toggle:hover { background: rgba(255,255,255,0.08); }
+    .featured-panel {
+      margin-top: 10px;
+      width: min(365px, calc(100vw - 28px));
+      max-height: min(80vh, 820px);
+      overflow: auto;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: #1e1c1c;
+      box-shadow: 0 18px 48px rgba(0,0,0,0.55);
+      padding: 12px;
+      display: none;
+    }
+    .featured-menu.open .featured-panel { display: block; }
+    .featured-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 11;
+      background: transparent;
+      display: none;
+    }
+    .featured-menu.open ~ .featured-backdrop { display: block; }
+
+    .featured-thumb {
+      width: 100%;
+      display: block;
+      position: relative;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+    .featured-thumb img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+    }
+    .featured-thumb::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 10px;
+      background:
+        radial-gradient(120% 80% at 50% 35%, rgba(0,0,0,0.45), rgba(0,0,0,0) 60%),
+        linear-gradient(to bottom, rgba(0,0,0,0.10), rgba(0,0,0,0.55));
+      opacity: 0;
+      transition: opacity 160ms ease;
+      pointer-events: none;
+    }
+    .featured-thumb .play-icon {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(0,0,0,0.40);
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      transition: opacity 160ms ease, transform 160ms ease;
+      pointer-events: none;
+    }
+    .featured-thumb:hover::after { opacity: 1; }
+    .featured-thumb:hover .play-icon {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.02);
+    }
+    .featured-thumb .play-icon svg { display: block; }
+
+    .featured-thumb .demo-tag {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      padding: 4px 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(107,155,127,0.55);
+      background: rgba(107,155,127,0.16);
+      color: #6B9B7F;
+      font-family: var(--ui-mono);
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .featured-thumb .demo-tag.orange {
+      border-color: rgba(217,119,87,0.55);
+      background: rgba(217,119,87,0.16);
+      color: #d97757;
+    }
+    .featured-thumb .demo-tag.yellow {
+      border-color: rgba(232,163,86,0.55);
+      background: rgba(232,163,86,0.16);
+      color: #e8a356;
+    }
+
+    .featured-entry { display: grid; gap: 10px; }
+    .featured-entry + .featured-entry {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+    }
+    .featured-meta {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      font-family: var(--ui-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6B9B7F;
+    }
+
+    /* Scrollbar for the Featured Games fold-down (only appears when needed) */
+    .featured-panel { scrollbar-width: thin; scrollbar-color: rgba(107,155,127,0.55) rgba(255,255,255,0.06); }
+    .featured-panel::-webkit-scrollbar { width: 10px; }
+    .featured-panel::-webkit-scrollbar-track { background: rgba(255,255,255,0.06); border-radius: 999px; }
+    .featured-panel::-webkit-scrollbar-thumb { background: rgba(107,155,127,0.45); border-radius: 999px; }
+    .featured-panel::-webkit-scrollbar-thumb:hover { background: rgba(107,155,127,0.65); }
+    .layout { flex: 1; display: grid; grid-template-columns: 1fr; min-height: 0; }
+    .play-area { padding: 14px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; position: relative; transition: all 0.5s ease; }
+    .screen-container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      transition: margin-top 0.5s ease;
+      /* Reserve space for the scaled content (screen-only vs full console). */
+      height: calc(var(--screen-container-h, 1480px) * var(--screen-scale, 1));
+      min-height: 0;
+    }
+    /* Virtual 720x1280 screen; we scale the whole thing uniformly via transform */
+    .screen-wrapper {
+      background: #101010;
+      border: 1px solid #2f2f2f;
+      border-radius: 14px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+      overflow: visible;
+      position: relative;
+      display: block;
+      width: 720px;
+      height: 1280px;
+      margin: 0 auto;
+      transform: scale(var(--screen-scale, 1));
+      transform-origin: top center;
+    }
+    /* View: Screen (default) */
+    body:not(.zoomed-out) .console-chin { display: none; }
+
+    /* Nudge up slightly so the bottom of the screen isn't cropped by play-area padding/header. */
+    body:not(.zoomed-out) .screen-container { margin-top: -14px; }
+
+    /* View: Console */
+    body.zoomed-out .play-area {
+      overflow: visible;
+      padding-bottom: 40px;
+    }
+    body.zoomed-out .screen-container { margin-top: 42px; }
+
+    /* Screen Bezel Inset - The line closer to the screen */
+    .console-body::before {
+      content: '';
+      position: absolute;
+      top: 30px;
+      left: 65px; /* Moved 5px closer to LEDs (70px -> 65px) */
+      right: 65px;
+      bottom: 145px; /* Leave room for chin */
+      border: 2px solid #222;
+      border-radius: 16px;
+      pointer-events: none;
+    }
+    
+    /* The Console Body (Bezel Frame) */
+    .console-body {
+      position: absolute;
+      top: -60px;
+      bottom: -140px; /* Stretch bottom for chin space while keeping border spacing */
+      left: -90px;
+      right: -90px;
+      background: #141414;
+      border: 3px solid #333;
+      border-radius: 30px;
+      z-index: -1;
+      
+      box-shadow: 
+        0 0 0 4px #0f0f0f,
+        0 0 0 7px #2a2a2a,
+        0 20px 60px rgba(0,0,0,0.6);
+    }
+    
+    /* Inner bezel line for detail - FRAMES EVERYTHING INCLUDING BUTTONS */
+    .console-body::before {
+      content: '';
+      position: absolute;
+      top: 34px; /* another 2px farther from screen */
+      bottom: 113px;
+      left: 65px;
+      right: 65px;
+      border: 2px solid #222; 
+      border-radius: 20px;
+      pointer-events: none;
+    }
+
+    /* The Console Base (Hardware)
+       We model this as a real object in 3D space:
+       - the TOP surface is slightly tilted down toward the viewer
+       - a vertical FRONT face is visible under it
+       - a small seam separates it from the vertical screen housing
+    */
+    /* The Control Area (Flat, inside the bottom bezel) */
+    .console-chin {
+      position: absolute;
+      bottom: 4px; /* Lower buttons 3px */
+      left: 0; 
+      right: 0;
+      height: 110px;
+      
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 26px;
+      padding: 0;
+      margin-top: 0;
+      z-index: 5;
+    }
+    
+    /* Remove 3D geometry pseudos */
+    .console-chin::before, .console-chin::after { display: none; }
+    
+    /* Remove the separate feet */
+    .console-base { display: none; }
+    
+    /* Removed the 'Neck' - seamless join instead */
+    .console-chin::before {
+       display: none;
+    }
+
+    /* The Vertical Front Face - The "Thickness" */
+    .console-chin::after {
+      content: '';
+      position: absolute;
+      left: -3px; right: -3px;
+      top: 100%; 
+      height: 22px;
+      
+      background: #050505;
+      border: 3px solid #333;
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+
+      transform-origin: top center;
+      transform: rotateX(-16deg);
+
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.05),
+        0 12px 20px rgba(0,0,0,0.7);
+    }
+
+    /* Feet live BELOW the base (supporting weight) */
+    .console-base {
+      position: absolute;
+      bottom: -180px; /* Moved UP relative to new base position */
+      left: -90px; right: -90px;
+      height: 20px;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .console-base::before,
+    .console-base::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      width: 50px;
+      height: 16px;
+      background: #1a1a1a;
+      border: 2px solid #333;
+      border-radius: 0 0 6px 6px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.8);
+    }
+    .console-base::before { left: 30px; }
+    .console-base::after { right: 30px; }
+
+
+    /* --- Hardware Components --- */
+
+    /* Button group (no outer tray/frame) */
+    .chin-buttons-frame {
+      display: flex;
+      gap: 16px;
+      padding: 0;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    /* Flat key style (reference-like) */
+    .chin-btn {
+      width: 58px;
+      height: 58px;
+      border-radius: 8px;
+      background: linear-gradient(to bottom, #2b2b2b, #1f1f1f);
+      border: 2px solid #1a1a1a;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.06),
+        0 3px 10px rgba(0,0,0,0.60);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #3a3a3a;
+      font-family: var(--font-mono);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.06s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .chin-btn:active {
+      transform: translateY(1px);
+      filter: brightness(0.92);
+    }
+
+    @keyframes ledPulseWhite {
+      0%, 100% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 3px 10px rgba(0,0,0,0.60), 0 0 0 rgba(255,255,255,0.0); }
+      55% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 3px 10px rgba(0,0,0,0.60), 0 0 14px rgba(245,245,245,0.65), 0 0 30px rgba(245,245,245,0.20); }
+    }
+    @keyframes ledPulseRed {
+      0%, 100% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 3px 10px rgba(0,0,0,0.60), 0 0 0 rgba(239,68,68,0.0); }
+      55% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 3px 10px rgba(0,0,0,0.60), 0 0 20px rgba(239,68,68,0.55); }
+    }
+
+    .chin-btn.is-lit {
+      animation: ledPulseWhite 1.2s ease-in-out infinite;
+    }
+
+    /* Round action button in same flat style */
+    .chin-knob {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      background: linear-gradient(to bottom, #2b2b2b, #1f1f1f);
+      border: 2px solid #1a1a1a;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.06),
+        0 3px 10px rgba(0,0,0,0.60);
+      cursor: pointer;
+      transition: transform 0.06s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+    .chin-knob:active {
+      transform: translateY(1px);
+      filter: brightness(0.92);
+    }
+    .chin-knob.is-lit-white {
+      animation: ledPulseWhite 1.2s ease-in-out infinite;
+    }
+    .chin-knob.is-lit-red {
+      animation: ledPulseRed 1.2s ease-in-out infinite;
+    }
+    
+    @media (max-width: 600px) { 
+      .console-body { top: -30px; bottom: -160px; left: -30px; right: -30px; border-width: 2px; border-radius: 20px; }
+      .console-chin { 
+        top: 100%;
+        bottom: auto;
+        height: 120px;
+        left: -30px;
+        right: -30px;
+        padding-top: 20px;
+        /* Reset 3D transforms for mobile */
+        transform: none;
+        box-shadow: none;
+        border: none;
+      }
+      .chin-buttons-frame { gap: 12px; }
+      .chin-btn { width: 44px; height: 44px; font-size: 16px; border-radius: 7px; border-width: 2px; }
+      .chin-knob { width: 56px; height: 56px; border-width: 2px; }
+      .console-body::before { top: 15px; left: 35px; right: 35px; bottom: 140px; border-radius: 12px; }
+    }
+
+    .screen-wrapper .bezel-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; z-index: 1; }
+    .media-area { position: absolute; top: 0; left: 0; width: 100%; height: 48%; background: radial-gradient(circle at 30% 30%, rgba(217,119,87,0.08), transparent 55%), #0e0e0e; overflow: hidden; z-index: 2; }
+    .media-area img, .media-area video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+    .media-area video { background: #000; }
+    .bezel { position: absolute; inset: 0; background: transparent; border: none; padding: 0; overflow: hidden; z-index: 3; }
+    .bezel img.bezel-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.92; pointer-events: none; }
+    .bezel-content { position: absolute; top: 48%; left: 0; width: 100%; height: 52%; padding: 0; z-index: 4; }
+    .choices {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: grid;
+      gap: 10px;
+      justify-items: center;
+      width: min(92%, 720px);
+      max-width: calc(100% - 40px);
+    }
+    .choice { padding: 0; border: none; border-radius: 0; background: transparent; letter-spacing: 0.02em; display: flex; align-items: center; gap: 8px; text-align: center; }
+    .choice .label { color: currentColor; font-family: var(--font-mono); font-weight: 700; }
+    .choice:not(.action-choice) .text { display: inline-block; white-space: nowrap; }
+    .choice.locked { opacity: 0.4; border-style: dashed; }
+    .choice .label { color: currentColor; font-family: var(--font-mono); font-weight: 700; }
+    .choice.action-choice { flex-direction: column; gap: 0px; }
+    .choice.action-choice .line { display: inline-flex; align-items: center; gap: 8px; }
+    .choice.action-choice .action-icon {
+      width: clamp(63px, 4.5em, 112px);
+      height: clamp(63px, 4.5em, 112px);
+      color: inherit;
+      opacity: 0.95;
+      position: relative;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,.65));
+      transform-origin: 50% 100%;
+    }
+    .choice.action-choice .action-icon svg { width: 100%; height: 100%; display: block; }
+    .choice.action-choice .action-icon .state { position: absolute; inset: 0; }
+
+    /* Single-SVG button press animation (avoids weird bottom artifacts from swapping states). */
+    .choice.action-choice .action-icon svg { overflow: visible; }
+    .choice.action-choice .action-icon .btn-face,
+    .choice.action-choice .action-icon .btn-sides,
+    .choice.action-choice .action-icon .btn-shadow {
+      transform-box: fill-box;
+    }
+    .choice.action-choice .action-icon .btn-face { transform-origin: 50% 50%; }
+    .choice.action-choice .action-icon .btn-sides { transform-origin: 50% 100%; }
+    .choice.action-choice .action-icon .btn-shadow { transform-origin: 50% 50%; opacity: 0.22; }
+
+    @keyframes btn-face {
+      /* Only animate the top "face" so the bottom stays perfectly still. */
+      0%, 100% { transform: translateY(0) scaleY(1); opacity: 1; }
+      40% { transform: translateY(0) scaleY(1); opacity: 1; }
+      55% { transform: translateY(10px) scaleY(0.985); opacity: 0.95; }
+      70% { transform: translateY(10px) scaleY(0.985); opacity: 0.95; }
+      85% { transform: translateY(2px) scaleY(0.995); opacity: 0.98; }
+    }
+
+    @keyframes btn-sides {
+      /* Keep the bottom fixed and shorten the walls as the face moves down. */
+      0%, 100% { transform: scaleY(1); opacity: 1; }
+      40% { transform: scaleY(1); opacity: 1; }
+      55% { transform: scaleY(0.86); opacity: 0.95; }
+      70% { transform: scaleY(0.86); opacity: 0.95; }
+      85% { transform: scaleY(0.97); opacity: 0.98; }
+    }
+
+    .choice.action-choice .action-icon.prompting .btn-face { animation: btn-face 0.95s ease-in-out infinite; }
+    .choice.action-choice .action-icon.prompting .btn-sides { animation: btn-sides 0.95s ease-in-out infinite; }
+    .main-text { position: absolute; background: transparent; border: none; padding: 0; line-height: 1.5; color: var(--text); overflow-y: auto; scrollbar-width: none; }
+    .main-text::-webkit-scrollbar { display: none; }
+    .separator { position: absolute; height: 1px; background: linear-gradient(90deg, transparent, #3a3a3a 20%, #3a3a3a 80%, transparent); width: calc(100% - 40px); left: 20px; text-align: center; line-height: 1.4; color: var(--subtext); font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.18em; }
+    /* Stats/Items should honor game.json font/colors; avoid hardcoding mono + span colors here. */
+    .stats, .inventory { position: absolute; font-family: var(--font-main); font-size: 14px; color: var(--subtext); }
+    .inventory { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; text-align: center; }
+    .inventory span { background: transparent; border: none; padding: 0 6px; border-radius: 0; color: inherit; }
+    .action-panel { display: none !important; }
+    .action-hud { position: absolute; inset: 0; pointer-events: none; z-index: 6; }
+    .action-hud.hidden { display: none; }
+    .hud-dice, .hud-prompt, .hud-status { position: absolute; left: 50%; transform: translateX(-50%); text-align: center; z-index: 7; max-width: 92%; }
+    .hud-dice { display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-weight: 700; }
+    .hud-dice svg { display: block; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+    .hud-prompt { font-size: 14px; font-weight: 600; color: var(--text); text-shadow: 0 2px 8px rgba(0,0,0,.9); white-space: nowrap; overflow: hidden; text-overflow: clip; }
+    @keyframes action-press {
+      0%, 100% { transform: translateX(-50%) translateY(0) scale(1); opacity: 0.95; }
+      50% { transform: translateX(-50%) translateY(3px) scale(0.96); opacity: 0.78; }
+    }
+    .hud-status { font-size: 14px; font-weight: 700; color: var(--text); text-shadow: 0 2px 8px rgba(0,0,0,.9); white-space: nowrap; overflow: hidden; text-overflow: clip; }
+    .assets { border-left: 1px solid #2f2f2f; background: var(--panel); padding: 16px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; }
+    .assets h3 { margin: 0; color: var(--accent); letter-spacing: 0.03em; }
+    .asset-block { background: #181818; border: 1px solid #2c2c2c; border-radius: 10px; padding: 12px; display: grid; gap: 10px; }
+    .asset-block small { color: var(--subtext); line-height: 1.4; }
+    .pill { display: inline-block; padding: 4px 8px; border-radius: 6px; background: #222; border: 1px solid #333; color: var(--subtext); font-size: 12px; }
+    .log { background: #111; border: 1px solid #262626; border-radius: 8px; padding: 10px; font-family: var(--font-mono); font-size: 12px; max-height: 200px; overflow: auto; color: #cfcfcf; }
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 50; }
+    .overlay.active { display: flex; }
+    .overlay-card { background: #121212; border: 1px solid #333; border-radius: 12px; padding: 18px 20px; width: min(420px, 90vw); color: var(--text); box-shadow: 0 10px 50px rgba(0,0,0,0.55); }
+    .overlay-card.help { width: min(820px, 94vw); max-height: 82vh; overflow: auto; }
+    .overlay-card pre {
+      margin: 10px 0 0;
+      padding: 12px 14px;
+      background: #141414;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.45;
+      overflow: auto;
+    }
+    .overlay-card.license { width: min(920px, 94vw); max-height: 82vh; overflow: auto; }
+
+    /* Scrollbar styling (match builder vibe) */
+    .overlay-card.help, .overlay-card.license {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(217,119,87,0.55) rgba(255,255,255,0.08);
+    }
+    .overlay-card.help::-webkit-scrollbar,
+    .overlay-card.license::-webkit-scrollbar { width: 10px; height: 10px; }
+    .overlay-card.help::-webkit-scrollbar-track,
+    .overlay-card.license::-webkit-scrollbar-track { background: rgba(255,255,255,0.06); border-radius: 10px; }
+    .overlay-card.help::-webkit-scrollbar-thumb,
+    .overlay-card.license::-webkit-scrollbar-thumb {
+      background: rgba(217,119,87,0.55);
+      border: 2px solid rgba(0,0,0,0.45);
+      border-radius: 10px;
+    }
+    .overlay-card.help::-webkit-scrollbar-thumb:hover,
+    .overlay-card.license::-webkit-scrollbar-thumb:hover { background: rgba(217,119,87,0.75); }
+    .help-section { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.12); }
+    .help-section:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .help-h { color: var(--text); font-family: var(--ui-mono); letter-spacing: 0.02em; margin-bottom: 6px; }
+    .help-p { color: var(--subtext); font-family: var(--ui-mono); font-size: 12px; line-height: 1.55; }
+
+    .jump { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); z-index: 60; display: none; width: min(560px, 92vw); }
+    .jump.active { display: block; }
+    .jump-card { background: #121212; border: 1px solid #333; border-radius: 12px; padding: 12px; box-shadow: 0 10px 50px rgba(0,0,0,0.55); }
+    .jump-row { display: flex; gap: 10px; align-items: center; }
+    .jump-input { flex: 1; padding: 10px 12px; border-radius: 10px; border: 1px solid #333; background: #0d0d0d; color: var(--text); font-family: var(--font-mono); }
+    .jump-hint { margin-top: 8px; font-size: 12px; color: var(--subtext); }
+
+    .page-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 18;
+      display: none;
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: rgba(0,0,0,0.62);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.2;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.85);
+      max-width: calc(100% - 24px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .page-badge.active { display: block; }
+
+    /* Quick cinematic fade between pages */
+    .page-fade { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; z-index: 19; transition: opacity 120ms linear; }
+    .page-fade.active { opacity: 1; }
+
+    /* Main text sweep-in on page change */
+    .main-text.sweep-in {
+      animation: text-sweep-in 420ms ease-out both;
+    }
+    .special-text.sweep-in {
+      animation: text-sweep-in 420ms ease-out both;
+    }
+    @keyframes text-sweep-in {
+      0% { opacity: 0; transform: translate(-10px, -10px); clip-path: inset(0 100% 100% 0); }
+      55% { opacity: 1; clip-path: inset(0 45% 45% 0); }
+      100% { opacity: 1; transform: translate(0, 0); clip-path: inset(0 0 0 0); }
+    }
+
+    /* Quick opacity fade-in for HUD/labels on page change (no motion) */
+    .ui-fade-in {
+      animation: ui-fade-in 160ms linear both;
+    }
+    @keyframes ui-fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Floating stat change toast over the media (image/video) area */
+    .stat-float-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 48%;
+      pointer-events: none;
+      z-index: 8;
+      display: block;
+    }
+    .stat-float {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-heading);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-shadow: 0 6px 18px rgba(0,0,0,0.85);
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+      opacity: 0;
+      white-space: nowrap;
+      font-size: var(--stat-popup-font-size);
+    }
+    .stat-float.positive { color: var(--stat-popup-positive); animation: stat-float-up var(--stat-popup-duration) ease-out both; }
+    .stat-float.negative { color: var(--stat-popup-negative); animation: stat-float-down var(--stat-popup-duration) ease-out both; }
+    @keyframes stat-float-up {
+      0% { opacity: 0; transform: translate(-50%, -50%) translateY(6px); }
+      18% { opacity: 1; }
+      100% { opacity: 0; transform: translate(-50%, -50%) translateY(calc(-1 * var(--stat-popup-move))); }
+    }
+    @keyframes stat-float-down {
+      0% { opacity: 0; transform: translate(-50%, -50%) translateY(-6px); }
+      18% { opacity: 1; }
+      100% { opacity: 0; transform: translate(-50%, -50%) translateY(var(--stat-popup-move)); }
+    }
+
+    /* In-screen splash (shows inside the game screen only, not full browser window) */
+    .splash { position: absolute; inset: 0; background: #000; display: none; align-items: center; justify-content: center; z-index: 20; }
+    .splash.active { display: flex; }
+    .splash-inner { display: flex; flex-direction: column; align-items: center; gap: 0; padding: 0; width: 100%; height: 100%; justify-content: center; }
+    /* Big, centered logo inside the 720×1280 game screen */
+    .splash-logo { width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain; image-rendering: auto; }
+    .splash-title { display: none; }
+    .overlay-card h2 { margin: 0 0 8px; color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase; font-family: var(--ui-heading); font-weight: 400; }
+    .overlay-card .row { margin: 6px 0; color: var(--subtext); font-family: var(--ui-mono); }
+
+    /* Ensure the in-game screen continues to use game.json font variables */
+    .screen-wrapper { font-family: var(--font-main); }
+    .special-page { position: absolute; inset: 0; background: #000; display: flex; align-items: flex-start; justify-content: center; padding: 40px 24px 32px; text-align: center; overflow: hidden; }
+    .special-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.55; filter: blur(1px); }
+    .special-text { position: relative; max-width: 720px; width: 100%; line-height: 1.6; background: transparent; padding: 24px; border-radius: 12px; border: none; margin-top: 8vh; font-size: calc(18px * var(--special-scale, 1)); }
+    .special-text .hint { font-size: calc(12px * var(--special-scale, 1)); }
+    .hint { color: var(--subtext); font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; margin-top: 8px; }
+    .muted { color: var(--subtext); }
+    .error { color: #f87171; }
+    .hidden-input { display: none; }
+    @media (max-width: 1100px) { .layout { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+  <header>
+    <div class="app-subtitle">W E B   P L A Y E R</div>
+    <div class="controls">
+      <button id="pick-folder" class="primary">Insert Cart</button>
+      <button id="zoom-btn" class="btn-like">View: Screen</button>
+      <button id="help-button" class="btn-like">Help</button>
+    </div>
+  </header>
+
+  <div id="featuredMenu" class="featured-menu open" aria-label="Featured games">
+    <button id="featuredToggle" class="featured-toggle" type="button" aria-expanded="true">Featured Games</button>
+    <div id="featuredPanel" class="featured-panel" role="dialog" aria-label="Featured games" aria-modal="false">
+      <div class="featured-entry">
+        <button class="featured-thumb" id="featured-what-gets-through" type="button" aria-label="Play: What Gets Through (coming soon)">
+          <img src="../web_assets/featured_games/what_gets_through.jpg" alt="What Gets Through" />
+          <span class="demo-tag" aria-hidden="true">Demo</span>
+          <span class="play-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 7.5V16.5L17 12L9 7.5Z" fill="rgba(232,227,217,0.92)"/>
+            </svg>
+          </span>
+        </button>
+        <div style="color: rgba(232,227,217,0.86); font-size: 12px; line-height: 1.55;">
+          <div>A ruined city. One companion. No safe paths.</div>
+          <div>Every choice shapes the journey and the cost of survival.</div>
+          <div>The question isn’t whether you’ll get through.</div>
+        </div>
+        <div class="featured-meta">
+          <span>132 Nodes</span>
+          <span style="opacity: 0.55;">|</span>
+          <span>Post Apocalyptic Survival</span>
+        </div>
+      </div>
+
+      <div class="featured-entry">
+        <button class="featured-thumb" id="featured-red-planet" type="button" aria-label="Play: The Red Planet (coming soon)">
+          <img src="../web_assets/featured_games/the_red_planet.jpg" alt="The Red Planet" />
+          <span class="demo-tag orange" aria-hidden="true">Demo</span>
+          <span class="play-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 7.5V16.5L17 12L9 7.5Z" fill="rgba(232,227,217,0.92)"/>
+            </svg>
+          </span>
+        </button>
+        <div style="color: rgba(232,227,217,0.86); font-size: 12px; line-height: 1.55;">
+          <div>Welcome to your mission on Mars, the Red Planet. As you explore its surface, you’ll learn important facts about its environment and test what you remember along the way. Pay close attention, on Mars, understanding what you’ve learned helps you move forward.</div>
+        </div>
+        <div class="featured-meta" style="color:#d97757;">
+          <span>14 NODES</span>
+          <span style="opacity: 0.55;">|</span>
+          <span>EDUCATIONAL</span>
+        </div>
+      </div>
+
+      <div class="featured-entry">
+        <button class="featured-thumb" id="featured-forest-memory" type="button" aria-label="Play: The Forest Memory Game (coming soon)">
+          <img src="../web_assets/featured_games/the_forest_memory_game.jpg" alt="The Forest Memory Game" />
+          <span class="demo-tag yellow" aria-hidden="true">Demo</span>
+          <span class="play-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 7.5V16.5L17 12L9 7.5Z" fill="rgba(232,227,217,0.92)"/>
+            </svg>
+          </span>
+        </button>
+        <div style="color: rgba(232,227,217,0.86); font-size: 12px; line-height: 1.55;">
+          <div>The Forest Memory Circle is a cozy memory game set in a magical forest. Animals show you pictures and ask questions to see what you remember. Look closely, think carefully, and have fun learning as you go.</div>
+        </div>
+        <div class="featured-meta" style="color:#e8a356;">
+          <span>35 Nodes</span>
+          <span style="opacity: 0.55;">|</span>
+          <span>Kids Memory Game</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="featuredBackdrop" class="featured-backdrop" aria-hidden="true"></div>
+
+  <div class="layout">
+    <section class="play-area">
+    <section class="play-area">
+      <div class="screen-container">
+        <div class="screen-wrapper" id="screen">
+        <div class="console-body">
+          <div class="console-chin">
+            <div class="chin-buttons-frame">
+              <button type="button" class="chin-btn" data-choice="0" aria-label="Choice 1">I</button>
+              <button type="button" class="chin-btn" data-choice="1" aria-label="Choice 2">II</button>
+              <button type="button" class="chin-btn" data-choice="2" aria-label="Choice 3">III</button>
+            </div>
+            <div class="chin-knob" role="button" aria-label="Action button" tabindex="0"></div>
+          </div>
+          <div class="console-base"></div>
+        </div>
+        <div class="led-stack left">
+          <div class="led-socket"><div id="led-red-left" class="led-indicator" title="Red LED"></div></div>
+          <div class="led-socket"><div id="led-orange-left" class="led-indicator" title="Orange LED"></div></div>
+          <div class="led-socket"><div id="led-blue-left" class="led-indicator" title="Blue LED"></div></div>
+          <div class="led-socket"><div id="led-green-left" class="led-indicator" title="Green LED"></div></div>
+        </div>
+        <div class="led-stack right">
+          <div class="led-socket"><div id="led-red-right" class="led-indicator" title="Red LED"></div></div>
+          <div class="led-socket"><div id="led-orange-right" class="led-indicator" title="Orange LED"></div></div>
+          <div class="led-socket"><div id="led-blue-right" class="led-indicator" title="Blue LED"></div></div>
+          <div class="led-socket"><div id="led-green-right" class="led-indicator" title="Green LED"></div></div>
+        </div>
+        <img id="bezel-bg" class="bezel-bg" alt="Bezel Background" style="display:none;" />
+        <div class="media-area" id="media"></div>
+        <div class="stat-float-layer" id="stat-float-layer" aria-hidden="true"></div>
+        <div class="page-badge" id="page-badge" aria-hidden="true"></div>
+        <div class="bezel" id="bezel">
+          <img id="bezel-img" class="bezel-img" alt="Bezel" style="display:none;" />
+          <div class="bezel-content" id="bezel-content">
+            <div class="choices" id="choices"></div>
+            <div class="main-text" id="main-text"></div>
+            <div class="separator" id="separator">INSERT CART</div>
+            <div class="stats" id="stats" style="display:none;">HP: — | STR: — | LCK: —</div>
+            <div class="inventory" id="inventory"></div>
+          </div>
+        </div>
+
+        <div class="page-fade" id="page-fade" aria-hidden="true"></div>
+        <div class="action-hud hidden" id="action-hud" aria-hidden="true">
+          <div class="hud-dice" id="hud-dice" aria-hidden="true">
+            <svg id="hud-dice-svg" viewBox="0 0 100 100" width="60" height="60" focusable="false" aria-hidden="true">
+              <polygon id="hud-dice-poly" points="50,15 85,30 85,70 50,85 15,70 15,30" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="2"></polygon>
+              <text id="hud-dice-text" x="50" y="50" text-anchor="middle" dominant-baseline="middle" font-size="40" font-weight="bold" fill="#000000">20</text>
+            </svg>
+          </div>
+          <div class="hud-prompt" id="hud-prompt"></div>
+          <div class="hud-status" id="hud-status"></div>
+        </div>
+
+        <div class="splash" id="splash" aria-hidden="true">
+          <div class="splash-inner">
+            <img id="splash-logo" class="splash-logo" alt="Game logo" />
+            <div id="splash-title" class="splash-title"></div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="action-panel hidden" id="action-panel"></div>
+    </section>
+
+  </div>
+
+  <div class="overlay" id="overlay">
+    <div class="overlay-card">
+      <h2 id="overlay-title"></h2>
+      <div id="overlay-body"></div>
+      <div class="row muted" id="overlay-foot"></div>
+    </div>
+  </div>
+
+  <div class="jump" id="jump">
+    <div class="jump-card">
+      <div class="jump-row">
+        <input id="jump-input" class="jump-input" type="text" placeholder="Jump to page id… (e.g. prologue)" autocomplete="off" spellcheck="false" />
+        <button id="jump-go" class="primary" type="button">Go</button>
+        <button id="jump-cancel" class="btn-like" type="button">Esc</button>
+      </div>
+      <div class="jump-hint">Shortcut: <code>Ctrl</code>+<code>J</code> (or <code>⌘</code>+<code>J</code>). Enter to jump, Esc to close.</div>
+    </div>
+  </div>
+
+  <!-- Hidden metadata holders to satisfy JS references -->
+  <div id="status-metadata" style="display:none;">
+    <span id="asset-source"></span>
+    <span id="game-title"></span>
+    <div id="log"></div>
+  </div>
+
+  <input id="game-file" class="hidden-input" type="file" accept="application/json" />
+  <input id="asset-folder" class="hidden-input" type="file" webkitdirectory directory mozdirectory multiple />
+
+  <script src="../web_assets/site_shell.js?v=2" defer></script>
+  <script>
+    const logEl = document.getElementById('log');
+    const assetSourceEl = document.getElementById('asset-source');
+    const gameTitleEl = document.getElementById('game-title');
+    const bezelBgEl = document.getElementById('bezel-bg');
+    const mediaEl = document.getElementById('media');
+    const statFloatLayerEl = document.getElementById('stat-float-layer');
+    const pageBadgeEl = document.getElementById('page-badge');
+    const bezelEl = document.getElementById('bezel');
+    const bezelImgEl = document.getElementById('bezel-img');
+    const bezelContentEl = document.getElementById('bezel-content');
+    const choicesEl = document.getElementById('choices');
+    const textEl = document.getElementById('main-text');
+    const separatorEl = document.getElementById('separator');
+    const statsEl = document.getElementById('stats');
+    const inventoryEl = document.getElementById('inventory');
+    const actionPanelEl = document.getElementById('action-panel');
+    const actionHudEl = document.getElementById('action-hud');
+    const hudDiceEl = document.getElementById('hud-dice');
+    const hudDiceSvgEl = document.getElementById('hud-dice-svg');
+    const hudDicePolyEl = document.getElementById('hud-dice-poly');
+    const hudDiceTextEl = document.getElementById('hud-dice-text');
+    const hudPromptEl = document.getElementById('hud-prompt');
+    const hudStatusEl = document.getElementById('hud-status');
+
+    // Featured fold-down
+    const featuredMenuEl = document.getElementById('featuredMenu');
+    const featuredToggleEl = document.getElementById('featuredToggle');
+    const featuredBackdropEl = document.getElementById('featuredBackdrop');
+
+    function setTopCssVar() {
+      const siteNav = document.getElementById('site-nav');
+      const header = document.querySelector('header');
+      const navH = siteNav ? siteNav.offsetHeight : 0;
+      const headerH = header ? header.offsetHeight : 0;
+      document.documentElement.style.setProperty('--app-top-h', `${navH + headerH}px`);
+    }
+
+    function closeFeatured() {
+      if (!featuredMenuEl) return;
+      featuredMenuEl.classList.remove('open');
+      if (featuredToggleEl) featuredToggleEl.setAttribute('aria-expanded', 'false');
+    }
+
+    function toggleFeatured() {
+      if (!featuredMenuEl) return;
+      const open = featuredMenuEl.classList.toggle('open');
+      if (featuredToggleEl) featuredToggleEl.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    const actionButtonEl = document.getElementById('action-button');
+    const overlayEl = document.getElementById('overlay');
+
+    const pageFadeEl = document.getElementById('page-fade');
+    let lastRenderedPageId = null;
+    let sweepArmed = true;
+    let uiFadeArmed = true;
+
+    let pendingStatDeltaFrom = null;
+
+    function statSnapshot() {
+      if (!engine) return null;
+      return {
+        hp: Number(engine.getStat('health') || 0),
+        str: Number(engine.getTotalStat('strength') || 0),
+        lck: Number(engine.getTotalStat('luck') || 0),
+      };
+    }
+
+    let nextStatFloatAt = 0;
+
+    function getStatFloatDurationMs() {
+      try {
+        const v = getComputedStyle(document.documentElement).getPropertyValue('--stat-popup-duration').trim();
+        const ms = parseFloat(v.replace('ms', ''));
+        return Number.isFinite(ms) ? ms : 900;
+      } catch (_) {
+        return 900;
+      }
+    }
+
+    function showStatFloat(text, positive) {
+      if (!statFloatLayerEl) return;
+      const now = performance.now();
+      const startAt = Math.max(now, nextStatFloatAt);
+      // Serialize popups so they don't overlap.
+      const dur = getStatFloatDurationMs();
+      const gap = Math.max(180, Math.round(dur * 0.85));
+      nextStatFloatAt = startAt + gap;
+
+      window.setTimeout(() => {
+        const el = document.createElement('div');
+        el.className = 'stat-float ' + (positive ? 'positive' : 'negative');
+        el.textContent = text;
+        statFloatLayerEl.appendChild(el);
+        const cleanup = () => { try { el.remove(); } catch (_) {} };
+        el.addEventListener('animationend', cleanup);
+        window.setTimeout(cleanup, dur + 80);
+      }, Math.max(0, startAt - now));
+    }
+
+    function flushPendingStatDelta() {
+      if (!pendingStatDeltaFrom) return;
+      const after = statSnapshot();
+      const before = pendingStatDeltaFrom;
+      pendingStatDeltaFrom = null;
+      if (!after) return;
+
+      const deltas = [
+        { key: 'hp', label: 'HP' },
+        { key: 'str', label: 'STR' },
+        { key: 'lck', label: 'LCK' },
+      ].map(({ key, label }) => ({ label, delta: Number(after[key] || 0) - Number(before[key] || 0) }))
+        .filter((x) => x.delta !== 0);
+
+      deltas.forEach(({ label, delta }) => {
+        const sign = delta > 0 ? '+' : '';
+        showStatFloat(`${sign}${delta} ${label}`, delta > 0);
+      });
+    }
+
+    const fadeDelay = (ms) => new Promise((r) => setTimeout(r, ms));
+
+    async function fadeToBlack() {
+      if (!pageFadeEl) return;
+      pageFadeEl.classList.add('active');
+      await fadeDelay(130);
+    }
+
+    async function fadeFromBlack() {
+      if (!pageFadeEl) return;
+      // Let the new page paint before fading out.
+      await fadeDelay(0);
+      pageFadeEl.classList.remove('active');
+    }
+
+    function triggerMainTextSweep() {
+      if (!textEl) return;
+      textEl.classList.remove('sweep-in');
+      // Force reflow so animation restarts reliably.
+      void textEl.offsetWidth;
+      textEl.classList.add('sweep-in');
+    }
+
+    function triggerSpecialTextSweep(el) {
+      if (!el) return;
+      el.classList.remove('sweep-in');
+      void el.offsetWidth;
+      el.classList.add('sweep-in');
+    }
+
+    function triggerUiFade() {
+      const specialText = bezelEl ? bezelEl.querySelector('.special-text') : null;
+      const specialHint = specialText ? specialText.querySelector('.hint') : null;
+      const els = [choicesEl, statsEl, separatorEl, inventoryEl, hudDiceEl, hudPromptEl, hudStatusEl, specialText, specialHint]
+        .filter(Boolean);
+      els.forEach((el) => {
+        el.classList.remove('ui-fade-in');
+        void el.offsetWidth;
+        el.classList.add('ui-fade-in');
+      });
+    }
+    const overlayTitle = document.getElementById('overlay-title');
+    const overlayBody = document.getElementById('overlay-body');
+    const overlayFoot = document.getElementById('overlay-foot');
+    const overlayCardEl = overlayEl ? overlayEl.querySelector('.overlay-card') : null;
+
+    if (overlayEl) {
+      overlayEl.addEventListener('click', (e) => {
+        if (e.target === overlayEl) hideOverlay();
+      });
+    }
+    const jumpEl = document.getElementById('jump');
+    const jumpInputEl = document.getElementById('jump-input');
+    const jumpGoEl = document.getElementById('jump-go');
+    const jumpCancelEl = document.getElementById('jump-cancel');
+    const splashEl = document.getElementById('splash');
+    const splashLogoEl = document.getElementById('splash-logo');
+    const splashTitleEl = document.getElementById('splash-title');
+
+    let splashActive = false;
+    const ledLeft = {
+      red: document.getElementById('led-red-left'),
+      orange: document.getElementById('led-orange-left'),
+      blue: document.getElementById('led-blue-left'),
+      green: document.getElementById('led-green-left'),
+    };
+    const ledRight = {
+      red: document.getElementById('led-red-right'),
+      orange: document.getElementById('led-orange-right'),
+      blue: document.getElementById('led-blue-right'),
+      green: document.getElementById('led-green-right'),
+    };
+
+    const screenWrapperEl = document.getElementById('screen');
+
+    let currentAssets = null;
+    let currentGame = null;
+    let engine = null;
+    let audioPlayer = null;
+    let sfxPlayer = null;
+    let lastPageId = null;
+    let lastActionResult = null;
+    // Cache media per page to avoid recreating <video> on re-renders (which looks like looping).
+    let lastMediaPageId = null;
+    let lastMediaType = null;
+    let lastMediaUrl = null;
+    let pendingActionNav = null; // { pageId, success, nextPage }
+    let actionPhase = 'idle'; // 'idle' | 'rolling' | 'result'
+    let actionPhasePageId = null;
+    let pageBadgeOn = false;
+    let actionPreEnemyRoll = null;
+    let autoScrollRaf = null;
+    let autoScrollPausedUntil = 0;
+    let autoScrollLoopRestartAt = 0;
+
+    if (bezelBgEl) {
+      bezelBgEl.addEventListener('error', () => {
+        log(`Bezel image failed to load: ${bezelBgEl.src}`);
+        bezelBgEl.style.display = 'none';
+      });
+    }
+
+    function log(message) {
+      const time = new Date().toLocaleTimeString();
+      logEl.textContent += `[${time}] ${message}\n`;
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function normalizePath(p) { return p.replace(/^\/?/, '').replace(/\\/g, '/').toLowerCase(); }
+
+    function stopAutoScroll() {
+      if (autoScrollRaf) cancelAnimationFrame(autoScrollRaf);
+      autoScrollRaf = null;
+    }
+
+    function startAutoScroll(el) {
+      stopAutoScroll();
+      if (!el) return;
+
+      // Reset to top each render
+      el.scrollTop = 0;
+
+      const settleMs = 900;
+      const bottomHoldMs = 20000;
+      const settledUntil = performance.now() + settleMs;
+
+      const pause = () => { autoScrollPausedUntil = performance.now() + 1500; };
+      el.onwheel = pause;
+      el.onpointerdown = pause;
+      el.ontouchstart = pause;
+
+      const step = () => {
+        if (!document.body.contains(el)) return;
+
+        const now = performance.now();
+
+        // Pause if user interacted recently
+        if (now < autoScrollPausedUntil) {
+          autoScrollRaf = requestAnimationFrame(step);
+          return;
+        }
+
+        // Initial settle delay before starting scroll
+        if (now < settledUntil) {
+          autoScrollRaf = requestAnimationFrame(step);
+          return;
+        }
+
+        const maxScroll = Math.max(0, el.scrollHeight - el.clientHeight);
+        if (maxScroll <= 0) {
+          autoScrollRaf = requestAnimationFrame(step);
+          return;
+        }
+
+        // If we've recently finished a loop, wait before restarting from top
+        if (autoScrollLoopRestartAt && now < autoScrollLoopRestartAt) {
+          autoScrollRaf = requestAnimationFrame(step);
+          return;
+        }
+
+        // Slow but clearly visible scroll speed
+        const pixelsPerFrame = 0.3; // adjust for faster/slower
+        el.scrollTop = Math.min(maxScroll, el.scrollTop + pixelsPerFrame);
+
+        if (el.scrollTop >= maxScroll - 1) {
+          // Reached the end: stay at bottom then restart from top
+          autoScrollLoopRestartAt = now + bottomHoldMs;
+          el.scrollTop = maxScroll;
+          setTimeout(() => {
+            if (!document.body.contains(el)) return;
+            el.scrollTop = 0;
+            autoScrollLoopRestartAt = 0;
+          }, bottomHoldMs);
+        }
+
+        autoScrollRaf = requestAnimationFrame(step);
+      };
+
+      autoScrollRaf = requestAnimationFrame(step);
+    }
+
+    class AssetSource {
+      constructor(label, map) { this.label = label; this.map = map; this.urlCache = new Map(); }
+      static async fromDirectoryHandle(handle) {
+        const map = new Map();
+        async function walk(dir, prefix = '') {
+          for await (const entry of dir.values()) {
+            const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
+            if (entry.kind === 'file') { map.set(normalizePath(rel), await entry.getFile()); }
+            else if (entry.kind === 'directory') { await walk(entry, rel); }
+          }
+        }
+        await walk(handle);
+        return new AssetSource(`Folder: ${handle.name}`, map);
+      }
+      static fromFileList(fileList) {
+        const map = new Map();
+        Array.from(fileList).forEach((file) => { const rel = normalizePath(file.webkitRelativePath || file.name); map.set(rel, file); });
+        return new AssetSource('Uploaded files', map);
+      }
+      getFile(path) { return this.map.get(normalizePath(path)) || null; }
+      // Find a file by suffix within the uploaded folder (useful when game.json is nested).
+      findPathEnding(suffix) {
+        const suf = normalizePath(suffix);
+        for (const key of this.map.keys()) {
+          if (key === suf || key.endsWith('/' + suf) || key.endsWith(suf)) return key;
+        }
+        return null;
+      }
+
+      async getUrl(path) {
+        const key = normalizePath(path);
+        if (this.urlCache.has(key)) return this.urlCache.get(key);
+        const file = this.getFile(key);
+        if (!file) return null;
+        const url = URL.createObjectURL(file);
+        this.urlCache.set(key, url);
+        return url;
+      }
+    }
+
+    // Built-in (repo) games: load assets directly via relative URLs (no folder picker).
+    class UrlAssetSource {
+      constructor(label, baseUrl) {
+        this.label = label;
+        this.baseUrl = baseUrl.replace(/\/$/, '');
+        this.urlCache = new Map(); // path -> url
+      }
+      getFile(_) { return null; }
+      async getUrl(path) {
+        if (!path) return null;
+        const p = normalizePath(path).replace(/^\//, '');
+        if (this.urlCache.has(p)) return this.urlCache.get(p);
+
+        // Shared assets live under ../web_assets when running from /play/.
+        let url;
+        if (p.startsWith('web_assets/')) url = encodeURI(`../${p}`);
+        else if (p.startsWith('special_pages/')) url = encodeURI(`../web_assets/${p}`);
+        else url = encodeURI(`${this.baseUrl}/${p}`);
+
+        // For direct URL assets, return immediately so media swaps don't block on preflight checks.
+        // (Folder-picked assets inherently verify existence; hosted assets will just 404 in-network if missing.)
+        this.urlCache.set(p, url);
+        return url;
+      }
+    }
+
+    class GameEngine {
+      constructor(data) {
+        this.game = data;
+        this.inventory = {};
+        this.variables = {};
+        this.history = [];
+        const defaults = { strength: 0, luck: 0, health: 100 };
+        this.playerStats = { ...defaults, ...(data.player_stats || {}) };
+        this.currentPage = data.start_page || 'start';
+        this.enterPage(this.currentPage);
+      }
+      getPage(id = this.currentPage) { return (this.game.pages || {})[id] || {}; }
+      hasItem(name, qty = 1) { const item = this.inventory[name]; if (!item) return false; if (qty <= 1) return true; const amount = typeof item === 'object' ? (item.quantity || 1) : 1; return amount >= qty; }
+      normalizeStatKey(name) {
+        if (!name) return '';
+        const k = String(name).trim().toLowerCase();
+        if (k === 'hp' || k === 'health') return 'health';
+        if (k === 'str' || k === 'strength') return 'strength';
+        if (k === 'lck' || k === 'luck') return 'luck';
+        return k;
+      }
+      getStat(name) {
+        const key = this.normalizeStatKey(name);
+        return this.playerStats[key] ?? 0;
+      }
+      getTotalStat(name) {
+        const key = this.normalizeStatKey(name);
+        let total = this.getStat(key);
+        Object.values(this.inventory).forEach((item) => {
+          if (item && item.stats) total += item.stats[key] || 0;
+          if (item && item.stat_mods) total += item.stat_mods[key] || 0;
+        });
+        return total;
+      }
+      getInventoryItems() {
+        const items = Object.values(this.inventory).map((item) => (typeof item === 'string' ? { name: item, display_name: item } : item));
+        // Do not surface internal "flag_*" markers in the Items UI.
+        return items.filter((it) => {
+          const name = (it && (it.name || it.display_name)) ? String(it.name || it.display_name) : '';
+          if (it && it.hidden) return false;
+          return !/^flag_/i.test(name);
+        });
+      }
+      collectPageItems(page = this.getPage()) {
+        const addOne = (entry) => {
+          if (!entry) return;
+          if (typeof entry === 'string') { this.inventory[entry] = { name: entry, display_name: entry }; return; }
+          if (entry.name) { this.inventory[entry.name] = entry; return; }
+          if (Object.values(entry).some((v) => typeof v === 'number')) { Object.entries(entry).forEach(([name, qty]) => { this.inventory[name] = { name, display_name: name.replace(/_/g, ' '), quantity: qty }; }); }
+        };
+        if (page.add_item) addOne(page.add_item);
+        if (Array.isArray(page.add_items)) page.add_items.forEach(addOne);
+      }
+      enterPage(id) {
+        if (!this.game.pages[id]) return false;
+        this.currentPage = id;
+        const page = this.getPage();
+        if (page.stat_mods) { Object.entries(page.stat_mods).forEach(([k, v]) => { if (k in this.playerStats) this.playerStats[k] += v; }); }
+        if (page.set_flags_on_enter) {
+          const flags = Array.isArray(page.set_flags_on_enter) ? page.set_flags_on_enter : [page.set_flags_on_enter];
+          flags.filter(Boolean).forEach((f) => { this.variables[String(f)] = true; });
+        }
+        this.collectPageItems(page);
+        if (this.playerStats.health <= 0 && this.game.pages.game_over) { this.currentPage = 'game_over'; }
+        return true;
+      }
+      getAvailableChoices() {
+        const page = this.getPage();
+        const all = page.choices || [];
+        return all.map((choice) => {
+          const lockedReasons = [];
+          const single = choice.requires_item || choice.required_item;
+          const arr = choice.requires_items || choice.required_items;
+          const items = [];
+          if (single) items.push(single);
+          if (Array.isArray(arr)) items.push(...arr);
+
+          if (items.length) {
+            items.forEach((it) => {
+              const need = String(it);
+              const amt = (it === single) ? (choice.requires_amount || 1) : 1;
+              if (!this.hasItem(need, amt)) lockedReasons.push(`item:${need}`);
+            });
+          }
+
+          const rf = choice.requires_flags;
+          if (rf) {
+            const flags = Array.isArray(rf) ? rf : [rf];
+            flags.forEach((f) => { if (!this.variables[String(f)]) lockedReasons.push(`flag:${f}`); });
+          }
+
+          if (lockedReasons.length) return { ...choice, locked: true, locked_reasons: lockedReasons };
+          return choice;
+        });
+      }
+      makeChoice(index) {
+        const choices = this.getAvailableChoices();
+        if (index >= choices.length) return false;
+        const choice = choices[index];
+        if (choice.locked) return false;
+        const add = (entry) => {
+          if (!entry) return;
+          if (typeof entry === 'string') { this.inventory[entry] = { name: entry, display_name: entry }; return; }
+          if (entry.name) { this.inventory[entry.name] = entry; return; }
+          if (Object.values(entry).some((v) => typeof v === 'number')) { Object.entries(entry).forEach(([name, qty]) => { this.inventory[name] = { name, display_name: name.replace(/_/g,' '), quantity: qty }; }); }
+        };
+        if (choice.add_item) add(choice.add_item);
+        if (Array.isArray(choice.add_items)) choice.add_items.forEach(add);
+        if (choice.remove_item) delete this.inventory[choice.remove_item];
+        if (choice.modify_stats) Object.entries(choice.modify_stats).forEach(([k,v]) => { if (k in this.playerStats) this.playerStats[k] += v; });
+        if (choice.reset_game) { this.inventory = {}; this.playerStats = { ...( { strength:0, luck:0, health:100 } ), ...(this.game.player_stats||{}) }; this.history = []; }
+        if (choice.set_variable) Object.entries(choice.set_variable).forEach(([k,v]) => { this.variables[k]=v; });
+        if (choice.set_flags) {
+          const flags = Array.isArray(choice.set_flags) ? choice.set_flags : [choice.set_flags];
+          flags.filter(Boolean).forEach((f) => { this.variables[String(f)] = true; });
+        }
+        this.history.push({ page: this.currentPage, choice: index });
+        const next = choice.next_page || choice.target;
+        if (next) this.enterPage(next);
+        return true;
+      }
+      performAction() {
+        const page = this.getPage();
+        const action = page.action || {};
+        if (!action.type || action.type === 'dice') {
+          const diceType = action.dice || 6;
+          const base = Math.floor(Math.random() * diceType) + 1;
+          const statKey = action.stat_bonus || 'luck';
+          const stat = this.getTotalStat(statKey);
+          const result = base + stat;
+          const target = action.target || 0;
+          const success = target ? result >= target : true;
+          return { type: 'dice', base_roll: base, stat_bonus: stat, result, target, success, prompt: action.prompt || '', failure_damage: action.failure_damage || 0, success_page: action.success_page, failure_page: action.failure_page };
+        }
+        if (action.type === 'combat' || action.type === 'boss') {
+          const base = Math.floor(Math.random() * 20) + 1;
+          const stat = this.getTotalStat(action.stat_bonus || 'strength');
+          const playerRoll = base + stat + (action.player_bonus || 0);
+          const enemyRoll = Math.floor(Math.random() * 20) + 1 + (action.enemy_bonus || 0);
+          const success = playerRoll > enemyRoll;
+          // Boss is rendered/processed like combat in the web player.
+          return { type: 'combat', base_roll: base, stat_bonus: stat, player_roll: playerRoll, enemy_roll: enemyRoll, enemy_damage: action.enemy_damage || 0, success, success_page: action.success_page, failure_page: action.failure_page };
+        }
+        return null;
+      }
+      processActionResult(result) {
+        if (!result) return;
+        if (!result.success) {
+          const dmg = result.type === 'combat' ? (result.enemy_damage || 0) : (result.failure_damage || 0);
+          if (dmg) this.playerStats.health -= dmg;
+          if (this.playerStats.health <= 0 && this.game.pages.game_over) { this.enterPage('game_over'); return; }
+        }
+        const next = result.success ? result.success_page : result.failure_page;
+        if (next) this.enterPage(next);
+      }
+    }
+
+    async function loadGameFromFile(file, assets) {
+      try {
+        log(`Loading game file: ${file.name}`);
+        const text = await file.text();
+        const data = JSON.parse(text);
+        currentGame = data;
+        engine = new GameEngine(data);
+        currentAssets = assets || currentAssets;
+
+        // Apply stat popup styling (web overrides fall back to pi/default).
+        const sp = (data && (data.stat_popup_web || data.stat_popup)) || {};
+        const px = (n, d) => `${Number.isFinite(Number(n)) ? Number(n) : d}px`;
+        const ms = (n, d) => `${Number.isFinite(Number(n)) ? Number(n) : d}ms`;
+        document.documentElement.style.setProperty('--stat-popup-font-size', px(sp.font_size, 24));
+        document.documentElement.style.setProperty('--stat-popup-positive', sp.positive_color || '#86efac');
+        document.documentElement.style.setProperty('--stat-popup-negative', sp.negative_color || '#fca5a5');
+        document.documentElement.style.setProperty('--stat-popup-duration', ms(sp.duration_ms, 900));
+        document.documentElement.style.setProperty('--stat-popup-move', px(sp.move_px, 26));
+        gameTitleEl.textContent = data.title || 'Untitled Game';
+        applyTheme();
+        applyTypography();
+        await loadFontIfNeeded();
+        await loadBezelImage('main');
+        log(`Loaded game.json (${file.name})`);
+        // Clear preload hint once a game is loaded
+        separatorEl.textContent = '';
+        statsEl.style.display = '';
+        // Optional: show a brief logo splash (matches console pre-start logo feel)
+        await showLogoSplash(3000);
+        renderPage(true);
+      } catch (e) {
+        console.error('Failed to load game.json', e);
+        log(`Failed to load game.json: ${e.message}`);
+      }
+    }
+
+    async function loadGameFromUrl(baseUrl, label) {
+      try {
+        // NOTE: When opened via file://, browsers block fetch() to local files.
+        // In that case we must fall back to a user-picked directory.
+        if (location && location.protocol === 'file:') {
+          throw new Error('This page is running from file://. Built-in featured games require folder access.');
+        }
+        const url = encodeURI(`${baseUrl.replace(/\/$/, '')}/game.json`);
+        log(`Loading built-in game: ${label}`);
+        const res = await fetch(url, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`Failed to load ${url} (${res.status})`);
+        const data = await res.json();
+        currentGame = data;
+        engine = new GameEngine(data);
+        currentAssets = new UrlAssetSource(`Built-in: ${label}`, baseUrl);
+        assetSourceEl.textContent = currentAssets.label;
+        gameTitleEl.textContent = data.title || label;
+        applyTheme();
+        await loadFontIfNeeded();
+        await loadBezelImage('main');
+        // Match the normal folder load UX.
+        separatorEl.textContent = '';
+        statsEl.style.display = '';
+        await showLogoSplash(3000);
+        renderPage(true);
+        closeFeatured();
+      } catch (e) {
+        console.error('Failed to load built-in game', e);
+        showOverlay('Featured Game', [`Could not load: ${label}`, String(e && e.message ? e.message : e)]);
+      }
+    }
+
+    async function loadFeaturedGameFromPicker(gameFolderName, label) {
+      if (!window.showDirectoryPicker) {
+        showOverlay('Featured Game', [
+          'Your browser does not support folder picking for featured games.',
+          'Use “Insert Cart” and select the game folder instead.'
+        ]);
+        return;
+      }
+      try {
+        showOverlay('Featured Game', [
+          `Select your project folder (the one that contains “games/”) so I can open: ${label}.`,
+          'Tip: pick the “Future Version” folder.'
+        ]);
+        const root = await window.showDirectoryPicker();
+        hideOverlay();
+
+        let gamesDir = null;
+        try { gamesDir = await root.getDirectoryHandle('games'); } catch (_) {}
+        const base = gamesDir || root;
+        const gameDir = await base.getDirectoryHandle(gameFolderName);
+        const assets = await AssetSource.fromDirectoryHandle(gameDir);
+        const gameFile = assets.getFile('game.json');
+        if (!gameFile) throw new Error('game.json not found in selected folder.');
+        assetSourceEl.textContent = assets.label;
+        currentAssets = assets;
+        await loadGameFromFile(gameFile, assets);
+        closeFeatured();
+      } catch (e) {
+        console.error('Failed to load featured game via picker', e);
+        showOverlay('Featured Game', [`Could not open: ${label}`, String(e && e.message ? e.message : e)]);
+      }
+    }
+
+    function themeFromGame() {
+      const themeValue = (currentGame && currentGame.theme) || 'fantasy';
+      if (typeof themeValue === 'string') return { preset: themeValue, custom: {} };
+      return { preset: themeValue.preset || 'fantasy', custom: themeValue.custom || {} };
+    }
+
+    function actionStyles() {
+      if (!currentGame) return { diceSize: 120 };
+      const styles = currentGame.action_styles_web || currentGame.action_styles || {};
+      let diceSize = parseFloat(styles.dice_size);
+      if (isNaN(diceSize)) diceSize = 120;
+      diceSize = Math.max(90, Math.min(160, diceSize));
+      return { diceSize };
+    }
+
+    function actionColors() {
+      const colors = (currentGame && currentGame.action_colors) || {};
+      return {
+        background: colors.background || 'rgba(0,0,0,0.55)',
+        border: colors.border || '#2c2c2c',
+        dice: colors.dice || '#ffffff',
+        diceText: colors.dice_text || '#000000',
+        victory: colors.victory || '#22c55e',
+        failure: colors.failure || '#b22222',
+      };
+    }
+
+    function actionTextColor() {
+      return (currentGame && currentGame.action_text_color) || '#FFFFFF';
+    }
+
+    function actionPositions() {
+      if (!currentGame) return { textTop: 0, diceTop: 0, resultTop: 0 };
+      const H = 1280;
+      // Web player must use the *_web values from the builder when present.
+      // Fall back to Pi defaults / legacy only if *_web is missing.
+      const apWeb = currentGame.action_positions_percent_web;
+      const apPi = currentGame.action_positions_percent;
+      const ap = apWeb || apPi || {};
+
+      const clampPct = (v, d) => {
+        const n = parseFloat(v);
+        if (isNaN(n)) return d;
+        return Math.max(0, Math.min(100, n));
+      };
+
+      // Values <=100 are % from bottom; values >100 are pixels from TOP (legacy fields)
+      const toTopPx = (val, fallbackBottomPct, legacyPx) => {
+        if (val != null) {
+          const n = parseFloat(val);
+          if (!isNaN(n)) {
+            if (n > 100) return n; // px from top
+            const bottomPct = clampPct(n, fallbackBottomPct);
+            return ((100 - bottomPct) / 100) * H;
+          }
+        }
+        if (legacyPx != null) {
+          const n = parseFloat(legacyPx);
+          if (!isNaN(n)) return n; // px from top
+        }
+        // fallback: use bottom pct fallback
+        return ((100 - fallbackBottomPct) / 100) * H;
+      };
+
+      // Defaults match console.py fallbacks (bottom-%): text=90, dice=82, result=85
+      const textTop = toTopPx(ap.text, 90, currentGame.action_text_y);
+      const diceTop = toTopPx(ap.dice, 82, currentGame.action_dice_y);
+      const resultTop = toTopPx(ap.result, 85, currentGame.action_result_y);
+
+      return { textTop, diceTop, resultTop };
+    }
+
+    function renderActionPanel(page) {
+      if (!page || !page.action) return;
+      const colors = actionColors();
+      if (hudDicePolyEl) {
+        hudDicePolyEl.setAttribute('fill', colors.dice);
+        hudDicePolyEl.setAttribute('stroke', colors.border);
+      }
+      if (hudDiceTextEl) {
+        hudDiceTextEl.setAttribute('fill', colors.diceText);
+        // Ensure SVG text uses the game font (SVG doesn't reliably inherit from parent CSS).
+        hudDiceTextEl.style.fontFamily = 'var(--font-heading)';
+        hudDiceTextEl.style.fontWeight = '800';
+      }
+
+      const type = ((page.action.type || 'dice') === 'boss') ? 'combat' : (page.action.type || 'dice');
+      const target = page.action.target || '';
+      const enemyName = (page.action.action_name && String(page.action.action_name).trim()) ? String(page.action.action_name).trim() : 'Enemy';
+      const result = lastActionResult && lastActionResult.page === engine.currentPage ? lastActionResult : null;
+
+      // Never overwrite the dice container (it contains SVG). Update just the number label.
+      // Don't stomp live animation updates.
+      if (hudDiceTextEl && !result && actionLiveDiceNumber == null) {
+        hudDiceTextEl.textContent = String((type === 'combat') ? '20' : (page.action.dice || 6));
+      }
+      if (hudDiceEl) hudDiceEl.style.display = 'flex';
+
+      if (result) {
+        // Show breakdown in the "text" slot, and success/failure in the "result" slot.
+        if (result.type === 'combat') {
+          const bonus = Number(result.stat_bonus || 0);
+          const base = Number(result.base_roll || 0);
+          const total = Number(result.player_roll || 0);
+          const you = bonus ? `${base}+${bonus}=${total}` : `${base}=${total}`;
+          hudPromptEl.textContent = `You: ${you}  vs  ${enemyName}: ${result.enemy_roll}`;
+        } else {
+          const tgt = result.target ? ` (Target ${result.target})` : '';
+          hudPromptEl.textContent = `Roll: ${result.base_roll} + ${result.stat_bonus} = ${result.result}${tgt}`;
+        }
+        // Don't show the extra "Success!/Failed!" line; it can overlap other result text.
+        hudStatusEl.textContent = '';
+        hudStatusEl.style.color = actionTextColor();
+      } else if (actionPhase === 'rolling') {
+        hudPromptEl.textContent = 'Rolling...';
+        hudStatusEl.textContent = '';
+        hudPromptEl.style.color = actionTextColor();
+        hudStatusEl.style.color = actionTextColor();
+      } else {
+        // Pre-roll: show opponent info at result position.
+        hudPromptEl.textContent = '';
+        if (type === 'combat') {
+          hudStatusEl.textContent = (actionPreEnemyRoll != null) ? `${enemyName} Roll: ${actionPreEnemyRoll}` : `${enemyName} Roll: —`;
+        } else {
+          hudStatusEl.textContent = (target !== '' && target != null) ? `Target: ${target}` : 'Target: —';
+        }
+        hudStatusEl.style.color = actionTextColor();
+      }
+
+      // Dice label already handled above
+
+      // Position elements based on action_positions_percent_web (bottom-based)
+      const H = 1280;
+      // Use transform-insensitive height so View: Console zoom doesn't shrink the dice.
+      const rawH = screenWrapperEl.offsetHeight || screenWrapperEl.clientHeight || screenWrapperEl.getBoundingClientRect().height;
+      const scale = rawH ? rawH / H : 1;
+      const pos = actionPositions();
+      const styles = actionStyles();
+      const diceSize = styles.diceSize * scale;
+
+      if (hudDiceEl) {
+        hudDiceEl.style.width = `${diceSize}px`;
+        hudDiceEl.style.height = `${diceSize}px`;
+        hudDiceEl.style.top = `${pos.diceTop * scale}px`;
+        // Match builder preview: dice is positioned by its CENTER point.
+        hudDiceEl.style.transform = 'translate(-50%, -50%)';
+      }
+      if (hudDiceSvgEl) {
+        hudDiceSvgEl.setAttribute('width', String(diceSize));
+        hudDiceSvgEl.setAttribute('height', String(diceSize));
+      }
+      if (hudDiceTextEl) {
+        // IMPORTANT: SVG font-size is in *viewBox units*.
+        // If we scale it by diceSize (pixels), it becomes enormous because the SVG itself is also scaled.
+        // Keep it in viewBox units so it scales naturally with the SVG.
+        const txt = (hudDiceTextEl.textContent || '').trim();
+        const isTwoPlusDigits = txt.length >= 2;
+        hudDiceTextEl.setAttribute('font-size', isTwoPlusDigits ? '40' : '44');
+      }
+      if (hudPromptEl) {
+        const textSize = (currentGame.action_text_size || 20) * scale;
+        hudPromptEl.style.fontSize = `${textSize}px`;
+        hudPromptEl.style.top = `${pos.textTop * scale}px`;
+      }
+      if (hudStatusEl) {
+        const textSize = (currentGame.action_text_size || 20) * scale;
+        hudStatusEl.style.fontSize = `${textSize}px`;
+        hudStatusEl.style.top = `${pos.resultTop * scale}px`;
+      }
+
+      // Keep action HUD lines on a single row by scaling down if needed.
+      fitActionHudTextToRow();
+    }
+
+    function applyLedEffect(page) {
+      const effect = (page && page.led_effect) || {};
+      const type = effect.type || 'off';
+      const colorMap = {
+        red: '#c81e1e', orange: '#d97757', blue: '#3b82f6', green: '#22c55e',
+        cyan: '#22d3ee', yellow: '#eab308', white: '#f8fafc'
+      };
+      const colorKey = (effect.color || '').toLowerCase();
+      const targetColor = ['red','orange','blue','green'].includes(colorKey) ? colorKey : null;
+      const colorVal = targetColor ? (colorMap[targetColor] || '#444') : '#444';
+      const speed = Math.max(0.1, effect.speed || 1);
+      const brightness = Math.max(0.1, Math.min(1, effect.brightness || 1));
+
+      const applyOff = (el) => {
+        if (!el) return;
+        el.style.animation = 'none';
+        el.style.opacity = '0.35';
+        el.style.background = '#2f2f2f';
+        el.style.borderColor = '#444';
+      };
+
+      const applyOn = (el) => {
+        if (!el) return;
+        el.style.animation = 'none';
+        el.style.background = colorVal;
+        el.style.borderColor = colorVal;
+        if (type === 'solid') {
+          el.style.opacity = brightness;
+          el.style.filter = `drop-shadow(0 0 6px ${colorVal})`;
+        } else if (type === 'pulse') {
+          el.style.opacity = 1;
+          el.style.animation = `led-pulse ${2 / speed}s infinite ease-in-out`;
+          el.style.filter = `drop-shadow(0 0 8px ${colorVal})`;
+        } else if (type === 'blink') {
+          el.style.opacity = 1;
+          el.style.animation = `led-blink ${1 / speed}s infinite step-end`;
+          el.style.filter = `drop-shadow(0 0 6px ${colorVal})`;
+        } else {
+          applyOff(el);
+        }
+      };
+
+      // Default all off
+      ['red','orange','blue','green'].forEach((c) => {
+        applyOff(ledLeft[c]);
+        applyOff(ledRight[c]);
+      });
+
+      if (type === 'off' || !targetColor) return;
+
+      // Light only the target color on both sides
+      applyOn(ledLeft[targetColor]);
+      applyOn(ledRight[targetColor]);
+    }
+
+    async function loadFontIfNeeded() {
+      if (!currentGame || !currentAssets) return;
+      const theme = themeFromGame();
+      const defaults = { fantasy: 'Spectral-SemiBold.ttf', scifi: 'Orbitron-SemiBold.ttf', steampunk: 'PlayfairDisplay-SemiBold.ttf', horror: 'SpecialElite-Regular.ttf' };
+      const fontFile = currentGame.font_file || (currentGame.fonts || {}).ttf || defaults[theme.preset] || defaults.fantasy;
+      let fontPath = `fonts/${fontFile}`;
+      let file = currentAssets.getFile(fontPath);
+      if (!file && typeof currentAssets.findPathEnding === 'function') {
+        const found = currentAssets.findPathEnding(fontPath);
+        if (found) { fontPath = found; file = currentAssets.getFile(found); }
+      }
+      if (!file) return;
+      const url = await currentAssets.getUrl(fontPath);
+      const family = String(fontFile).replace(/\.[^.]+$/, '') || String(fontFile);
+      const face = new FontFace(family, `url(${url})`);
+      await face.load();
+      document.fonts.add(face);
+      // IMPORTANT: Avoid self-referential CSS vars like "var(--font-main)" inside --font-main.
+      // Set explicit fallbacks.
+      document.documentElement.style.setProperty('--font-main', `'${family}', Inter, system-ui, sans-serif`);
+      document.documentElement.style.setProperty('--font-heading', `'${family}', Outfit, system-ui, sans-serif`);
+      document.documentElement.style.setProperty('--font-mono', `'${family}', "JetBrains Mono", monospace`);
+    }
+
+    let baselineScreenHeight = null;
+
+    // Option A scaling: keep a fixed 720x1280 virtual screen and scale the whole console uniformly.
+    const BASE_CONSOLE_W = 900;  // 720 + 90*2 (console-body left/right)
+    const BASE_CONSOLE_H = 1600; // include extra bottom space so chin/buttons fit comfortably
+    const BASE_SCREEN_W = 900;   // screen + side bezel + LEDs (no chin)
+    const BASE_SCREEN_H = 1280;
+    const CONSOLE_MAX_SCALE = 0.90; // Safety cap; actual console scale is also kept smaller than Screen mode
+
+    function updateScreenScale() {
+      const playArea = document.querySelector('.play-area');
+      if (!playArea) return;
+
+      // IMPORTANT: compute available space from the viewport, not from playArea's current layout,
+      // to avoid feedback loops where the scaled screen changes the container size.
+      const header = document.querySelector('header');
+      const headerH = header ? header.offsetHeight : 0;
+      const viewportW = Math.max(0, window.innerWidth);
+      const viewportH = Math.max(0, window.innerHeight - headerH);
+
+      // Also respect play-area padding so the scaled console doesn't get clipped.
+      const cs = window.getComputedStyle(playArea);
+      const padX = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+      const padY = (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
+
+      const w = Math.max(0, viewportW - padX);
+      const h = Math.max(0, viewportH - padY);
+      const isConsole = document.body.classList.contains('zoomed-out');
+      const baseW = isConsole ? BASE_CONSOLE_W : BASE_SCREEN_W;
+      const baseH = isConsole ? BASE_CONSOLE_H : BASE_SCREEN_H;
+      const rawScale = Math.min(w / baseW, h / baseH);
+      const rawScreenScale = Math.min(w / BASE_SCREEN_W, h / BASE_SCREEN_H);
+      let scale = Math.max(0.1, Math.min(1, rawScale));
+      if (isConsole) {
+        // Keep Console view slightly zoomed out compared to Screen view so the chin/buttons always fit.
+        scale = Math.min(scale, rawScreenScale * 0.90, CONSOLE_MAX_SCALE);
+      }
+      document.documentElement.style.setProperty('--screen-scale', String(scale));
+      document.documentElement.style.setProperty('--screen-container-h', String(baseH) + 'px');
+    }
+
+    function scheduleLayoutRecalc() {
+      baselineScreenHeight = null;
+      // Typography affects element sizes; apply it before layout so measurements are stable.
+      const recalc = () => {
+        updateScreenScale();
+        applyTypography();
+        applyLayout();
+        const page = engine && engine.getPage ? engine.getPage() : null;
+        if (page && page.action) renderActionPanel(page);
+      };
+      requestAnimationFrame(recalc);
+      setTimeout(recalc, 50);
+      setTimeout(recalc, 150);
+    }
+
+    function applyTypography() {
+      if (!currentGame) return;
+      const sizes = currentGame.font_sizes_web || currentGame.font_sizes || {};
+      const colors = currentGame.font_colors || {};
+
+      // Use layout dimensions before transforms to avoid zoomed-out scaling issues
+      const rawHeight = screenWrapperEl.offsetHeight || screenWrapperEl.clientHeight || screenWrapperEl.getBoundingClientRect().height;
+      let scale = 1;
+      if (rawHeight) {
+        if (!baselineScreenHeight) baselineScreenHeight = rawHeight;
+        scale = Math.min(1, rawHeight / baselineScreenHeight);
+      }
+
+      const sizeChoices = (sizes.choices || 20) * scale;
+      const sizeMain = (sizes.main || 20) * scale;
+      const sizeStats = (sizes.stats || 20) * scale;
+      const sizeItems = (sizes.items || 18) * scale;
+
+      choicesEl.style.fontSize = `${sizeChoices}px`;
+      textEl.style.fontSize = `${sizeMain}px`;
+      statsEl.style.fontSize = `${sizeStats}px`;
+      inventoryEl.style.fontSize = `${sizeItems}px`;
+      // Scale special-page text with the same factor so it matches the bezel
+      document.documentElement.style.setProperty('--special-scale', scale.toString());
+      choicesEl.style.color = colors.choices || '#d97757';
+      textEl.style.color = colors.main || '#e8e3d9';
+      statsEl.style.color = colors.stats || '#e8e3d9';
+      inventoryEl.style.color = colors.items || '#e8e3d9';
+      const sepColor = colors.separator || colors.stats || colors.items || '#e8e3d9';
+      if (separatorEl) separatorEl.style.background = sepColor;
+
+      // After typography changes, refit choice text to stay on one line.
+      fitChoiceTextToRow();
+
+      // Action HUD text uses its own sizing; refit it too in case names are long.
+      fitActionHudTextToRow();
+
+    }
+
+    function fitChoiceTextToRow() {
+      if (!choicesEl) return;
+      const rows = Array.from(choicesEl.querySelectorAll('.choice:not(.action-choice)'));
+      if (!rows.length) return;
+
+      const rawW = choicesEl.getBoundingClientRect().width || choicesEl.clientWidth;
+      const bezelW = bezelContentEl ? (bezelContentEl.getBoundingClientRect().width || bezelContentEl.clientWidth) : 0;
+      const screenW = screenWrapperEl ? (screenWrapperEl.getBoundingClientRect().width || screenWrapperEl.clientWidth) : 0;
+      const clampW = Math.max(0, Math.floor(Math.max(rawW, 0)));
+      // Avoid the case where the container grows with its content and thus never triggers fitting.
+      const containerW = Math.max(
+        0,
+        Math.min(
+          clampW || 0,
+          bezelW ? Math.floor(bezelW - 40) : Infinity,
+          screenW ? Math.floor(screenW * 0.92) : Infinity
+        )
+      );
+      if (!containerW) return;
+
+      for (const row of rows) {
+        const label = row.querySelector('.label');
+        const text = row.querySelector('.text');
+        if (!label || !text) continue;
+
+        // Reset so we always start from the base (theme) size.
+        text.style.fontSize = '';
+
+        const labelW = label.getBoundingClientRect().width;
+        const gap = 10; // matches flex gap (8px) with a small cushion
+        const available = Math.max(40, containerW - labelW - gap);
+
+        // If it already fits, keep base font size.
+        if (text.scrollWidth <= available) continue;
+
+        const basePx = parseFloat(getComputedStyle(text).fontSize) || 16;
+        const scale = Math.max(0.72, Math.min(1, (available / text.scrollWidth) * 0.98));
+        text.style.fontSize = `${Math.max(10, basePx * scale)}px`;
+      }
+    }
+
+    function fitActionHudTextToRow() {
+      if (!screenWrapperEl) return;
+      const W = screenWrapperEl.clientWidth || 0;
+      if (!W) return;
+      const available = Math.max(120, Math.floor(W * 0.92));
+      const els = [hudPromptEl, hudStatusEl].filter(Boolean);
+      for (const el of els) {
+        // Reset to base size (set by renderActionPanel)
+        el.style.fontSize = '';
+        if (!el.textContent || !el.textContent.trim()) continue;
+        // If it fits, keep base.
+        if (el.scrollWidth <= available) continue;
+        const basePx = parseFloat(getComputedStyle(el).fontSize) || 14;
+        const scale = Math.max(0.70, Math.min(1, (available / el.scrollWidth) * 0.98));
+        el.style.fontSize = `${Math.max(10, basePx * scale)}px`;
+      }
+    }
+
+    function applyTheme() {
+      const { preset, custom } = themeFromGame();
+      const presets = {
+        fantasy: { bg: '#1c1c1c', panel: '#2c2c2c', text: '#e8e3d9', sub: '#b8b3a9', accent: '#d97757', accentDark: '#c65d3b' },
+        scifi: { bg: '#0a1628', panel: '#0f1e37', text: '#00ffff', sub: '#64c8ff', accent: '#0088ff', accentDark: '#0064c8' },
+        horror: { bg: '#120808', panel: '#1e0f0f', text: '#cccccc', sub: '#a0a0a0', accent: '#8b0000', accentDark: '#640000' },
+        steampunk: { bg: '#2c1810', panel: '#3c2319', text: '#d4a574', sub: '#b48c64', accent: '#b8860b', accentDark: '#8b6508' },
+      };
+      const base = presets[preset] || presets.fantasy;
+      const merged = {
+        bg: custom.background_color || base.bg,
+        panel: base.panel,
+        text: custom.primary_color || base.text,
+        sub: custom.secondary_color || base.sub,
+        accent: custom.accent_color || base.accent,
+        accentDark: custom.accent_color ? shade(custom.accent_color, -20) : base.accentDark,
+      };
+      document.documentElement.style.setProperty('--bg', merged.bg);
+      document.documentElement.style.setProperty('--panel', merged.panel);
+      document.documentElement.style.setProperty('--panel-alt', merged.panel);
+      document.documentElement.style.setProperty('--text', merged.text);
+      document.documentElement.style.setProperty('--subtext', merged.sub);
+      document.documentElement.style.setProperty('--accent', merged.accent);
+      document.documentElement.style.setProperty('--accent-dark', merged.accentDark);
+    }
+
+    function shade(hex, delta) {
+      const v = hex.replace('#','');
+      const n = parseInt(v, 16);
+      const r = Math.min(255, Math.max(0, (n >> 16) + delta));
+      const g = Math.min(255, Math.max(0, ((n >> 8) & 0xff) + delta));
+      const b = Math.min(255, Math.max(0, (n & 0xff) + delta));
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    async function loadBezelImage(type = 'main') {
+      if (!currentGame) { bezelImgEl.style.display = 'none'; return; }
+      const { preset } = themeFromGame();
+      const presetSafe = (['fantasy','scifi','horror','steampunk'].includes(preset) ? preset : 'fantasy');
+      const bezels = (currentGame.bezels || {});
+
+      const tryGetUrl = async (path) => {
+        if (currentAssets) {
+          const direct = await currentAssets.getUrl(path);
+          if (direct) return direct;
+          const underWebAssets = await currentAssets.getUrl(`web_assets/${path}`);
+          if (underWebAssets) return underWebAssets;
+        }
+        // Fallback to relative URL when running web_player.html from disk
+        try {
+          return new URL(path, window.location.href).toString();
+        } catch {
+          return null;
+        }
+      };
+
+      let candidates = [];
+      if (type === 'action') {
+        const actionFile = currentGame.action_bezel || `${presetSafe}_action_bezel.png`;
+        candidates = [
+          actionFile.startsWith('action_bezel/') ? actionFile : `action_bezel/${actionFile}`,
+          actionFile.startsWith('action_bezels/') ? actionFile : `action_bezels/${actionFile}`,
+          `web_assets/action_bezel/${actionFile}`,
+          `web_assets/bezels/${actionFile}`,
+          `bezels/${actionFile}`,
+          `web_assets/bezels/${presetSafe}_action_bezel.png`,
+          `bezels/${presetSafe}_action_bezel.png`,
+          'web_assets/bezels/fantasy_action_bezel.png',
+          'bezels/fantasy_action_bezel.png',
+        ];
+      } else {
+        const mainFile = bezels.bottom || `${presetSafe}_bezel.png`;
+        candidates = [
+          mainFile.startsWith('bezels/') ? mainFile : `bezels/${mainFile}`,
+          `web_assets/bezels/${mainFile.startsWith('bezels/') ? mainFile.slice('bezels/'.length) : mainFile}`,
+          `web_assets/bezels/${presetSafe}_bezel.png`,
+          `bezels/${presetSafe}_bezel.png`,
+          'web_assets/bezels/fantasy_bezel.png',
+          'bezels/fantasy_bezel.png',
+        ];
+      }
+
+      for (const path of candidates) {
+        const url = await tryGetUrl(path);
+        if (!url) continue;
+        bezelImgEl.src = url;
+        bezelImgEl.style.display = 'block';
+        log(`BezelImg(${type}) -> ${path}`);
+        return;
+      }
+
+      bezelImgEl.style.display = 'none';
+      log(`BezelImg(${type}) not found. Tried: ${candidates.join(', ')}`);
+    }
+
+    async function loadBezelBackground(type = 'main') {
+      if (!currentAssets || !currentGame) { bezelBgEl.style.display = 'none'; return; }
+      const { preset } = themeFromGame();
+      const presetSafe = (['fantasy','scifi','horror','steampunk'].includes(preset) ? preset : 'fantasy');
+      const bezels = (currentGame.bezels || {});
+      let candidates = [];
+      const tryGetUrl = async (path) => {
+        const direct = await currentAssets.getUrl(path);
+        if (direct) return direct;
+        // Support assets packaged under web_assets/
+        return await currentAssets.getUrl(`web_assets/${path}`);
+      };
+
+      if (type === 'action') {
+        const actionFile = currentGame.action_bezel || `${presetSafe}_action_bezel.png`;
+        candidates = [
+          // Match console/USB layout: action_bezel/<file>
+          actionFile.startsWith('action_bezel/') ? actionFile : `action_bezel/${actionFile}`,
+          // Back-compat: earlier web builds used action_bezels/
+          actionFile.startsWith('action_bezels/') ? actionFile : `action_bezels/${actionFile}`,
+          `bezels/${actionFile}`, // fallback if packed in bezels
+          `bezels/${presetSafe}_action_bezel.png`,
+          'bezels/fantasy_action_bezel.png',
+        ];
+      } else {
+        const mainFile = bezels.bottom || `${presetSafe}_bezel.png`;
+        candidates = [
+          mainFile.startsWith('bezels/') ? mainFile : `bezels/${mainFile}`,
+          `bezels/${presetSafe}_bezel.png`,
+          'bezels/fantasy_bezel.png',
+        ];
+      }
+
+      for (const path of candidates) {
+        const url = await tryGetUrl(path);
+        if (url) {
+          log(`Bezel(${type}) loaded: ${path}`);
+          bezelBgEl.src = url;
+          bezelBgEl.style.display = 'block';
+          return;
+        }
+
+        // Last resort: if running from the repo folder, try relative URL paths
+        // (useful when assets are on disk but not selected via folder picker).
+        if (/^bezels\//.test(path) || /^action_bezel\//.test(path) || /^action_bezels\//.test(path)) {
+          const relCandidates = [path, `web_assets/${path}`];
+          for (const rel of relCandidates) {
+            const resolved = new URL(rel, window.location.href).toString();
+            bezelBgEl.src = resolved;
+            bezelBgEl.style.display = 'block';
+            log(`Bezel(${type}) trying relative: ${rel}`);
+            return;
+          }
+        }
+      }
+      log(`Bezel(${type}) not found. Tried: ${candidates.join(', ')}`);
+      bezelBgEl.style.display = 'none';
+    }
+
+    async function resolveMedia(page) {
+      if (!currentAssets) return { type: 'none' };
+      const pageId = engine.currentPage;
+      const imageFile = page.image || `${pageId}.jpg`;
+      const stem = imageFile.split('.').slice(0, -1).join('.') || pageId;
+
+      // Special pages: prefer special_pages / special_images (video then image)
+      if (page.special_page) {
+        const bg = page.special_bg ? String(page.special_bg).trim() : '';
+        const bgFile = bg || imageFile;
+        const bgStem = bgFile.split('.').slice(0, -1).join('.') || stem;
+
+        // Prefer mp4 first (when present), then fall back to images.
+        const candidates = [
+          `images/special_pages/${bgStem}.mp4`,
+          `images/special_images/${bgStem}.mp4`,
+          `images/special_pages/${bgFile}`,
+          `images/special_images/${bgFile}`,
+          `images/special_pages/${bgStem}.jpg`,
+          `images/special_images/${bgStem}.jpg`,
+          `images/special_pages/${bgStem}.png`,
+          `images/special_images/${bgStem}.png`,
+        ];
+        for (const path of candidates) {
+          const url = await currentAssets.getUrl(path);
+          if (url) {
+            const isVideo = path.endsWith('.mp4');
+            return { type: isVideo ? 'video' : 'image', url };
+          }
+        }
+
+        // Fallback to theme preset special background
+        const { preset } = themeFromGame();
+        const presetBg = `special_pages/${preset}_sp_bg.jpg`;
+        const presetUrl = await currentAssets.getUrl(presetBg);
+        if (presetUrl) {
+          return { type: 'image', url: presetUrl };
+        }
+      }
+
+      const videoPath = `images/animations/${stem}.mp4`;
+      const videoUrl = await currentAssets.getUrl(videoPath);
+      if (videoUrl) return { type: 'video', url: videoUrl };
+      const imgUrl = await currentAssets.getUrl(`images/${imageFile}`);
+      if (imgUrl) return { type: 'image', url: imgUrl };
+      return { type: 'none' };
+    }
+
+    async function playAudioForPage(page) {
+      if (!currentAssets) return;
+      const pageId = engine.currentPage;
+      const speechFile = page.speech_file || `${pageId}.wav`;
+      // Only play SFX when explicitly specified; many games don't provide per-page *_sfx.wav files.
+      const soundFile = page.sound_file || null;
+      if (audioPlayer) { audioPlayer.pause(); audioPlayer = null; }
+      if (sfxPlayer) { sfxPlayer.pause(); sfxPlayer = null; }
+      const speechUrl = await currentAssets.getUrl(`audio/${speechFile}`);
+      if (speechUrl) { audioPlayer = new Audio(speechUrl); audioPlayer.play().catch(()=>{}); }
+      if (soundFile) {
+        const sfxUrl = await currentAssets.getUrl(`audio/${soundFile}`);
+        if (!sfxUrl) return;
+        sfxPlayer = new Audio(sfxUrl);
+        sfxPlayer.volume = (audioPlayer?.volume ?? 1) * 0.6;
+        sfxPlayer.play().catch(()=>{});
+      }
+    }
+
+    function setMediaContent(content) {
+      mediaEl.innerHTML = '';
+      if (content.type === 'image') {
+        const img = document.createElement('img');
+        img.src = content.url;
+        img.alt = 'Page image';
+        img.onload = scheduleLayoutRecalc;
+        mediaEl.appendChild(img);
+      } else if (content.type === 'video') {
+        const video = document.createElement('video');
+        video.src = content.url;
+        video.autoplay = true;
+        video.loop = false;
+        video.muted = true;
+        video.addEventListener('ended', () => { video.pause(); });
+        video.onloadedmetadata = scheduleLayoutRecalc;
+        mediaEl.appendChild(video);
+      }
+    }
+
+    function setSpecialPage(page, media) {
+      // Hide normal layers
+      mediaEl.style.display = 'none';
+      bezelBgEl.style.display = 'none';
+      bezelEl.classList.add('special-page');
+      bezelEl.style.background = 'transparent';
+      bezelContentEl.style.display = 'none';
+      bezelImgEl.style.display = 'none';
+      bezelEl.innerHTML = '';
+      const bgUrl = media.type === 'image' || media.type === 'video' ? media.url : null;
+
+      if (bgUrl) {
+        const bg = document.createElement(media.type === 'video' ? 'video' : 'img');
+        bg.className = 'special-bg';
+        bg.src = bgUrl;
+        if (media.type === 'video') {
+          bg.playsInline = true;
+          bg.preload = 'auto';
+          bg.autoplay = true;
+          bg.loop = false;
+          bg.muted = true;
+          bg.addEventListener('ended', () => { bg.pause(); });
+
+          // Show a still poster immediately while the mp4 buffers (prevents the "blank for seconds" feel).
+          try {
+            const pageId = engine ? engine.currentPage : '';
+            const imageFile = page.image || (pageId ? `${pageId}.jpg` : '');
+            const stem = imageFile ? (imageFile.split('.').slice(0, -1).join('.') || pageId) : pageId;
+            const posterCandidates = [
+              // Prefer exact page id posters first.
+              pageId ? `images/special_pages/${pageId}.jpg` : null,
+              pageId ? `images/special_pages/${pageId}.png` : null,
+              pageId ? `images/special_images/${pageId}.jpg` : null,
+              pageId ? `images/special_images/${pageId}.png` : null,
+              // Then fall back to stem derived from page.image.
+              stem ? `images/special_pages/${stem}.jpg` : null,
+              stem ? `images/special_pages/${stem}.png` : null,
+              stem ? `images/special_images/${stem}.jpg` : null,
+              stem ? `images/special_images/${stem}.png` : null,
+            ].filter(Boolean);
+            if (currentAssets && stem) {
+              Promise.resolve().then(async () => {
+                for (const c of posterCandidates) {
+                  const u = await currentAssets.getUrl(c);
+                  if (u) { bg.poster = u; break; }
+                }
+              });
+            }
+          } catch (_) {}
+        }
+        bg.style.zIndex = 1;
+        bezelEl.appendChild(bg);
+      }
+
+      const pad = page.special_padding || {};
+      const padTop = Number.isFinite(Number(pad.top)) ? Number(pad.top) : 100;
+      const padBottom = Number.isFinite(Number(pad.bottom)) ? Number(pad.bottom) : 150;
+      const padLeft = Number.isFinite(Number(pad.left)) ? Number(pad.left) : 150;
+      const padRight = Number.isFinite(Number(pad.right)) ? Number(pad.right) : 150;
+      const continueY = Number.isFinite(Number(page.continue_y)) ? Number(page.continue_y) : 650;
+
+      // Special pages: text area inset by special_padding (pixels), plus a separately positioned hint.
+      const wrapper = document.createElement('div');
+      wrapper.className = 'special-text';
+      wrapper.style.zIndex = 2;
+      wrapper.style.position = 'absolute';
+      wrapper.style.left = `${padLeft}px`;
+      wrapper.style.right = `${padRight}px`;
+      wrapper.style.top = `${padTop}px`;
+      wrapper.style.bottom = `${padBottom}px`;
+      // Override the base CSS (which sets width:100%) so left/right insets both apply.
+      wrapper.style.width = 'auto';
+      wrapper.style.boxSizing = 'border-box';
+      wrapper.style.marginTop = '0';
+      wrapper.style.padding = '0';
+      wrapper.style.maxWidth = 'none';
+      wrapper.style.overflow = 'hidden';
+
+      const body = document.createElement('div');
+      body.innerHTML = (page.text || '').replace(/\n/g, '<br/>');
+      body.style.height = '100%';
+      body.style.overflowY = 'auto';
+      body.style.scrollbarWidth = 'none';
+      body.style.padding = '0';
+      body.style.border = 'none';
+      wrapper.appendChild(body);
+      bezelEl.appendChild(wrapper);
+
+      if (sweepArmed) {
+        sweepArmed = false;
+        triggerSpecialTextSweep(wrapper);
+      }
+
+      const hint = document.createElement('div');
+      hint.className = 'hint';
+      hint.textContent = page.continue_text || 'Press any choice / Action to continue';
+
+      // Continue Text styling: optional overrides, otherwise inherit theme defaults
+      const themeChoicesColor = (currentGame && currentGame.font_colors && currentGame.font_colors.choices) ? currentGame.font_colors.choices : null;
+      const themeChoicesSize = (currentGame && currentGame.font_sizes && currentGame.font_sizes.choices) ? Number(currentGame.font_sizes.choices) : null;
+      const pageSize = Number(page.continue_text_size);
+      const fontSizePx = Number.isFinite(pageSize) ? pageSize : (Number.isFinite(themeChoicesSize) ? themeChoicesSize : 20);
+      hint.style.color = page.continue_text_color || themeChoicesColor || 'var(--accent)';
+      hint.style.fontSize = `${fontSizePx}px`;
+      hint.style.fontFamily = 'var(--font-main)';
+      hint.style.textTransform = 'none';
+      hint.style.letterSpacing = '0.02em';
+      hint.style.position = 'absolute';
+      hint.style.left = '0';
+      hint.style.right = '0';
+      hint.style.top = `${continueY}px`;
+      hint.style.textAlign = 'center';
+      hint.style.zIndex = 3;
+      bezelEl.appendChild(hint);
+
+      // Even though the choices UI is hidden for special pages, choice 1 is still used for navigation.
+      // Keep the physical button LEDs in sync.
+      updateHardwareLights(page, engine ? engine.getAvailableChoices() : []);
+    }
+
+    function renderChoices(page) {
+      bezelEl.classList.remove('special-page');
+      bezelImgEl.style.display = bezelImgEl.src ? 'block' : 'none';
+      bezelContentEl.style.display = 'block';
+      choicesEl.innerHTML = '';
+
+      // Action pages use a custom flow:
+      // - State A (idle): show prompt as [1] clickable (triggers Action)
+      // - State B (rolling): show Continue as locked
+      // - State C (result): show Continue clickable
+      if (page.action) {
+        const row = document.createElement('div');
+        row.className = 'choice action-choice';
+        // Action is key 4 (round knob)
+        row.dataset.index = 3;
+        const line = document.createElement('div');
+        line.className = 'line';
+        const label = document.createElement('span');
+        label.className = 'label';
+        label.textContent = `[4]`;
+        const text = document.createElement('span');
+        text.className = 'text';
+        const icon = document.createElement('div');
+        icon.className = 'action-icon';
+        icon.style.color = (currentGame && currentGame.font_colors && currentGame.font_colors.choices) ? currentGame.font_colors.choices : 'var(--accent)';
+        // Single SVG based on your design; we animate parts instead of swapping two separate SVGs.
+        // Cropped viewBox so the button fills the icon box (original SVG has a huge artboard).
+        icon.innerHTML = `
+          <svg class="state" viewBox="130 370 352 170" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid meet">
+            <g class="btn-shadow">
+              <ellipse cx="306.43" cy="510" rx="145" ry="14" fill="currentColor" opacity="0.22"/>
+            </g>
+
+            <!-- Bottom/base stays fixed -->
+            <g class="btn-base" fill="none" stroke="currentColor" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M469.08,482.09c0,11.83-72.75,21.43-162.49,21.43s-162.49-9.59-162.49-21.43" />
+            </g>
+
+            <!-- Side walls move with the face -->
+            <g class="btn-sides" fill="none" stroke="currentColor" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="143.94" y1="408.18" x2="143.94" y2="482.09" />
+              <line x1="468.93" y1="408.18" x2="468.93" y2="482.09" />
+            </g>
+
+            <g class="btn-face" fill="none" stroke="currentColor" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+              <ellipse cx="306.43" cy="408.18" rx="162.49" ry="21.43" />
+            </g>
+          </svg>
+        `;
+
+        const type = page.action.type || 'dice';
+        const target = page.action.target || '';
+        const defaultPrompt = type === 'combat'
+          ? 'Press Action to fight'
+          : (target ? `Roll ${target}+ for success` : 'Press Action to roll');
+
+        if (actionPhasePageId !== engine.currentPage) {
+          // should have been initialized in renderPage, but keep safe.
+          actionPhase = 'idle';
+          actionPhasePageId = engine.currentPage;
+        }
+
+        if (actionPhase === 'idle') {
+          text.textContent = page.action.prompt || defaultPrompt;
+          row.addEventListener('click', handleAction);
+        } else {
+          text.textContent = 'Continue';
+          row.classList.add('locked');
+          if (pendingActionNav && pendingActionNav.pageId === engine.currentPage) {
+            row.classList.remove('locked');
+            row.addEventListener('click', () => selectChoice(3));
+          }
+        }
+
+        // Animate as a prompt while waiting for Action press; hide once action has started.
+        if (actionPhase === 'idle') {
+          icon.style.display = 'block';
+          icon.classList.add('prompting');
+        } else {
+          icon.classList.remove('prompting');
+          icon.style.display = 'none';
+        }
+
+        line.append(label, text);
+        row.append(line, icon);
+        choicesEl.appendChild(row);
+
+        updateHardwareLights(page, []);
+      } else {
+        const choices = engine.getAvailableChoices();
+        choices.forEach((choice, idx) => {
+          const row = document.createElement('div');
+          row.className = 'choice' + (choice.locked ? ' locked' : '');
+          row.dataset.index = idx;
+          const label = document.createElement('span'); label.className = 'label'; label.textContent = `[${idx+1}]`;
+          const text = document.createElement('span'); text.className = 'text'; text.textContent = choice.text || choice.label || 'Choice';
+          row.append(label, text);
+          if (choice.locked && choice.locked_reasons) {
+            const rs = Array.isArray(choice.locked_reasons) ? choice.locked_reasons : [choice.locked_reasons];
+            row.title = `Locked: ${rs.join(', ')}`;
+          }
+          if (!choice.locked) row.addEventListener('click', () => selectChoice(idx));
+          choicesEl.appendChild(row);
+        });
+
+        updateHardwareLights(page, choices);
+      }
+
+      // Ensure long choice labels stay on one line by scaling down the text if needed.
+      requestAnimationFrame(() => fitChoiceTextToRow());
+      textEl.textContent = page.text || '';
+      if (sweepArmed) {
+        sweepArmed = false;
+        triggerMainTextSweep();
+      }
+      const hp = engine.getStat('health');
+      const str = engine.getTotalStat('strength');
+      const luck = engine.getTotalStat('luck');
+      statsEl.textContent = `HP: ${hp} | STR: ${str} | LCK: ${luck}`;
+      inventoryEl.innerHTML = '';
+      const items = engine.getInventoryItems();
+      if (items.length) {
+        // Use a flex-wrap layout (defined in CSS for web_player.html) so
+        // items automatically flow onto additional rows instead of
+        // pushing the first row upward.
+        items.forEach((item, idx) => {
+          if (idx > 0) {
+            const sep = document.createElement('span');
+            sep.textContent = '|';
+            sep.style.padding = '0 6px';
+            sep.style.opacity = '0.7';
+            inventoryEl.appendChild(sep);
+          }
+          const tag = document.createElement('span');
+          tag.textContent = item.display_name || item.name;
+          if (item.bonus) tag.textContent += ` (${item.bonus})`;
+          inventoryEl.appendChild(tag);
+        });
+      } else {
+        const none = document.createElement('span');
+        none.textContent = 'No items';
+        inventoryEl.appendChild(none);
+      }
+      applyLayout();
+      startAutoScroll(textEl);
+    }
+
+    function applyLayout() {
+      if (!bezelContentEl || !currentGame) return;
+      const W = 720, H = 1280;
+      const rect = {
+        width: bezelContentEl.offsetWidth || bezelContentEl.getBoundingClientRect().width,
+        height: bezelContentEl.offsetHeight || bezelContentEl.getBoundingClientRect().height,
+      };
+      const imageH = Math.round(H * 0.48);
+      const panelH = H - imageH;
+      const scaleY = rect.height ? rect.height / panelH : 1;
+      const scaleX = rect.width ? rect.width / W : 1;
+
+      // Prefer web-specific positions if provided
+      const fp = currentGame.font_positions_web || currentGame.font_positions || {};
+      const bpPct = currentGame.bottom_positions_percent_web || currentGame.bottom_positions_percent || {};
+      const bpPx = currentGame.bottom_pixel_positions_web || currentGame.bottom_pixel_positions || {};
+      const legacyTop = !bpPct || Object.keys(bpPct).length === 0;
+
+      const colors = currentGame.font_colors || {};
+      const sepColor = colors.separator || colors.stats || colors.items || '#e8e3d9';
+      if (separatorEl) {
+        separatorEl.style.background = sepColor;
+        separatorEl.style.height = '2px';
+      }
+
+      const paddingPct = currentGame.main_text_padding !== undefined ? currentGame.main_text_padding : 11;
+      const topPadPct = currentGame.main_text_top_padding !== undefined ? currentGame.main_text_top_padding : 0;
+      const rows = currentGame.text_area_rows !== undefined ? currentGame.text_area_rows : 14;
+      const maxHeightPx = currentGame.main_text_max_height !== undefined ? currentGame.main_text_max_height : 500;
+      const sizesForLayout = currentGame.font_sizes_web || currentGame.font_sizes || {};
+      const mainFontSize = sizesForLayout.main || 20;
+      const itemsFontSize = sizesForLayout.items || 18;
+      const lineHeightMultiplier = 1.35;
+
+      const clampPct = (v, d) => {
+        const n = parseFloat(v);
+        if (isNaN(n)) return d;
+        return Math.max(0, Math.min(100, n));
+      };
+
+      const pctFromBottom = (val, fallback, allowLegacyTop = false) => {
+        if (val === undefined || val === null) return fallback;
+        const n = parseFloat(val);
+        if (isNaN(n)) return fallback;
+        if (allowLegacyTop && legacyTop) return clampPct(100 - n, fallback); // legacy percent-from-top
+        return clampPct(n, fallback);
+      };
+
+      const pxToPct = (px, fallback) => {
+        if (px === undefined || px === null) return fallback;
+        const n = parseFloat(px);
+        if (isNaN(n)) return fallback;
+        return clampPct((n / H) * 100, fallback);
+      };
+
+      const choicesBottom = pctFromBottom(fp.choices, 48, true);
+      const mainBottom = pctFromBottom(fp.main, 39, true);
+      const statsBottom = bpPct.stats !== undefined
+        ? pctFromBottom(bpPct.stats, 10)
+        : bpPx.stats !== undefined
+          ? pxToPct(bpPx.stats, 10)
+          : pctFromBottom(fp.stats, 10, true);
+      const itemsBottom = bpPct.items !== undefined
+        ? pctFromBottom(bpPct.items, 3)
+        : bpPx.items !== undefined
+          ? pxToPct(bpPx.items, 3)
+          : pctFromBottom(fp.items, 3, true);
+      const sepBottom = bpPct.separator !== undefined
+        ? pctFromBottom(bpPct.separator, 6)
+        : bpPx.separator !== undefined
+          ? pxToPct(bpPx.separator, 6)
+          : pctFromBottom(fp.separator, 6, true);
+
+      const choicesYScreen = (1 - choicesBottom / 100) * H;
+      const mainYBase = (1 - mainBottom / 100) * H;
+      const mainYScreen = mainYBase + (topPadPct / 100) * H;
+      const statsYScreen = (1 - statsBottom / 100) * H;
+      const itemsYScreen = (1 - itemsBottom / 100) * H;
+      const sepYScreen = (1 - sepBottom / 100) * H;
+
+      const paddingPx = (paddingPct / 100) * W;
+      const textWidth = W - paddingPx * 2;
+
+      const baseLineHeightPx = mainFontSize * lineHeightMultiplier;
+      const itemsLineHeightPx = itemsFontSize * lineHeightMultiplier;
+
+      const maxLinesByRows = rows;
+      const maxLinesByHeight = Math.floor(maxHeightPx / baseLineHeightPx);
+      const maxLinesByAvailable = Math.floor(
+        Math.max(0, (statsYScreen - mainYScreen - 32)) / baseLineHeightPx
+      );
+      const effectiveLines = Math.max(
+        1,
+        Math.min(maxLinesByRows, maxLinesByHeight, maxLinesByAvailable)
+      );
+
+      const textHeight = effectiveLines * baseLineHeightPx;
+      const bottomGap = Math.max(12, panelH - (statsYScreen - imageH) + 8);
+
+      const setEl = (el, { top, left, width, height, bottom, centerX }) => {
+        if (!el) return;
+        if (left !== undefined) el.style.left = `${left * scaleX}px`;
+        if (width !== undefined) el.style.width = `${width * scaleX}px`;
+        if (height !== undefined) el.style.height = `${height * scaleY}px`;
+        if (bottom !== undefined) el.style.bottom = `${bottom * scaleY}px`; else el.style.bottom = '';
+        if (centerX) {
+          el.style.left = '50%';
+          el.style.transform = 'translateX(-50%)';
+        } else if (el.style.transform) {
+          el.style.transform = '';
+        }
+        if (top !== undefined) el.style.top = `${top * scaleY}px`;
+      };
+
+      const toPanelY = (y) => Math.max(0, y - imageH);
+
+      setEl(choicesEl, { top: toPanelY(choicesYScreen), centerX: true });
+      // Constrain text box to computed height so it scrolls instead of flowing under stats
+      setEl(textEl, { top: toPanelY(mainYScreen), left: paddingPx, width: textWidth, height: textHeight });
+      setEl(separatorEl, { top: toPanelY(sepYScreen), left: paddingPx, width: textWidth });
+
+      // offsetHeight is transform-insensitive (getBoundingClientRect() includes zoom transforms)
+      const statsHeight = statsEl.offsetHeight / (scaleY || 1);
+      setEl(statsEl, { top: toPanelY(statsYScreen) - statsHeight, centerX: true });
+
+      // Position inventory so the first row roughly matches the old baseline,
+      // while extra rows still grow downward.
+      const inventoryTop = toPanelY(itemsYScreen) - itemsLineHeightPx;
+      setEl(inventoryEl, { top: inventoryTop, left: paddingPx, width: textWidth });
+
+      const textHeightPx = textHeight * scaleY;
+      textEl.style.maxHeight = `${textHeightPx}px`;
+      textEl.style.height = `${textHeightPx}px`;
+      textEl.style.overflowY = 'auto';
+    }
+
+    async function renderPage(forceAudio = false) {
+      if (!engine) return;
+      const isNewPage = (lastRenderedPageId != null) && (engine.currentPage !== lastRenderedPageId);
+      sweepArmed = (lastRenderedPageId == null) || (engine.currentPage !== lastRenderedPageId);
+      uiFadeArmed = (lastRenderedPageId == null) || (engine.currentPage !== lastRenderedPageId);
+      if (isNewPage && !splashActive) await fadeToBlack();
+
+      if (engine.currentPage !== lastPageId) lastActionResult = null;
+      const page = engine.getPage();
+      const hasAction = !!page.action;
+
+      updatePageBadge(page);
+
+      // Initialize action page state when entering a new page.
+      if (actionPhasePageId !== engine.currentPage) {
+        actionPhasePageId = engine.currentPage;
+        actionPhase = 'idle';
+        pendingActionNav = null;
+        lastActionResult = null;
+        actionLiveDiceNumber = null;
+        actionPreEnemyRoll = null;
+        if (hasAction && ['combat', 'boss'].includes(page.action.type || 'dice')) {
+          actionPreEnemyRoll = (Math.floor(Math.random() * 20) + 1) + (page.action.enemy_bonus || 0);
+        }
+      }
+
+      if (!page.special_page) {
+        await loadBezelImage(hasAction ? 'action' : 'main');
+        if (bezelBgEl) bezelBgEl.style.display = 'none';
+      } else {
+        if (bezelBgEl) bezelBgEl.style.display = 'none';
+      }
+      const media = await resolveMedia(page);
+      const mediaChanged = (engine.currentPage !== lastMediaPageId) || (media.type !== lastMediaType) || (media.url !== lastMediaUrl);
+      if (mediaChanged) {
+        setMediaContent(media);
+        lastMediaPageId = engine.currentPage;
+        lastMediaType = media.type;
+        lastMediaUrl = media.url;
+      }
+
+      if (page.special_page) {
+        // Avoid rebuilding special-page DOM (and restarting bg video) unless media changed or we're entering.
+        if (mediaChanged || !bezelEl.classList.contains('special-page')) setSpecialPage(page, media);
+      }
+      else { // normal page
+        mediaEl.style.display = '';
+        if (!bezelContentEl.parentElement) {
+          bezelEl.innerHTML = '';
+          bezelEl.appendChild(bezelImgEl);
+          bezelEl.appendChild(bezelContentEl);
+        }
+        bezelEl.classList.remove('special-page');
+        bezelContentEl.style.display = 'block';
+        const hasBg = bezelBgEl && bezelBgEl.src;
+        bezelEl.style.background = 'transparent';
+        bezelImgEl.style.display = hasBg ? 'none' : 'none';
+        renderChoices(page);
+      }
+      applyLedEffect(page);
+      actionPanelEl.classList.add('hidden');
+      if (hasAction) {
+        if (hudDiceEl) hudDiceEl.style.display = 'flex';
+        if (actionHudEl) actionHudEl.classList.remove('hidden');
+        renderActionPanel(page);
+      } else {
+        if (actionHudEl) actionHudEl.classList.add('hidden');
+        if (hudPromptEl) hudPromptEl.textContent = '';
+        if (hudStatusEl) hudStatusEl.textContent = '';
+      }
+
+      if (uiFadeArmed) {
+        uiFadeArmed = false;
+        triggerUiFade();
+      }
+      if (engine.currentPage !== lastPageId || forceAudio) { lastPageId = engine.currentPage; playAudioForPage(page); }
+      scheduleLayoutRecalc();
+
+      // Show stat deltas after page transition has updated stats/items.
+      flushPendingStatDelta();
+
+      lastRenderedPageId = engine.currentPage;
+      if (isNewPage && !splashActive) await fadeFromBlack();
+    }
+
+    function selectChoice(index) {
+      if (!engine) return;
+      if (splashActive) return;
+      const page = engine.getPage();
+      // Action pages: gate Continue until action is resolved, then route Continue to success/failure.
+      if (page && page.action) {
+        // Only Action button (key 4 / index 3) should interact with action pages.
+        if (index !== 3) return;
+        if (actionPhase === 'idle') {
+          handleAction();
+          return;
+        }
+        if (!pendingActionNav || pendingActionNav.pageId !== engine.currentPage) return;
+        const next = pendingActionNav.nextPage || (pendingActionNav.success ? page.action.success_page : page.action.failure_page);
+        pendingActionNav = null;
+        lastActionResult = null;
+        actionLiveDiceNumber = null;
+        actionPhase = 'idle';
+        actionPreEnemyRoll = null;
+        if (!next) {
+          log('Action Continue clicked but no success_page/failure_page is set for this action.');
+          showOverlay('Action', ['Missing next page for this action.']);
+          renderPage(false);
+          return;
+        }
+        pendingStatDeltaFrom = statSnapshot();
+        engine.enterPage(next);
+        renderPage();
+        return;
+      }
+      const before = statSnapshot();
+      if (engine.makeChoice(index)) {
+        pendingStatDeltaFrom = before;
+        renderPage();
+      }
+    }
+
+    function showOverlay(title, bodyLines, footer) {
+      overlayTitle.textContent = title;
+      overlayBody.innerHTML = bodyLines.map((l) => `<div class="row">${l}</div>`).join('');
+      overlayFoot.textContent = footer || '';
+      overlayEl.classList.add('active');
+      overlayEl.dataset.sticky = '0';
+      overlayCardEl.classList.remove('help');
+      setTimeout(() => { if (overlayEl.dataset.sticky !== '1') overlayEl.classList.remove('active'); }, 1600);
+    }
+
+    function hideOverlay() {
+      overlayEl.classList.remove('active');
+      overlayEl.dataset.sticky = '0';
+      overlayCardEl.classList.remove('help');
+    }
+
+    function showHelp() {
+      overlayTitle.textContent = 'Help';
+      overlayCardEl.classList.add('help');
+      overlayCardEl.classList.remove('license');
+      overlayEl.dataset.sticky = '1';
+
+      overlayBody.innerHTML = [
+        '<div class="help-section">'
+          + '<div class="help-h">Choice Buttons (I / II / III)</div>'
+          + '<div class="help-p">Use these to pick choices 1–3 when they are available on the current page.</div>'
+          + '</div>',
+
+        '<div class="help-section">'
+          + '<div class="help-h">Action Button</div>'
+          + '<div class="help-p">Used on action pages (dice/combat/boss). It starts the roll/fight and then continues.</div>'
+          + '</div>',
+
+        '<div class="help-section">'
+          + '<div class="help-h">Stats</div>'
+          + '<div class="help-p">HP (Health): damage you can take. STR (Strength): bonus to combat rolls. LCK (Luck): bonus to dice/skill checks.</div>'
+          + '</div>',
+
+        '<div class="help-section">'
+          + '<div class="help-h">USB folder layout</div>'
+          + '<pre>&lt;GAME_FOLDER&gt;/\n'
+            + '├── game.json\n'
+            + '├── logo.png\n'
+            + '├── audio/\n'
+            + '│   ├── &lt;page_id&gt;.wav\n'
+            + '│   └── &lt;page_id&gt;_sfx.wav\n'
+            + '├── images/\n'
+            + '│   ├── &lt;page_id&gt;.jpg\n'
+            + '│   ├── animations/\n'
+            + '│   │   └── &lt;page_id&gt;.mp4\n'
+            + '│   └── special_pages/\n'
+            + '│       ├── &lt;special_bg&gt;.jpg\n'
+            + '│       └── &lt;special_bg&gt;.mp4\n'
+            + '├── bezels/\n'
+            + '│   └── &lt;story_bezel&gt;.png\n'
+            + '├── action_bezel/\n'
+            + '│   └── &lt;action_bezel&gt;.png\n'
+            + '└── fonts/\n'
+            + '    └── &lt;font_file&gt;.ttf\n'
+            + '</pre>'
+          + '</div>',
+
+        '<div class="help-section">'
+          + '<div class="help-h">Shortcuts</div>'
+          + '<div class="help-p">Jump to page: Mac: ⌘J · PC: Ctrl+J</div>'
+          + '<div class="help-p">Toggle page badge (page id/name): Mac: ⌘P · PC: Ctrl+P</div>'
+          + '</div>',
+      ].join('');
+
+      overlayFoot.textContent = '';
+      overlayEl.classList.add('active');
+    }
+
+    const LICENSE_TEXT = `DUNGEON MASTRON LICENSE
+
+Copyright (c) 2026 Artifextron, Henrik Åberg
+All Rights Reserved.
+
+================================================================================
+TERMS AND CONDITIONS
+================================================================================
+
+This software and content (Dungeon Mastron Console, Web Player, Game Builder, 
+and AI Companion) is proprietary material made available in source 
+form for transparency and personal use.
+
+PERMISSIONS
+-----------
+You are permitted to:
+
+  ✓ Use this software to play games
+  ✓ Use this software to create games with the included Game Builder
+  ✓ Use the AI Companion to create games with AI assistants
+  ✓ Modify this software and templates for personal, private, non-commercial use
+  ✓ Study and learn from the source code and templates
+  ✓ Create, distribute, and sell games made with the Game Builder or AI Companion
+    (you own full rights to your created games)
+
+RESTRICTIONS
+------------
+You may NOT:
+
+  ✗ Distribute this software or templates (original or modified versions)
+  ✗ Publish, share, or make available any fork, derivative, or modified template
+  ✗ Use this software or templates for commercial purposes
+  ✗ Sublicense, sell, rent, or lease this software or templates
+  ✗ Remove or modify this license or copyright notices
+  ✗ Use this software to create competing products or services
+  ✗ Reverse engineer this software (beyond what's visible in source)
+
+GAME OWNERSHIP AND PLAYBACK
+---------------------------
+Games created using the Dungeon Mastron Game Builder or AI Companion 
+are owned entirely by their creators. You may distribute, sell, or license 
+your games freely.
+
+However, games are designed to be played using official Dungeon Mastron players:
+- Dungeon Mastron Web Player (free)
+- Dungeon Mastron Console (console.py on Raspberry Pi)
+
+Creating alternative players or software that executes Dungeon Mastron game 
+files requires written permission from the copyright holder.
+
+Attribution to Dungeon Mastron is appreciated but not required when 
+distributing your games.
+
+ATTRIBUTION
+-----------
+When sharing games or content created with this software, you should credit:
+"Created with Dungeon Mastron / www.dungeonmastron.com"
+
+DISCLAIMER
+----------
+THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT
+HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE
+USE OF THIS SOFTWARE.
+
+ENFORCEMENT
+-----------
+Violations of this license may result in:
+- DMCA takedown notices
+- Cease and desist orders
+- Legal action for damages
+
+If you're unsure whether your use case is permitted, please contact the
+copyright holder before proceeding.
+
+================================================================================
+For questions or licensing inquiries: [dungeonmastron@gmail.com / Henrik Åberg]
+Project website: www.dungeonmastron.com
+================================================================================
+`;
+
+    function escapeHtml(s) {
+      return String(s)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;');
+    }
+
+    function showLicense() {
+      overlayTitle.textContent = 'License';
+      overlayCardEl.classList.add('license');
+      overlayCardEl.classList.remove('help');
+      overlayEl.dataset.sticky = '1';
+      overlayBody.innerHTML = `<pre>${escapeHtml(LICENSE_TEXT)}</pre>`;
+      overlayFoot.textContent = '';
+      overlayEl.classList.add('active');
+    }
+
+    async function showLogoSplash(ms = 4000) {
+      if (!splashEl || !currentGame) return false;
+      const logo = currentGame.logo;
+      if (!logo) return false;
+
+      let url = null;
+      if (currentAssets) {
+        const candidates = [
+          logo,
+          `web_assets/${logo}`,
+          `images/${logo}`,
+          `web_assets/images/${logo}`,
+        ];
+        for (const c of candidates) {
+          const u = await currentAssets.getUrl(c);
+          if (u) { url = u; break; }
+        }
+      }
+      if (!url) {
+        try { url = new URL(logo, window.location.href).toString(); } catch (_) { url = null; }
+      }
+      if (!url) return false;
+
+      splashLogoEl.src = url;
+      if (splashTitleEl) splashTitleEl.textContent = '';
+      splashActive = true;
+      splashEl.classList.add('active');
+      splashEl.setAttribute('aria-hidden', 'false');
+
+      await new Promise((r) => setTimeout(r, ms));
+
+      splashEl.classList.remove('active');
+      splashEl.setAttribute('aria-hidden', 'true');
+      splashActive = false;
+      return true;
+    }
+
+    function openJump() {
+      if (!jumpEl) return;
+      jumpEl.classList.add('active');
+      if (jumpInputEl) {
+        jumpInputEl.value = '';
+        jumpInputEl.focus();
+      }
+    }
+
+    function closeJump() {
+      if (!jumpEl) return;
+      jumpEl.classList.remove('active');
+    }
+
+    function updatePageBadge(page) {
+      if (!pageBadgeEl) return;
+      if (!pageBadgeOn) { pageBadgeEl.classList.remove('active'); return; }
+      const id = engine ? (engine.currentPage || '') : '';
+      const name = (page && page.display_name) ? String(page.display_name).trim() : '';
+      pageBadgeEl.textContent = name ? `${id} — ${name}` : id;
+      pageBadgeEl.classList.add('active');
+    }
+
+    function jumpToPage(raw) {
+      if (!engine) return;
+      const id = (raw || '').trim();
+      if (!id) return;
+      const page = (engine.game && engine.game.pages && engine.game.pages[id]) ? engine.game.pages[id] : null;
+      if (!page) {
+        showOverlay('Jump', [`Page not found: ${id}`]);
+        return;
+      }
+      pendingActionNav = null;
+      lastActionResult = null;
+      actionLiveDiceNumber = null;
+      actionPreEnemyRoll = null;
+      actionPhase = 'idle';
+      actionPhasePageId = null;
+      engine.enterPage(id);
+      renderPage(true);
+      showOverlay('Jump', [`Now at: ${id}`]);
+    }
+
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    let actionAnimToken = 0;
+    let actionAnimBusy = false;
+    let actionLiveDiceNumber = null;
+
+    function setHudDiceNumber(n) {
+      if (!hudDiceTextEl) return;
+      actionLiveDiceNumber = n;
+      hudDiceTextEl.textContent = String(n);
+    }
+
+    async function handleAction() {
+      if (!engine || actionAnimBusy) return;
+      if (splashActive) return;
+      const page = engine.getPage();
+      if (!page || !page.action) return;
+
+      const before = statSnapshot();
+
+      const actionIcon = document.querySelector('.choice.action-choice .action-icon');
+
+      actionAnimBusy = true;
+      const token = ++actionAnimToken;
+
+      try {
+        actionLiveDiceNumber = null;
+        actionPhase = 'rolling';
+        actionPhasePageId = engine.currentPage;
+        if (actionIcon) {
+          actionIcon.classList.remove('prompting');
+          actionIcon.style.display = 'none';
+        }
+        // Update only the action HUD; do NOT re-render the page (would restart media/audio).
+        renderActionPanel(page);
+
+        let result = null;
+        // For combat/boss, use the pre-generated enemy roll so it matches what the player saw on entry.
+        if (['combat', 'boss'].includes(page.action.type || 'dice') && actionPreEnemyRoll != null) {
+          const base = Math.floor(Math.random() * 20) + 1;
+          const stat = engine.getTotalStat(page.action.stat_bonus || 'strength');
+          const playerRoll = base + stat + (page.action.player_bonus || 0);
+          const enemyRoll = actionPreEnemyRoll;
+          const success = playerRoll > enemyRoll;
+          result = {
+            type: 'combat',
+            base_roll: base,
+            stat_bonus: stat,
+            player_roll: playerRoll,
+            enemy_roll: enemyRoll,
+            enemy_damage: page.action.enemy_damage || 0,
+            success,
+            success_page: page.action.success_page,
+            failure_page: page.action.failure_page,
+          };
+        } else {
+          result = engine.performAction();
+        }
+        if (!result) return;
+
+        // Apply damage on failure (both combat and dice), matching console.py behavior.
+        if (!result.success) {
+          const dmg = result.type === 'combat' ? (result.enemy_damage || 0) : (result.failure_damage || 0);
+          if (dmg) engine.playerStats.health -= dmg;
+          if (engine.playerStats.health <= 0 && engine.game && engine.game.pages && engine.game.pages.game_over) {
+            pendingActionNav = null;
+            lastActionResult = null;
+            actionLiveDiceNumber = null;
+            actionPreEnemyRoll = null;
+            actionPhase = 'idle';
+            actionPhasePageId = null;
+            engine.enterPage('game_over');
+            renderPage(false);
+            return;
+          }
+        }
+
+        // Show immediate stat delta (e.g., damage) on the action page without waiting for navigation.
+        if (before) {
+          pendingStatDeltaFrom = before;
+          flushPendingStatDelta();
+        }
+        const colors = actionColors();
+        const type = result.type || (page.action.type || 'dice');
+
+        // Ensure HUD visible while animating
+        if (actionHudEl) actionHudEl.classList.remove('hidden');
+
+        // Rolling animation
+        if (hudPromptEl) hudPromptEl.textContent = 'Rolling...';
+        if (hudStatusEl) hudStatusEl.textContent = '';
+        if (hudStatusEl) hudStatusEl.style.color = colors.border;
+
+        const maxDie = (type === 'combat' || type === 'boss') ? 20 : (page.action.dice || 6);
+        for (let i = 0; i < 12; i++) {
+          setHudDiceNumber(Math.floor(Math.random() * maxDie) + 1);
+          renderActionPanel(page);
+          await sleep(90);
+          if (token !== actionAnimToken) return;
+        }
+
+        // Snap the die face to the actual rolled value (base die), so it matches the computed result.
+        if (result && typeof result.base_roll === 'number') {
+          setHudDiceNumber(result.base_roll);
+        }
+
+        // Final value + success/failure
+        lastActionResult = { ...result, page: engine.currentPage };
+        actionPhase = 'result';
+        actionPhasePageId = engine.currentPage;
+
+        // Show Success/Failure as a stat-float style toast.
+        showStatFloat(result.success ? 'Success' : 'Failure', !!result.success);
+
+        renderActionPanel(page);
+        await sleep(800);
+        if (token !== actionAnimToken) return;
+
+        // Don't navigate yet: enable Continue, and route it to success/failure page.
+        pendingActionNav = {
+          pageId: engine.currentPage,
+          success: !!result.success,
+          nextPage: (result.success ? (result.success_page || page.action.success_page) : (result.failure_page || page.action.failure_page)),
+        };
+        actionLiveDiceNumber = null;
+        renderPage();
+      } finally {
+        if (token === actionAnimToken) actionAnimBusy = false;
+      }
+    }
+
+    function resetUI() {
+      mediaEl.innerHTML = '';
+      bezelImgEl.src = '';
+      bezelImgEl.style.display = 'none';
+      bezelEl.innerHTML = '';
+      bezelEl.appendChild(bezelImgEl);
+      bezelEl.appendChild(bezelContentEl);
+      choicesEl.innerHTML = '';
+      textEl.textContent = '';
+      statsEl.textContent = 'HP: — | STR: — | LCK: —';
+      statsEl.style.display = 'none';
+      inventoryEl.innerHTML = '';
+      actionPanelEl.classList.add('hidden');
+      ['red','orange','blue','green'].forEach((c) => {
+        if (ledLeft[c]) { ledLeft[c].style.opacity = '0.2'; ledLeft[c].style.background = '#222'; ledLeft[c].style.animation = 'none'; }
+        if (ledRight[c]) { ledRight[c].style.opacity = '0.2'; ledRight[c].style.background = '#222'; ledRight[c].style.animation = 'none'; }
+      });
+      currentGame = null;
+      engine = null;
+      lastPageId = null;
+      lastActionResult = null;
+      lastMediaPageId = null;
+      lastMediaType = null;
+      lastMediaUrl = null;
+      gameTitleEl.textContent = 'Not loaded';
+      bezelEl.classList.remove('special-page');
+      bezelContentEl.style.display = 'block';
+
+      // Clear physical button glows
+      clearHardwareLights();
+    }
+
+    document.getElementById('pick-folder').addEventListener('click', async () => {
+      const fallback = () => {
+        const folderInput = document.getElementById('asset-folder');
+        if (folderInput && 'webkitdirectory' in folderInput) {
+          folderInput.click();
+          log('Falling back to folder upload.');
+        } else {
+          log('Folder upload not supported; please use "Load game.json" and then "Upload assets / folder".');
+          document.getElementById('game-file').click();
+        }
+      };
+
+      if (!window.showDirectoryPicker) {
+        log('Directory picker not supported in this browser.');
+        fallback();
+        return;
+      }
+
+      try {
+        const handle = await window.showDirectoryPicker();
+        const assets = await AssetSource.fromDirectoryHandle(handle);
+        assetSourceEl.textContent = assets.label;
+        currentAssets = assets;
+        const gameFile = assets.getFile('game.json');
+        if (gameFile) { await loadGameFromFile(gameFile, assets); }
+        else { log('No game.json found in selected folder.'); }
+      } catch (err) {
+        log(`Folder access cancelled or failed: ${err.message}`);
+        fallback();
+      }
+    });
+
+
+
+    const gameFileInput = document.getElementById('game-file');
+    if (gameFileInput) gameFileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      await loadGameFromFile(file, currentAssets);
+    });
+
+    const zoomBtn = document.getElementById('zoom-btn');
+
+    if (zoomBtn) {
+      // Default to "View: Console" mode on load.
+      let isZoomedOut = true;
+      document.body.classList.toggle('zoomed-out', isZoomedOut);
+
+      const syncZoomButton = () => {
+        // Match web_player.html: button label indicates the mode you will switch TO.
+        zoomBtn.textContent = isZoomedOut ? 'View: Screen' : 'View: Console';
+      };
+
+      zoomBtn.addEventListener('click', () => {
+        isZoomedOut = !isZoomedOut;
+        document.body.classList.toggle('zoomed-out', isZoomedOut);
+        syncZoomButton();
+        scheduleLayoutRecalc();
+      });
+
+      syncZoomButton();
+      scheduleLayoutRecalc();
+    }
+
+    const helpBtn = document.getElementById('help-button');
+    if (helpBtn) {
+      helpBtn.addEventListener('click', () => showHelp());
+    }
+
+    // Note: copyright badge element is after this script in the HTML;
+    // it uses inline onclick="showLicense()".
+
+    const assetFolderInput = document.getElementById('asset-folder');
+    if (assetFolderInput) assetFolderInput.addEventListener('change', async (e) => {
+      if (!e.target.files.length) return;
+      const assets = AssetSource.fromFileList(e.target.files);
+      currentAssets = assets;
+      assetSourceEl.textContent = assets.label;
+      const gameFile = assets.getFile('game.json');
+      if (gameFile) { await loadGameFromFile(gameFile, assets); }
+      else if (currentGame) { log('Assets loaded. Re-rendering with new source.'); await loadBezelImage(); renderPage(true); }
+      else { log('Assets loaded. Add game.json to start.'); }
+    });
+
+    // Physical button bindings (chin buttons)
+    const chinButtons = Array.from(document.querySelectorAll('.chin-btn'));
+    chinButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const idx = Number(btn.dataset.choice || '0');
+        selectChoice(idx);
+      });
+    });
+
+    const chinKnob = document.querySelector('.chin-knob');
+    if (chinKnob) {
+      // Match key tangent 4 behavior (choice index 3): triggers action roll/continue on action pages,
+      // or selects choice 4 on normal pages if present.
+      chinKnob.addEventListener('click', () => selectChoice(3));
+      chinKnob.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectChoice(3); }
+      });
+    }
+
+    function clearHardwareLights() {
+      chinButtons.forEach((b) => b.classList.remove('is-lit'));
+      if (chinKnob) chinKnob.classList.remove('is-lit-white', 'is-lit-red');
+
+      chinButtons.forEach((b) => { b.style.animationDelay = ''; });
+      if (chinKnob) chinKnob.style.animationDelay = '';
+    }
+
+    function updateHardwareLights(page, choices) {
+      if (!engine) { clearHardwareLights(); return; }
+      const p = page || engine.getPage();
+      const list = Array.isArray(choices) ? choices : [];
+
+      const LED_PERIOD_MS = 1200;
+      const syncDelay = () => `-${(performance.now() % LED_PERIOD_MS) / 1000}s`;
+
+      const setPulse = (el, className, on) => {
+        if (!el) return;
+        const wasOn = el.classList.contains(className);
+        el.classList.toggle(className, on);
+        if (on && !wasOn) {
+          el.style.animationDelay = syncDelay();
+        }
+        if (!on && wasOn) {
+          // Clear delay so future pulses always resync on enable.
+          el.style.animationDelay = '';
+        }
+      };
+
+      // Choice buttons (1-3): white LED pulse when choice exists and is not locked.
+      chinButtons.forEach((btn, idx) => {
+        const c = list[idx];
+        const on = !!c && !c.locked;
+        setPulse(btn, 'is-lit', on);
+      });
+
+      if (!chinKnob) return;
+
+      // Action button:
+      // - On action pages: red LED pulse when ready to press (idle phase)
+      // - On normal pages with a 4th choice: white LED pulse when choice 4 exists and is not locked
+      if (p && p.action) {
+        const on = (actionPhasePageId === engine.currentPage) && (actionPhase === 'idle');
+        // Ensure a stable animation phase even if toggled later.
+        setPulse(chinKnob, 'is-lit-red', on);
+        setPulse(chinKnob, 'is-lit-white', false);
+      } else {
+        const c4 = list[3];
+        const on = !!c4 && !c4.locked;
+        setPulse(chinKnob, 'is-lit-white', on);
+        setPulse(chinKnob, 'is-lit-red', false);
+      }
+    }
+
+    const resetBtn = document.getElementById('reset-game');
+    if (resetBtn) resetBtn.addEventListener('click', () => { resetUI(); log('Reset UI.'); });
+    if (actionButtonEl) actionButtonEl.addEventListener('click', handleAction);
+    document.addEventListener('keydown', (e) => {
+      if (!engine) return;
+      if (splashActive) {
+        e.preventDefault();
+        return;
+      }
+
+      if (overlayEl && overlayEl.classList.contains('active') && overlayEl.dataset.sticky === '1') {
+        if (e.key === 'Escape') { e.preventDefault(); hideOverlay(); return; }
+      }
+      // Quick jump: Ctrl+J / Cmd+J
+      if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === 'j')) {
+        e.preventDefault();
+        openJump();
+        return;
+      }
+      // Toggle page id/name badge: Ctrl+P / Cmd+P
+      if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === 'p')) {
+        e.preventDefault();
+        pageBadgeOn = !pageBadgeOn;
+        updatePageBadge(engine.getPage());
+        return;
+      }
+      if (jumpEl && jumpEl.classList.contains('active')) {
+        if (e.key === 'Escape') { e.preventDefault(); closeJump(); return; }
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          jumpToPage(jumpInputEl ? jumpInputEl.value : '');
+          closeJump();
+          return;
+        }
+      }
+      // Action pages: only key 4 should do anything.
+      const page = engine.getPage();
+      if (page && page.action) {
+        if (e.key === '4') { e.preventDefault(); selectChoice(3); }
+        return;
+      }
+      if (/^[1-4]$/.test(e.key)) selectChoice(Number(e.key) - 1);
+      else if (e.code === 'Space' || e.code === 'Enter') handleAction();
+      else if (e.key.toLowerCase() === 'r') renderPage(true);
+    });
+
+    if (jumpGoEl) jumpGoEl.addEventListener('click', () => { jumpToPage(jumpInputEl ? jumpInputEl.value : ''); closeJump(); });
+    if (jumpCancelEl) jumpCancelEl.addEventListener('click', closeJump);
+    overlayEl.addEventListener('click', () => overlayEl.classList.remove('active'));
+    window.addEventListener('resize', () => scheduleLayoutRecalc());
+
+    // Featured fold-down wiring
+    // site_shell.js injects #site-nav via a deferred script, so compute offsets after it's populated.
+    const initFeaturedPositioning = () => {
+      setTopCssVar();
+      // A couple extra ticks to catch late layout/font shifts.
+      requestAnimationFrame(() => setTopCssVar());
+      requestAnimationFrame(() => requestAnimationFrame(() => setTopCssVar()));
+    };
+
+    if (document.readyState === 'complete') initFeaturedPositioning();
+    else window.addEventListener('load', initFeaturedPositioning, { once: true });
+
+    window.addEventListener('resize', () => {
+      setTopCssVar();
+    });
+
+    // Update if the site nav content changes after load (async injection)
+    try {
+      const siteNavEl = document.getElementById('site-nav');
+      if (siteNavEl && window.MutationObserver) {
+        const obs = new MutationObserver(() => setTopCssVar());
+        obs.observe(siteNavEl, { childList: true, subtree: true });
+      }
+    } catch (_) {}
+    if (featuredToggleEl) featuredToggleEl.addEventListener('click', (e) => { e.stopPropagation(); toggleFeatured(); });
+    if (featuredBackdropEl) featuredBackdropEl.addEventListener('click', closeFeatured);
+
+    // Featured games: load bundled games without folder picker.
+    const featuredRedPlanetBtn = document.getElementById('featured-red-planet');
+    if (featuredRedPlanetBtn) {
+      featuredRedPlanetBtn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        // If we're hosted (http/https), prefer direct URL load. If we're on file://, we must use the picker.
+        if (location && location.protocol !== 'file:') {
+          try {
+            await loadGameFromUrl('../games/The Red Planet', 'The Red Planet');
+            return;
+          } catch (_) {
+            // fall through to picker
+          }
+        }
+        await loadFeaturedGameFromPicker('The Red Planet', 'The Red Planet');
+      });
+    }
+
+    const featuredForestBtn = document.getElementById('featured-forest-memory');
+    if (featuredForestBtn) {
+      featuredForestBtn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        if (location && location.protocol !== 'file:') {
+          try {
+            await loadGameFromUrl('../games/Forest Memory Circle', 'Forest Memory Circle');
+            return;
+          } catch (_) {
+            // fall through to picker
+          }
+        }
+        await loadFeaturedGameFromPicker('Forest Memory Circle', 'Forest Memory Circle');
+      });
+    }
+
+    const featuredWgtBtn = document.getElementById('featured-what-gets-through');
+    if (featuredWgtBtn) {
+      featuredWgtBtn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        if (location && location.protocol !== 'file:') {
+          try {
+            await loadGameFromUrl('../games/What Gets Through', 'What Gets Through');
+            return;
+          } catch (_) {
+            // fall through to picker
+          }
+        }
+        await loadFeaturedGameFromPicker('What Gets Through', 'What Gets Through');
+      });
+    }
+    document.addEventListener('click', (e) => {
+      if (!featuredMenuEl || !featuredMenuEl.classList.contains('open')) return;
+      if (featuredMenuEl.contains(e.target)) return;
+      closeFeatured();
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeFeatured();
+    });
+
+    // macOS monitor swaps often change devicePixelRatio without an obvious "layout" change.
+    // Trigger a recalc when DPR changes so positioning stays consistent across Retina/external displays.
+    let lastDpr = window.devicePixelRatio || 1;
+    setInterval(() => {
+      const dpr = window.devicePixelRatio || 1;
+      if (dpr !== lastDpr) {
+        lastDpr = dpr;
+        scheduleLayoutRecalc();
+      }
+    }, 250);
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', () => scheduleLayoutRecalc());
+      window.visualViewport.addEventListener('scroll', () => scheduleLayoutRecalc());
+    }
+    log('Ready. Pick a game folder (preferred) or load game.json and assets.');
+  </script>
+
+  <button id="copyrightBadge" type="button" onclick="showLicense()" style="position: fixed; bottom: 12px; left: 24px; font-size: 11px; color: #A9A9A9; font-weight: 600; font-family: var(--ui-mono); z-index: 9999; background: rgba(0,0,0,0.6); padding: 4px 10px; border-radius: 4px; border: 1px solid #3D3D3D; line-height: 1.1; cursor: pointer; pointer-events: auto;"><span style="font-size: 15px; position: relative; top: 1px;">©</span> 2026 Artifextron</button>
+</body>
+</html>

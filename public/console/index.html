@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Console – Dungeon Mastron</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../web_assets/site_shell.css" />
+  <style>
+    body { margin: 0; background: var(--shell-bg); color: var(--shell-text); font-family: var(--shell-font); }
+    .wrap { max-width: 1560px; margin: 0 auto; padding: 46px 18px 80px; }
+
+    .kicker {
+      font-family: var(--shell-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(232,227,217,0.70);
+      margin-bottom: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .kicker::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #6B9B7F;
+      opacity: 0.9;
+    }
+    .kicker--orange::before { background: #D97757; opacity: 0.95; }
+
+    h1 {
+      font-family: var(--shell-heading);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin: 0;
+      font-size: clamp(28px, 3.2vw, 52px);
+      line-height: 1.08;
+      color: var(--shell-text);
+    }
+    .h2 {
+      font-family: var(--shell-heading);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin: 0;
+      font-size: clamp(28px, 3.2vw, 52px);
+      line-height: 1.08;
+      color: var(--shell-text);
+    }
+    .sub {
+      margin: 14px 0 0;
+      font-family: var(--shell-heading);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: clamp(12px, 1.2vw, 16px);
+      line-height: 1.55;
+      color: #6B9B7F;
+    }
+    .sub--orange { color: #D97757; }
+    p { margin: 12px 0 0; color: var(--shell-sub); line-height: 1.6; max-width: 70ch; }
+
+    .rail { margin-top: 18px; }
+
+    .block {
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+    }
+    .block:first-child { border-top: none; padding-top: 0; }
+
+    .block h3 {
+      margin: 0 0 8px;
+      font-family: var(--shell-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #6B9B7F;
+    }
+    .block h3.orange { color: #D97757; }
+    .block p { margin: 0 0 10px; color: var(--shell-sub); font-size: 12px; line-height: 1.55; }
+    .bullets { margin: 0; padding-left: 18px; color: var(--shell-sub); line-height: 1.6; font-size: 12px; }
+    .bullets li { margin: 6px 0; }
+    .bullets li::marker { color: var(--marker, #6B9B7F); }
+
+
+    .pair-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media (min-width: 1100px) {
+      .pair-grid {
+        grid-template-columns: 1fr 1px 1fr;
+        gap: 16px;
+        align-items: stretch;
+      }
+    }
+    .pair-grid .sep {
+      display: none;
+      background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0),
+        rgba(255,255,255,0.06),
+        rgba(255,255,255,0)
+      );
+      width: 1px;
+      align-self: stretch;
+    }
+    @media (min-width: 1100px) { .pair-grid .sep { display: block; } }
+
+    .pair-grid .block { border-top: none; padding-top: 0; }
+    @media (min-width: 1100px) {
+      .pair-grid .block { padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.10); }
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 0.5fr 0.5fr;
+      gap: 34px;
+      align-items: start;
+      margin-top: 18px;
+    }
+    @media (max-width: 980px) { .grid { grid-template-columns: 1fr; } }
+    .right img { width: 100%; height: auto; display: block; }
+    .right .stack { display: grid; gap: 18px; }
+
+    .section-sep {
+      margin-top: 34px;
+      margin-bottom: 16px;
+      height: 1px;
+      width: 100%;
+      background: rgba(255,255,255,0.10);
+    }
+
+    .below-grid {
+      display: grid;
+      grid-template-columns: 0.42fr 0.58fr;
+      gap: 34px;
+      align-items: start;
+      margin-top: 26px;
+    }
+    @media (max-width: 980px) { .below-grid { grid-template-columns: 1fr; } }
+    .below-left img { width: 100%; height: auto; display: block; }
+    .below-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+  <main class="wrap">
+    <div class="kicker">Console</div>
+    <div class="grid">
+      <div class="left">
+        <h1>An experience you can feel, build &amp; collect</h1>
+        <p class="sub">Dungeon Mastron, made physical.</p>
+
+        <div class="rail">
+          <div class="pair-grid">
+            <section class="block">
+              <h3>What it’s made of</h3>
+              <p>The Dungeon Mastron Console is a DIY build made from accessible parts and simple electronics.</p>
+              <ul class="bullets">
+                <li>A 3D-printed enclosure</li>
+                <li>Physical buttons and LEDs for tactile input and feedback</li>
+                <li>A Raspberry Pi at the core</li>
+                <li>Official Raspberry Pi 7'' Screen</li>
+                <li>Plus basic electronic parts</li>
+              </ul>
+              <p>No custom chips, no locked-down hardware, everything is understandable and replaceable.</p>
+            </section>
+
+            <div class="sep" aria-hidden="true"></div>
+
+            <section class="block">
+              <h3>Same Games, Everywhere</h3>
+              <p>One game format. Two ways to play.</p>
+              <p>Every Dungeon Mastron game works the same way on both the physical console and the web player.</p>
+              <ul class="bullets">
+                <li>Build once</li>
+                <li>Play instantly in the web player</li>
+                <li>Load the exact same game onto the physical console</li>
+              </ul>
+              <p>The platform doesn’t fork or downgrade experiences. The difference is not what you play, it’s how it feels to play.</p>
+            </section>
+        </div>
+
+          <div class="pair-grid">
+            <section class="block">
+              <h3>The System Image</h3>
+              <p>Dungeon Mastron provides a complete, ready-to-use system image.</p>
+              <ul class="bullets">
+                <li>Download a single IMG file</li>
+                <li>Flash it to an SD card</li>
+                <li>Insert it into the Pi and power on</li>
+              </ul>
+              <p>No manual setup, no operating system configuration, no guesswork. The console boots directly into Dungeon Mastron.</p>
+            </section>
+
+            <div class="sep" aria-hidden="true"></div>
+
+            <section class="block">
+              <h3>Files &amp; Availability</h3>
+              <p>Open and accessible</p>
+              <p>All build files and resources are freely available:</p>
+              <ul class="bullets">
+                <li>Here</li>
+                <li>MakerWorld</li>
+              </ul>
+              <p>You’re free to print, tweak, remix, and rebuild, whether you follow the reference design or go your own way.</p>
+            </section>
+          </div>
+
+        </div>
+      </div>
+      <div class="right" aria-label="Console image">
+        <div class="stack">
+          <img src="../web_assets/console_pictures/console_side_noCart_grey_BG.jpg" alt="" />
+        </div>
+      </div>
+    </div>
+
+    <div class="section-sep" aria-hidden="true"></div>
+
+    <section class="below-grid" aria-label="Cartridge">
+      <div class="below-left">
+        <div class="kicker kicker--orange">Cartridge</div>
+        <img src="../web_assets/console_pictures/cart_front_toweroftheblackstar_grey_bg.png" alt="" />
+      </div>
+      <div class="below-right">
+        <h2 class="h2">One story. One cartridge</h2>
+        <p class="sub sub--orange">A complete world, made physical.</p>
+
+        <section class="block" style="border-top: none; padding-top: 0; margin-top: 18px;">
+          <h3 class="orange">Built for creators</h3>
+          <p>Every game you create can live on its own cartridge.</p>
+          <ul class="bullets" style="--marker: #D97757;">
+            <li>3D-printed cartridges, designed to be reused and re-labeled</li>
+            <li>Each cartridge houses a USB drive that holds the complete game</li>
+            <li>One adventure per cartridge</li>
+            <li>Easy to swap, store, and share</li>
+            <li>Works on any Dungeon Mastron console</li>
+          </ul>
+          <p>The same game file that runs in the web player can be loaded onto a cartridge without modification.</p>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <div class="left">© 2026 Artifextron</div>
+
+      <form
+        action="https://buttondown.com/api/emails/embed-subscribe/Dungeon_Mastron"
+        method="post"
+        class="newsletter"
+      >
+        <label for="bd-email">Get project updates</label>
+        <p class="desc">Occasional updates as Dungeon Mastron evolves.</p>
+        <div class="row">
+          <input type="email" name="email" id="bd-email" placeholder="Enter your email" required />
+          <input type="submit" value="Subscribe" />
+        </div>
+      </form>
+
+      <div class="links">
+        <a href="https://discord.gg/" target="_blank" rel="noopener noreferrer">Discord</a>
+        <a href="https://www.patreon.com/" target="_blank" rel="noopener noreferrer">Patreon</a>
+        <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="/LICENSE.txt" target="_blank" rel="noopener noreferrer">License</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../web_assets/site_shell.js?v=2" defer></script>
+</body>
+</html>

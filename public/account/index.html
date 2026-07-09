@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Account – Dungeon Mastron</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/web_assets/site_shell.css" />
+  <style>
+    body { margin: 0; background: var(--shell-bg); color: var(--shell-text); font-family: var(--shell-font); }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 30px 18px 70px; }
+    h1 { font-family: var(--shell-heading); font-weight: 600; letter-spacing: 0.10em; text-transform: uppercase; margin: 0 0 14px; }
+    .panel { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.10); border-radius: 16px; padding: 16px; }
+    .tabs { display:flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+    .tab { font-family: var(--shell-mono); font-size: 12px; padding: 8px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.18); color: var(--shell-text); cursor: pointer; }
+    .tab.active { background: rgba(217,119,87,0.16); border-color: rgba(217,119,87,0.40); }
+    label { display:block; font-family: var(--shell-mono); font-size: 12px; color: var(--shell-sub); margin: 10px 0 6px; }
+    input { width: 100%; padding: 11px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.25); color: var(--shell-text); font-family: var(--shell-mono); }
+    .row { display:flex; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: var(--shell-text); text-decoration: none; font-family: var(--shell-mono); cursor: pointer; }
+    .btn.primary { background: rgba(217,119,87,0.16); border-color: rgba(217,119,87,0.40); }
+    .note { margin-top: 10px; color: var(--shell-sub); font-family: var(--shell-mono); font-size: 12px; line-height: 1.55; }
+    .err { color: #fca5a5; }
+    .ok { color: #86efac; }
+    code { font-family: var(--shell-mono); }
+    pre { margin: 12px 0 0; padding: 12px 14px; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.10); border-radius: 10px; overflow:auto; color: var(--shell-text); font-family: var(--shell-mono); font-size: 12px; line-height: 1.45; }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+  <main class="wrap">
+    <h1>Account</h1>
+
+    <div id="needsConfig" class="panel" style="display:none;">
+      <div class="note">
+        Supabase is not configured. Create <code>web_assets/supabase_config.js</code> from
+        <code>web_assets/supabase_config.example.js</code> and fill in the URL + anon key.
+      </div>
+    </div>
+
+    <div id="authPanel" class="panel" style="display:none;">
+      <div class="tabs">
+        <button class="tab" id="tabLogin" type="button">Log in</button>
+        <button class="tab" id="tabSignup" type="button">Create account</button>
+        <button class="tab" id="tabProfile" type="button" style="display:none;">Profile</button>
+      </div>
+
+      <div id="viewLogin" style="display:none;">
+        <label>Email</label>
+        <input id="loginEmail" type="email" autocomplete="email" />
+        <label>Password</label>
+        <input id="loginPass" type="password" autocomplete="current-password" />
+        <div class="row">
+          <button class="btn primary" id="loginBtn" type="button">Log in</button>
+          <button class="btn" id="logoutBtn" type="button" style="display:none;">Log out</button>
+        </div>
+        <div class="note" id="loginMsg"></div>
+      </div>
+
+      <div id="viewSignup" style="display:none;">
+        <label>Email</label>
+        <input id="signupEmail" type="email" autocomplete="email" />
+        <label>Password</label>
+        <input id="signupPass" type="password" autocomplete="new-password" />
+        <div class="row">
+          <button class="btn primary" id="signupBtn" type="button">Create account</button>
+        </div>
+        <div class="note" id="signupMsg"></div>
+      </div>
+
+      <div id="viewProfile" style="display:none;">
+        <div class="note">Choose a unique username (3–20 chars, a–z 0–9 _ , must start with a letter).</div>
+        <label>Username</label>
+        <input id="username" type="text" autocomplete="nickname" placeholder="e.g. dragon_king" />
+        <div class="row">
+          <button class="btn primary" id="saveProfileBtn" type="button">Save</button>
+        </div>
+        <div class="note" id="profileMsg"></div>
+
+        <div class="note" style="margin-top:16px;">If this is your first setup, ensure this table exists in Supabase:</div>
+        <pre id="sql">create table if not exists public.profiles (
+  id uuid primary key references auth.users (id) on delete cascade,
+  username text unique not null,
+  created_at timestamptz default now()
+);
+
+alter table public.profiles enable row level security;
+
+create policy "profiles_read" on public.profiles
+  for select to authenticated using (true);
+
+create policy "profiles_insert_own" on public.profiles
+  for insert to authenticated with check (auth.uid() = id);
+
+create policy "profiles_update_own" on public.profiles
+  for update to authenticated using (auth.uid() = id);
+</pre>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin></script>
+  <script src="/web_assets/supabase_config.js" onerror="/* optional */"></script>
+  <script src="/web_assets/site_shell.js"></script>
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const tabLogin = $('tabLogin');
+    const tabSignup = $('tabSignup');
+    const tabProfile = $('tabProfile');
+    const viewLogin = $('viewLogin');
+    const viewSignup = $('viewSignup');
+    const viewProfile = $('viewProfile');
+    const needsConfig = $('needsConfig');
+    const authPanel = $('authPanel');
+
+    function setTab(name) {
+      [tabLogin, tabSignup, tabProfile].forEach((t) => t && t.classList.remove('active'));
+      [viewLogin, viewSignup, viewProfile].forEach((v) => v && (v.style.display = 'none'));
+      if (name === 'login') { tabLogin.classList.add('active'); viewLogin.style.display = 'block'; }
+      if (name === 'signup') { tabSignup.classList.add('active'); viewSignup.style.display = 'block'; }
+      if (name === 'profile') { tabProfile.classList.add('active'); viewProfile.style.display = 'block'; }
+    }
+
+    function getNext() {
+      const u = new URL(window.location.href);
+      const next = u.searchParams.get('next');
+      return next && next.startsWith('/') ? next : '/library/';
+    }
+
+    function validateUsername(raw) {
+      const u = String(raw || '').trim();
+      if (u.length < 3 || u.length > 20) return null;
+      if (!/^[a-z][a-z0-9_]*$/.test(u)) return null;
+      return u;
+    }
+
+    async function loadState() {
+      const sb = window.DM && window.DM.supabase;
+      if (!sb) { needsConfig.style.display = 'block'; return; }
+      authPanel.style.display = 'block';
+
+      const url = new URL(window.location.href);
+      const wantProfile = url.searchParams.get('mode') === 'profile';
+
+      const { data } = await sb.auth.getSession();
+      const session = data && data.session ? data.session : null;
+      const user = session ? session.user : null;
+      const confirmed = !!(user && user.email_confirmed_at);
+
+      $('logoutBtn').style.display = session ? 'inline-flex' : 'none';
+      tabProfile.style.display = session ? 'inline-flex' : 'none';
+
+      if (wantProfile) {
+        setTab('profile');
+      } else {
+        setTab(session ? 'login' : 'login');
+      }
+
+      if (session && !confirmed) {
+        $('loginMsg').className = 'note err';
+        $('loginMsg').textContent = 'Email not verified yet. Please verify your email, then log in again.';
+      }
+
+      if (session && confirmed) {
+        // If profile missing, force profile tab
+        try {
+          const { data: prof } = await sb.from('profiles').select('username').eq('id', user.id).maybeSingle();
+          if (!prof || !prof.username) {
+            const u = new URL(window.location.href);
+            u.searchParams.set('mode', 'profile');
+            u.searchParams.set('next', getNext());
+            window.history.replaceState({}, '', u.toString());
+            setTab('profile');
+          } else {
+            // Keep username in metadata for nav display
+            if (!user.user_metadata || user.user_metadata.username !== prof.username) {
+              try { await sb.auth.updateUser({ data: { username: prof.username } }); } catch (_) {}
+            }
+          }
+        } catch (_) {
+          const u = new URL(window.location.href);
+          u.searchParams.set('mode', 'profile');
+          u.searchParams.set('next', getNext());
+          window.history.replaceState({}, '', u.toString());
+          setTab('profile');
+        }
+      }
+    }
+
+    tabLogin.onclick = () => setTab('login');
+    tabSignup.onclick = () => setTab('signup');
+    tabProfile.onclick = () => setTab('profile');
+
+    $('loginBtn').onclick = async () => {
+      const sb = window.DM.supabase;
+      const email = $('loginEmail').value.trim();
+      const password = $('loginPass').value;
+      $('loginMsg').className = 'note';
+      $('loginMsg').textContent = '';
+      const { data, error } = await sb.auth.signInWithPassword({ email, password });
+      if (error) { $('loginMsg').className = 'note err'; $('loginMsg').textContent = error.message; return; }
+      const user = data.user;
+      if (!user.email_confirmed_at) {
+        $('loginMsg').className = 'note err';
+        $('loginMsg').textContent = 'Email not verified yet. Please verify your email first.';
+        return;
+      }
+      await loadState();
+      // If profile not required, go next.
+      const u = new URL(window.location.href);
+      if (u.searchParams.get('mode') !== 'profile') window.location.href = getNext();
+    };
+
+    $('logoutBtn').onclick = async () => {
+      const sb = window.DM.supabase;
+      await sb.auth.signOut();
+      window.location.href = '/';
+    };
+
+    $('signupBtn').onclick = async () => {
+      const sb = window.DM.supabase;
+      const email = $('signupEmail').value.trim();
+      const password = $('signupPass').value;
+      $('signupMsg').className = 'note';
+      $('signupMsg').textContent = '';
+      const { error } = await sb.auth.signUp({ email, password });
+      if (error) { $('signupMsg').className = 'note err'; $('signupMsg').textContent = error.message; return; }
+      $('signupMsg').className = 'note ok';
+      $('signupMsg').textContent = 'Account created. Please check your email to verify, then return to log in.';
+    };
+
+    $('saveProfileBtn').onclick = async () => {
+      const sb = window.DM.supabase;
+      const { data } = await sb.auth.getSession();
+      const session = data && data.session ? data.session : null;
+      if (!session) { $('profileMsg').className = 'note err'; $('profileMsg').textContent = 'Not signed in.'; return; }
+      const user = session.user;
+      if (!user.email_confirmed_at) { $('profileMsg').className = 'note err'; $('profileMsg').textContent = 'Verify your email first.'; return; }
+
+      const uname = validateUsername($('username').value);
+      if (!uname) { $('profileMsg').className = 'note err'; $('profileMsg').textContent = 'Invalid username format.'; return; }
+
+      $('profileMsg').className = 'note';
+      $('profileMsg').textContent = 'Saving…';
+
+      try {
+        // Ensure uniqueness; insert or update own profile.
+        const { data: existing } = await sb.from('profiles').select('id, username').eq('id', user.id).maybeSingle();
+        if (existing && existing.id) {
+          const { error } = await sb.from('profiles').update({ username: uname }).eq('id', user.id);
+          if (error) throw error;
+        } else {
+          const { error } = await sb.from('profiles').insert({ id: user.id, username: uname });
+          if (error) throw error;
+        }
+
+        try { await sb.auth.updateUser({ data: { username: uname } }); } catch (_) {}
+
+        $('profileMsg').className = 'note ok';
+        $('profileMsg').textContent = 'Saved.';
+        window.setTimeout(() => { window.location.href = getNext(); }, 500);
+      } catch (err) {
+        const msg = (err && err.message) ? err.message : String(err);
+        $('profileMsg').className = 'note err';
+        $('profileMsg').textContent = msg.includes('duplicate') ? 'Username is taken.' : msg;
+      }
+    };
+
+    window.addEventListener('DOMContentLoaded', loadState);
+  </script>
+</body>
+</html>

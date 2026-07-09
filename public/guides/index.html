@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guides – Dungeon Mastron</title>
+  <meta name="description" content="Guides and manuals for Dungeon Mastron: game creation, UI/JSON reference, animation pipeline, and style notes." />
+  <link rel="canonical" href="https://dungeonmastron.com/Guides/" />
+  <meta property="og:site_name" content="Dungeon Mastron" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Guides — Dungeon Mastron" />
+  <meta property="og:description" content="Guides and manuals for Dungeon Mastron creators." />
+  <meta property="og:url" content="https://dungeonmastron.com/Guides/" />
+  <meta property="og:image" content="https://dungeonmastron.com/web_assets/splash.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../web_assets/site_shell.css" />
+  <style>
+    body { margin: 0; background: var(--shell-bg); color: var(--shell-text); font-family: var(--shell-font); }
+    .wrap { max-width: 1560px; margin: 0 auto; padding: 46px 18px 80px; }
+
+    .kicker {
+      font-family: var(--shell-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(232,227,217,0.70);
+      margin-bottom: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .kicker::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #6B9B7F;
+      opacity: 0.9;
+    }
+    .kicker--orange::before { background: #D97757; opacity: 0.95; }
+
+    h1 {
+      font-family: var(--shell-heading);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin: 0;
+      font-size: clamp(28px, 3.2vw, 52px);
+      line-height: 1.08;
+      color: var(--shell-text);
+    }
+    .sub {
+      margin: 14px 0 0;
+      font-family: var(--shell-heading);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: clamp(12px, 1.2vw, 16px);
+      line-height: 1.55;
+      color: #6B9B7F;
+      max-width: 70ch;
+    }
+
+    .cards {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px 18px;
+      align-items: start;
+    }
+    @media (max-width: 1200px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 720px) { .cards { grid-template-columns: 1fr; } }
+
+    .card { padding: 14px 0; }
+    .card-body { }
+    .card.card--topsep {
+      border-top: 1px solid rgba(255,255,255,0.10);
+      padding-top: 28px;
+    }
+    .card.card--sep {
+      border-top: 1px solid rgba(255,255,255,0.10);
+      padding-top: 28px;
+    }
+
+    /* Vertical separators for columns 2-4 (desktop 4-col layout)
+       Drawn inside the column gap so it doesn't affect content width. */
+    @media (min-width: 1201px) {
+      .cards .card:nth-child(4n + 2),
+      .cards .card:nth-child(4n + 3),
+      .cards .card:nth-child(4n + 4) {
+        position: relative;
+      }
+      .cards .card:nth-child(4n + 2)::before,
+      .cards .card:nth-child(4n + 3)::before,
+      .cards .card:nth-child(4n + 4)::before {
+        content: "";
+        position: absolute;
+        left: -9px;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(
+          to bottom,
+          rgba(255,255,255,0),
+          rgba(255,255,255,0.06),
+          rgba(255,255,255,0)
+        );
+      }
+    }
+    .card h3 {
+      margin: 0 0 8px;
+      font-family: var(--shell-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #6B9B7F;
+    }
+    .card.card--orange h3 { color: #D97757; }
+    /* Match Game Builder "Build Mode" button color */
+    .card.card--yellow h3 { color: #e8a356; }
+    .card p {
+      margin: 0 0 10px;
+      color: var(--shell-sub);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .card p:last-child { margin-bottom: 0; }
+    .card video {
+      width: 100%;
+      aspect-ratio: 375 / 211;
+      object-fit: contain;
+      display: block;
+      margin-top: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.25);
+    }
+
+    .video-wrap {
+      position: relative;
+      margin-top: 12px;
+    }
+    .video-wrap video { margin-top: 0; }
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 12px;
+      background:
+        radial-gradient(120% 80% at 50% 35%, rgba(107,155,127,0.18), rgba(0,0,0,0) 60%),
+        linear-gradient(to bottom, rgba(0,0,0,0.46), rgba(0,0,0,0.18));
+      color: rgba(232,227,217,0.90);
+      font-family: var(--shell-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      pointer-events: none;
+      transition: opacity 160ms ease;
+      opacity: 1;
+    }
+    .video-wrap:hover .video-overlay { opacity: 0; }
+    .video-overlay--orange {
+      background:
+        radial-gradient(120% 80% at 50% 35%, rgba(217,119,87,0.24), rgba(0,0,0,0) 60%),
+        linear-gradient(to bottom, rgba(0,0,0,0.46), rgba(0,0,0,0.18));
+    }
+    .video-overlay--yellow {
+      background:
+        radial-gradient(120% 80% at 50% 35%, rgba(232,163,86,0.24), rgba(0,0,0,0) 60%),
+        linear-gradient(to bottom, rgba(0,0,0,0.46), rgba(0,0,0,0.18));
+    }
+
+    .section-sep {
+      margin-top: 50px;
+      margin-bottom: 16px;
+      height: 1px;
+      width: 100%;
+      background: rgba(255,255,255,0.10);
+    }
+
+    .manual-grid {
+      display: grid;
+      grid-template-columns: 0.4fr 0.6fr;
+      gap: 34px;
+      align-items: start;
+      margin-top: 26px;
+    }
+    @media (max-width: 980px) { .manual-grid { grid-template-columns: 1fr; } }
+
+    .big-copy {
+      font-family: var(--shell-heading);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: clamp(28px, 3.2vw, 52px);
+      line-height: 1.08;
+      color: var(--shell-text);
+      margin: 0;
+    }
+    .sub--orange {
+      margin: 14px 0 0;
+      font-family: var(--shell-heading);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: clamp(12px, 1.2vw, 16px);
+      line-height: 1.55;
+      color: #D97757;
+      max-width: 70ch;
+    }
+    .manual-left {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      min-height: 100%;
+    }
+    .manual-center {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .terminal {
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.02);
+      overflow: hidden;
+    }
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      font-family: var(--shell-mono);
+      font-size: 12px;
+      color: rgba(232,227,217,0.85);
+    }
+    .terminal-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .terminal-body {
+      padding: 14px;
+      font-family: var(--shell-mono);
+      font-size: 12px;
+      line-height: 1.45;
+      color: #E8E3D9;
+      white-space: pre-wrap;
+      overflow: auto;
+      height: 540px;
+      max-height: none;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(107,155,127,0.95) rgba(255,255,255,0.10);
+    }
+    .terminal-body::-webkit-scrollbar { width: 10px; height: 10px; }
+    .terminal-body::-webkit-scrollbar-track { background: rgba(255,255,255,0.08); border-radius: 999px; }
+    .terminal-body::-webkit-scrollbar-thumb { background: rgba(107,155,127,0.95); border-radius: 999px; }
+    .terminal-body::-webkit-scrollbar-thumb:hover { background: rgba(107,155,127,1); }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+  <main class="wrap">
+    <div class="kicker">Guides</div>
+    <h1>All stories begin on an empty page.</h1>
+    <p class="sub">Start with structure. Connect moments. Add systems only when they serve the story.</p>
+
+    <section class="cards" aria-label="Guides grid">
+      <section class="card card--topsep">
+        <div class="card-body">
+          <h3>Pages &amp; Build Mode</h3>
+          <p>The foundation of every story.</p>
+          <p>Pages are the basic units of a Dungeon Mastron adventure. Each page represents a moment: a scene, a choice, a consequence, or a transition. Build Mode lets you focus on structure rather than content, making it easy to think in terms of flow before writing every line of text.</p>
+          <p>Start small. A beginning, a few branches, and an ending are often enough to shape the entire experience.</p>
+        </div>
+        <div class="video-wrap">
+          <video class="card-video" src="/web_assets/video/section1.mp4" muted playsinline preload="metadata"></video>
+          <div class="video-overlay">Mouse over to play video</div>
+        </div>
+      </section>
+
+      <section class="card card--topsep">
+        <div class="card-body">
+          <h3>Connecting Pages (Shortcuts)</h3>
+          <p>Flow should feel effortless.</p>
+          <p>Pages are connected visually, forming a map of the story. Shortcut-based linking allows you to create and remove connections quickly, encouraging experimentation without fear of breaking anything.</p>
+          <p>This makes it easy to iterate: try alternate paths, add loops, or simplify structure until the story reads clearly at a glance.</p>
+        </div>
+        <div class="video-wrap">
+          <video class="card-video" src="/web_assets/video/section2.mp4" muted playsinline preload="metadata"></video>
+          <div class="video-overlay">Mouse over to play video</div>
+        </div>
+      </section>
+
+      <section class="card card--topsep">
+        <div class="card-body">
+          <h3>Page States (Sanctuary, Armory, etc.)</h3>
+          <p>See your world at a glance.</p>
+          <p>Page states are a visual aid for you as the creator. They help you understand what each part of your world represents while you’re building it.</p>
+          <p>A Sanctuary marks places where players can recover or feel safe. An Armory highlights where items or upgrades are found. Other states help you quickly spot danger, transitions, or endpoints in the overall structure.</p>
+        </div>
+        <div class="video-wrap">
+          <video class="card-video" src="/web_assets/video/section3.mp4" muted playsinline preload="metadata"></video>
+          <div class="video-overlay">Mouse over to play video</div>
+        </div>
+      </section>
+
+      <section class="card card--topsep">
+        <div class="card-body">
+          <h3>Action Pages (Dice &amp; Combat)</h3>
+          <p>Introduce risk only when it matters.</p>
+          <p>Action pages add uncertainty through dice rolls or combat checks. They’re designed for moments where chance, preparation, or stats should influence the outcome.</p>
+          <p>Because they branch naturally into success and failure, action pages create tension without stopping the story or turning it into a simulation.</p>
+        </div>
+        <div class="video-wrap">
+          <video class="card-video" src="/web_assets/video/section4.mp4" muted playsinline preload="metadata"></video>
+          <div class="video-overlay">Mouse over to play video</div>
+        </div>
+      </section>
+
+      <section class="card card--sep card--orange">
+        <div class="card-body">
+          <h3>Boss Pages &amp; Stages</h3>
+          <p>Design moments that escalate.</p>
+          <p>Boss Pages allow you to structure larger encounters across multiple stages. A boss doesn’t have to be a fight, it can be a debate, a chase, or a trial.</p>
+          <p>Stages let situations evolve: rules can change, stakes can rise, and consequences can compound.</p>
+        </div>
+        <div class="video-wrap">
+          <video class="card-video" src="/web_assets/video/section5.mp4" muted playsinline preload="metadata"></video>
+          <div class="video-overlay video-overlay--orange">Mouse over to play video</div>
+        </div>
+      </section>
+
+      <section class="card card--sep card--orange">
+        <div class="card-body">
+          <h3>Stats</h3>
+          <p>Simple systems with narrative weight.</p>
+          <p>Stats provide light structure for decision-making and risk. They influence outcomes without dominating the story.</p>
+          <p>Rather than simulating everything, stats exist to support tension, progression, and consequence where it serves the narrative.</p>
+        </div>
+        <div class="video-wrap">
+          <video class="card-video" src="/web_assets/video/section6.mp4" muted playsinline preload="metadata"></video>
+          <div class="video-overlay video-overlay--orange">Mouse over to play video</div>
+        </div>
+      </section>
+
+      <section class="card card--sep card--orange">
+        <div class="card-body">
+          <h3>Items</h3>
+          <p>Gameplay tools and resources.</p>
+          <p>Items can unlock paths, modify outcomes, or represent story progress. They’re both mechanical and narrative tools.</p>
+          <p>An item might be a key, a memory, a weapon, or a symbol, what matters is how it changes future choices.</p>
+        </div>
+        <div class="video-wrap">
+          <video class="card-video" src="/web_assets/video/section7.mp4" muted playsinline preload="metadata"></video>
+          <div class="video-overlay video-overlay--orange">Mouse over to play video</div>
+        </div>
+      </section>
+
+      <section class="card card--sep card--orange">
+        <div class="card-body">
+          <h3>Modifiers</h3>
+          <p>Small changes, lasting impact.</p>
+          <p>Modifiers apply temporary or permanent effects to stats or actions. They’re ideal for injuries, buffs, situational advantages, or lingering consequences.</p>
+          <p>Used sparingly, modifiers add texture and continuity without complicating the system.</p>
+        </div>
+        <div class="video-wrap">
+          <video class="card-video" src="/web_assets/video/section8.mp4" muted playsinline preload="metadata"></video>
+          <div class="video-overlay video-overlay--orange">Mouse over to play video</div>
+        </div>
+      </section>
+
+      <section class="card card--sep card--yellow">
+        <h3>Flags (Conditions &amp; Memory)</h3>
+        <p>Let the story remember what happened.</p>
+        <p>Flags track decisions, discoveries, and irreversible moments. They allow the story to react later, opening or closing choices, changing outcomes, or altering tone.</p>
+        <p>Flags are the backbone of long-term consequence and replayability.</p>
+        <div class="video-wrap">
+          <video class="card-video" src="/web_assets/video/section9.mp4" muted playsinline preload="metadata"></video>
+          <div class="video-overlay video-overlay--yellow">Mouse over to play video</div>
+        </div>
+      </section>
+
+      <section class="card card--sep card--yellow">
+        <h3>Locked Choices &amp; Gated Paths</h3>
+        <p>Not every option is always available.</p>
+        <p>Locked choices depend on flags, items, or conditions. They allow you to design secrets, requirements, and earned progression without duplicating content.</p>
+        <p>This keeps stories cohesive while still feeling reactive to player decisions.</p>
+        <div class="video-wrap">
+          <video class="card-video" src="/web_assets/video/section10.mp4" muted playsinline preload="metadata"></video>
+          <div class="video-overlay video-overlay--yellow">Mouse over to play video</div>
+        </div>
+      </section>
+
+      <section class="card card--sep card--yellow">
+        <div class="card-body">
+          <h3>Settings &amp; Assets</h3>
+          <p>Define identity, tone, and presentation.</p>
+          <p>Settings determine how the adventure begins, its title, starting page, and initial setup. Assets define how it’s presented, through fonts, bezels, and other visual elements that give the game its character.</p>
+          <p>Together, they shape both the structure and the feel of the game.</p>
+        </div>
+        <div class="video-wrap">
+          <video class="card-video" src="/web_assets/video/section11.mp4" muted playsinline preload="metadata"></video>
+          <div class="video-overlay video-overlay--yellow">Mouse over to play video</div>
+        </div>
+      </section>
+
+      <section class="card card--sep card--yellow">
+        <div class="card-body">
+          <h3>Analysis &amp; Checks</h3>
+          <p>Confidence before play.</p>
+          <p>Analysis tools scan the game structure to identify missing links, unreachable pages, or other structural issues.</p>
+          <p>It’s a quick way to ensure the story works as intended before sharing, exporting, or committing it to a cartridge.</p>
+        </div>
+        <div class="video-wrap">
+          <video class="card-video" src="/web_assets/video/section12.mp4" muted playsinline preload="metadata"></video>
+          <div class="video-overlay video-overlay--yellow">Mouse over to play video</div>
+        </div>
+      </section>
+
+    </section>
+
+    <div class="section-sep" aria-hidden="true"></div>
+
+    <section class="manual-grid" aria-label="Game creation manual">
+      <div class="manual-left">
+        <div class="kicker kicker--orange">Manual</div>
+        <div class="manual-center">
+          <p class="big-copy">Creators manual.</p>
+          <p class="sub--orange">A deeper look into how games are built.</p>
+        </div>
+      </div>
+      <div>
+        <div class="terminal" aria-label="Game creation manual">
+          <div class="terminal-bar">
+            <div class="terminal-title">GAME_CREATION_MANUAL.md</div>
+          </div>
+          <pre id="gameCreationManual" class="terminal-body">Loading…</pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <div class="left">© 2026 Artifextron</div>
+
+      <form
+        action="https://buttondown.com/api/emails/embed-subscribe/Dungeon_Mastron"
+        method="post"
+        class="newsletter"
+      >
+        <label for="bd-email">Get project updates</label>
+        <p class="desc">Occasional updates as Dungeon Mastron evolves.</p>
+        <div class="row">
+          <input type="email" name="email" id="bd-email" placeholder="Enter your email" required />
+          <input type="submit" value="Subscribe" />
+        </div>
+      </form>
+
+      <div class="links">
+        <a href="https://discord.gg/" target="_blank" rel="noopener noreferrer">Discord</a>
+        <a href="https://www.patreon.com/" target="_blank" rel="noopener noreferrer">Patreon</a>
+        <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="/LICENSE.txt" target="_blank" rel="noopener noreferrer">License</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../web_assets/site_shell.js?v=2" defer></script>
+  <script>
+    (function () {
+      function bindHoverVideo(v) {
+        if (!v) return;
+        v.muted = true;
+        v.playsInline = true;
+        v.loop = true;
+        v.pause();
+
+        const play = () => {
+          const p = v.play();
+          if (p && typeof p.catch === 'function') p.catch(() => {});
+        };
+        const stop = () => {
+          v.pause();
+          try { v.currentTime = 0; } catch (_) {}
+        };
+
+        v.addEventListener('pointerenter', play);
+        v.addEventListener('pointerleave', stop);
+
+        // Ensure a still first frame.
+        v.addEventListener('loadeddata', () => {
+          v.pause();
+          try { v.currentTime = 0; } catch (_) {}
+        }, { once: true });
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('video.card-video').forEach(bindHoverVideo);
+      });
+    })();
+  </script>
+
+  <script>
+    (function () {
+      function colsForWidth(w) {
+        if (w <= 720) return 1;
+        if (w <= 1200) return 2;
+        return 4;
+      }
+
+      function alignCardVideos() {
+        const cards = Array.from(document.querySelectorAll('.cards .card'));
+        const withVideo = cards.filter((c) => c.querySelector('video.card-video'));
+        if (!withVideo.length) return;
+
+        // Reset
+        withVideo.forEach((c) => {
+          const body = c.querySelector('.card-body');
+          if (body) body.style.minHeight = '';
+        });
+
+        const cols = colsForWidth(window.innerWidth);
+        for (let i = 0; i < withVideo.length; i += cols) {
+          const row = withVideo.slice(i, i + cols);
+          let max = 0;
+          row.forEach((c) => {
+            const body = c.querySelector('.card-body');
+            if (!body) return;
+            max = Math.max(max, body.offsetHeight);
+          });
+          row.forEach((c) => {
+            const body = c.querySelector('.card-body');
+            if (body) body.style.minHeight = `${max}px`;
+          });
+        }
+      }
+
+      window.addEventListener('resize', () => alignCardVideos());
+      window.addEventListener('load', () => alignCardVideos());
+    })();
+  </script>
+
+  <script>
+    (async () => {
+      const el = document.getElementById('gameCreationManual');
+      if (!el) return;
+      try {
+        const res = await fetch('./GAME_CREATION_MANUAL.md', { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        el.textContent = (await res.text()).replace(/^\s+/, '');
+      } catch (e) {
+        el.textContent = `Failed to load ./GAME_CREATION_MANUAL.md\n\n${String(e)}`;
+      }
+    })();
+  </script>
+</body>
+</html>

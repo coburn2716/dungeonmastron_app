@@ -1,0 +1,9 @@
+.DS_Store
+node_modules/
+.vercel
+*.psd
+*.zip
+__pycache__/
+*.pyc
+
+# temporarily excluded until media optimization lands (added back in a later commit)

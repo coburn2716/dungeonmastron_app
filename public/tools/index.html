@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tools – Dungeon Mastron</title>
+  <meta name="description" content="Download Dungeon Mastron helper scripts and references: animation generators, audio tools, and visual style guides." />
+  <link rel="canonical" href="https://dungeonmastron.com/tools/" />
+  <meta property="og:site_name" content="Dungeon Mastron" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Tools — Dungeon Mastron" />
+  <meta property="og:description" content="Helper scripts and references for Dungeon Mastron creators." />
+  <meta property="og:url" content="https://dungeonmastron.com/tools/" />
+  <meta property="og:image" content="https://dungeonmastron.com/web_assets/splash.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../web_assets/site_shell.css" />
+  <style>
+    body { margin: 0; background: var(--shell-bg); color: var(--shell-text); font-family: var(--shell-font); }
+    .wrap { max-width: 1560px; margin: 0 auto; padding: 46px 18px 80px; }
+
+    .kicker {
+      font-family: var(--shell-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(232,227,217,0.70);
+      margin-bottom: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .kicker::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #D97757;
+      opacity: 0.95;
+    }
+
+    .kicker--green::before { background: #6B9B7F; }
+    .kicker--yellow::before { background: #e8a356; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 34px;
+      align-items: start;
+      margin-top: 16px;
+    }
+    @media (max-width: 980px) { .grid { grid-template-columns: 1fr; } }
+
+    .big-copy {
+      font-family: var(--shell-heading);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: clamp(18px, 2.2vw, 30px);
+      line-height: 1.15;
+      color: var(--shell-text);
+      margin: 0;
+    }
+    .big-copy .line { display: block; margin: 0 0 14px; }
+    .big-copy .line:last-child { margin-bottom: 0; }
+
+    .rail { position: relative; padding-left: 18px; }
+    .rail::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(255,255,255,0.10);
+    }
+
+    .section-sep {
+      margin-top: 50px;
+      margin-bottom: 16px;
+      height: 1px;
+      width: 100%;
+      background: rgba(255,255,255,0.10);
+    }
+
+    .block {
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+    }
+    .block:first-child { border-top: none; padding-top: 0; }
+
+    .guide-grid .block {
+      border-top: 1px solid rgba(255,255,255,0.10);
+      padding-top: 14px;
+    }
+    .guide-grid .block:first-child { border-top: none; padding-top: 0; }
+    /* User request: remove the separator line above “What it does” (2nd block) */
+    .guide-grid .block:nth-child(2) { border-top: none; padding-top: 0; }
+    .block h3 {
+      margin: 0 0 8px;
+      font-family: var(--shell-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #D97757;
+    }
+    .block h3.green { color: #6B9B7F; }
+    .block h3.yellow { color: #e8a356; }
+    .block p { margin: 0 0 10px; color: var(--shell-sub); font-size: 12px; line-height: 1.55; }
+    .bullets { margin: 0; padding-left: 18px; color: var(--shell-sub); line-height: 1.6; font-size: 12px; }
+    .bullets li { margin: 6px 0; }
+    .bullets li::marker { color: var(--marker, rgba(232,227,217,0.55)); }
+    .bullets.bullets--orange li::marker { color: #D97757; }
+    .bullets.bullets--green li::marker { color: #6B9B7F; }
+    .bullets.bullets--yellow li::marker { color: #e8a356; }
+
+    .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: var(--shell-text); text-decoration: none; font-family: var(--shell-mono); }
+    .btn:hover { background: rgba(255,255,255,0.08); }
+    .btn.primary { background: rgba(217,119,87,0.16); border-color: rgba(217,119,87,0.40); }
+
+    .terminal {
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.02);
+      overflow: hidden;
+    }
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      font-family: var(--shell-mono);
+      font-size: 12px;
+      color: rgba(232,227,217,0.85);
+    }
+    .terminal-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .terminal-body {
+      padding: 14px;
+      font-family: var(--shell-mono);
+      font-size: 12px;
+      line-height: 1.45;
+      color: #E8E3D9;
+      white-space: pre-wrap;
+      overflow: auto;
+      height: 472px;
+      max-height: none;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(217,119,87,0.95) rgba(255,255,255,0.10);
+    }
+    .terminal-body::-webkit-scrollbar { width: 10px; height: 10px; }
+    .terminal-body::-webkit-scrollbar-track { background: rgba(255,255,255,0.08); border-radius: 999px; }
+    .terminal-body::-webkit-scrollbar-thumb { background: rgba(217,119,87,0.95); border-radius: 999px; }
+    .terminal-body::-webkit-scrollbar-thumb:hover { background: rgba(217,119,87,1); }
+    @media (max-width: 980px) { .terminal-body { height: 420px; } }
+    @media (max-width: 560px) { .terminal-body { height: 360px; } }
+
+    .terminal-body--short { height: 555px; }
+    @media (max-width: 980px) { .terminal-body--short { height: 515px; } }
+    @media (max-width: 560px) { .terminal-body--short { height: 475px; } }
+
+    .terminal-body--vs { height: 364px; }
+    @media (max-width: 980px) { .terminal-body--vs { height: 320px; } }
+    @media (max-width: 560px) { .terminal-body--vs { height: 260px; } }
+
+    .terminal-body--yellow {
+      scrollbar-color: rgba(232,163,86,0.95) rgba(255,255,255,0.10);
+    }
+    .terminal-body--yellow::-webkit-scrollbar-thumb { background: rgba(232,163,86,0.95); }
+    .terminal-body--yellow::-webkit-scrollbar-thumb:hover { background: rgba(232,163,86,1); }
+
+    .terminal-body--green {
+      scrollbar-color: rgba(107,155,127,0.95) rgba(255,255,255,0.10);
+    }
+    .terminal-body--green::-webkit-scrollbar-thumb { background: rgba(107,155,127,0.95); }
+    .terminal-body--green::-webkit-scrollbar-thumb:hover { background: rgba(107,155,127,1); }
+
+    .terminals-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 18px;
+      margin-top: 14px;
+    }
+    @media (max-width: 980px) { .guide-grid { grid-template-columns: 1fr; } }
+    .guide-grid .block--right { grid-column: 2; }
+    @media (max-width: 980px) { .guide-grid .block--right { grid-column: auto; } }
+
+    .below-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 34px;
+      align-items: start;
+      margin-top: 22px;
+    }
+    @media (max-width: 980px) { .below-grid { grid-template-columns: 1fr; } }
+
+    .below-left-rail {
+      border-right: 1px solid rgba(255,255,255,0.10);
+      padding-right: 18px;
+    }
+
+    .visual-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 34px;
+      align-items: start;
+      margin-top: 16px;
+    }
+    @media (max-width: 980px) { .visual-grid { grid-template-columns: 1fr; } }
+
+    .media-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 18px;
+    }
+    @media (max-width: 980px) { .media-row { grid-template-columns: 1fr; } }
+    .media-box {
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.02);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .media-box img,
+    .media-box video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      background: rgba(0,0,0,0.20);
+    }
+
+    .image-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+    @media (max-width: 980px) { .image-strip { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .image-strip { grid-template-columns: 1fr; } }
+    .image-strip img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .mini-pre {
+      margin: 10px 0 0;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.02);
+      border-radius: 14px;
+      font-family: var(--shell-mono);
+      font-size: 12px;
+      line-height: 1.45;
+      color: rgba(232,227,217,0.80);
+      overflow: auto;
+      white-space: pre;
+    }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+
+  <main class="wrap">
+    <div class="kicker">Animation</div>
+
+    <section class="grid">
+      <div>
+        <p class="big-copy">
+          <span class="line">IMAGE ANIMATION GENERATOR.</span>
+          <span class="line">KEN BURNS–STYLE VIDEO.</span>
+        </p>
+
+        <div class="guide-grid">
+          <section class="block">
+            <h3>What this is</h3>
+            <ul class="bullets bullets--orange">
+              <li>A pre-rendered animation system for Dungeon Mastron games</li>
+              <li>Turns static page images into smooth 30 FPS video animations</li>
+              <li>Designed for console performance and visual polish</li>
+              <li>Fully optional, games work even without animations</li>
+            </ul>
+          </section>
+
+          <section class="block">
+            <h3>What it does</h3>
+            <ul class="bullets bullets--orange">
+              <li>Generates short MP4 videos for each game page</li>
+              <li>Applies subtle zoom and pan (Ken Burns) effects</li>
+              <li>Automatically plays videos on the console when available</li>
+              <li>Falls back to static images if videos are missing</li>
+            </ul>
+          </section>
+
+          <section class="block">
+            <h3>How it works</h3>
+            <ul class="bullets bullets--orange">
+              <li>Choose animation effects per page in the Game Builder</li>
+              <li>Export an animation manifest (one click)</li>
+              <li>Run the animation generator on your computer</li>
+            </ul>
+          </section>
+
+          <section class="block">
+            <h3>Creator control</h3>
+            <ul class="bullets bullets--orange">
+              <li>Pick a specific animation effect per page</li>
+              <li>Use Random for automatic variation</li>
+              <li>Mix manual and random effects freely</li>
+              <li>Regenerate animations anytime</li>
+            </ul>
+          </section>
+
+          <section class="block">
+            <h3>Smart fallback system</h3>
+            <ul class="bullets bullets--orange">
+              <li>Video missing → static image shown</li>
+              <li>Video unsupported → static image shown</li>
+              <li>OpenCV missing → static image shown</li>
+            </ul>
+          </section>
+
+          <section class="block">
+            <h3>Typical workflow</h3>
+            <ul class="bullets bullets--orange">
+              <li>Select animation effects, export animation manifest</li>
+              <li>Run the generator script, videos are created automatically</li>
+              <li>Include both images and animations in your game folder</li>
+            </ul>
+          </section>
+
+          <section class="block">
+            <h3>Available animation effects</h3>
+            <ul class="bullets bullets--orange">
+              <li>Zoom In / Zoom Out</li>
+              <li>Zoom + Pan (8 directions)</li>
+              <li>Random (automatic selection)</li>
+            </ul>
+            <p>All effects are subtle, cinematic, and optimized for readability.</p>
+          </section>
+
+          <section class="block">
+            <h3>Technical highlights</h3>
+            <ul class="bullets bullets--orange">
+              <li>Resolution: 1280×720 / 1024×1024</li>
+              <li>Frame rate: 30 FPS</li>
+              <li>Format: H.264 MP4</li>
+              <li>Size: ~1–2 MB per animation</li>
+            </ul>
+          </section>
+
+        </div>
+
+        <div class="media-row" aria-label="Example image and animation">
+          <div class="media-box">
+            <img src="/web_assets/images/p090_chapel_sanctuary.jpg" alt="Example page image: Chapel Sanctuary" loading="lazy" />
+          </div>
+          <div class="media-box">
+            <video src="/web_assets/images/p090_chapel_sanctuary.mp4" controls playsinline preload="metadata"></video>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="rail">
+        <div class="terminals-row">
+          <div class="terminal" aria-label="Animation generator square">
+            <div class="terminal-bar">
+              <div class="terminal-title">animation_generator_square.py</div>
+            </div>
+            <pre id="toolSquare" class="terminal-body">Loading…</pre>
+          </div>
+
+          <div class="terminal" aria-label="Animation generator vertical">
+            <div class="terminal-bar">
+              <div class="terminal-title">animation_generator_vertical.py</div>
+            </div>
+            <pre id="toolVertical" class="terminal-body">Loading…</pre>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <div class="section-sep" aria-hidden="true"></div>
+
+    <section class="below-grid">
+      <div class="below-left-rail">
+        <div class="kicker kicker--green" style="margin-bottom: 12px;">Rename audio</div>
+        <div class="terminal" aria-label="Rename audio by JSON script">
+          <div class="terminal-bar">
+            <div class="terminal-title">rename_audio_by_json.py</div>
+          </div>
+          <pre id="toolRenameAudio" class="terminal-body terminal-body--short terminal-body--green">Loading…</pre>
+        </div>
+      </div>
+      <div>
+        <p class="big-copy">
+          <span class="line">LET THE AI LISTEN, MATCH,</span>
+          <span class="line">AND ORGANIZE YOUR VOICE LINES</span>
+        </p>
+
+        <div class="guide-grid" style="margin-top: 16px;">
+          <section class="block">
+            <h3 class="green">What this is</h3>
+            <ul class="bullets bullets--green">
+              <li>A smart audio renaming tool for Dungeon Mastron games</li>
+              <li>Uses AI transcription + text matching</li>
+              <li>Renames .wav files to the correct page IDs from game.json</li>
+              <li>Designed for large voice-acted games with many audio files</li>
+            </ul>
+          </section>
+
+          <section class="block">
+            <h3 class="green">How it works</h3>
+            <ul class="bullets bullets--green">
+              <li>Reads your game.json</li>
+              <li>Transcribes each audio file using Whisper</li>
+              <li>Compares spoken text to page text</li>
+              <li>Renames the file to the correct page ID</li>
+            </ul>
+          </section>
+
+          <section class="block">
+            <h3 class="green">Safe by default</h3>
+            <ul class="bullets bullets--green">
+              <li>Runs in dry-run mode by default</li>
+              <li>No files are renamed until you confirm</li>
+              <li>Generates a CSV report (original name, new name, confidence, warnings)</li>
+            </ul>
+          </section>
+
+          <section class="block">
+            <h3 class="green">Smart matching rules</h3>
+            <ul class="bullets bullets--green">
+              <li>Normalizes text (case, punctuation, spacing)</li>
+              <li>Uses similarity scoring to avoid bad matches</li>
+              <li>Rejects ambiguous matches automatically</li>
+              <li>Can skip transcription when filenames already match page IDs</li>
+            </ul>
+          </section>
+
+          <section class="block">
+            <h3 class="green">Typical use case</h3>
+            <p>Before:</p>
+            <pre class="mini-pre">audio/
+├── take_01.wav
+├── take_02.wav
+└── intro_final.wav</pre>
+            <p style="margin-top: 10px;">After:</p>
+            <pre class="mini-pre">audio/
+├── p001.wav
+├── p002.wav
+└── p003.wav</pre>
+          </section>
+
+          <section class="block">
+            <h3 class="green">Creator workflow</h3>
+            <ul class="bullets bullets--green">
+              <li>Place all .wav files in one folder</li>
+              <li>Run the renamer in dry-run mode</li>
+              <li>Review the CSV report</li>
+              <li>Apply renaming once satisfied</li>
+              <li>Copy audio folder to your game</li>
+            </ul>
+          </section>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="section-sep" style="margin-top: 50px;" aria-hidden="true"></div>
+
+    <div class="kicker kicker--yellow" style="margin-top: 26px;">Visual styles</div>
+
+    <section class="visual-grid">
+      <div>
+        <p class="big-copy">
+          <span class="line">YOUR WORLD, VISUALLY UNIFIED.</span>
+        </p>
+
+        <div class="guide-grid" style="margin-top: 16px;">
+          <section class="block">
+            <h3 class="yellow">What the Visual style template does</h3>
+            <ul class="bullets bullets--yellow">
+              <li>Defines visual styles for a game</li>
+              <li>Locks in art direction (style, medium, palette, mood)</li>
+              <li>Ensures character consistency across all images</li>
+              <li>Prevents visual drift over time</li>
+              <li>Works across Midjourney, Leonardo, ChatGPT, and other image AIs</li>
+              <li>Acts as a visual rulebook for the entire project</li>
+            </ul>
+          </section>
+
+          <section class="block block--right">
+            <h3 class="yellow">A complete prompt</h3>
+            <ul class="bullets bullets--yellow">
+              <li><strong>Visual style</strong> — paste your Visual style template</li>
+              <li><strong>Page story text</strong> — paste the page story text</li>
+              <li><strong>Character anchors</strong> — repeat key traits (silhouette, clothing, posture)</li>
+              <li><strong>Camera / lighting</strong> — wide shot/close-up + torch-lit/ambient/fog</li>
+              <li><strong>Scene focus / scale &amp; space</strong> — what the camera sees + vast/narrow/claustrophobic</li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="image-strip" aria-label="Visual style examples">
+          <img src="/web_assets/images/p007.png" alt="Visual example p007" loading="lazy" />
+          <img src="/web_assets/images/p009.png" alt="Visual example p009" loading="lazy" />
+          <img src="/web_assets/images/p010.png" alt="Visual example p010" loading="lazy" />
+          <img src="/web_assets/images/p011.png" alt="Visual example p011" loading="lazy" />
+        </div>
+      </div>
+      <div>
+        <div class="terminal" aria-label="Visual styles guide">
+          <div class="terminal-bar">
+            <div class="terminal-title">visual_styles.md</div>
+          </div>
+          <pre id="toolVisualStyles" class="terminal-body terminal-body--vs terminal-body--yellow">Loading…</pre>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-sep" style="margin-top: 50px;" aria-hidden="true"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <div class="left">© 2026 Artifextron</div>
+
+      <form
+        action="https://buttondown.com/api/emails/embed-subscribe/Dungeon_Mastron"
+        method="post"
+        class="newsletter"
+      >
+        <label for="bd-email">Get project updates</label>
+        <p class="desc">Occasional updates as Dungeon Mastron evolves.</p>
+        <div class="row">
+          <input type="email" name="email" id="bd-email" placeholder="Enter your email" required />
+          <input type="submit" value="Subscribe" />
+        </div>
+      </form>
+
+      <div class="links">
+        <a href="https://discord.gg/" target="_blank" rel="noopener noreferrer">Discord</a>
+        <a href="https://www.patreon.com/" target="_blank" rel="noopener noreferrer">Patreon</a>
+        <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="/LICENSE.txt" target="_blank" rel="noopener noreferrer">License</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../web_assets/site_shell.js?v=2" defer></script>
+  <script>
+    (async () => {
+      const el = document.getElementById('toolSquare');
+      if (!el) return;
+      try {
+        const res = await fetch('/Scripts/animation_generator_square.py', { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        el.textContent = (await res.text()).replace(/^\s+/, '');
+      } catch (e) {
+        el.textContent = `Failed to load /Scripts/animation_generator_square.py\n\n${String(e)}`;
+      }
+    })();
+
+    (async () => {
+      const el = document.getElementById('toolVertical');
+      if (!el) return;
+      try {
+        const res = await fetch('/Scripts/animation_generator_vertical.py', { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        el.textContent = (await res.text()).replace(/^\s+/, '');
+      } catch (e) {
+        el.textContent = `Failed to load /Scripts/animation_generator_vertical.py\n\n${String(e)}`;
+      }
+    })();
+
+    (async () => {
+      const el = document.getElementById('toolRenameAudio');
+      if (!el) return;
+      try {
+        const res = await fetch('/Scripts/rename_audio_by_json.py', { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        el.textContent = (await res.text()).replace(/^\s+/, '');
+      } catch (e) {
+        el.textContent = `Failed to load /Scripts/rename_audio_by_json.py\n\n${String(e)}`;
+      }
+    })();
+
+    (async () => {
+      const el = document.getElementById('toolVisualStyles');
+      if (!el) return;
+      try {
+        const tryFetch = async (path) => {
+          const res = await fetch(path, { cache: 'no-store' });
+          return res.ok ? res : null;
+        };
+        const res = (await tryFetch('/Guides/visual_styles.md'))
+          || (await tryFetch('/guides/visual_styles.md'))
+          || (await tryFetch('../Guides/visual_styles.md'))
+          || (await tryFetch('../guides/visual_styles.md'));
+        if (!res) throw new Error('HTTP 404');
+        el.textContent = (await res.text()).replace(/^\s+/, '');
+      } catch (e) {
+        el.textContent = `Failed to load /Guides/visual_styles.md\n\n${String(e)}`;
+      }
+    })();
+  </script>
+</body>
+</html>

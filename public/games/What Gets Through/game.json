@@ -1,0 +1,2995 @@
+{
+  "license_lines": [
+    "DUNGEON MASTRON LICENSE",
+    "",
+    "Copyright (c) 2026 Artifextron, Henrik Åberg",
+    "All Rights Reserved.",
+    "",
+    "================================================================================",
+    "TERMS AND CONDITIONS",
+    "================================================================================",
+    "",
+    "This software and content (Dungeon Mastron Console, Web Player, Game Builder, ",
+    "and AI Companion) is proprietary material made available in source ",
+    "form for transparency and personal use.",
+    "",
+    "PERMISSIONS",
+    "-----------",
+    "You are permitted to:",
+    "",
+    "  ✓ Use this software to play games",
+    "  ✓ Use this software to create games with the included Game Builder",
+    "  ✓ Use the AI Companion to create games with AI assistants",
+    "  ✓ Modify this software and templates for personal, private, non-commercial use",
+    "  ✓ Study and learn from the source code and templates",
+    "  ✓ Create, distribute, and sell games made with the Game Builder or AI Companion",
+    "    (you own full rights to your created games)",
+    "",
+    "RESTRICTIONS",
+    "------------",
+    "You may NOT:",
+    "",
+    "  ✗ Distribute this software or templates (original or modified versions)",
+    "  ✗ Publish, share, or make available any fork, derivative, or modified template",
+    "  ✗ Use this software or templates for commercial purposes",
+    "  ✗ Sublicense, sell, rent, or lease this software or templates",
+    "  ✗ Remove or modify this license or copyright notices",
+    "  ✗ Use this software to create competing products or services",
+    "  ✗ Reverse engineer this software (beyond what's visible in source)",
+    "",
+    "GAME OWNERSHIP AND PLAYBACK",
+    "---------------------------",
+    "Games created using the Dungeon Mastron Game Builder or AI Companion ",
+    "are owned entirely by their creators. You may distribute, sell, or license ",
+    "your games freely.",
+    "",
+    "However, games are designed to be played using official Dungeon Mastron players:",
+    "- Dungeon Mastron Web Player (free)",
+    "- Dungeon Mastron Console (console.py on Raspberry Pi)",
+    "",
+    "Creating alternative players or software that executes Dungeon Mastron game ",
+    "files requires written permission from the copyright holder.",
+    "",
+    "Attribution to Dungeon Mastron is appreciated but not required when ",
+    "distributing your games.",
+    "",
+    "ATTRIBUTION",
+    "-----------",
+    "When sharing games or content created with this software, you should credit:",
+    "\"Created with Dungeon Mastron / www.dungeonmastron.com\"",
+    "",
+    "DISCLAIMER",
+    "----------",
+    "THIS SOFTWARE IS PROVIDED \"AS IS\" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR",
+    "IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS",
+    "FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT",
+    "HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE",
+    "USE OF THIS SOFTWARE.",
+    "",
+    "ENFORCEMENT",
+    "-----------",
+    "Violations of this license may result in:",
+    "- DMCA takedown notices",
+    "- Cease and desist orders",
+    "- Legal action for damages",
+    "",
+    "If you're unsure whether your use case is permitted, please contact the",
+    "copyright holder before proceeding.",
+    "",
+    "================================================================================",
+    "For questions or licensing inquiries: [dungeonmastron@gmail.com / Henrik Åberg]",
+    "Project website: www.dungeonmastron.com",
+    "================================================================================"
+  ],
+  "title": "What Gets Through",
+  "logo": "logo.jpg",
+  "start_page": "p001_prologue",
+  "theme": {
+    "preset": "fantasy",
+    "custom": {
+      "primary_color": "#e8e3d9",
+      "accent_color": "#d97757",
+      "background_color": "#1c1c1c",
+      "secondary_color": "#b8b3a9"
+    }
+  },
+  "player_stats": {
+    "health": 100,
+    "strength": 1,
+    "luck": 1
+  },
+  "font_sizes": {
+    "main": 18,
+    "choices": 20,
+    "stats": 18,
+    "items": 18
+  },
+  "font_colors": {
+    "main": "#b9a598",
+    "choices": "#ab5936",
+    "stats": "#b9a598",
+    "items": "#b9a598",
+    "separator": "#ab5936"
+  },
+  "font_positions": {
+    "choices": 43,
+    "main": 35,
+    "stats": 91.015625,
+    "items": 95,
+    "separator": 92.5
+  },
+  "main_text_padding": 11,
+  "main_text_top_padding": 0,
+  "text_area_rows": 12,
+  "main_text_max_height": 800,
+  "action_colors": {
+    "dice": "#b9a598",
+    "dice_text": "#ab5936"
+  },
+  "action_bezel": "action_bezel.png",
+  "bezels": {
+    "bottom": "story_bezel.png"
+  },
+  "pages": {
+    "p001_prologue": {
+      "page_type": "normal",
+      "text": "The city doesn’t wake up anymore.\nIt just stays like this, half-lit, half-forgotten, holding its breath.\n\nDust floats through the abandoned library in slow, careful spirals. Shelves lean where they were shoved years ago. Books lie open on the floor, pages swollen and stuck together, like someone dropped them mid-thought and never came back.\n\nYou sit with your back against a reading table, boots stretched out, pack close enough to grab if you need it. For a moment, things are quiet enough to pretend this place still remembers what it was for.\n\nRivet lifts his head, ears pricking forward. One ear twitches, shifting slightly before settling. His eyes blink, then focus on you.\n\n“Easy,” you whisper. Talking still feels unnecessary. Dangerous. “It’s just the building.”\n\nIt isn’t just the building. It never is.\n\nBut for now, the doors are barred. The walls are solid. And the city hasn’t noticed you yet.\n\nSoon, it will.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "blue",
+        "speed": 0.8
+      },
+      "choices": [
+        {
+          "text": "Continue",
+          "target": "p002_library_safe",
+          "next_page": "p002_library_safe"
+        }
+      ],
+      "special_page": true,
+      "special_padding": {
+        "top": 250,
+        "bottom": 250,
+        "left": 40,
+        "right": 40
+      },
+      "continue_y": 1150,
+      "display_name": "The city doesn’t wake up anymore.",
+      "continue_text": "Continue"
+    },
+    "p002_library_safe": {
+      "page_type": "sanctuary",
+      "text": "The library smells like dust, paper, and old glue. It’s one of the last places where you can breathe without tasting smoke.\n\nYou’ve stayed two nights, long enough to rest, not long enough to feel safe. Someone passed through recently. You see it in the scuffed dust, the shifted chair. They didn’t linger.\n\nRivet moves between the shelves with practiced care, claws clicking softly on tile. He stops beneath a cracked vent and lifts his head, scenting air that never quite stops moving.\n\n“Yeah,” you murmur. “I hear it too.”\nWhatever’s out there has started moving again.\n\nYou check your pack. Not much. Enough to reach the river district if nothing goes wrong. Enough to go farther if you’re smart.\n\nSmart still hurts.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "blue",
+        "speed": 0.9
+      },
+      "choices": [
+        {
+          "text": "Check your supplies and leave at dawn",
+          "target": "p003_loadout",
+          "next_page": "p003_loadout"
+        },
+        {
+          "text": "Search one last time for useful info",
+          "target": "p004_library_search",
+          "next_page": "p004_library_search"
+        }
+      ],
+      "display_name": "The library smells like dust, paper, and o…"
+    },
+    "p003_loadout": {
+      "page_type": "armory",
+      "text": "You lay your gear out by habit, not hope.\n\nA half-full water bottle.\nA wrapped bundle of notes, maps, frequencies, things people died learning. A single flare you’ve been saving for a reason you don’t want to name yet.\n\nRivet lowers himself beside you, his fur is warm under your fingers but scarred as you have patched him up more times than you can remember.\n\nOld dog. Loyal dog.\n\n“You’re holding together better than I am,” you say.\n\nHis tail wags once.\n\nWhen you finish packing, there’s nothing left to decide except direction.\n\nStaying means being found. Leaving means being hurt.",
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Continue",
+          "target": "p005_exit_library",
+          "next_page": "p005_exit_library"
+        }
+      ],
+      "display_name": "You lay your gear out by habit, not hope.",
+      "add_items": [
+        {
+          "name": "street_map",
+          "display_name": "Street Map",
+          "stats": {
+            "luck": 1
+          }
+        }
+      ]
+    },
+    "p004_library_search": {
+      "page_type": "normal",
+      "text": "You climb to the collapsed second floor where the local history archives used to be. Torn posters and mildew-stuck newspapers cling to the walls. You find a binder labeled “Agri Co-op Perimeter Protocols” with a half-legible gate code format, plus a note about raider cults marking routes with tattooed symbols. Below, Rivet gives a low warning growl, something outside just scraped along the front doors.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Grab the protocols binder",
+          "target": "p005_exit_library",
+          "next_page": "p005_exit_library",
+          "add_items": [
+            {
+              "name": "protocols_binder",
+              "display_name": "Protocols Binder",
+              "stats": {
+                "luck": 1
+              }
+            }
+          ]
+        }
+      ],
+      "display_name": "You climb to the collapsed second floor wh…"
+    },
+    "p005_exit_library": {
+      "page_type": "normal",
+      "text": "The side door opens with a soft, complaining creak. \n\nYou pause, listening.\n\nThe street beyond is empty, but not calm. Trash drifts in lazy circles. A hanging sign knocks gently against brick. Somewhere far away, metal scrapes against metal, steady and patient, like the city testing its bones.\n\nRivet steps out first, nose low, ears turning as he listens for danger you can’t see.\n\nYou follow him into the open.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Head through the main streets",
+          "target": "p006_main_street",
+          "next_page": "p006_main_street"
+        },
+        {
+          "text": "Cut through back alleys",
+          "target": "p006_back_alleys",
+          "next_page": "p006_back_alleys"
+        }
+      ],
+      "display_name": "The side door opens with a soft, complaini…"
+    },
+    "p006_main_street": {
+      "page_type": "normal",
+      "text": "You step onto an avenue lined with dead cars and sun-bleached mannequins left in a looted clothing store. Wind pushes grit across the asphalt like sand on a beach nobody wanted. Rivet's head tilts, his ears catch boot-scuffs around the next bus. If the cult is out, they’ll want tribute. If they see you, they’ll want more.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Cross fast, using cars as cover",
+          "target": "p007_crossfire_action",
+          "next_page": "p007_crossfire_action"
+        },
+        {
+          "text": "Duck into the metro entrance",
+          "target": "p008_metro_stairs",
+          "next_page": "p008_metro_stairs"
+        }
+      ],
+      "display_name": "You step onto an avenue lined with dead ca…"
+    },
+    "p006_back_alleys": {
+      "page_type": "normal",
+      "text": "The alleys are a maze of graffiti, collapsed balconies, and puddles that shimmer with oil. Somewhere, a rat squeals and then abruptly stops. Rivet sniffs a rusted drain cover and gives you a short “huff” sound, his version of a warning. The quiet here is personal; it presses against your ears. You can either stay low or climb up, it might be safer up there?",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Climb to the rooftops",
+          "target": "p009_rooftop_ladder",
+          "next_page": "p009_rooftop_ladder"
+        },
+        {
+          "text": "Stay low and thread the alleys",
+          "target": "p010_alley_tripwire",
+          "next_page": "p010_alley_tripwire"
+        }
+      ],
+      "display_name": "The alleys are a maze of graffiti, collaps…"
+    },
+    "p007_crossfire_action": {
+      "page_type": "action",
+      "text": "A shout cracks the morning. Tattooed raiders spill from behind the bus, rifles patched with tape and charm-bones.\n\nYou don’t freeze, you shout “Rivet!”\n\nHe explodes forward, drawing their aim as you sprint low between car husks. You slam a door to throw their timing off, then dive for the gap. Shots whip past close enough to feel.\n\nThis is a fight whether you want it or not, win means slipping through. Lose means paying in blood.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "combat",
+        "action_name": "Raider",
+        "prompt": "",
+        "stat_bonus": "strength",
+        "success_page": "p011_after_crossfire",
+        "failure_page": "p010_crossfire_wounded",
+        "stage_page": "",
+        "player_bonus": 0,
+        "enemy_bonus": 4,
+        "enemy_damage": 36
+      },
+      "display_name": "A shout cracks the morning. Tattooed raide…"
+    },
+    "p008_metro_stairs": {
+      "page_type": "normal",
+      "text": "Concrete steps plunge into the metro like a throat. The air turns cool and sour, and your flashlight beam catches drifting dust that looks like slow snow. Rivet goes first, body low, ears up, his instincts doing what your nerves can’t. Down here, sound travels. If anyone’s living in the tunnels, they already know you’re arriving.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Go deeper into the tunnels",
+          "target": "p013_tunnel_signs",
+          "next_page": "p013_tunnel_signs"
+        },
+        {
+          "text": "Use the mezzanine towards the street",
+          "target": "p014_mezzanine_market",
+          "next_page": "p014_mezzanine_market"
+        }
+      ],
+      "display_name": "Concrete steps plunge into the metro like…"
+    },
+    "p009_rooftop_ladder": {
+      "page_type": "normal",
+      "text": "The fire escape groans under your weight, flakes of paint falling like dandruff. You haul yourself up, then brace and tug while Rivet scrambles beside you. From the roof, the city opens into a broken skyline, smoke columns, distant crows, and the thin strip of green that might still be fields beyond the concrete.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Run the rooftops toward the river",
+          "target": "p015_rooftop_run",
+          "next_page": "p015_rooftop_run"
+        },
+        {
+          "text": "Drop into a skylight to scavenge",
+          "target": "p016_skylight_drop",
+          "next_page": "p016_skylight_drop"
+        }
+      ],
+      "display_name": "The fire escape groans under your weight,…"
+    },
+    "p010_alley_tripwire": {
+      "page_type": "normal",
+      "text": "Something glints across the alley, wire, low and mean. Too late. Your shin catches it and a tin can rattle, screaming your location into the neighborhood. Rivet whips around, body tensing, as shapes move behind a dumpster. You freeze, but either way the moment is already loud. Somewhere distant, a loose sign taps in a steady, lonely rhythm.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Try to cut the wire and stay quiet",
+          "target": "p017_tripwire_disarm_action",
+          "next_page": "p017_tripwire_disarm_action"
+        }
+      ],
+      "display_name": "Something glints across the alley—wire, lo…"
+    },
+    "p017_tripwire_disarm_action": {
+      "page_type": "action",
+      "text": "You drop to a knee, hands shaking, trying to pinch and twist the wire free. The can keeps rattling, a stupid, bright alarm. Rivet steps between you and the alley mouth, jaws open. Footsteps hurry closer, and you feel the city’s attention swing onto you like a knife. The wind tastes of rust and river water, sharp and clean at the same time.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "dice",
+        "action_name": "",
+        "prompt": "",
+        "success_page": "p020_river_district",
+        "failure_page": "p019_tripwire_spotted",
+        "stage_page": "",
+        "dice": 20,
+        "target": 9,
+        "failure_damage": 28
+      },
+      "display_name": "You drop to a knee, hands shaking, trying…"
+    },
+    "p019_tripwire_spotted": {
+      "page_type": "normal",
+      "text": "A raider’s tattooed face appears at the alley mouth, eyes bright with the joy of finding something weaker. Rivet lunges first, buying you seconds. You scramble up and slam your shoulder into a side door that gives with a wet crack. Pain throbs where you hit the frame, but you’re inside, alive, bleeding, moving.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Push through the building",
+          "target": "p020_river_district",
+          "modify_stats": {
+            "health": -3
+          },
+          "next_page": "p020_river_district"
+        }
+      ],
+      "display_name": "A raider’s tattooed face appears at the al…"
+    },
+    "p011_after_crossfire": {
+      "page_type": "normal",
+      "text": "You slide behind a sedan just as rounds punch the hood into jagged flowers. Rivet bull-rushes the nearest raider, knocking him into the street. You use the chaos to slip past, heart hammering, cheeks gritty with dust.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Keep moving toward the river district",
+          "target": "p020_river_district",
+          "next_page": "p020_river_district"
+        }
+      ],
+      "display_name": "You slide behind a sedan just as rounds pu…"
+    },
+    "p013_tunnel_signs": {
+      "page_type": "normal",
+      "text": "Spray-painted arrows point down the tunnel, each marked with a crude spiral cult sign, the binder warned. The rails are slick with stagnant water, and the air smells like batteries left in a drawer too long. Rivet pauses, listening so hard his head trembles. Somewhere ahead, a generator hums, steady as a heartbeat that isn’t yours.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Follow the spiral arrows",
+          "target": "p021_generator_room",
+          "next_page": "p021_generator_room"
+        },
+        {
+          "text": "Avoid; take the service corridor",
+          "target": "p022_service_corridor",
+          "next_page": "p022_service_corridor"
+        }
+      ],
+      "display_name": "Spray-painted arrows point down the tunnel…"
+    },
+    "p014_mezzanine_market": {
+      "page_type": "armory",
+      "text": "The mezzanine level has been turned into a tiny scav market: blankets on the floor, jars of nails, stripped phone parts. A woman with soot-streaked cheeks looks you over, then looks at Rivet with open hunger. In the corner, a child draws circles on the wall, spirals, again. You feel the farm’s envelope heavy in your bag, like it’s alive.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "blue",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Trade for water filter",
+          "target": "p020_river_district",
+          "add_item": {
+            "name": "water_filter",
+            "display_name": "Water Filter",
+            "quantity": 1,
+            "stats": {
+              "luck": 1,
+              "health": 3
+            }
+          },
+          "next_page": "p020_river_district"
+        },
+        {
+          "text": "Leave before attention sticks",
+          "target": "p020_river_district",
+          "next_page": "p020_river_district"
+        }
+      ],
+      "display_name": "The mezzanine level has been turned into a…"
+    },
+    "p015_rooftop_run": {
+      "page_type": "normal",
+      "text": "You sprint along tarpaper roofs littered with satellite dishes and bones of pigeons. A gap yawns where a building has pancaked into the street, leaving only a jagged mouth of open air. Rivet bunches his rear muscle, making himself ready for the jump, and looks to you like he’s waiting for permission to be brave first.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Let Rivet jump and anchor a tether",
+          "target": "p025_rooftop_jump_action",
+          "next_page": "p025_rooftop_jump_action"
+        },
+        {
+          "text": "Find a stairwell down instead",
+          "target": "p020_river_district",
+          "next_page": "p020_river_district"
+        }
+      ],
+      "display_name": "You sprint along tarpaper roofs littered w…"
+    },
+    "p025_rooftop_jump_action": {
+      "page_type": "action",
+      "text": "Rivet rockets forward, claws sparking against gravel as he launches across the gap. For a breath he hangs above the street like a thrown coin. If he lands clean, he can brace and pull you across with the tether line you’ve tied to his harness. If he slips… there’s a long way down. The air carries smoke and wet concrete, the kind that sticks to your tongue.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "dice",
+        "action_name": "",
+        "prompt": "",
+        "success_page": "p027_rooftop_tether",
+        "failure_page": "p028_rooftop_tether_fail",
+        "stage_page": "",
+        "dice": 20,
+        "target": 9,
+        "failure_damage": 32
+      },
+      "display_name": "RIVET rockets forward, claws sparking agai…"
+    },
+    "p027_rooftop_tether": {
+      "page_type": "normal",
+      "text": "Rivet lands heavy, scrabbling once, then stabilizing. He digs in and the tether goes taut. You swallow your fear, run, and leap. The line bites your waist, and for a second you’re flying and laughing at the same time. You land hard on the other side, knees screaming, but you’re across. The river’s direction feels closer now, like a promise.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "green",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Continue toward the river district",
+          "target": "p020_river_district",
+          "next_page": "p020_river_district"
+        }
+      ],
+      "display_name": "RIVET lands with a heavy clank, scrabbling…"
+    },
+    "p028_rooftop_tether_fail": {
+      "page_type": "normal",
+      "text": "Rivet hits the far ledge wrong and skids, claws skidding. The tether jerks and you slam into the rooftop lip, bruising ribs as you scramble. He recovers, barely dragging himself to a stable brace. By the time you crawl across, both of you are rattled, and your breath tastes like pain. Still, you made the gap. The city didn’t win.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Keep going toward the river district",
+          "target": "p020_river_district",
+          "next_page": "p020_river_district"
+        }
+      ],
+      "display_name": "RIVET hits the far ledge wrong and skids,…"
+    },
+    "p016_skylight_drop": {
+      "page_type": "armory",
+      "text": "The skylight glass is mostly gone, leaving toothy shards around the frame. You lower yourself into a department store where racks are twisted into modern art. It smells of mold and perfume. Rivet lands with you, paws crunching. On a counter, you spot a knife, it has seen better days, but you should maybe take it anyway?",
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Take the knife, and move out",
+          "target": "p020_river_district",
+          "next_page": "p020_river_district",
+          "add_items": [
+            {
+              "name": "knife",
+              "display_name": "Knife",
+              "stats": {
+                "strength": 1
+              }
+            }
+          ]
+        }
+      ],
+      "display_name": "The skylight glass is mostly gone, leaving…"
+    },
+    "p020_river_district": {
+      "page_type": "normal",
+      "text": "The canal runs through the city like a scar filled with slow green water. Barges lie half-sunk, and a dead billboard creaks overhead. Rivet sniffs the breeze, then points his muzzle east, toward the bridge approach before swiveling west where a collapsed overpass might offer a hidden crossing. You can go straight into danger or detour into uncertainty.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Take the bridge approach",
+          "target": "p030_bridge_approach",
+          "next_page": "p030_bridge_approach"
+        },
+        {
+          "text": "Detour under the collapsed overpass",
+          "target": "p031_overpass_detour",
+          "next_page": "p031_overpass_detour"
+        }
+      ],
+      "display_name": "The canal runs through the city like a sca…"
+    },
+    "p030_bridge_approach": {
+      "page_type": "normal",
+      "text": "The bridge approach is a long, exposed ramp littered with rebar and burned-out cars. On the concrete, someone has painted spirals and short phrases: BE SEEN, BE CLEAN, BE CUT OPEN. At the crest, silhouettes move, tattooed cult-raiders with masks made from welded street signs. Rivet lowers his body, ready to become your shield if you need it.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Sneak through the wrecks",
+          "target": "p032_bridge_sneak_action",
+          "next_page": "p032_bridge_sneak_action"
+        },
+        {
+          "text": "Create a distraction and slip away",
+          "target": "p036_underbridge_route",
+          "next_page": "p036_underbridge_route"
+        }
+      ],
+      "display_name": "The bridge approach is a long, exposed ram…"
+    },
+    "p032_bridge_sneak_action": {
+      "page_type": "action",
+      "text": "You and Rivet crawl through the maze of car carcasses. A loose license plate clatters; a masked head turns. Your throat tightens. If you move too fast, they’ll see. If you move too slow, they’ll hear your breathing. Rivet’s muscle whine softly as he prepares to sprint if they spot you.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "dice",
+        "action_name": "",
+        "prompt": "",
+        "success_page": "p034_bridge_midspan",
+        "failure_page": "p035_bridge_midspan_wounded",
+        "stage_page": "",
+        "dice": 20,
+        "target": 9,
+        "failure_damage": 32
+      },
+      "display_name": "You and RIVET crawl through the maze of ca…"
+    },
+    "p035_bridge_midspan_wounded": {
+      "page_type": "normal",
+      "text": "A cultist’s flashlight beam pins you like an accusation. Rivet lunges, jaws clamping on a forearm with a crunch that is half armor, half bone. The cultist screams; another fires wildly. You run hunched, feeling heat graze your side. When you reach deeper shadow under the bridge structure, your hands shake so hard you can barely grip your bag.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Push onward across the bridge",
+          "target": "p034_bridge_midspan",
+          "next_page": "p034_bridge_midspan"
+        }
+      ],
+      "display_name": "A cultist’s flashlight beam pins you like…"
+    },
+    "p031_overpass_detour": {
+      "page_type": "normal",
+      "text": "Under the collapsed overpass, the city’s noise changes. Water drips steadily, and the air is colder, tasting of wet rust. The concrete forms a low tunnel where graffiti becomes layered prayers. A narrow maintenance hatch leads into an old storm drain that might bypass the bridge entirely, if it isn’t flooded, or inhabited, or both.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Enter the storm drain",
+          "target": "p037_storm_drain",
+          "next_page": "p037_storm_drain"
+        },
+        {
+          "text": "Stay topside and follow the canal edge",
+          "target": "p036_underbridge_route",
+          "next_page": "p036_underbridge_route"
+        }
+      ],
+      "display_name": "Under the collapsed overpass, the city’s n…"
+    },
+    "p037_storm_drain": {
+      "page_type": "normal",
+      "text": "The storm drain swallows your flashlight beam. Water reaches your ankles, then calves, and the smell turns sour, rotting plant matter and something chemical. If you have a filter, the water might be useful later. If you don’t, it’s just another way the world tries to infect you.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Push through the flooded section",
+          "target": "p038_flood_push_action",
+          "next_page": "p038_flood_push_action"
+        },
+        {
+          "text": "Turn back before you’re committed",
+          "target": "p036_underbridge_route",
+          "next_page": "p036_underbridge_route"
+        }
+      ],
+      "display_name": "The storm drain swallows your flashlight b…"
+    },
+    "p038_flood_push_action": {
+      "page_type": "action",
+      "text": "A sudden surge of cold water hits your thighs as the tunnel dips. Something bumps your leg, floating debris, or not. Rivet moves in front, long-jump muscle ready to lunge at anything that breaks the surface. You have to keep your footing and your nerve, one careful step at a time in a place that wants you to slip under.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "dice",
+        "action_name": "",
+        "prompt": "",
+        "success_page": "p039_drain_exit",
+        "failure_page": "p038b_flood_wounded",
+        "stage_page": "",
+        "dice": 20,
+        "target": 8,
+        "failure_damage": 33
+      },
+      "display_name": "A sudden surge of cold water hits your thi…"
+    },
+    "p039_drain_exit": {
+      "page_type": "normal",
+      "text": "The drain spits you out near the far end of the bridge district, where reeds grow through cracked concrete and the canal widens. You wring water from your sleeves, smelling like the city’s underbelly, but still feel a bit refreshed. ",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Head for the rail yard ahead",
+          "target": "p041_rail_yard_entry",
+          "next_page": "p041_rail_yard_entry"
+        },
+        {
+          "text": "Cut through riverside warehouses",
+          "target": "p042_warehouse_row",
+          "next_page": "p042_warehouse_row"
+        }
+      ],
+      "display_name": "The drain spits you out near the far end o…",
+      "stat_mods": {
+        "health": 10
+      }
+    },
+    "p034_bridge_midspan": {
+      "page_type": "normal",
+      "text": "Midspan, the bridge feels like a stage. The wind is stronger, carrying the canal stink and the dry scent of sun-baked rubber. Below, water slides past without caring who lives. You spot a dangling maintenance ladder that could lead down to safer ground, and ahead, a toll booth that’s been turned into a shrine of spirals and bones.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Climb down the maintenance ladder",
+          "target": "p036_underbridge_route",
+          "next_page": "p036_underbridge_route"
+        },
+        {
+          "text": "Approach the toll-booth shrine",
+          "target": "p043_tollbooth_shrine",
+          "next_page": "p043_tollbooth_shrine"
+        }
+      ],
+      "display_name": "Midspan, the bridge feels like a stage. Th…"
+    },
+    "p036_underbridge_route": {
+      "page_type": "normal",
+      "text": "Under the bridge, shadows hold the day at arm’s length. The steel girders hum faintly in the wind, like a giant tuning fork. You find a line of chalk marks, someone’s old path, leading toward a rail yard. Rivet’s scent the air; he catches the oily smell of people, not far ahead. He pauses, protective, faithful til the end. ",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Follow the chalk marks to the rail yard",
+          "target": "p041_rail_yard_entry",
+          "next_page": "p041_rail_yard_entry"
+        },
+        {
+          "text": "Veer into the warehouse row instead",
+          "target": "p042_warehouse_row",
+          "next_page": "p042_warehouse_row"
+        }
+      ],
+      "display_name": "Under the bridge, shadows hold the day at…"
+    },
+    "p043_tollbooth_shrine": {
+      "page_type": "locked",
+      "text": "The toll booth is packed with offerings: copper wire, teeth, bits of circuit board, a child’s shoe and  on the glass, someone has etched deep spirals. A notebook lies open with a list of “Routes to the Clean Fields.” If you have the protocols binder, you might decode the scribbles into something useful. If you don’t, it’s just madness dressed as guidance.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Try to decode the notebook",
+          "target": "p044_decode_routes",
+          "requires_item": "protocols_binder",
+          "next_page": "p044_decode_routes"
+        },
+        {
+          "text": "Leave before someone returns",
+          "target": "p041_rail_yard_entry",
+          "next_page": "p041_rail_yard_entry"
+        }
+      ],
+      "display_name": "The toll booth is packed with offerings: c…"
+    },
+    "p044_decode_routes": {
+      "page_type": "normal",
+      "text": "You match the cult’s route notes against the farm perimeter protocol format. The scribbles become coordinates, then a pattern: they’ve been probing the farm’s gates, looking for weaknesses. You copy a short gate code fragment and tuck it into the envelope like a hidden blade. “This matters,” you murmur to Rivet. His ears perk twice, agreement, or recognition.\n\nYou check your gear and leave the tollbooth behind, heading for the rail yard. ",
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Pocket the gate code fragment",
+          "target": "p041_rail_yard_entry",
+          "add_item": {
+            "name": "farm_gate_code",
+            "display_name": "Farm Gate Code Fragment",
+            "quantity": 1
+          },
+          "next_page": "p041_rail_yard_entry"
+        }
+      ],
+      "display_name": "You match the cult’s route notes against t…"
+    },
+    "p041_rail_yard_entry": {
+      "page_type": "normal",
+      "text": "The rail yard sprawls wide, tracks weaving like cracked veins. Boxcars sit open, gutted, their steel sides tagged with spirals and warning words. Somewhere inside the yard, a fire burns small. Rivet’s hearing catches a soft chant, low and rhythmic, and you realize you might be walking into a gathering.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Skirt the yard edge, staying hidden",
+          "target": "p045_yard_skirt_action",
+          "next_page": "p045_yard_skirt_action"
+        },
+        {
+          "text": "Cut straight through for speed",
+          "target": "p046_yard_cutthrough_action",
+          "next_page": "p046_yard_cutthrough_action"
+        }
+      ],
+      "display_name": "The rail yard sprawls wide, tracks weaving…"
+    },
+    "p045_yard_skirt_action": {
+      "page_type": "action",
+      "text": "Cult scouts sweep the yard in a loose net, flashlights bobbing, voices low and sure.\n\nRivet stiffens beside you, waiting for your cue. You grab a fist-sized rock from the gravel and throw it hard into the dark. The clang pulls two heads, and you move.\n\nA scout breaks toward you, knife out.\n\n“Rivet, HIT!”\n\nHe slams the scout off-balance while you run past, shoving the attacker’s shoulder into a crate stack to slow the pursuit.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "combat",
+        "action_name": "Cult Scout",
+        "prompt": "",
+        "stat_bonus": "strength",
+        "success_page": "p047_boxcar_find",
+        "failure_page": "p045b_yard_wounded",
+        "stage_page": "",
+        "player_bonus": 0,
+        "enemy_bonus": 4,
+        "enemy_damage": 36
+      },
+      "display_name": "Cult scouts sweep the yard in a loose net,…"
+    },
+    "p046_yard_cutthrough_action": {
+      "page_type": "action",
+      "text": "You sprint between boxcars, trusting speed more than stealth. Someone shouts, then two more voices answer. Rivet accelerates beside you, muscle singing, and you feel the strange comfort of running with a dog that doesn’t get tired. You must dodge a hanging chain and a jagged rail spike without slowing.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "dice",
+        "action_name": "",
+        "prompt": "",
+        "success_page": "p047_boxcar_find",
+        "failure_page": "p049_yard_hit_wounded",
+        "stage_page": "",
+        "dice": 20,
+        "target": 8,
+        "failure_damage": 34
+      },
+      "display_name": "You sprint between boxcars, trusting speed…"
+    },
+    "p049_yard_hit_wounded": {
+      "page_type": "normal",
+      "text": "A large rusty chain slams into your shoulder and yanks you sideways. You hit the dirt hard enough to see stars.  The cult’s voices swell. You roll into a boxcar and slam the door until it sticks. Your shoulder burns and your mouth tastes like pennies.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Hide inside the boxcar",
+          "target": "p047_boxcar_find",
+          "next_page": "p047_boxcar_find"
+        }
+      ],
+      "display_name": "A chain wraps your shoulder and yanks you…"
+    },
+    "p047_boxcar_find": {
+      "page_type": "armory",
+      "text": "Inside the boxcar, you find a stash: old military surplus that someone never got to use. A sharpening stone, a crude breaching spike, and a torn patch labeled K9 UNIT. Rivet sniffs it, then makes a soft whine, like a memory he shouldn’t have.\n\nYou lean back against the boxcar wall with Rivet beside you \"Lets wait it out\" you say, while preparing to work on your knife.\n\nOutside, chanting drifts away, searching elsewhere. ",
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Move on, out of the rail yard",
+          "target": "p050_out_of_yard",
+          "next_page": "p050_out_of_yard"
+        }
+      ],
+      "display_name": "Inside the boxcar, you find a stash: old m…",
+      "stat_mods": {
+        "strength": 1
+      }
+    },
+    "p050_out_of_yard": {
+      "page_type": "normal",
+      "text": "You slip out of the rail yard through a gap in the fence where someone peeled the metal back like a tin can lid. Beyond, the city thins into industrial lots and low housing blocks. You find a small maintenance shed with a door that still locks. Inside, the air is dry, and for a moment you can pretend the world is only you and your dog and a plan that might work.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Stay and rest",
+          "target": "p051_sanctuary_shed",
+          "next_page": "p051_sanctuary_shed"
+        },
+        {
+          "text": "Move while the cult is distracted",
+          "target": "p052a_industrial_sprint_action",
+          "next_page": "p052a_industrial_sprint_action"
+        }
+      ],
+      "display_name": "You slip out of the rail yard through a ga…"
+    },
+    "p051_sanctuary_shed": {
+      "page_type": "sanctuary",
+      "text": "You sit with your back against a tool cabinet and finally let the shaking out. Rivet settles at the door like a statue that breathes. You clean the worst scrapes and tear cloth into makeshift bandages and hope infection stays polite. You whisper, “We’re still in it,” and the dog’s tail muscle ticks a steady, reassuring rhythm.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "green",
+        "speed": 0.8
+      },
+      "choices": [
+        {
+          "text": "Move on",
+          "target": "p052_industrial_strip",
+          "next_page": "p052_industrial_strip"
+        }
+      ],
+      "display_name": "You sit with your back against a tool cabi…",
+      "stat_mods": {
+        "health": 12
+      }
+    },
+    "p052_industrial_strip": {
+      "page_type": "normal",
+      "text": "The industrial strip is all chain-link and faded warning signs. A half-collapsed factory breathes out the smell of stale chemicals. You hear distant chanting again, always the spirals, always the same hunger for meaning. Ahead, the road splits: one way leads past a gas station where scavengers often camp, the other skirts a school that’s rumored to be haunted, a home to someone beyond evil. ",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Approach the gas station camp",
+          "target": "p053_gas_station",
+          "next_page": "p053_gas_station"
+        },
+        {
+          "text": "Skirt the school ruins",
+          "target": "p054_school_ruins",
+          "next_page": "p054_school_ruins"
+        }
+      ],
+      "display_name": "The industrial strip is all chain-link and…"
+    },
+    "p053_gas_station": {
+      "page_type": "normal",
+      "text": "The gas station canopy sags like a tired jaw. Someone has painted “SAFE” on the wall, but the letters look like they were written in sarcasm. Three scavengers sit around a barrel fire, their eyes jumping to Rivet’s warm fur frame. One of them offers a trade: a subway token and a strip of dried meat in exchange for a battery or a flare.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Trade a flare for a subway token",
+          "target": "p055_after_gas",
+          "next_page": "p055_after_gas",
+          "modify_stats": {
+            "luck": 1
+          }
+        },
+        {
+          "text": "Trade a battery for the meat",
+          "target": "p055_after_gas",
+          "next_page": "p055_after_gas",
+          "modify_stats": {
+            "health": 10
+          }
+        },
+        {
+          "text": "Leave without a trade",
+          "next_page": "p055_after_gas",
+          "target": "p055_after_gas"
+        }
+      ],
+      "display_name": "The gas station canopy sags like a tired j…"
+    },
+    "p055_after_gas": {
+      "page_type": "normal",
+      "text": "You leave the gas station with the uncomfortable feeling of being watched from behind polite faces. Rivet stays close enough that your hand can brush his warm fur whenever you need to remember you’re not alone. The skyline ahead breaks into lower shapes, suburbs, then open land. But between you and that horizon lies one more dense knot of city: a school district and the highway interchange beyond it.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Cut through the school district",
+          "target": "p054_school_ruins",
+          "next_page": "p054_school_ruins"
+        },
+        {
+          "text": "Follow the service road",
+          "target": "p056_service_road",
+          "next_page": "p056_service_road"
+        }
+      ],
+      "display_name": "You leave the camp with the uncomfortable…"
+    },
+    "p054_school_ruins": {
+      "page_type": "normal",
+      "text": "The school’s front sign is half-fallen, letters missing: “NTRAL HIGH.” The courtyard is overgrown with waist-high weeds, and the playground swings move in the wind without children. Inside, lockers gape open like broken teeth. You remember laughing in places like this, before the world learned better. Rivet stops, ears awake; he hears something coming from the gym.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Enter the gym to investigate",
+          "target": "p057_gym_reveal",
+          "next_page": "p057_gym_reveal"
+        },
+        {
+          "text": "Avoid; cut around the back fence",
+          "target": "p056_service_road",
+          "next_page": "p056_service_road"
+        }
+      ],
+      "display_name": "The school’s front sign is half-fallen, le…"
+    },
+    "p057_gym_reveal": {
+      "page_type": "normal",
+      "text": "The gym doors creak open and the stink of sweat and old blood rolls out. Under the bleachers, candles burn in careful spirals. \n\nA tall figure steps into the center court wearing a welded mask a long hooded cape and tattoos that coil up his neck like vines. In his hands: a spike club with blood and meaty parts nailed to it. \n\nHe doesn’t chant, he listens, as if he can hear your heart and decide if it’s worth keeping.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Continue",
+          "target": "p058_miniboss_stage1",
+          "next_page": "p058_miniboss_stage1"
+        }
+      ],
+      "special_page": true,
+      "special_padding": {
+        "top": 500,
+        "bottom": 200,
+        "left": 60,
+        "right": 60
+      },
+      "continue_y": 1150,
+      "display_name": "The gym doors creak open and the stink of…",
+      "continue_text": "FIGHT THE HARRIER"
+    },
+    "p058_miniboss_stage1": {
+      "page_type": "action",
+      "text": "The masked Harrier steps onto the gym court, the spiked club in hand. Rivet charges to meet him, but you don’t stay tucked away, you move with the fight, circling for an opening. You spot loose floorboards and a toppled bench you can shove into the Harrier’s path. When the club swings low, you kick the bench forward to spoil his footing and shout a quick cue to Rivet. Your dog hits like a living battering ram. The Harrier aims to cripple the dog; you aim to turn every second into an advantage.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "boss",
+        "prompt": "FIGHT!",
+        "player_bonus": 1,
+        "enemy_bonus": 4,
+        "enemy_damage": 36,
+        "boss_stage": 1,
+        "stages_total": 3,
+        "action_name": "The Harrier",
+        "success_page": "p058_miniboss_stage1_win",
+        "failure_page": "p058_miniboss_stage1_lose",
+        "stage_page": "p059_miniboss_stage2"
+      },
+      "display_name": "The masked Harrier steps onto the gym cour…"
+    },
+    "p059_miniboss_stage2": {
+      "page_type": "action",
+      "text": "The Harrier tries to circle Rivet, looking for an angle to strike. You see a hanging hoop chain swaying, and your brain clicks into survival math. You dart in, snag the chain, and yank, trying to tangle his weapon arm while Rivet keeps pressure with snap-bites and growls. The Harrier’s elbow is fast, and the spike club is hungry. If you mistime it, you’ll be the soft target. If you succeed, Rivet gets the clean angle to attack and end the rhythm of his swings.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "boss",
+        "action_name": "The Harrier",
+        "prompt": "",
+        "success_page": "p059_miniboss_stage2_win",
+        "failure_page": "p059_miniboss_stage2_lose",
+        "stage_page": "p060_miniboss_stage3",
+        "player_bonus": 1,
+        "enemy_bonus": 4,
+        "enemy_damage": 36,
+        "stages_total": 1,
+        "boss_stage": 1
+      },
+      "display_name": "The Harrier tries to circle RIVET, hunting…"
+    },
+    "p060_miniboss_stage3": {
+      "page_type": "action",
+      "text": "Rivet’s jaws lock onto the Harrier’s forearm. The Harrier snarls through his mask and raises the spike club for a desperate swing at your dog’s head. You can’t out-muscle him, but you can disrupt him. You rush in and slam your shoulder into his side, driving him off-balance while yelling Rivet’s name like a command. jaws grind; the Harrier’s stance breaks for a heartbeat, and one heartbeat is all Rivet needs.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "boss",
+        "action_name": "The Harrier",
+        "prompt": "",
+        "success_page": "p060_miniboss_stage3_win",
+        "failure_page": "p060_miniboss_stage3_lose",
+        "stage_page": "",
+        "player_bonus": 1,
+        "enemy_bonus": 6,
+        "enemy_damage": 37,
+        "stages_total": 1,
+        "boss_stage": 1
+      },
+      "display_name": "RIVET’s jaws lock onto the Harrier’s forea…"
+    },
+    "p061_post_miniboss": {
+      "page_type": "armory",
+      "text": "The Harrier collapses, mask dented, tattoos smeared with sweat and blood. Rivet had hit him like a missile, teeth, weight, momentum. dragging him off balance and slamming him into the floor until the fight went out of him. Now Rivet stands over the body, panting in trained pulses, chest flecked red.\n\nYou step closer, stomach turning at the gore, and force yourself to search. You find a key fob labeled “INTERCHANGE MAINT.” and a small pouch of clean bandages. You pocket both, hands trembling.\n\nYou stay for a while to catch your breath before heading out towards the interchange.",
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Take the maintenance key fob",
+          "target": "p062_interchange_edge",
+          "add_item": {
+            "name": "interchange_fob",
+            "display_name": "Interchange Fob",
+            "quantity": 1
+          },
+          "next_page": "p062_interchange_edge"
+        },
+        {
+          "text": "Take the clean bandages (+heal)",
+          "target": "p062_interchange_edge",
+          "next_page": "p062_interchange_edge",
+          "modify_stats": {
+            "health": 15
+          }
+        }
+      ],
+      "display_name": "The Harrier collapses, mask dented, tattoo…"
+    },
+    "p056_service_road": {
+      "page_type": "normal",
+      "text": "The service road runs along a line of dead streetlights. You pass a burned-out bus full of graffiti prayers. In the distance, the highway interchange rises like a concrete crown, ramps looping over ramps. It’s the last major choke point before the suburbs thin into fields. Rivet’s head stays high, scanning for movement along the overpasses.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Approach the interchange",
+          "target": "p062_interchange_edge",
+          "next_page": "p062_interchange_edge"
+        }
+      ],
+      "display_name": "The service road runs along a line of dead…"
+    },
+    "p062_interchange_edge": {
+      "page_type": "locked",
+      "text": "You approach the highway, staying low. This will be the fastest  route out of the city, away from the madness and decay. ",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Use the maintenance door",
+          "target": "p063_service_tunnels",
+          "requires_item": "interchange_fob",
+          "next_page": "p063_service_tunnels"
+        },
+        {
+          "text": "Climb the ramp through the wrecks",
+          "target": "p064_ramp_climb_action",
+          "next_page": "p064_ramp_climb_action"
+        }
+      ],
+      "display_name": "At the interchange, the city feels like it…"
+    },
+    "p064_ramp_climb_action": {
+      "page_type": "action",
+      "text": "You scramble over twisted metal and shattered glass. A car shifts under your weight with a scream of steel. Above, silhouettes move along the ramp’s spine, cult scouts. Rivet rushes ahead, trying to draw eyes away from you. You need to crest the ramp without being pinned in the open. Somewhere distant, a loose sign taps in a steady, lonely rhythm.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "dice",
+        "action_name": "",
+        "prompt": "",
+        "success_page": "p065_ramp_top",
+        "failure_page": "p064b_ramp_wounded",
+        "stage_page": "",
+        "dice": 20,
+        "target": 9,
+        "failure_damage": 34
+      },
+      "display_name": "You scramble over twisted warm fur and sha…"
+    },
+    "p065_ramp_top": {
+      "page_type": "normal",
+      "text": "From the ramp’s crest you can see the suburbs: rows of small houses, trees stripped by drought, and beyond them a smear of green that could be farmland. The air smells less like smoke, and dry earth. The interchange is still dangerous, echoing, exposed. You spot a billboard ladder down to the neighborhood, and a narrow drainage channel that runs beneath the ramp.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Take the billboard ladder down",
+          "target": "p067_suburb_entry",
+          "next_page": "p067_suburb_entry"
+        },
+        {
+          "text": "Follow the drainage channel",
+          "target": "p068_drainage_channel",
+          "next_page": "p068_drainage_channel"
+        }
+      ],
+      "display_name": "From the ramp’s crest you can see the subu…"
+    },
+    "p063_service_tunnels": {
+      "page_type": "normal",
+      "text": "The maintenance door clicks open and you descend into cool concrete corridors where the city’s heartbeat is just water drips and distant traffic ghosts. Painted arrows lead maintenance crews, years ago toward access hatches. You find a locked cabinet marked FIRST AID and a service hatch leading to the suburbs side.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Pry the first aid cabinet",
+          "target": "p069_breach_cabinet_action",
+          "next_page": "p069_breach_cabinet_action"
+        },
+        {
+          "text": "Skip it and take the service hatch out",
+          "target": "p067_suburb_entry",
+          "next_page": "p067_suburb_entry"
+        }
+      ],
+      "display_name": "The maintenance door clicks open and you d…"
+    },
+    "p069_breach_cabinet_action": {
+      "page_type": "action",
+      "text": "Rivet braces, then rams the cabinet hard. The lock is old, but the metal frame might hold. Each slam echoes down the tunnel, inviting attention. You need the door to give before someone hears and comes to collect whatever is making noise. Silence settles, heavy enough to feel on your skin.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "dice",
+        "action_name": "",
+        "prompt": "Roll To Breach",
+        "success_page": "p070_firstaid_cache",
+        "failure_page": "p069b_breach_wounded",
+        "stage_page": "",
+        "dice": 20,
+        "target": 9,
+        "failure_damage": 32
+      },
+      "display_name": "RIVET braces, then rams the cabinet with h…"
+    },
+    "p070_firstaid_cache": {
+      "page_type": "armory",
+      "text": "You stuff gauze and pills into your bag. The sterile smell is almost obscene after so much rot. If you’ve been bleeding, you finally stop it properly. Rivet shakes his head once, then nudges you toward the exit hatch. Above, daylight waits, and with it the next stretch of road that will try to take something from you.",
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Leave the tunnel into the daylight",
+          "target": "p067_suburb_entry",
+          "next_page": "p067_suburb_entry"
+        }
+      ],
+      "display_name": "You stuff gauze and pills into your bag. T…",
+      "stat_mods": {
+        "health": 22,
+        "luck": 1
+      }
+    },
+    "p067_suburb_entry": {
+      "page_type": "normal",
+      "text": "You step into a neighborhood where lawns have turned to brittle weeds and houses sit open like mouths after a scream. Wind chimes still hang on one porch, clinking softly, sad music for nobody. Rivet pauses to sniff, then angles you away from a house that smells wrong: humans, death. Cult scouts, maybe. Your choices narrow to streets and backyards, each with different kinds of exposure.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Move street-to-street",
+          "target": "p072_street_sweep_action",
+          "next_page": "p072_street_sweep_action"
+        },
+        {
+          "text": "Cut through backyards and fences",
+          "target": "p073_fence_maze",
+          "next_page": "p073_fence_maze"
+        }
+      ],
+      "display_name": "You step into a neighborhood where lawns h…"
+    },
+    "p072_street_sweep_action": {
+      "page_type": "action",
+      "text": "A patrol cuts across the street ahead, two cultist scouts, tight spacing, moving like they’ve done this a thousand times.\n\nYou and Rivet drop behind a broken curb. You wait for the right second, then whisper, “Now.”\n\nRivet darts left to draw their attention; you sprint the opposite way, low and fast, using parked wrecks as shields.\n\nOne scout turns, blade coming up.\n\nYou meet him with a shove and a knee, just long enough for Rivet to crash into his side and break the line.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "combat",
+        "action_name": "Cult Scout",
+        "prompt": "",
+        "stat_bonus": "strength",
+        "success_page": "p073_fence_maze",
+        "failure_page": "p072b_street_wounded",
+        "stage_page": "",
+        "player_bonus": 0,
+        "enemy_bonus": 5,
+        "enemy_damage": 36
+      },
+      "display_name": "A patrol cuts across the street ahead—two…"
+    },
+    "p073_fence_maze": {
+      "page_type": "normal",
+      "text": "You hop fences and squeeze between sheds, moving through backyards like a thief noting every creak. Dogs used to bark here; now only wind pushes dead leaves in little circles. Rivet’s scent steers you away from a garage that reeks of fuel and sweat.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Reach the neighborhood edge",
+          "target": "p074_neighborhood_exit",
+          "next_page": "p074_neighborhood_exit"
+        }
+      ],
+      "display_name": "You hop fences and squeeze between sheds,…"
+    },
+    "p074_neighborhood_exit": {
+      "page_type": "normal",
+      "text": "At the neighborhood’s edge, you find a small community park. The grass is mostly dust, but a gazebo still stands, its roof patched with tarp. Someone has left a tin of matches and a note: “Rest. Don’t light fires you can’t hide.” It feels like the closest thing to kindness you’ve seen all day. Rivet circles once, then sits, watching the paths.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "green",
+        "speed": 0.7
+      },
+      "choices": [
+        {
+          "text": "Rest under the gazebo",
+          "target": "p075_sanctuary_gazebo",
+          "next_page": "p075_sanctuary_gazebo"
+        },
+        {
+          "text": "Move on toward the highway verge",
+          "target": "p076_highway_verge",
+          "next_page": "p076_highway_verge"
+        }
+      ],
+      "display_name": "At the neighborhood’s edge, you find a sma…"
+    },
+    "p075_sanctuary_gazebo": {
+      "page_type": "sanctuary",
+      "text": "You eat the last of your dry crackers and drink carefully. You run fingers along Rivet’s scarred body, checking for tight muscles. “Still with me?” you whisper. His ears swivel and he gives a soft, confident bark, yes, yes, yes.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "green",
+        "speed": 0.9
+      },
+      "choices": [
+        {
+          "text": "Lets move on",
+          "target": "p076_highway_verge",
+          "next_page": "p076_highway_verge"
+        }
+      ],
+      "display_name": "You eat the last of your dry crackers and…",
+      "stat_mods": {
+        "health": 10
+      }
+    },
+    "p076_highway_verge": {
+      "page_type": "normal",
+      "text": "The highway verge is littered with blown tires and sun-bleached bones of roadkill. The city behind you looks smaller already, like a nightmare you’re walking away from. Ahead, the interchange fades into a long straight stretch toward farmland. But the cult uses highways as arteries, easy movement, easy ambush. Rivet’s hearing catches engine noise somewhere distant, coming closer.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Hide in the drainage ditch",
+          "target": "p077_ditch_hide_action",
+          "next_page": "p077_ditch_hide_action"
+        },
+        {
+          "text": "Run for the billboard field ahead",
+          "target": "p078_billboard_field",
+          "next_page": "p078_billboard_field"
+        },
+        {
+          "text": "Push through exhaustion",
+          "target": "p076b_exhaustion_check",
+          "next_page": "p076b_exhaustion_check"
+        }
+      ],
+      "display_name": "The highway verge is littered with blown t…"
+    },
+    "p077_ditch_hide_action": {
+      "page_type": "action",
+      "text": "You drop into the ditch among wet reeds and trash. The stink is strong enough to make your eyes water. A vehicle rumbles past above, tires crunching debris. You have to stay perfectly still, if the patrol stops, it’s because they heard you breathe.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "dice",
+        "action_name": "",
+        "prompt": "",
+        "success_page": "p079_patrol_passed",
+        "failure_page": "p080_patrol_spotted",
+        "stage_page": "",
+        "dice": 20,
+        "target": 9,
+        "failure_damage": 34
+      },
+      "display_name": "You drop into the ditch among wet reeds an…"
+    },
+    "p080_patrol_spotted": {
+      "page_type": "normal",
+      "text": "The patrol slows. A masked head leans out, staring into the ditch. Rivet snaps upright and rushes, slamming into the vehicle’s side with a clang that makes the driver swear. You crawl out the opposite side and sprint, the world tilting. Behind you, the engine roars back to life, angry. You can’t outrun it forever, only far enough to make it choose easier prey.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Reach the billboard field, gasping",
+          "target": "p078_billboard_field",
+          "next_page": "p078_billboard_field"
+        }
+      ],
+      "display_name": "The patrol slows. A masked head leans out,…"
+    },
+    "p079_patrol_passed": {
+      "page_type": "normal",
+      "text": "The vehicle’s rumble fades, leaving only wind and your heartbeat. You stay down another ten seconds anyway, because survival is mostly refusing to believe you’re safe. Rivet rises last, scanning the road like a wary sentry. When you climb out, your clothes stink, but you’re alive and unspotted, and that’s a fair trade in this world.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Continue toward the billboard field",
+          "target": "p078_billboard_field",
+          "next_page": "p078_billboard_field"
+        }
+      ],
+      "display_name": "The vehicle’s rumble fades, leaving only w…"
+    },
+    "p078_billboard_field": {
+      "page_type": "normal",
+      "text": "A field of billboards lines the highway, each one cracked and sun-faded: vacations, soda, a smiling family you can’t forgive. Many have been repainted with spirals and crude eyes. Under one sign, you find a half-buried tin box. Inside could be tools, or it could be a trap?",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Pry the tin box open",
+          "target": "p081_trunk_breach",
+          "next_page": "p081_trunk_breach"
+        },
+        {
+          "text": "leave it; keep to the tree line",
+          "target": "p082_tree_line",
+          "next_page": "p082_tree_line"
+        }
+      ],
+      "display_name": "A field of billboards lines the highway, e…"
+    },
+    "p081_trunk_breach": {
+      "page_type": "armory",
+      "text": "Inside: Some candy, a comic book and a pack of smokes. You grin despite everything, because the universe occasionally hands you something that isn’t pain. You stuff the findings into your pack and pat Rivet on the head. ",
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Head towards the tree line",
+          "target": "p082_tree_line",
+          "next_page": "p082_tree_line"
+        }
+      ],
+      "display_name": "RIVET wedges the spike and twists with a g…",
+      "stat_mods": {
+        "luck": 1,
+        "health": 20
+      }
+    },
+    "p082_tree_line": {
+      "page_type": "normal",
+      "text": "You leave the highway’s open throat and move along a thin tree line. The trees are scrubby, leaves sparse, but their shadows break up your outline. In the distance, you see the farm’s outer region: old irrigation channels, a few surviving barns, tall fencing on the horizon. But between here and there lies a low valley where the cult has set up watchfires.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Cross the valley at dusk",
+          "target": "p083_valley_cross_action",
+          "next_page": "p083_valley_cross_action"
+        },
+        {
+          "text": "Wait and scout for an alternate route",
+          "target": "p084_scout_ridge",
+          "next_page": "p084_scout_ridge"
+        }
+      ],
+      "display_name": "You leave the highway’s open throat and mo…"
+    },
+    "p083_valley_cross_action": {
+      "page_type": "action",
+      "text": "You and Rivet move downhill as the light dies. Watchfires blink like eyes. Every step through dry grass sounds too loud. Rivet’s body stays low, ready to rush if someone rises from behind a rock. You have to cross open ground without drawing the firelight’s attention. Silence settles, heavy enough to feel on your skin.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "dice",
+        "action_name": "",
+        "prompt": "",
+        "success_page": "p085_valley_far_side",
+        "failure_page": "p086_valley_far_side_wounded",
+        "stage_page": "",
+        "dice": 20,
+        "target": 9,
+        "failure_damage": 34
+      },
+      "display_name": "You and RIVET move downhill as the light d…"
+    },
+    "p086_valley_far_side_wounded": {
+      "page_type": "normal",
+      "text": "A shout rings out and a flare arcs into the sky, bathing the valley in harsh white. You run, stumbling, feeling stones bite your palms when you catch yourself. Rivet barrels into a pursuer with a wet crunch, then returns to you like a loyal missile. You make the far side with your throat raw from breathing dust and fear.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Move on",
+          "target": "p085_valley_far_side",
+          "next_page": "p085_valley_far_side"
+        }
+      ],
+      "display_name": "A shout rings out and a flare arcs into th…"
+    },
+    "p084_scout_ridge": {
+      "page_type": "normal",
+      "text": "You climb a low ridge and belly-down in the dirt, watching the valley. Cultists move between fires, their tattoos glowing faintly in the light like ink that’s alive. You also spot a narrow culvert that runs beneath the lowest part of the valley, tight, but possible. Rivet’s ears swivel and he gives a low rumble: he hears something bigger near the fires, the earth trembles..",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Take the culvert route",
+          "target": "p087_culvert_route",
+          "next_page": "p087_culvert_route"
+        },
+        {
+          "text": "Take the valley crossing",
+          "target": "p083_valley_cross_action",
+          "next_page": "p083_valley_cross_action"
+        }
+      ],
+      "display_name": "You climb a low ridge and belly-down in th…"
+    },
+    "p087_culvert_route": {
+      "page_type": "normal",
+      "text": "The culvert is a concrete throat barely wide enough to crawl. Your shoulders scrape, and the smell is rot and damp earth. Rivet goes first, eyes dim, listening. Halfway through, you see scratch marks on the wall, a feel of cold dread settles in your stomach. If something is living here, you’re in its hallway.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Keep crawling, no matter what",
+          "target": "p088_culvert_action",
+          "next_page": "p088_culvert_action"
+        },
+        {
+          "text": "Back out before you’re trapped",
+          "target": "p083_valley_cross_action",
+          "next_page": "p083_valley_cross_action"
+        }
+      ],
+      "display_name": "The culvert is a concrete throat barely wi…"
+    },
+    "p088_culvert_action": {
+      "page_type": "action",
+      "text": "A shape lunges at you from the darkness of the narrow tunnel, feral, human-shaped, maybe not fully human anymore. Rivet snaps at it, a bite strong enough to make bones complain. You have to keep moving while your dog fights in a space too tight for mercy.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "combat",
+        "action_name": "Feral Human",
+        "prompt": "",
+        "success_page": "p085_valley_far_side",
+        "failure_page": "p089_culvert_after_wounded",
+        "stage_page": "",
+        "player_bonus": 0,
+        "enemy_bonus": 3,
+        "enemy_damage": 42
+      },
+      "display_name": "A shape lunges in the darkness—feral, huma…"
+    },
+    "p089_culvert_after_wounded": {
+      "page_type": "normal",
+      "text": "The creature catches your ankle for a heartbeat, nails digging through fabric and skin. You kick free, leaving pain behind like a breadcrumb. Rivet’s jaws clamp down with a sound that turns your stomach, and then you’re out, spitting into the night air on the far side, shaking. The culvert’s darkness swallows the last wet noises.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Limp into the ditch beyond the valley",
+          "target": "p085_valley_far_side",
+          "next_page": "p085_valley_far_side"
+        }
+      ],
+      "display_name": "The creature catches your ankle for a hear…"
+    },
+    "p085_valley_far_side": {
+      "page_type": "normal",
+      "text": "On the far side of the valley, the ground rises toward open farmland. The watchfires are behind you now, smaller, but not gone. Rivet licks your hand, checking if you are okey. Ahead, an abandoned roadside chapel sits near a dirt lane that points straight toward the farm’s distant fence.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Take shelter in the chapel",
+          "target": "p090_chapel_sanctuary",
+          "next_page": "p090_chapel_sanctuary"
+        },
+        {
+          "text": "Follow the dirt lane immediately",
+          "target": "p091_dirt_lane",
+          "next_page": "p091_dirt_lane"
+        }
+      ],
+      "display_name": "On the far side of the valley, the ground…"
+    },
+    "p090_chapel_sanctuary": {
+      "page_type": "sanctuary",
+      "text": "The chapel smells of old wax and damp wood. A cracked stained-glass window paints the floor in bruised colors. You sit in the front pew and let your head fall back for one blessed minute. You dress your wounds the best you can. Rivet stands at the door like a guardian, watching over you. “You should rest,” you whisper, and he answers with a soft whine.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "green",
+        "speed": 0.8
+      },
+      "choices": [
+        {
+          "text": "Leave the chapel",
+          "target": "p091_dirt_lane",
+          "next_page": "p091_dirt_lane"
+        }
+      ],
+      "display_name": "The chapel smells of old wax and damp wood…",
+      "stat_mods": {
+        "health": 18
+      }
+    },
+    "p091_dirt_lane": {
+      "page_type": "normal",
+      "text": "The dirt lane is lined with dead corn stalks and rusted irrigation pipes. The air smells less like smoke and more like soil, smells good for a change. Far ahead, the farm fence rises with watchtowers silhouetted against the sky. You think of your brother’s face, how it might look when he sees you. A barn, which has seen better days is coming up ahead. ",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Approach the barn cautiously",
+          "target": "p092_barn_approach",
+          "next_page": "p092_barn_approach"
+        },
+        {
+          "text": "Circle wide through the fields",
+          "target": "p093_field_circle",
+          "next_page": "p093_field_circle"
+        }
+      ],
+      "display_name": "The dirt lane is lined with dead corn stal…"
+    },
+    "p092_barn_approach": {
+      "page_type": "normal",
+      "text": "The barn is half-collapsed, its red paint flaked to gray. Inside, shadows breathe. You smell sweat fresh and the faint tang of gun oil. Rivet lowers his body, ready to rush. You could try to sneak around the barn wall, or you could send Rivet in first, letting the dog take the risk your body can’t afford.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Send Rivet to scout inside",
+          "target": "p094_barn_scout_action",
+          "next_page": "p094_barn_scout_action"
+        },
+        {
+          "text": "Sneak past along the outer wall",
+          "target": "p095_barn_sneak_action",
+          "next_page": "p095_barn_sneak_action"
+        }
+      ],
+      "display_name": "The barn is half-collapsed, its red paint…"
+    },
+    "p093_field_circle": {
+      "page_type": "normal",
+      "text": "You circle through the fields, keeping low behind dead rows of crops. The stalks scratch your arms like the land wants payment. Rivet’s nose flutter; he tracks a scent line that makes him pause at a trampled patch of earth. Boot prints, two different sizes, heading toward the farm fence.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Follow the boot prints toward the fence",
+          "target": "p096_boot_prints",
+          "next_page": "p096_boot_prints"
+        }
+      ],
+      "display_name": "You circle through the fields, keeping low…"
+    },
+    "p094_barn_scout_action": {
+      "page_type": "action",
+      "text": "Rivet slips into the barn first, claws quiet on packed dirt. A cultist erupts from behind a hay bale with a machete, eyes bright like this is a blessing. You don’t just watch, you move. You yank a broken plank free, shove it into the attacker’s path, and shout, “GO!” Rivet answers with a brutal rush, slamming the cultist into a post. While they stagger, you sprint past to the far door, ready to kick it open the second Rivet pins them.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "combat",
+        "action_name": "Cultist",
+        "prompt": "",
+        "stat_bonus": "strength",
+        "success_page": "p097_barn_aftermath",
+        "failure_page": "p098_barn_aftermath_wounded",
+        "stage_page": "",
+        "player_bonus": 0,
+        "enemy_bonus": 4,
+        "enemy_damage": 35
+      },
+      "display_name": "RIVET slips into the barn first, claws qui…"
+    },
+    "p095_barn_sneak_action": {
+      "page_type": "action",
+      "text": "You slide along the barn wall, trying to keep your breath silent. A board creaks, too loud. A cultist pivots toward you, blade rising. You react instead of freezing: throw a fistful of grit into his face and duck low. “Rivet, NOW!” Your dog launches in a long jump, taking the cultist’s chest and driving him backward. You grab a fallen rake handle like a staff, ready to pry the knife arm wide while Rivet bites and holds. If your timing is off, the blade finds skin.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "combat",
+        "action_name": "Cultist",
+        "prompt": "",
+        "stat_bonus": "strength",
+        "success_page": "p097_barn_aftermath",
+        "failure_page": "p098_barn_aftermath_wounded",
+        "stage_page": "",
+        "player_bonus": 0,
+        "enemy_bonus": 3,
+        "enemy_damage": 34
+      },
+      "display_name": "You slide along the barn wall, trying to k…"
+    },
+    "p098_barn_aftermath_wounded": {
+      "page_type": "normal",
+      "text": "A blade kisses your forearm as you scramble past, slicing shallow but hot. Blood beads instantly. Rivet answers with a savage bite that drops the attacker screaming into the dirt. You don’t look back long enough to see how bad it is. You only know the pain is real and the farm fence is closer than it was a minute ago.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Move on",
+          "target": "p096_boot_prints",
+          "next_page": "p096_boot_prints"
+        }
+      ],
+      "display_name": "A blade kisses your forearm as you scrambl…"
+    },
+    "p097_barn_aftermath": {
+      "page_type": "normal",
+      "text": "The attacker goes down under Rivet’s weight, and you sprint out the far side of the barn, lungs scraping for air. The world is open here, no alleys, no rooftops, just field and fence and the black line of watchtowers ahead. Past that, is hopefully just a little better.\n\nYou show Rivet what you just managed to snatch from the attacker in the chaos, a pristine looking hunting knife. ",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Move on",
+          "target": "p096_boot_prints",
+          "next_page": "p096_boot_prints"
+        }
+      ],
+      "display_name": "The attacker goes down under RIVET’s weigh…",
+      "add_items": [
+        {
+          "name": "hunting_knife",
+          "display_name": "Hunting Knife",
+          "stats": {
+            "strength": 1
+          }
+        }
+      ]
+    },
+    "p096_boot_prints": {
+      "page_type": "normal",
+      "text": "The boot prints lead you to a shallow ditch where someone dragged something heavy. A scrap of cloth is caught on a thorn: the faded blue of your brother’s old jacket. You hold it like a relic, feeling anger and relief collide. Rivet sniffs it, then points his muzzle toward the main gate road. If your brother came here, he either got in… or he didn’t. ",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Close in on the gate",
+          "target": "p099_fence_line",
+          "next_page": "p099_fence_line"
+        }
+      ],
+      "display_name": "The boot prints lead you to a shallow ditc…"
+    },
+    "p099_fence_line": {
+      "page_type": "locked",
+      "text": "The farm fence rises tall, steel mesh reinforced with welded plates. Watchtowers stand at intervals, but tonight their lights are dim. Too dim. Near the main gate, you see cult spirals painted on the outer panels like a claim. Rivet growls, low and steady. You hear chanting from the tree line: the cult is staging something here, and you walked into the first row of seats.\n\nYou see a door along the metal wall, out of sight from the main gate, you head in that direction. It´s better to be inside unrecognized than outside you think.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Try the door (use code if you have it)",
+          "target": "p100_gate_call",
+          "requires_item": "farm_gate_code",
+          "next_page": "p100_gate_call"
+        },
+        {
+          "text": "Head towards the main gate",
+          "target": "p101_maintenance_culvert",
+          "next_page": "p101_maintenance_culvert"
+        }
+      ],
+      "display_name": "The farm fence rises tall—warm fur mesh re…"
+    },
+    "p100_gate_call": {
+      "page_type": "normal",
+      "text": "You step into view, hands raised, throat dry. “Hey!” you shout, voice cracking from disuse. “It’s June”. A spotlight snaps on, pinning you and Rivet in hard white. A voice from the tower says your brother’s name like a test. Before you can answer, chanting rises behind the tree line, and the tower light flickers like it’s being cut.\n\nYou feel the danger coming, but you are now hopeful for the first time in a while.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Wait and steady yourself",
+          "target": "p102_final_reveal",
+          "next_page": "p102_final_reveal"
+        }
+      ],
+      "display_name": "You step into view, hands raised, throat d…",
+      "stat_mods": {
+        "health": 15
+      }
+    },
+    "p101_maintenance_culvert": {
+      "page_type": "normal",
+      "text": "You walk along the fence base, hoping the farm’s sentries decide not to take you for a cultist, and maybe even better, recognize you. The chanting in the trees grows louder, closer, like footsteps made of voices.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Head towards the gate",
+          "target": "p102_final_reveal",
+          "next_page": "p102_final_reveal"
+        }
+      ],
+      "display_name": "Along the fence base, you find a maintenan…"
+    },
+    "p102_final_reveal": {
+      "page_type": "normal",
+      "text": "The farm gate looms ahead, floodlights cutting white scars through the dust. For one fragile second, it feels like you made it.\n\nThe tower light flickers. The voice above stutters, then goes dead.\n\nChanting rolls out of the trees behind you, no longer hidden. Not rushing. Certain.\n\nRivet stops cold. Every muscle locks.\n\nThe cult parts at the tree line, kneeling as one. Something steps forward into the open, tall enough to make the gate look small, scarred and masked, wrapped in bone and belief.\n\nThe air feels heavier around him, like the world leaning in to listen.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Continue",
+          "target": "p105_final_stage1",
+          "next_page": "p105_final_stage1"
+        }
+      ],
+      "special_page": true,
+      "special_padding": {
+        "top": 300,
+        "bottom": 200,
+        "left": 40,
+        "right": 40
+      },
+      "continue_y": 1150,
+      "display_name": "The treeline parts, and something heavy ro…"
+    },
+    "p105_final_stage1": {
+      "page_type": "action",
+      "text": "The Shepherd doesn’t look at you again. He turns his back on you and steps toward the gate.\n\nOne massive hand closes around the vertical bars. Metal shrieks as he slams his shoulder into the gate, the impact echoing across the farmyard. Floodlights flicker. Dust rains down from the towers.\n\nThe second hit bends steel.\n\nRivet explodes forward on instinct, barking sharp and furious.\n\nIf he keeps ramming the gate, it will give.\n\nYou have seconds to pull his attention off it.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "boss",
+        "action_name": "The Shepherd",
+        "prompt": "",
+        "success_page": "p105_final_stage1_win",
+        "failure_page": "p105_final_stage1_lose",
+        "stage_page": "p107_final_stage2",
+        "player_bonus": 1,
+        "enemy_bonus": 7,
+        "enemy_damage": 52,
+        "stages_total": 1,
+        "boss_stage": 1
+      },
+      "display_name": "The Shepherd’s platform lurches forward, t…"
+    },
+    "p107_final_stage2": {
+      "page_type": "action",
+      "text": "The Shepherd doesn’t pursue you.\n\nHe grips the bent gate and rips a section free, steel screaming as bolts shear loose. The torn panel comes away in his hands fencing, wire, and concrete footings still attached.\n\nHe drags it backward, then swings it once, testing the weight. Each impact against the ground sends vibrations through your boots.\n\nTo your left, near a collapsed barrier, you spot a rusted pry bar and loose chain half-buried in dirt.\n\nRivet circles wide, staying behind the Shepherd’s legs, waiting for an opening.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "boss",
+        "action_name": "The Shepherd",
+        "prompt": "",
+        "success_page": "p107_final_stage2_win",
+        "failure_page": "p107_final_stage2_lose",
+        "stage_page": "p109_final_stage3",
+        "player_bonus": 1,
+        "enemy_bonus": 8,
+        "enemy_damage": 48,
+        "stages_total": 1,
+        "boss_stage": 1
+      },
+      "display_name": "RIVET tries a long jump for the Shepherd’s…"
+    },
+    "p109_final_stage3": {
+      "page_type": "action",
+      "text": "Behind the Shepherd, the tree line erupts into motion. Cultists surge forward, not toward you, but toward the fence and the broken gate.\n\nFarm defenders answer instantly. Gunfire cracks from the walls. Someone shouts orders. A figure runs the ramp with a rifle, firing down into the trees.\n\nThe Shepherd doesn’t look back. He raises one massive arm and speaks. The chant rises again, dozens of voices locking together. The sound presses against your chest, against your thoughts, flattening the air.\n\nRivet digs his paws into the dirt, growling, bracing against something that isn’t there.\n\nA farmhand breaks from cover and charges the Shepherd from the side, screaming. The Shepherd turns once and backhands them out of the air. The body hits the ground and doesn’t move.\n\nThe chant never falters. If the call holds, the farm will break piece by piece. You have to stop him now.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "boss",
+        "action_name": "The Shepherd",
+        "prompt": "",
+        "success_page": "p109_final_stage3_win",
+        "failure_page": "p109_final_stage3_lose",
+        "stage_page": "p111_final_stage4",
+        "player_bonus": 1,
+        "enemy_bonus": 9,
+        "enemy_damage": 38,
+        "stages_total": 1,
+        "boss_stage": 1
+      },
+      "display_name": "The platform shudders as RIVET finds purch…"
+    },
+    "p111_final_stage4": {
+      "page_type": "action",
+      "text": "The cultists pour into farmyard. Gunfire erupts at close range now. Shouts overlap. Someone screams for help.\n\nThe Shepherd raises both arms, not to strike, but to claim. For a moment, everything bends toward him: cultists surging, defenders falling back, the farm’s order unraveling in seconds.\n\nRivet snaps and barks, frantic, trying to keep you moving as the space collapses around you.\n\nThe Shepherd is focused on the farm now, not you.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "boss",
+        "action_name": "The Shepherd",
+        "prompt": "",
+        "success_page": "p111_final_stage4_win",
+        "failure_page": "p111_final_stage4_lose",
+        "stage_page": "p113_final_stage5",
+        "player_bonus": 1,
+        "enemy_bonus": 9,
+        "enemy_damage": 38,
+        "stages_total": 1,
+        "boss_stage": 1
+      },
+      "display_name": "The loosened canister swings, sloshing. Th…"
+    },
+    "p113_final_stage5": {
+      "page_type": "action",
+      "text": "The Shepherd still down on his knee looks up at you.\n\nUp close, without the voice, without the weight of the crowd, he looks smaller. Still massive. Still dangerous. But contained.\n\nRivet plants himself at your side, teeth bared, legs shaking with exhaustion. This is it.\n\nThere is no distance left. No belief left to burn. Only the knife in your hand  and the decision to finish it.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "boss",
+        "action_name": "The Shepherd",
+        "prompt": "",
+        "success_page": "p113_final_stage5_win",
+        "failure_page": "p113_final_stage5_lose",
+        "stage_page": "",
+        "player_bonus": 1,
+        "enemy_bonus": 10,
+        "enemy_damage": 44,
+        "stages_total": 1,
+        "boss_stage": 1
+      },
+      "display_name": "The Shepherd’s seat harness is exposed—str…"
+    },
+    "p114_victory_yard": {
+      "page_type": "normal",
+      "text": "Someone claps you on the shoulder as they pass. Another nods once, sharp and grateful, before running to reinforce the wall and gate.\n\nThe Shepherd’s body is already being dragged clear of the yard. Not ceremonially. Practically.\n\nRivet shakes himself and stays close, pressed against your leg like he’s making sure you’re still real.\n\nA runner reaches you, breathless.\n\n“Gatehouse. The leadership wants eyes on you. And the dog.”",
+      "led_effect": {
+        "type": "pulse",
+        "color": "green",
+        "speed": 0.8
+      },
+      "choices": [
+        {
+          "text": "Approach the gatehouse",
+          "target": "p115_gatehouse_meet",
+          "next_page": "p115_gatehouse_meet"
+        }
+      ],
+      "display_name": "The Shepherd hits the dirt with a sound th…"
+    },
+    "p115_gatehouse_meet": {
+      "page_type": "normal",
+      "text": "The gatehouse smells like smoke, wet wool, and antiseptic. Lantern light catches faces you don’t recognize, hard-eyed defenders with hands that still shake after a fight they survived just minutes ago.\n\nA woman in a patched jacket steps into your space without ceremony. She doesn’t raise her voice. She doesn’t need to. \n\n“You’re the one from the gate,” she says. She holds out her hand. “The envelope.”\n\nWhen you give it to her, she reads standing up, lips moving slightly as she tracks lines and marks meant for people who already knew what they were looking at.\n\n“This explains why they came here,” she says quietly. “Routes. Signals. Who they were waiting for.”\n\nShe looks up at you then. Really looks.\n\n“If that thing at the gate had finished what it started, this place would be no more, so thank you.”\n\nShe folds the papers once, careful.\n“Your brother,” she says. “Elias. He’s alive.”",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Continue",
+          "target": "p117_elias_status",
+          "next_page": "p117_elias_status"
+        }
+      ],
+      "display_name": "In the gatehouse, lantern light reveals fa…"
+    },
+    "p117_elias_status": {
+      "page_type": "normal",
+      "text": "They take you past the gatehouse into a converted storage room lit by a single hanging lamp. A generator hums behind the wall, steady but tired.\n\nElias is sitting up on a cot, shirt off, ribs wrapped tight. He looks smaller than you remember, not weaker, just worn thin.\n\nWhen he sees you, his breath catches like he forgot how that works.\n\n“June,” he says. Just your name. Like he’s checking if it still exists.\n\nRivet pads in ahead of you, limping slightly. Elias reaches out without thinking, fingers through warm fur. Rivet leans into it, careful.\n\n\"We have so much to catch up on\" he says and smiles at you. ",
+      "led_effect": {
+        "type": "pulse",
+        "color": "green",
+        "speed": 0.8
+      },
+      "choices": [
+        {
+          "text": "Continue",
+          "target": "p119_end_choice",
+          "next_page": "p119_end_choice"
+        }
+      ],
+      "display_name": "They lead you to a small infirmary room th…"
+    },
+    "p119_end_choice": {
+      "page_type": "normal",
+      "text": "By morning, the fires are out and the bodies are gone from the yard. The damage remains. Bent steel. Scorched earth. A gate that held just long enough.\n\nThe woman in the patched jacket spreads the envelope’s contents across the table: marked routes, symbols, timings. Places the cult watches instead of attacks.\n\n“This doesn’t end,” she says. “But it changes shape.”\nShe looks between you and Elias.\n\n“You’re both in this now, whether you stay or not.”\nElias sits close enough that your shoulders touch. He hasn’t slept. Neither have you.\n\nThe farm will survive tonight. What happens after is up to you.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Help the farm prepare",
+          "target": "p120_ending_1",
+          "next_page": "p120_ending_1"
+        },
+        {
+          "text": "Leave with Elias at dawn",
+          "target": "p121_ending_2",
+          "next_page": "p121_ending_2"
+        },
+        {
+          "text": "Stay. Keep Rivet close",
+          "target": "p122_ending_3",
+          "next_page": "p122_ending_3"
+        }
+      ],
+      "display_name": "Later, the farm’s defenders gather in the…"
+    },
+    "p120_ending_1": {
+      "page_type": "ending",
+      "text": "You stay.\n\nThe envelope turns into a working map. Routes get marked, erased, argued over. Watch points shift. Weak sections of fence get reinforced before anyone can test them again.\n\nElias works beside you, steady and tireless. He already knew some of this, the places the cult watched from, the paths they preferred, but seeing it laid out sharpens everything.\n\nRivet heals. Slowly. He patrols the inner yard, not the perimeter, content to let others take the long watches now.\n\nWhen movement stirs at the tree line days later, the farm is ready. Not invincible. Just prepared.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "green",
+        "speed": 0.8
+      },
+      "choices": [
+        {
+          "text": "",
+          "next_page": "the_end",
+          "target": "the_end",
+          "reset_game": true
+        }
+      ],
+      "display_name": "You spend the night in the gatehouse, spre…",
+      "special_page": true,
+      "special_padding": {
+        "top": 300,
+        "bottom": 200,
+        "left": 40,
+        "right": 40
+      },
+      "special_bg": "p120_ending_1.jpg",
+      "continue_y": 1150
+    },
+    "p121_ending_2": {
+      "page_type": "ending",
+      "text": "You leave a few days later.\n\nThe patched-jacket woman doesn’t argue. She just nods once and tells you which routes have gone quiet.\n\nElias walks beside you, gear packed light, eyes scanning the horizon out of habit. He looks like someone who’s done standing still for a while.\n\nRivet trots ahead, ears up, tail loose, happy to be moving again even if his pace is slower than it used to be.\n\nBehind you, the farm seals its gate and gets back to the work of surviving.\n\nAhead of you, the road stretches on, unchanged, waiting.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "green",
+        "speed": 0.8
+      },
+      "choices": [
+        {
+          "text": "",
+          "next_page": "the_end",
+          "target": "the_end",
+          "reset_game": true
+        }
+      ],
+      "display_name": "You don’t trust fences forever. At first l…",
+      "special_page": true,
+      "special_padding": {
+        "top": 300,
+        "bottom": 200,
+        "left": 40,
+        "right": 40
+      },
+      "special_bg": "p121_ending_2.jpg",
+      "continue_y": 1150
+    },
+    "p122_ending_3": {
+      "page_type": "ending",
+      "text": "You don’t leave.\n\nNot because you’re needed on the walls, and not because anyone asks you to stay.\n\nYou stay because the farm has room now, for quiet, for repair, for a life that doesn’t end at the edge of a road.\n\nElias understands without needing it explained. He keeps working the perimeter, teaching what he learned, turning experience into habit for others.\n\nRivet heals properly. Long sleeps. Short walks. Sun on his back instead of firelight. He still follows you everywhere, just slower, just closer.\n\nThe farm grows into its scars. You let the road go.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 0.8
+      },
+      "choices": [
+        {
+          "text": "",
+          "next_page": "the_end",
+          "target": "the_end",
+          "reset_game": true
+        }
+      ],
+      "display_name": "The leader says it plainly: they can reinf…",
+      "special_page": true,
+      "special_padding": {
+        "top": 300,
+        "bottom": 200,
+        "left": 40,
+        "right": 40
+      },
+      "special_bg": "p122_ending_3.jpg",
+      "continue_y": 1150
+    },
+    "game_over": {
+      "page_type": "game_over",
+      "text": "Your strength finally gives out. Sounds blur into a dull roar, then into nothing. The world does not end with a dramatic finale, only with your body refusing to stand again. Somewhere nearby, Rivet’s desperate bark turns frantic as he tries to drag you to safety that no longer exists. In the ruined quiet, the city keeps breathing without you.",
+      "led_effect": {
+        "type": "blink",
+        "color": "red",
+        "speed": 1.2
+      },
+      "choices": [
+        {
+          "text": "Play Again!",
+          "next_page": "p001_prologue",
+          "target": "p001_prologue",
+          "reset_game": true
+        }
+      ],
+      "display_name": "Your strength finally gives out. Sounds bl…",
+      "special_page": true,
+      "special_padding": {
+        "top": 100,
+        "bottom": 200,
+        "left": 40,
+        "right": 40
+      },
+      "special_bg": "game_over.jpg",
+      "continue_text": "Play Again",
+      "continue_y": 1150
+    },
+    "p021_generator_room": {
+      "page_type": "normal",
+      "text": "You follow the spiral arrows and find a generator room lit by trembling work lamps. Cultists have rigged the old unit to feed power to something deeper, maybe the bridge lights, maybe the farm assault radios. The air stinks of fuel and hot metal. Rivet’s eyes paint silhouettes through the haze. You could sabotage the lines, risking attention, or slip past while they’re distracted by their own obsession.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Sabotage the generator cables",
+          "target": "p021a_sabotage_action",
+          "next_page": "p021a_sabotage_action"
+        },
+        {
+          "text": "Slip through the side hatch",
+          "target": "p020_river_district",
+          "next_page": "p020_river_district"
+        }
+      ],
+      "display_name": "You follow the spiral arrows and find a ge…"
+    },
+    "p021a_sabotage_action": {
+      "page_type": "action",
+      "text": "You crawl to the cable trunk and wedge a metal shard into the junction, praying for a short that looks like an accident. Rivet holds still beside you, muscle dampened. A cultist turns, head cocked, listening. If the spark pops too loud, they’ll swarm the room.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "red",
+        "speed": 1
+      },
+      "choices": [],
+      "action": {
+        "type": "dice",
+        "action_name": "",
+        "prompt": "",
+        "success_page": "p022_service_corridor",
+        "failure_page": "p021b_sabotage_wounded",
+        "stage_page": "",
+        "dice": 20,
+        "target": 9,
+        "failure_damage": 33
+      },
+      "display_name": "You crawl to the cable trunk and wedge a w…"
+    },
+    "p022_service_corridor": {
+      "page_type": "normal",
+      "text": "The service corridor narrows, then rises toward a maintenance hatch. Rivet leads you up, ears swiveling, until a rusted hatch opens onto daylight and the wet smell of the river district.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Climb out to the canals",
+          "target": "p020_river_district",
+          "next_page": "p020_river_district"
+        }
+      ],
+      "display_name": "The service corridor narrows, then rises t…"
+    },
+    "p042_warehouse_row": {
+      "page_type": "normal",
+      "text": "The riverside warehouses are long, hollow shells with broken skylights that drip light in dusty columns. Inside one, you find stacked crates marked with old shipping codes and newer spiral paint. Your footsteps echo like you’re walking in a drum. Rivet’s hearing catches a murmured argument deeper in the building, cultists dividing loot. You can sneak through for a shortcut to the rail yard, or back out before the echo betrays you.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Sneak through the warehouse interior",
+          "target": "p041_rail_yard_entry",
+          "next_page": "p041_rail_yard_entry",
+          "modify_stats": {
+            "luck": 1
+          }
+        },
+        {
+          "text": "Back out and take the open route",
+          "target": "p042b_open_route",
+          "next_page": "p042b_open_route",
+          "modify_stats": {
+            "health": 10
+          }
+        }
+      ],
+      "display_name": "The riverside warehouses are long, hollow…"
+    },
+    "p068_drainage_channel": {
+      "page_type": "normal",
+      "text": "The drainage channel runs under the ramp like a concrete creek bed. Water trickles through, cold and gray. The mud walls are carved with spirals and children’s handprints. Halfway along, a rusted grate blocks the exit into the suburbs. Rivet tests it with a bite; the metal groans. You can force it, or climb back up and risk the open streets instead.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Force the grate together",
+          "target": "p067_suburb_entry",
+          "next_page": "p067_suburb_entry",
+          "modify_stats": {
+            "health": -6
+          }
+        },
+        {
+          "text": "Abort the channel and climb out elsewhere",
+          "target": "p068b_abort_channel",
+          "next_page": "p068b_abort_channel"
+        }
+      ],
+      "display_name": "The drainage channel runs under the ramp l…"
+    },
+    "p114b_wounded_victory": {
+      "page_type": "normal",
+      "text": "You’re dragged behind cover as the last of the cultists break and run.\n\nThe farmyard is a mess of smoke, bodies, and shattered equipment. Someone ties off your wound with shaking hands.\n\nThe Shepherd’s body lies where it fell, whatever he was, he isn’t anymore.\n\nA voice cuts through the noise. “Gatehouse. Now. They’re asking for you.”",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "modify_stats": {
+        "health": -12
+      },
+      "choices": [
+        {
+          "text": "Stagger to the gatehouse",
+          "target": "p115_gatehouse_meet",
+          "next_page": "p115_gatehouse_meet"
+        }
+      ],
+      "display_name": "You win, but victory is paid for in blood…"
+    },
+    "p076b_exhaustion_check": {
+      "page_type": "action",
+      "text": "Your legs feel like they belong to someone else. The highway’s grit is in your teeth, and every breath scrapes. If you push hard now, you might gain distance before the next patrol loop… or you might simply collapse where the road can find you.",
+      "led_effect": {
+        "type": "blink",
+        "color": "red",
+        "speed": 2
+      },
+      "action": {
+        "type": "dice",
+        "action_name": "",
+        "prompt": "",
+        "success_page": "p078_billboard_field",
+        "failure_page": "p076c_exhausted_after",
+        "stage_page": "",
+        "dice": 20,
+        "target": 13,
+        "failure_damage": 42
+      },
+      "choices": [],
+      "display_name": "Your legs feel like they belong to someone…"
+    },
+    "p052a_industrial_sprint_action": {
+      "page_type": "action",
+      "text": "You push through the industrial strip while the cult’s attention is elsewhere. Between broken loading docks and rusted fencing, sound carries. One wrong step and the echo will invite company. You signals Rivet forward, nose down, ears turning, while you pick your line through glass and rebar.",
+      "led_effect": {
+        "type": "blink",
+        "color": "red",
+        "speed": 2
+      },
+      "choices": [],
+      "action": {
+        "type": "dice",
+        "action_name": "",
+        "prompt": "",
+        "success_page": "p052_industrial_strip",
+        "failure_page": "p052b_sprint_wounded",
+        "stage_page": "",
+        "dice": 20,
+        "target": 6,
+        "failure_damage": 30
+      },
+      "display_name": "You push through the industrial strip whil…"
+    },
+    "p076c_exhausted_after": {
+      "page_type": "normal",
+      "text": "Your lungs burn like you’ve been breathing ash. You make it into the shadow of the billboard supports and finally let your knees hit gravel. Rivet presses against your hip, steadying you, urging you to breathe slow. Somewhere behind you, the patrol’s voices drift and fade. You didn’t outrun them clean. You just survived long enough for distance to do the rest.\n\nYou force yourself up before your body decides it’s done.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Keep moving",
+          "target": "p078_billboard_field",
+          "next_page": "p078_billboard_field"
+        }
+      ],
+      "display_name": "Your lungs burn like you’ve been breathing…"
+    },
+    "p010_crossfire_wounded": {
+      "page_type": "normal",
+      "text": "Pain blooms hot along your ribs, then the cold rush of blood through fabric. You don’t stop to see how bad it is. Rivet shoulders into you, forcing you low behind a wrecked sedan as rounds chew the asphalt. His growl is quiet, controlled, trained restraint, not fear.\n\nYou count the shots. You wait for the gap. Then you move, half-running, half-falling toward cover.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Stagger onward",
+          "target": "p011_after_crossfire",
+          "next_page": "p011_after_crossfire"
+        }
+      ],
+      "display_name": "Pain blooms hot along your ribs—then the c…"
+    },
+    "p038b_flood_wounded": {
+      "page_type": "normal",
+      "text": "The surge slams you sideways. Water punches the breath out of you and drags you hard against concrete. For a second you’re just limbs and panic, fingers clawing for anything that isn’t moving. Rivet snaps his jaws on your sleeve and hauls, pure muscle and stubbornness until you’re back on your feet, coughing.\n\nYou’re soaked, scraped, and still alive.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Stagger onward",
+          "target": "p039_drain_exit",
+          "next_page": "p039_drain_exit"
+        }
+      ],
+      "display_name": "The surge slams you sideways. Water punche…"
+    },
+    "p045b_yard_wounded": {
+      "page_type": "normal",
+      "text": "A boot skids on loose gravel and the noise is loud enough to feel. Heads turn. A shout rises.\n\nRivet hits the nearest raider low, buying you one ugly second. You swing a length of pipe like you mean it, just to make space, and take a glancing cut for it, sharp, stingy, real.\n\nYou don’t win. You escape.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Stagger onward",
+          "target": "p047_boxcar_find",
+          "next_page": "p047_boxcar_find"
+        }
+      ],
+      "display_name": "A boot skids on loose gravel and the noise…"
+    },
+    "p064b_ramp_wounded": {
+      "page_type": "normal",
+      "text": "Your hand slips on damp rust. Weight drops through your stomach and the world tilts, then you slam your knee on the edge, pain white and immediate. Rivet plants himself and braces, letting you use him like a living anchor.\n\nYou drag yourself up shaking. The joint screams every time you bend it.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Stagger onward",
+          "target": "p065_ramp_top",
+          "next_page": "p065_ramp_top"
+        }
+      ],
+      "display_name": "Your hand slips on damp rust. Weight drops…"
+    },
+    "p069b_breach_wounded": {
+      "page_type": "normal",
+      "text": "The cabinet gives, but not cleanly. sharp metal splinters and something inside snaps back into your forearm. You bite down hard enough to taste copper. Rivet snarls once, warning, not rage, then shoves through the gap ahead of you.\n\nYou follow, cradling your arm, moving because stopping would be worse.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Stagger onward",
+          "target": "p070_firstaid_cache",
+          "next_page": "p070_firstaid_cache"
+        }
+      ],
+      "display_name": "The cabinet gives, but not cleanly. Wood s…"
+    },
+    "p052b_sprint_wounded": {
+      "page_type": "normal",
+      "text": "You run, and the world becomes breath and footfalls. A piece of rebar catches your shin and tears it open like paper. You keep moving anyway, teeth clenched, eyes watering.\n\nRivet stays tight to your side, herding you through the gaps like he’s done it a hundred times.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Stagger onward",
+          "target": "p052_industrial_strip",
+          "next_page": "p052_industrial_strip"
+        }
+      ],
+      "display_name": "You run, and the world becomes breath and…"
+    },
+    "p021b_sabotage_wounded": {
+      "page_type": "normal",
+      "text": "The cable trunk snaps loud when it shouldn’t. You freeze, heart hammering, as footsteps pause nearby.\n\nRivet shifts, silent signal, then bumps your leg once. Move. Now.\n\nYou slip away, but a thrown object clips your shoulder on the way out. It’s not deep. It still hurts. It still counts.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Stagger onward",
+          "target": "p022_service_corridor",
+          "next_page": "p022_service_corridor"
+        }
+      ],
+      "display_name": "The cable trunk snaps loud when it shouldn…"
+    },
+    "p058_miniboss_stage1_win": {
+      "page_type": "normal",
+      "text": "The Harrier’s club hits a bench instead of bone, and the impact jars his arm. Rivet seizes the moment and drives him back a step, forcing him to reset his stance.\n\nJune’s hands shake as adrenaline drains. Rivet stays tight to your leg, chest heaving, eyes locked on the Harrier.\n\nThere’s no celebration, only the next breath, the next angle, the next decision.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Keep fighting",
+          "target": "p059_miniboss_stage2",
+          "next_page": "p059_miniboss_stage2"
+        }
+      ],
+      "display_name": "Stage 1/3 breaks in your favor."
+    },
+    "p058_miniboss_stage1_lose": {
+      "page_type": "normal",
+      "text": "The spiked club grazes your shoulder and digs deep into it. Your arm goes numb for a moment, and you have to bite down on a yell to keep from giving him the sound he wants.\n\nPain pulses somewhere sharp and new. Rivet presses in, growling low, trying to keep the threat off you.\n\nYou don’t get to stop. You only get to continue, hurt, angry, and alive.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Keep fighting",
+          "target": "p059_miniboss_stage2",
+          "next_page": "p059_miniboss_stage2"
+        }
+      ],
+      "display_name": "Stage 1/3 ends with you paying for it."
+    },
+    "p059_miniboss_stage2_win": {
+      "page_type": "normal",
+      "text": "You yank the hanging chain hard; it snags the Harrier’s wrist and steals his swing. Rivet hits his ribs like a battering ram, and you hear breath leave him in a harsh cough.\n\nJune’s hands shake as adrenaline drains. Rivet stays tight to your leg, chest heaving, eyes locked on the Harrier.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Keep fighting",
+          "target": "p060_miniboss_stage3",
+          "next_page": "p060_miniboss_stage3"
+        }
+      ],
+      "display_name": "Stage 2/3 breaks in your favor.",
+      "stat_mods": {
+        "health": 15
+      }
+    },
+    "p059_miniboss_stage2_lose": {
+      "page_type": "normal",
+      "text": "The Harrier twists free and slams the club into the floor beside your foot, shock rippling up your leg. Your knee buckles, and you have to shove off the wall to stay upright.\n\nPain pulses somewhere sharp and new. Rivet presses in, growling low, trying to keep the threat off you.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Keep fighting",
+          "target": "p060_miniboss_stage3",
+          "next_page": "p060_miniboss_stage3"
+        }
+      ],
+      "display_name": "Stage 2/3 ends with you paying for it."
+    },
+    "p105_final_stage1_win": {
+      "page_type": "normal",
+      "text": "You sprint hard across the gravel, angling for his blind side instead of charging straight in.\n\nRivet hits first, snapping at the Shepherd’s calf and peeling away just as the massive foot stomps down where he was.\n\nYou leap onto a low concrete barrier and slash at the back of the Shepherd’s leg with your hunting knife, forcing him to turn.\n\nThe next ram misses the gate and smashes into empty air.\n\nHe roars, not in pain, but in frustration and turns fully to face you.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Keep fighting",
+          "target": "p107_final_stage2",
+          "next_page": "p107_final_stage2"
+        }
+      ],
+      "display_name": "Stage 1/5 breaks in your favor."
+    },
+    "p105_final_stage1_lose": {
+      "page_type": "normal",
+      "text": "You hesitate, torn between the gate and the thing breaking it. The Shepherd slams into the gate again. Steel buckles. One hinge tears loose with a sound like a gunshot.\n\nRivet lunges desperately, barking, snapping, but the Shepherd ignores him.\n\nYou rush in too late, the gate is damaged, hanging crooked and screaming under its own weight.\n\nThe Shepherd finally turns, satisfied, and looks down at you.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Keep fighting",
+          "target": "p107_final_stage2",
+          "next_page": "p107_final_stage2"
+        }
+      ],
+      "display_name": "Stage 1/5 ends with you paying for it.",
+      "stat_mods": {
+        "luck": -1
+      }
+    },
+    "p107_final_stage2_win": {
+      "page_type": "normal",
+      "text": "You sprint for the barrier as the Shepherd winds up.\n\nThe torn gate panel crashes down where you stood, shattering concrete and throwing dust into the floodlights.\n\nYou snatch the pry bar and jam it into the loose chain trailing from the panel, levering it hard around a broken fence post.\n\nWhen the Shepherd swings again, the chain snags and yanks sideways. Rivet hits the Shepherd’s ankle at the same moment, teeth locking in.\n\nYou rush in and drive the knife into the back of his knee.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Keep fighting",
+          "target": "p109_final_stage3",
+          "next_page": "p109_final_stage3"
+        }
+      ],
+      "display_name": "Stage 2/5 breaks in your favor.",
+      "stat_mods": {
+        "health": 15
+      }
+    },
+    "p107_final_stage2_lose": {
+      "page_type": "normal",
+      "text": "The Shepherd swings the torn gate panel in a brutal arc. It clips you and sends you tumbling across the gravel, the world flashing white as you hit hard near the fence base.\n\nRivet charges without hesitation, biting down on the Shepherd’s calf and refusing to let go until he’s shaken loose and thrown aside.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Keep fighting",
+          "target": "p109_final_stage3",
+          "next_page": "p109_final_stage3"
+        }
+      ],
+      "display_name": "Stage 2/5 ends with you paying for it."
+    },
+    "p109_final_stage3_win": {
+      "page_type": "normal",
+      "text": "You don’t wait for the chant to finish. You sprint straight at him through the chaos, boots slipping in churned dirt and blood.\n\nYou hurl the pry bar hard across his line of sight. It clips the edge of his mask with a sharp, ugly crack.\n\nThe Shepherd stumbles half a step. The chant breaks, voices losing sync, some cutting off entirely as gunfire finds them.\n\nRivet charges through the opening, leaping and clamping onto the Shepherd’s forearm, shaking violently.\n\nThe Shepherd roars and turns fully toward you, the farm momentarily forgotten.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Keep fighting",
+          "target": "p111_final_stage4",
+          "next_page": "p111_final_stage4"
+        }
+      ],
+      "display_name": "Stage 3/5 breaks in your favor."
+    },
+    "p109_final_stage3_lose": {
+      "page_type": "normal",
+      "text": "You hesitate, the sound hitting harder than you expect. The chant settles into rhythm, heavy and certain.\n\nThe Shepherd gestures once. Cultists surge into the farm yard as the defenders scramble to respond. Shouts turn to screams.\n\nRivet presses against your leg, growling, keeping you upright as the pressure builds.\n\nThe Shepherd steps forward again, confidence absolute.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Keep fighting",
+          "target": "p111_final_stage4",
+          "next_page": "p111_final_stage4"
+        }
+      ],
+      "display_name": "Stage 3/5 ends with you paying for it."
+    },
+    "p111_final_stage4_win": {
+      "page_type": "normal",
+      "text": "You see it before he does. A farm defender climbs the tower ramp behind him, hauling a heavy winch cable loose from its mount.\n\nYou shout and sprint, drawing the Shepherd’s attention just long enough. Rivet darts in low, snapping at his ankle, forcing him to shift his weight.\n\nThe cable drops.\n\nIt coils around the Shepherd’s shoulder and neck as it goes taut, yanking him sideways with a sound like a falling wall. He crashes to one knee, stunned.\n\nThe chant dies instantly and the cult hesitates.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Keep fighting",
+          "target": "p113_final_stage5",
+          "next_page": "p113_final_stage5"
+        }
+      ],
+      "display_name": "Stage 4/5 breaks in your favor.",
+      "stat_mods": {
+        "strength": 1
+      }
+    },
+    "p111_final_stage4_lose": {
+      "page_type": "normal",
+      "text": "You move too late. The Shepherd brings both hands down in a sweeping blow, scattering defenders like debris.\n\nRivet slams into his leg, barking, teeth flashing, buying you seconds.\n\nAbove, a farm defender cuts the winch cable free without warning. It drops hard, slamming into the Shepherd’s shoulder and tangling around his arm. He staggers, roaring in fury, forced down to one knee by his own weight.\n\nThe chant breaks, the cult falters, suddenly unsure.",
+      "led_effect": {
+        "type": "pulse",
+        "color": "orange",
+        "speed": 1
+      },
+      "choices": [
+        {
+          "text": "Keep fighting",
+          "target": "p113_final_stage5",
+          "next_page": "p113_final_stage5"
+        }
+      ],
+      "display_name": "Stage 4/5 ends with you paying for it."
+    },
+    "p072b_street_wounded": {
+      "page_type": "normal",
+      "text": "You misread the sweep. A figure steps from cover too close, too fast.\n\nYou feel the strike more than you see it, pain blooming along your ribs as you slam into a wall.\n\nRivet lunges in a blur of fur and teeth, forcing space between you and the blade. He returns to your side, eyes wild, breathing hard.\n\nYou spit blood, stand anyway, and rush toward the neighborhood streets.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Stagger onward",
+          "target": "p073_fence_maze",
+          "next_page": "p073_fence_maze"
+        }
+      ],
+      "display_name": "You misread the sweep. A figure steps from…"
+    },
+    "p042b_open_route": {
+      "page_type": "normal",
+      "text": "You back out into the open air and take the long route along the waterline.\n\nIt’s safer in one way, no tight echoes, no blind corners, but every open stretch makes you feel exposed. Rivet keeps close, nose working, ears swiveling.\n\nYou lose time, but you keep your skin.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Reach the rail yard approach",
+          "target": "p041_rail_yard_entry",
+          "next_page": "p041_rail_yard_entry"
+        }
+      ],
+      "display_name": "You back out into the open air and take th…"
+    },
+    "p060_miniboss_stage3_win": {
+      "page_type": "normal",
+      "text": "Rivet’s bite forces the club hand open. The weapon skitters away, and the Harrier’s confidence breaks for the first time, just a flash of panic behind the mask.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Keep going",
+          "target": "p061_post_miniboss",
+          "next_page": "p061_post_miniboss"
+        }
+      ],
+      "display_name": "Stage 3/3 breaks in your favor."
+    },
+    "p060_miniboss_stage3_lose": {
+      "page_type": "normal",
+      "text": "The Harrier lands a desperate elbow into your ribs as he yanks away. Something inside you complains loudly. You taste iron and know you can’t take many more hits like that.\n",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Keep going",
+          "target": "p061_post_miniboss",
+          "next_page": "p061_post_miniboss"
+        }
+      ],
+      "display_name": "Stage 3/3 ends with you paying for it."
+    },
+    "p113_final_stage5_win": {
+      "page_type": "normal",
+      "text": "The Shepherd tries to rise. Rivet doesn’t let him.\n\nYour dog hits his chest with everything he has left, driving him back against the wreckage.\n\nYou step in close, controlled, deliberate and slide the knife in under the mask, up where the cable has left his throat exposed.\n\nThe Shepherd stiffens. Then he slumps forward, dead weight crashing into the dirt. For a moment, the entire yard seems to hold its breath. Then the cult breaks.\n\nGunfire fades. Shouts turn into commands. Medics move.\n\nRivet stands beside you, chest heaving, eyes never leaving the body.\n\nThe farm still stands.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Continue",
+          "target": "p114_victory_yard",
+          "next_page": "p114_victory_yard"
+        }
+      ],
+      "display_name": "Stage 5/5 breaks in your favor."
+    },
+    "p113_final_stage5_lose": {
+      "page_type": "normal",
+      "text": "You go in too fast. A massive arm swinging blindly. the blow catches you and throws you hard against the concrete base of the gate. Pain explodes white-hot through your side.\n\nRivet launches instantly, slamming into the Shepherd’s throat, buying you the second you need.\n\nYou push yourself up, blood in your mouth, vision swimming and drive the knife home.\n\nOnce. Twice.\n\nThe Shepherd collapses forward into the dirt, shaking, then still. Around you, the fight continues but it has lost its center.\n\nRivet presses against you, steadying you on shaking legs. You’re alive, but hurt badly enough that someone else has to pull you clear.",
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Continue",
+          "target": "p114b_wounded_victory",
+          "next_page": "p114b_wounded_victory"
+        }
+      ],
+      "display_name": "Stage 5/5 ends with you paying for it."
+    },
+    "the_end": {
+      "text": "",
+      "choices": [
+        {
+          "text": "Play Again",
+          "next_page": "p001_prologue",
+          "target": "p001_prologue",
+          "reset_game": true
+        }
+      ],
+      "special_page": true,
+      "special_padding": {
+        "top": 100,
+        "bottom": 200,
+        "left": 40,
+        "right": 40
+      },
+      "special_bg": "the_end.jpg",
+      "continue_y": 1150
+    }
+  },
+  "action_positions_percent": {
+    "text": 90,
+    "dice": 82,
+    "result": 85
+  },
+  "action_positions_percent_web": {
+    "text": 99.3,
+    "dice": 50,
+    "result": 99.3
+  },
+  "action_styles": {
+    "dice_size": 120
+  },
+  "action_styles_web": {
+    "dice_size": 130
+  },
+  "stat_popup": {
+    "font_size": 24,
+    "positive_color": "#86efac",
+    "negative_color": "#fca5a5",
+    "duration_ms": 900,
+    "move_px": 26
+  },
+  "stat_popup_web": {
+    "font_size": 30,
+    "positive_color": "#86efac",
+    "negative_color": "#fca5a5",
+    "duration_ms": 2500,
+    "move_px": 30
+  },
+  "action_text_color": "#b9a598",
+  "action_text_size": 20,
+  "font_positions_web": {
+    "choices": 43,
+    "main": 34,
+    "stats": 7,
+    "items": 3,
+    "separator": 5.7
+  },
+  "bottom_positions_percent": {
+    "stats": 91.015625,
+    "separator": 92.5,
+    "items": 95
+  },
+  "bottom_positions_percent_web": {
+    "stats": 7,
+    "separator": 5.7,
+    "items": 3
+  },
+  "text_shadow_opacity": 20
+}

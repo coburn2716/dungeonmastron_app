@@ -1,0 +1,974 @@
+{
+  "license_lines": [
+    "DUNGEON MASTRON LICENSE",
+    "",
+    "Copyright (c) 2026 Artifextron, Henrik Åberg",
+    "All Rights Reserved.",
+    "",
+    "================================================================================",
+    "TERMS AND CONDITIONS",
+    "================================================================================",
+    "",
+    "This software and content (Dungeon Mastron Console, Web Player, Game Builder, ",
+    "and AI Companion) is proprietary material made available in source ",
+    "form for transparency and personal use.",
+    "",
+    "PERMISSIONS",
+    "-----------",
+    "You are permitted to:",
+    "",
+    "  ✓ Use this software to play games",
+    "  ✓ Use this software to create games with the included Game Builder",
+    "  ✓ Use the AI Companion to create games with AI assistants",
+    "  ✓ Modify this software and templates for personal, private, non-commercial use",
+    "  ✓ Study and learn from the source code and templates",
+    "  ✓ Create, distribute, and sell games made with the Game Builder or AI Companion",
+    "    (you own full rights to your created games)",
+    "",
+    "RESTRICTIONS",
+    "------------",
+    "You may NOT:",
+    "",
+    "  ✗ Distribute this software or templates (original or modified versions)",
+    "  ✗ Publish, share, or make available any fork, derivative, or modified template",
+    "  ✗ Use this software or templates for commercial purposes",
+    "  ✗ Sublicense, sell, rent, or lease this software or templates",
+    "  ✗ Remove or modify this license or copyright notices",
+    "  ✗ Use this software to create competing products or services",
+    "  ✗ Reverse engineer this software (beyond what's visible in source)",
+    "",
+    "GAME OWNERSHIP AND PLAYBACK",
+    "---------------------------",
+    "Games created using the Dungeon Mastron Game Builder or AI Companion ",
+    "are owned entirely by their creators. You may distribute, sell, or license ",
+    "your games freely.",
+    "",
+    "However, games are designed to be played using official Dungeon Mastron players:",
+    "- Dungeon Mastron Web Player (free)",
+    "- Dungeon Mastron Console (console.py on Raspberry Pi)",
+    "",
+    "Creating alternative players or software that executes Dungeon Mastron game ",
+    "files requires written permission from the copyright holder.",
+    "",
+    "Attribution to Dungeon Mastron is appreciated but not required when ",
+    "distributing your games.",
+    "",
+    "ATTRIBUTION",
+    "-----------",
+    "When sharing games or content created with this software, you should credit:",
+    "\"Created with Dungeon Mastron / www.dungeonmastron.com\"",
+    "",
+    "DISCLAIMER",
+    "----------",
+    "THIS SOFTWARE IS PROVIDED \"AS IS\" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR",
+    "IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS",
+    "FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT",
+    "HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE",
+    "USE OF THIS SOFTWARE.",
+    "",
+    "ENFORCEMENT",
+    "-----------",
+    "Violations of this license may result in:",
+    "- DMCA takedown notices",
+    "- Cease and desist orders",
+    "- Legal action for damages",
+    "",
+    "If you're unsure whether your use case is permitted, please contact the",
+    "copyright holder before proceeding.",
+    "",
+    "================================================================================",
+    "For questions or licensing inquiries: [dungeonmastron@gmail.com / Henrik Åberg]",
+    "Project website: www.dungeonmastron.com",
+    "================================================================================"
+  ],
+  "title": "The Forest Memory Circle",
+  "logo": "logo.jpg",
+  "start_page": "p1_image_1",
+  "theme": {
+    "preset": "fantasy",
+    "custom": {
+      "primary_color": "#e8e3d9",
+      "accent_color": "#d97757",
+      "background_color": "#1c1c1c",
+      "secondary_color": "#b8b3a9"
+    }
+  },
+  "player_stats": {
+    "health": 50,
+    "strength": 1,
+    "luck": 1
+  },
+  "font_sizes": {
+    "main": 20,
+    "choices": 20,
+    "stats": 20,
+    "items": 20
+  },
+  "font_colors": {
+    "main": "#f4e2bd",
+    "choices": "#72ba69",
+    "stats": "#f4e2bd",
+    "items": "#f4e2bd",
+    "separator": "#f4e2bd"
+  },
+  "font_positions": {
+    "choices": 52,
+    "main": 61,
+    "stats": 9.53125,
+    "items": 41,
+    "separator": 81
+  },
+  "main_text_padding": 14,
+  "main_text_top_padding": 0,
+  "text_area_rows": 14,
+  "main_text_max_height": 800,
+  "action_colors": {
+    "dice": "#ffffff",
+    "dice_text": "#000000"
+  },
+  "pages": {
+    "p1_image_1": {
+      "page_type": "normal",
+      "text": "Welcome to the Forest Memory Circle!\n\nTonight, the woodland friends are practicing a gentle skill: Memory, and counting. Elder Owl says,\n“In this forest, remembering is like holding a lantern. The more carefully you look, the brighter it glows. For each correct answer you make, you will be rewarded with a memory star, collect all ten for a secret ending”\n\nNotice the details in this picture. You’ll be asked about them on the next page.",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Turn the page",
+          "target": "p2_q1",
+          "next_page": "p2_q1"
+        }
+      ],
+      "special_page": true,
+      "special_padding": {
+        "top": 450,
+        "bottom": 150,
+        "left": 50,
+        "right": 50
+      },
+      "special_bg": "p1_image_1.jpg",
+      "continue_text": "CONTINUE",
+      "continue_y": 1200
+    },
+    "p2_q1": {
+      "page_type": "normal",
+      "text": "Question 1 of 10:\n\nThink back to the previous picture.\n\nHow many owls were there?",
+      "led_effect": {
+        "type": "solid",
+        "color": "red"
+      },
+      "choices": [
+        {
+          "text": "0",
+          "target": "p3_image_2b",
+          "next_page": "p3_image_2b"
+        },
+        {
+          "text": "1",
+          "target": "p3_image_2a",
+          "next_page": "p3_image_2a"
+        },
+        {
+          "text": "2",
+          "target": "p3_image_2b",
+          "next_page": "p3_image_2b"
+        }
+      ]
+    },
+    "p3_image_2a": {
+      "page_type": "normal",
+      "text": "Nice job! Your lantern of remembering glows a little brighter.\n\nTake a good look at this picture. You’ll be asked about it on the next page.\n\nYou follow the animals along a winding path. On a wooden bench sits a tiny picnic: squirrels wearing little scarves, sharing two acorns beside a leaf-shaped plate.",
+      "add_item": {
+        "name": "flag_q1",
+        "display_name": "Memory Star 1",
+        "quantity": 1
+      },
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Turn the page",
+          "target": "p4_q2",
+          "next_page": "p4_q2"
+        }
+      ]
+    },
+    "p3_image_2b": {
+      "page_type": "normal",
+      "text": "Almost! That one was tricky and that’s okay. 💛\nElder Owl reminds you: “Slow eyes make strong memories.”\n\nNow, look closely at the this picture. You will be asked about it on the following page.\n\nYou follow the animals along a winding path. On a wooden bench sits a tiny picnic: squirrels wearing little scarves, sharing two acorns beside a leaf-shaped plate.",
+      "modify_stats": {
+        "health": -10
+      },
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Turn the page",
+          "target": "p4_q2",
+          "next_page": "p4_q2"
+        }
+      ],
+      "stat_mods": {
+        "health": -10
+      }
+    },
+    "p4_q2": {
+      "page_type": "normal",
+      "text": "Question 2 of 10:\n\nThink back to the previous picture.\n\nHow many squirrels were there sitting on the bench?",
+      "led_effect": {
+        "type": "solid",
+        "color": "red"
+      },
+      "choices": [
+        {
+          "text": "2",
+          "target": "p5_image_3b",
+          "next_page": "p5_image_3b"
+        },
+        {
+          "text": "3",
+          "target": "p5_image_3a",
+          "next_page": "p5_image_3a"
+        },
+        {
+          "text": "4",
+          "target": "p5_image_3b",
+          "next_page": "p5_image_3b"
+        }
+      ]
+    },
+    "p5_image_3a": {
+      "page_type": "normal",
+      "text": "Great job!\n\nLook closely and notice the details. A question is coming on the next page.\n\nThe path opens to a secret nook. A stone throne rests among ferns. Above it hang lanterns, glowing like honey.",
+      "add_item": {
+        "name": "flag_q2",
+        "display_name": "Memory Star 2",
+        "quantity": 1
+      },
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Turn the page",
+          "target": "p6_q3",
+          "next_page": "p6_q3"
+        }
+      ]
+    },
+    "p5_image_3b": {
+      "page_type": "normal",
+      "text": "Almost! That one was hard. \n\nLook closely and notice the details. A question is coming on the next page.\n\nThe path opens to a secret nook. A stone throne rests among ferns. Above it hang lanterns, glowing like honey.",
+      "modify_stats": {
+        "health": -10
+      },
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Turn the page",
+          "target": "p6_q3",
+          "next_page": "p6_q3"
+        }
+      ],
+      "stat_mods": {
+        "health": -10
+      }
+    },
+    "p6_q3": {
+      "page_type": "normal",
+      "text": "Question 3 of 10:\n\nThink back to the previous picture.\n\nHow many lanterns were hanging above the throne?",
+      "led_effect": {
+        "type": "solid",
+        "color": "red"
+      },
+      "choices": [
+        {
+          "text": "4",
+          "target": "p7_image_4a",
+          "next_page": "p7_image_4a"
+        },
+        {
+          "text": "5",
+          "target": "p7_image_4b",
+          "next_page": "p7_image_4b"
+        },
+        {
+          "text": "6",
+          "target": "p7_image_4b",
+          "next_page": "p7_image_4b"
+        }
+      ]
+    },
+    "p7_image_4a": {
+      "page_type": "normal",
+      "text": "Super! \n\nStudy this picture carefully. You’ll answer a question about it very soon.\n\nNear a sleepy stream, you spot a patch of mushrooms: with white spots, lined up beside the water.",
+      "add_item": {
+        "name": "flag_q3",
+        "display_name": "Memory Star 3",
+        "quantity": 1
+      },
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Turn the page",
+          "target": "p8_q4",
+          "next_page": "p8_q4"
+        }
+      ]
+    },
+    "p7_image_4b": {
+      "page_type": "normal",
+      "text": "Tricky that one! You will nail the next one. \n\nNow, look closely at this picture. You will be asked about it on the following page.\n\nNear a sleepy stream, you spot a patch of mushrooms: with white spots, lined up beside the water.",
+      "modify_stats": {
+        "health": -10
+      },
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Turn the page",
+          "target": "p8_q4",
+          "next_page": "p8_q4"
+        }
+      ],
+      "stat_mods": {
+        "health": -10
+      }
+    },
+    "p8_q4": {
+      "page_type": "normal",
+      "text": "Question 4 of 10:\n\nThink back to the previous picture.\n\nHow many red mushrooms were by the stream?",
+      "led_effect": {
+        "type": "solid",
+        "color": "red"
+      },
+      "choices": [
+        {
+          "text": "4",
+          "target": "p9_image_5b",
+          "next_page": "p9_image_5b"
+        },
+        {
+          "text": "5",
+          "target": "p9_image_5b",
+          "next_page": "p9_image_5b"
+        },
+        {
+          "text": "6",
+          "target": "p9_image_5a",
+          "next_page": "p9_image_5a"
+        }
+      ]
+    },
+    "p9_image_5a": {
+      "page_type": "normal",
+      "text": "Wonderful!\n\nTake your time and look closely. The next page will ask you about this picture.\n\nA meadow appears, sparkling with dew. Butterflies flutter over the grass, some yellow, some pink, dancing in slow loops.",
+      "add_item": {
+        "name": "flag_q4",
+        "display_name": "Memory Star 4",
+        "quantity": 1
+      },
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Turn the page",
+          "target": "p10_q5",
+          "next_page": "p10_q5"
+        }
+      ]
+    },
+    "p9_image_5b": {
+      "page_type": "normal",
+      "text": "Almost! So close.\n\nTake your time and look closely. The next page will ask you about this picture.\n\nA meadow appears, sparkling with dew. Butterflies flutter over the grass, some yellow, some pink, dancing in slow loops.",
+      "modify_stats": {
+        "health": -10
+      },
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Turn the page",
+          "target": "p10_q5",
+          "next_page": "p10_q5"
+        }
+      ],
+      "stat_mods": {
+        "health": -10
+      }
+    },
+    "p10_q5": {
+      "page_type": "normal",
+      "text": "Question 5 of 10:\n\nThink back to the previous picture.\n\nHow many butterflies were fluttering in the meadow?",
+      "led_effect": {
+        "type": "solid",
+        "color": "red"
+      },
+      "choices": [
+        {
+          "text": "7",
+          "target": "p11_image_6b",
+          "next_page": "p11_image_6b"
+        },
+        {
+          "text": "8",
+          "target": "p11_image_6a",
+          "next_page": "p11_image_6a"
+        },
+        {
+          "text": "9",
+          "target": "p11_image_6b",
+          "next_page": "p11_image_6b"
+        }
+      ]
+    },
+    "p11_image_6a": {
+      "page_type": "normal",
+      "text": "You are really good at this! \n\nLook at everything you can see here. You’ll be asked about it on the following page.\n\nThe animals host a tiny tea party. On a stump-table sit teacups and a teapot shaped like an acorn.",
+      "add_item": {
+        "name": "flag_q5",
+        "display_name": "Memory Star 5",
+        "quantity": 1
+      },
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Turn the page",
+          "target": "p12_q6",
+          "next_page": "p12_q6"
+        }
+      ]
+    },
+    "p11_image_6b": {
+      "page_type": "normal",
+      "text": "Almost! That one was tricky.\n\nNow, look closely at this picture. You will be asked about it on the following page.\n\nThe animals host a tiny tea party. On a stump-table sit teacups and a teapot shaped like an acorn.",
+      "modify_stats": {
+        "health": -10
+      },
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Turn the page",
+          "target": "p12_q6",
+          "next_page": "p12_q6"
+        }
+      ],
+      "stat_mods": {
+        "health": -10
+      }
+    },
+    "p12_q6": {
+      "page_type": "normal",
+      "text": "Question 6 of 10:\n\nThink back to the previous picture.\n\nHow many teacups were on the stump-table?",
+      "led_effect": {
+        "type": "solid",
+        "color": "red"
+      },
+      "choices": [
+        {
+          "text": "3",
+          "target": "p13_image_7a",
+          "next_page": "p13_image_7a"
+        },
+        {
+          "text": "4",
+          "target": "p13_image_7b",
+          "next_page": "p13_image_7b"
+        },
+        {
+          "text": "5",
+          "target": "p13_image_7b",
+          "next_page": "p13_image_7b"
+        }
+      ]
+    },
+    "p13_image_7a": {
+      "page_type": "normal",
+      "text": "Wonderful!\n\nPause for a moment and look carefully. A question about this picture comes next.\n\nAn old tree has a bookshelf carved into its trunk. You see storybooks lined up neatly, each with a different colored spine.",
+      "add_item": {
+        "name": "flag_q6",
+        "display_name": "Memory Star 6",
+        "quantity": 1
+      },
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Turn the page",
+          "target": "p14_q7",
+          "next_page": "p14_q7"
+        }
+      ]
+    },
+    "p13_image_7b": {
+      "page_type": "normal",
+      "text": "So close! you will get it next time for sure\n\nNow, look closely at this picture. You will be asked about it on the following page.\n\nAn old tree has a bookshelf carved into its trunk. You see storybooks lined up neatly, each with a different colored spine.",
+      "modify_stats": {
+        "health": -10
+      },
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Turn the page",
+          "target": "p14_q7",
+          "next_page": "p14_q7"
+        }
+      ],
+      "stat_mods": {
+        "health": -10
+      }
+    },
+    "p14_q7": {
+      "page_type": "normal",
+      "text": "Question 7 of 10:\n\nThink back to the previous picture.\n\nHow many storybooks were on the shelf?",
+      "led_effect": {
+        "type": "solid",
+        "color": "red"
+      },
+      "choices": [
+        {
+          "text": "7",
+          "target": "p15_image_8b",
+          "next_page": "p15_image_8b"
+        },
+        {
+          "text": "8",
+          "target": "p15_image_8b",
+          "next_page": "p15_image_8b"
+        },
+        {
+          "text": "9",
+          "target": "p15_image_8a",
+          "next_page": "p15_image_8a"
+        }
+      ]
+    },
+    "p15_image_8a": {
+      "page_type": "normal",
+      "text": "Nice job!\n\nTry to remember what you see. The next page will ask you about this picture.\n\nA fox leads you to a berry bush. Hanging from the branches are golden berries that glow softly like tiny lanterns.",
+      "add_item": {
+        "name": "flag_q7",
+        "display_name": "Memory Star 7",
+        "quantity": 1
+      },
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Turn the page",
+          "target": "p16_q8",
+          "next_page": "p16_q8"
+        }
+      ]
+    },
+    "p15_image_8b": {
+      "page_type": "normal",
+      "text": "Nice job!\n\nPause for a moment and look carefully. A question about this picture comes next.\n\nAn old tree has a bookshelf carved into its trunk. You see storybooks lined up neatly, each with a different colored spine.",
+      "modify_stats": {
+        "health": -10
+      },
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Turn the page",
+          "target": "p16_q8",
+          "next_page": "p16_q8"
+        }
+      ],
+      "stat_mods": {
+        "health": -10
+      }
+    },
+    "p16_q8": {
+      "page_type": "normal",
+      "text": "Question 8 of 10:\n\nThink back to the previous picture.\n\nHow many golden berries were on the bush?",
+      "led_effect": {
+        "type": "solid",
+        "color": "red"
+      },
+      "choices": [
+        {
+          "text": "4",
+          "target": "p17_image_9b",
+          "next_page": "p17_image_9b"
+        },
+        {
+          "text": "5",
+          "target": "p17_image_9a",
+          "next_page": "p17_image_9a"
+        },
+        {
+          "text": "6",
+          "target": "p17_image_9b",
+          "next_page": "p17_image_9b"
+        }
+      ]
+    },
+    "p17_image_9a": {
+      "page_type": "normal",
+      "text": "You are so smart!\n\nLook closely and make a picture in your mind. You’ll answer a question on the next page.\n\nAt a shallow pond, flat stones form a path. You count stepping stones making a gentle curve across the water.",
+      "add_item": {
+        "name": "flag_q8",
+        "display_name": "Memory Star 8",
+        "quantity": 1
+      },
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Turn the page",
+          "target": "p18_q9",
+          "next_page": "p18_q9"
+        }
+      ]
+    },
+    "p17_image_9b": {
+      "page_type": "normal",
+      "text": "Almost! So close.\n\nNow, look closely at this picture. You will be asked about it on the following page.\n\nAt a shallow pond, flat stones form a path. You count stepping stones making a gentle curve across the water.",
+      "modify_stats": {
+        "health": -10
+      },
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Turn the page",
+          "target": "p18_q9",
+          "next_page": "p18_q9"
+        }
+      ],
+      "stat_mods": {
+        "health": -10
+      }
+    },
+    "p18_q9": {
+      "page_type": "normal",
+      "text": "Question 9 of 10:\n\nThink back to the previous picture.\n\nHow many stepping stones crossed the pond?",
+      "led_effect": {
+        "type": "solid",
+        "color": "red"
+      },
+      "choices": [
+        {
+          "text": "8",
+          "target": "p19_image_10b",
+          "next_page": "p19_image_10b"
+        },
+        {
+          "text": "9",
+          "target": "p19_image_10b",
+          "next_page": "p19_image_10b"
+        },
+        {
+          "text": "10",
+          "target": "p19_image_10a",
+          "next_page": "p19_image_10a"
+        }
+      ]
+    },
+    "p19_image_10a": {
+      "page_type": "normal",
+      "text": "Super!\n\nTake a careful look at this scene. A question about it is coming up next.\n\nFinally, you reach the ‘Star Map’ clearing. In the sky above the trees, you can spot bright stars clustered close together.",
+      "add_item": {
+        "name": "flag_q9",
+        "display_name": "Memory Star 9",
+        "quantity": 1
+      },
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Turn the page",
+          "target": "p20_q10",
+          "next_page": "p20_q10"
+        }
+      ]
+    },
+    "p19_image_10b": {
+      "page_type": "normal",
+      "text": "That was a tricky one! \n\nNow, look closely at this picture. You will be asked about it on the following page.\n\nFinally, you reach the ‘Star Map’ clearing. In the sky above the trees, you can spot bright stars clustered close together.",
+      "modify_stats": {
+        "health": -10
+      },
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Turn the page",
+          "target": "p20_q10",
+          "next_page": "p20_q10"
+        }
+      ],
+      "stat_mods": {
+        "health": -10
+      }
+    },
+    "p20_q10": {
+      "page_type": "normal",
+      "text": "Question 10 of 10:\n\nThink back to the previous picture.\n\nHow many bright stars were in the cluster?",
+      "led_effect": {
+        "type": "solid",
+        "color": "red"
+      },
+      "choices": [
+        {
+          "text": "4",
+          "target": "p21_result10_a",
+          "next_page": "p21_result10_a"
+        },
+        {
+          "text": "5",
+          "target": "p21_result10_b",
+          "next_page": "p21_result10_b"
+        },
+        {
+          "text": "6",
+          "target": "p21_result10_b",
+          "next_page": "p21_result10_b"
+        }
+      ]
+    },
+    "p21_result10_a": {
+      "page_type": "normal",
+      "text": "Wonderful! Good Job\n\nThe stars twinkle as if they heard you answer. Elder Owl smiles.“That was the last question. Let’s see which ending your Memory Stars unlock.”",
+      "add_item": {
+        "name": "flag_q10",
+        "display_name": "Memory Star 10",
+        "quantity": 1
+      },
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Continue",
+          "target": "p22_gate",
+          "next_page": "p22_gate"
+        }
+      ]
+    },
+    "p21_result10_b": {
+      "page_type": "normal",
+      "text": "Good try!\n\nElder Owl says, “Even when a star slips away, you still walked the whole path.”\n\n“Let’s see which ending your Memory Stars unlock.”",
+      "modify_stats": {
+        "health": -10
+      },
+      "led_effect": {
+        "type": "solid",
+        "color": "orange"
+      },
+      "choices": [
+        {
+          "text": "Continue",
+          "target": "p22_gate",
+          "next_page": "p22_gate"
+        }
+      ],
+      "stat_mods": {
+        "health": -10
+      }
+    },
+    "p22_gate": {
+      "page_type": "locked",
+      "text": "Elder Owl opens a tiny velvet pouch.\n\n“Each correct answer earned a Memory Star. If you collected all ten, the forest will sing the Perfect Goodnight Song.”",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Perfect Ending (requires all Memory Stars)",
+          "requires_items": [
+            "flag_q1",
+            "flag_q2",
+            "flag_q3",
+            "flag_q4",
+            "flag_q5",
+            "flag_q6",
+            "flag_q7",
+            "flag_q8",
+            "flag_q9",
+            "flag_q10"
+          ],
+          "target": "p23_perfect_ending",
+          "next_page": "p23_perfect_ending"
+        },
+        {
+          "text": "Finish the story",
+          "target": "p24_regular_ending",
+          "next_page": "p24_regular_ending"
+        }
+      ]
+    },
+    "p23_perfect_ending": {
+      "page_type": "ending",
+      "text": "",
+      "led_effect": {
+        "type": "solid",
+        "color": "green"
+      },
+      "choices": [
+        {
+          "text": "Continue",
+          "next_page": "p1_image_1",
+          "target": "p1_image_1",
+          "reset_game": true
+        }
+      ],
+      "special_page": true,
+      "special_padding": {
+        "top": 100,
+        "bottom": 150,
+        "left": 150,
+        "right": 150
+      },
+      "special_bg": "p23_perfect_ending.jpg",
+      "continue_text": "PLAY AGAIN!",
+      "continue_y": 1200
+    },
+    "p24_regular_ending": {
+      "page_type": "ending",
+      "text": "",
+      "led_effect": {
+        "type": "solid",
+        "color": "blue"
+      },
+      "choices": [
+        {
+          "text": "Continue",
+          "next_page": "p1_image_1",
+          "target": "p1_image_1",
+          "reset_game": true
+        }
+      ],
+      "special_page": true,
+      "special_padding": {
+        "top": 100,
+        "bottom": 150,
+        "left": 150,
+        "right": 150
+      },
+      "special_bg": "p24_regular_ending.jpg",
+      "continue_y": 1200
+    },
+    "game_over": {
+      "text": "",
+      "choices": [
+        {
+          "text": "Continue",
+          "next_page": "p1_image_1",
+          "target": "p1_image_1",
+          "reset_game": true
+        }
+      ],
+      "special_page": true,
+      "special_padding": {
+        "top": 100,
+        "bottom": 150,
+        "left": 45,
+        "right": 45
+      },
+      "special_bg": "game_over.jpg",
+      "continue_text": "PLAY AGAIN!",
+      "continue_y": 1200
+    }
+  },
+  "action_positions_percent": {
+    "text": 90,
+    "dice": 82,
+    "result": 85
+  },
+  "action_positions_percent_web": {
+    "text": 90,
+    "dice": 82,
+    "result": 85
+  },
+  "action_styles": {
+    "dice_size": 120
+  },
+  "action_styles_web": {
+    "dice_size": 120
+  },
+  "stat_popup": {
+    "font_size": 24,
+    "positive_color": "#86efac",
+    "negative_color": "#fca5a5",
+    "duration_ms": 900,
+    "move_px": 26
+  },
+  "stat_popup_web": {
+    "font_size": 24,
+    "positive_color": "#86efac",
+    "negative_color": "#fca5a5",
+    "duration_ms": 900,
+    "move_px": 26
+  },
+  "action_text_color": "#ffffff",
+  "action_text_size": 20,
+  "font_positions_web": {
+    "choices": 50,
+    "main": 40,
+    "stats": 7,
+    "items": 3,
+    "separator": 5.7
+  },
+  "bottom_positions_percent": {
+    "stats": 9.53125,
+    "separator": 81,
+    "items": 41
+  },
+  "bottom_positions_percent_web": {
+    "stats": 7,
+    "separator": 5.7,
+    "items": 3
+  },
+  "text_shadow_opacity": 20,
+  "bezels": {
+    "bottom": "story_bezel.png"
+  },
+  "font_file": "Delius-Regular.ttf"
+}

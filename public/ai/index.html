@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Companion – Dungeon Mastron</title>
+  <meta name="description" content="AI Companion prompts and templates for making Dungeon Mastron games faster: story, choices, stats, items, and balancing." />
+  <link rel="canonical" href="https://dungeonmastron.com/ai/" />
+  <meta property="og:site_name" content="Dungeon Mastron" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="AI Companion — Dungeon Mastron" />
+  <meta property="og:description" content="AI Companion prompts and templates for making Dungeon Mastron games faster." />
+  <meta property="og:url" content="https://dungeonmastron.com/ai/" />
+  <meta property="og:image" content="https://dungeonmastron.com/web_assets/splash.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../web_assets/site_shell.css" />
+  <style>
+    body { margin: 0; background: var(--shell-bg); color: var(--shell-text); font-family: var(--shell-font); }
+    .wrap { max-width: 1560px; margin: 0 auto; padding: 46px 18px 80px; }
+    h1 { font-family: var(--shell-heading); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin: 0 0 12px; font-size: clamp(24px, 3.2vw, 44px); }
+    p { margin: 0 0 12px; color: var(--shell-sub); line-height: 1.6; }
+    .panel { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.10); border-radius: 16px; padding: 16px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: var(--shell-text); text-decoration: none; font-family: var(--shell-mono); }
+    .btn.primary { background: rgba(217,119,87,0.16); border-color: rgba(217,119,87,0.40); }
+
+    .kicker {
+      font-family: var(--shell-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(232,227,217,0.70);
+      margin-bottom: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .kicker::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #6B9B7F;
+      opacity: 0.9;
+    }
+    .kicker--orange::before { background: #D97757; }
+    .lead { max-width: 62ch; font-size: 14px; }
+
+    .terminal {
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.02);
+      overflow: hidden;
+    }
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      font-family: var(--shell-mono);
+      font-size: 12px;
+      color: rgba(232,227,217,0.85);
+    }
+    .terminal-dots { display: inline-flex; gap: 6px; align-items: center; }
+    .terminal-dots span { width: 10px; height: 10px; border-radius: 999px; display: inline-block; opacity: 0.85; }
+    .terminal-dots .r { background: #ef4444; }
+    .terminal-dots .y { background: #f59e0b; }
+    .terminal-dots .g { background: #22c55e; }
+    .terminal-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .terminal-actions { display: inline-flex; gap: 10px; align-items: center; margin-left: auto; }
+    .terminal-body {
+      padding: 14px;
+      font-family: var(--shell-mono);
+      font-size: 12px;
+      line-height: 1.45;
+      color: #E8E3D9;
+      white-space: pre-wrap;
+      overflow: auto;
+      height: 574px;
+      max-height: none;
+    }
+    .terminal-body--orange { height: 509px; }
+    .terminal-body { scrollbar-width: thin; }
+    .terminal-body::-webkit-scrollbar { width: 10px; height: 10px; }
+    .terminal-body::-webkit-scrollbar-track { background: rgba(255,255,255,0.08); border-radius: 999px; }
+
+    .terminal-body--green { scrollbar-color: #6B9B7F rgba(255,255,255,0.10); }
+    .terminal-body--green::-webkit-scrollbar-thumb { background: rgba(107,155,127,0.95); border-radius: 999px; }
+    .terminal-body--green::-webkit-scrollbar-thumb:hover { background: rgba(107,155,127,1); }
+
+    .terminal-body--orange { scrollbar-color: #D97757 rgba(255,255,255,0.10); }
+    .terminal-body--orange::-webkit-scrollbar-thumb { background: rgba(217,119,87,0.95); border-radius: 999px; }
+    .terminal-body--orange::-webkit-scrollbar-thumb:hover { background: rgba(217,119,87,1); }
+    @media (max-width: 980px) { .terminal-body { height: 420px; } }
+    @media (max-width: 560px) { .terminal-body { height: 360px; } }
+    .terminal-body .accent { color: #6B9B7F; }
+    .terminal-note { margin-top: 10px; font-size: 12px; color: var(--shell-sub); }
+    .terminal-note h3 {
+      margin: 0 0 8px;
+      font-family: var(--shell-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #6B9B7F;
+    }
+
+    .note-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 18px;
+      margin-top: 10px;
+    }
+    @media (max-width: 980px) { .note-grid { grid-template-columns: 1fr; } }
+    .note-block { padding-top: 0; }
+
+    .note-block--rail {
+      border-left: 1px solid rgba(255,255,255,0.10);
+      padding-left: 14px;
+    }
+
+    .section-sep {
+      margin-top: 34px;
+      height: 1px;
+      width: 100%;
+      background: rgba(255,255,255,0.10);
+    }
+
+    .balancer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap: 22px;
+      align-items: start;
+      margin-top: 16px;
+    }
+    @media (max-width: 980px) { .balancer-grid { grid-template-columns: 1fr; } }
+    .balancer-left-rail {
+      border-right: 1px solid rgba(255,255,255,0.10);
+      padding-right: 18px;
+    }
+
+    .balancer-stack { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; }
+    @media (max-width: 980px) { .balancer-stack { grid-template-columns: 1fr; } }
+
+    .difficulty-graph { margin-top: 8px; }
+    .difficulty-bar {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.35fr 1.35fr;
+      gap: 8px;
+      align-items: stretch;
+      height: 44px;
+      margin-top: 10px;
+    }
+    .difficulty-seg {
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.02);
+      border-radius: 12px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      min-width: 0;
+    }
+    .difficulty-seg .name {
+      font-family: var(--shell-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(232,227,217,0.82);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .difficulty-seg .range {
+      font-family: var(--shell-mono);
+      font-size: 12px;
+      color: rgba(232,227,217,0.70);
+      white-space: nowrap;
+    }
+    .difficulty-seg.easy .name { color: rgba(232,227,217,0.72); }
+    .difficulty-seg.medium .name { color: rgba(217,119,87,0.80); }
+    .difficulty-seg.hard .name { color: rgba(217,119,87,0.92); }
+    .difficulty-seg.superhard { border-color: rgba(217,119,87,0.35); background: rgba(217,119,87,0.08); }
+    .difficulty-seg.superhard .name { color: rgba(217,119,87,1); }
+    .difficulty-legend {
+      margin: 18px 0 0;
+      color: var(--shell-sub);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .sub-sep {
+      margin-top: 14px;
+      height: 1px;
+      width: 100%;
+      background: rgba(255,255,255,0.10);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 34px;
+      align-items: start;
+      margin-top: 20px;
+    }
+    @media (max-width: 980px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+    .side {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .side h2 {
+      margin: 0 0 10px;
+      font-family: var(--shell-heading);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 14px;
+      color: var(--shell-text);
+    }
+
+    .big-copy {
+      font-family: var(--shell-heading);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: clamp(18px, 2.2vw, 30px);
+      line-height: 1.15;
+      color: var(--shell-text);
+      margin: 0;
+    }
+    .big-copy .line { display: block; margin: 0 0 14px; }
+    .big-copy .line:last-child { margin-bottom: 0; }
+
+    .right-stack {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 18px;
+    }
+    @media (max-width: 980px) { .right-stack { grid-template-columns: 1fr; } }
+
+    .block {
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+    }
+    .block:nth-child(-n+2) { border-top: none; padding-top: 0; }
+    .block--full { grid-column: 1 / -1; }
+    .block h3 {
+      margin: 0 0 8px;
+      font-family: var(--shell-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #6B9B7F;
+    }
+    .block h3.orange { color: #D97757; }
+    .block p { margin: 0 0 10px; color: var(--shell-sub); font-size: 12px; line-height: 1.55; }
+    .bullets { margin: 0; padding-left: 18px; color: var(--shell-sub); line-height: 1.6; font-size: 12px; }
+    .bullets li { margin: 6px 0; }
+    .bullets li::marker { color: #6B9B7F; }
+    .bullets.bullets--orange li::marker { color: #D97757; }
+
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    @media (max-width: 980px) { .compare { grid-template-columns: 1fr; } }
+    .compare .col {
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.02);
+      border-radius: 14px;
+      padding: 12px;
+    }
+    .compare .col h4 {
+      margin: 0 0 8px;
+      font-family: var(--shell-heading);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: var(--shell-text);
+    }
+    .ticks { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; color: var(--shell-sub); }
+    .ticks li { display: flex; gap: 10px; align-items: flex-start; }
+    .ticks li .mark { width: 14px; flex: 0 0 14px; color: #6B9B7F; font-family: var(--shell-mono); }
+    .ticks li .mark.no { color: rgba(232,227,217,0.35); }
+
+    .side--plain {
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+
+    .right-rail {
+      position: relative;
+      padding-left: 18px;
+    }
+    .right-rail::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(255,255,255,0.10);
+    }
+
+    .steps { margin: 0; padding-left: 18px; color: var(--shell-sub); line-height: 1.7; }
+    .steps li { margin: 6px 0; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+  <main class="wrap">
+    <div class="kicker">AI Companion</div>
+
+    <section class="grid">
+      <div>
+        <div class="terminal" aria-label="AI Companion template">
+          <div class="terminal-bar">
+            <div class="terminal-title"><span class="accent">AI</span> Companion — Template</div>
+            <div class="terminal-actions">
+              <a class="btn" href="../LICENSE.txt" download="LICENSE.txt">License</a>
+              <a class="btn" href="../Guides/ai_companion.md" download="ai_companion.md">Open raw</a>
+            </div>
+          </div>
+          <pre id="aiTemplate" class="terminal-body terminal-body--green">Loading…</pre>
+        </div>
+
+        <div class="terminal-note">
+          <div class="note-grid">
+            <div class="note-block">
+              <h3>How should I prompt?</h3>
+              Copy the whole template into your AI chat and add “ask me questions so that we can create the best game”.
+            </div>
+            <div class="note-block note-block--rail">
+              <h3>Patreon members</h3>
+              The AI companion is a work in progress, constantly evolving and being refined. Patreon members receive early access to updates and improvements.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="side side--plain right-rail">
+        <p class="big-copy">
+          <span class="line">CRAFT WORLDS YOURSELF.</span>
+          <span class="line">BUILD IT TOGETHER WITH THE AI COMPANION.</span>
+          <span class="line">OR LET THE AI WRITE EVERYTHING &amp; SURPRISE YOU.</span>
+        </p>
+
+        <div class="right-stack">
+          <section class="block">
+            <h3>What you’re looking at</h3>
+            <p>An AI template used to design, validate, and generate Dungeon Mastron games.</p>
+            <ul class="bullets">
+              <li>All game rules</li>
+              <li>Real validation</li>
+              <li>Verifying checks</li>
+              <li>Final game output</li>
+            </ul>
+          </section>
+
+          <section class="block">
+            <h3>What the AI actually does</h3>
+            <p>The AI is a collaborator, a creative force for you to use.</p>
+            <ul class="bullets">
+              <li>Create game structures</li>
+              <li>Write stories</li>
+              <li>Enforce rules and consistency</li>
+              <li>Prevent broken logic and dead ends</li>
+            </ul>
+          </section>
+
+          <section class="block block--full">
+            <h3>Built for creators</h3>
+            <p>Rules-based, narrative-aware, mechanically constrained. Built to help you finish games, guide you and be your creative partner.</p>
+            <div class="compare" aria-label="What makes it different">
+              <div class="col">
+                <h4>Not this</h4>
+                <ul class="ticks">
+                  <li><span class="mark no">✕</span><span>Random text generation</span></li>
+                  <li><span class="mark no">✕</span><span>Hidden AI decisions</span></li>
+                  <li><span class="mark no">✕</span><span>Broken game logic</span></li>
+                </ul>
+              </div>
+              <div class="col">
+                <h4>This</h4>
+                <ul class="ticks">
+                  <li><span class="mark">✓</span><span>Enforced narrative structure</span></li>
+                  <li><span class="mark">✓</span><span>Mechanical validation</span></li>
+                  <li><span class="mark">✓</span><span>Gameplay-first design</span></li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="block">
+            <h3>Why should I use AI?</h3>
+            <ul class="bullets">
+              <li>Break creative deadlocks</li>
+              <li>Spark new narrative directions</li>
+              <li>Generate game structures</li>
+              <li>Keep momentum when inspiration stalls</li>
+            </ul>
+          </section>
+
+          <section class="block">
+            <h3>Ownership &amp; control</h3>
+            <ul class="bullets">
+              <li>Full ownership of your games</li>
+              <li>No royalties</li>
+              <li>No lock-in</li>
+              <li>Official players only (compatibility &amp; quality)</li>
+            </ul>
+          </section>
+        </div>
+      </aside>
+    </section>
+
+    <div class="section-sep" aria-hidden="true"></div>
+
+    <div id="ai-game-balancer" class="kicker kicker--orange" style="margin-top: 26px;">AI GAME BALANCER</div>
+
+    <section class="balancer-grid">
+      <div class="balancer-left-rail">
+        <p class="big-copy">
+          <span class="line">SET THE DIFFICULTY YOURSELF.</span>
+          <span class="line">ADJUST IT WITH THE AI GAME BALANCER.</span>
+          <span class="line">OR LET THE AI SIMULATE HUNDREDS OF RUNS TO FIND THE RIGHT BALANCE.</span>
+        </p>
+
+        <div class="balancer-stack">
+          <section class="block">
+            <h3 class="orange">Balance with data</h3>
+            <ul class="bullets bullets--orange">
+              <li>Simulate real players</li>
+              <li>Test hundreds of runs in minutes</li>
+              <li>Turn guesswork into measured difficulty</li>
+            </ul>
+          </section>
+
+          <section class="block">
+            <h3 class="orange">Numbers-only tuning</h3>
+            <ul class="bullets bullets--orange">
+              <li>Change numbers. Keep everything else</li>
+              <li>No rewrites. No rewiring. Just balance</li>
+              <li>Hit your target difficulty, on purpose</li>
+            </ul>
+          </section>
+
+          <section class="block">
+            <h3 class="orange">Fair difficulty</h3>
+            <ul class="bullets bullets--orange">
+              <li>Fair fights. Clear consequences</li>
+              <li>Fair for the careful. Dangerous for the bold</li>
+              <li>Challenge without cheap deaths</li>
+            </ul>
+          </section>
+
+          <section class="block">
+            <h3 class="orange">Ship with confidence</h3>
+            <ul class="bullets bullets--orange">
+              <li>Iterate fast. Ship confidently</li>
+              <li>Tune. Test. Verify</li>
+              <li>Your game, played a hundreds times (before release)</li>
+            </ul>
+          </section>
+
+          <section class="block block--full">
+            <h3 class="orange">Difficulty bands</h3>
+            <div class="difficulty-graph" aria-label="Death rate targets by difficulty">
+              <div class="difficulty-bar" role="img" aria-label="Easy 5–15%, Medium 15–30%, Hard 30–50%, Super hard 50–70%">
+                <div class="difficulty-seg easy"><span class="name">Easy</span><span class="range">5–15%</span></div>
+                <div class="difficulty-seg medium"><span class="name">Medium</span><span class="range">15–30%</span></div>
+                <div class="difficulty-seg hard"><span class="name">Hard</span><span class="range">30–50%</span></div>
+                <div class="difficulty-seg superhard"><span class="name">Super hard</span><span class="range">50–70%</span></div>
+              </div>
+              <p class="difficulty-legend">Death rate target (HP ≤ 0)</p>
+
+              <div class="sub-sep" aria-hidden="true"></div>
+              <h3 class="orange" style="margin-top: 14px;">Patreon members</h3>
+              <p>The AI game balancer is a work in progress, constantly evolving and being refined. Patreon members receive early access to updates and improvements.</p>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div>
+        <div class="terminal" aria-label="AI Game Balancer template">
+          <div class="terminal-bar">
+            <div class="terminal-title"><span class="accent">AI</span> Game Balancer — Template</div>
+            <div class="terminal-actions">
+              <a class="btn" href="../LICENSE.txt" download="LICENSE.txt">License</a>
+              <a class="btn" href="../Guides/ai_game_balancer.md" download="ai_game_balancer.md">Open raw</a>
+            </div>
+          </div>
+          <pre id="aiBalancerTemplate" class="terminal-body terminal-body--orange">Loading…</pre>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <div class="left">© 2026 Artifextron</div>
+
+      <form
+        action="https://buttondown.com/api/emails/embed-subscribe/Dungeon_Mastron"
+        method="post"
+        class="newsletter"
+      >
+        <label for="bd-email">Get project updates</label>
+        <p class="desc">Occasional updates as Dungeon Mastron evolves.</p>
+        <div class="row">
+          <input type="email" name="email" id="bd-email" placeholder="Enter your email" required />
+          <input type="submit" value="Subscribe" />
+        </div>
+      </form>
+
+      <div class="links">
+        <a href="https://discord.gg/" target="_blank" rel="noopener noreferrer">Discord</a>
+        <a href="https://www.patreon.com/" target="_blank" rel="noopener noreferrer">Patreon</a>
+        <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="/LICENSE.txt" target="_blank" rel="noopener noreferrer">License</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../web_assets/site_shell.js?v=2" defer></script>
+  <script>
+    async function fetchFirstText(paths) {
+      for (const p of paths) {
+        try {
+          const url = new URL(p, window.location.href);
+          const res = await fetch(url, { cache: 'no-store' });
+          if (!res.ok) continue;
+          return await res.text();
+        } catch (_) {
+          // try next
+        }
+      }
+      throw new Error(`HTTP 404`);
+    }
+
+    (async () => {
+      const el = document.getElementById('aiTemplate');
+      if (!el) return;
+      try {
+        let text = await fetchFirstText([
+          '../Guides/ai_companion.md',
+          '../guides/ai_companion.md',
+        ]);
+
+        // Hide the license header/block in the embedded terminal view.
+        // (Keep license accessible via the "License" button.)
+        const licenseIdx = text.indexOf('## License');
+        if (licenseIdx !== -1) {
+          const after = text.slice(licenseIdx);
+          const startFence = after.indexOf('```');
+          if (startFence !== -1) {
+            const endFence = after.indexOf('```', startFence + 3);
+            if (endFence !== -1) {
+              // Remove everything from the file start through the end of the license fenced block.
+              text = text.slice(licenseIdx + endFence + 3);
+            }
+          }
+        }
+
+        text = text.replace(/^\s+/, '');
+        el.textContent = text;
+      } catch (e) {
+        el.textContent = `Failed to load Guides/ai_companion.md\n\n${String(e)}`;
+      }
+    })();
+
+    (async () => {
+      const el = document.getElementById('aiBalancerTemplate');
+      if (!el) return;
+      try {
+        const text = await fetchFirstText([
+          '../Guides/ai_game_balancer.md',
+          '../guides/ai_game_balancer.md',
+        ]);
+        el.textContent = text.replace(/^\s+/, '');
+      } catch (e) {
+        el.textContent = `Failed to load Guides/ai_game_balancer.md\n\n${String(e)}`;
+      }
+    })();
+  </script>
+</body>
+</html>

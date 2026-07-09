@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game Library – Dungeon Mastron</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/web_assets/site_shell.css" />
+  <style>
+    body { margin: 0; background: var(--shell-bg); color: var(--shell-text); font-family: var(--shell-font); }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 30px 18px 70px; }
+    h1 { font-family: var(--shell-heading); font-weight: 600; letter-spacing: 0.10em; text-transform: uppercase; margin: 0 0 10px; }
+    .sub { color: var(--shell-sub); margin-bottom: 18px; }
+    .panel { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.10); border-radius: 16px; padding: 16px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: var(--shell-text); text-decoration: none; font-family: var(--shell-mono); }
+    .btn.primary { background: rgba(217,119,87,0.16); border-color: rgba(217,119,87,0.40); }
+    .row { display:flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
+    .note { color: var(--shell-sub); font-family: var(--shell-mono); font-size: 12px; line-height: 1.5; }
+    .grid { display:grid; grid-template-columns: repeat(12, 1fr); gap: 12px; margin-top: 16px; }
+    .card { grid-column: span 4; background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 12px; }
+    .card .t { font-family: var(--shell-heading); font-weight: 600; margin-bottom: 6px; }
+    .card .m { color: var(--shell-sub); font-size: 13px; line-height: 1.5; }
+    @media (max-width: 980px) { .card { grid-column: span 6; } }
+    @media (max-width: 620px) { .card { grid-column: span 12; } }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+  <main class="wrap">
+    <h1>Game Library</h1>
+    <div class="sub">Sign in to access the library.</div>
+
+    <div id="gate" class="panel" style="display:none;">
+      <div class="note">You must be logged in with a verified email to view the Game Library.</div>
+      <div class="row">
+        <a class="btn primary" id="loginBtn" href="/account/?next=/library/">Log in / Create account</a>
+      </div>
+    </div>
+
+    <div id="content" class="panel" style="display:none;">
+      <div class="note">Library is connected. (Catalog UI comes next.)</div>
+      <div class="grid" style="margin-top:14px;">
+        <div class="card"><div class="t">Featured (placeholder)</div><div class="m">Your hosted catalog will appear here.</div></div>
+        <div class="card"><div class="t">New (placeholder)</div><div class="m">Recent releases will appear here.</div></div>
+        <div class="card"><div class="t">Top Rated (placeholder)</div><div class="m">Ratings will come later.</div></div>
+      </div>
+    </div>
+
+    <div id="needsConfig" class="panel" style="display:none;">
+      <div class="note">
+        Supabase is not configured. Create <code>web_assets/supabase_config.js</code> from
+        <code>web_assets/supabase_config.example.js</code> and fill in the URL + anon key.
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin></script>
+  <script src="/web_assets/supabase_config.js" onerror="/* optional */"></script>
+  <script src="/web_assets/site_shell.js"></script>
+  <script>
+    (async () => {
+      const needsConfig = document.getElementById('needsConfig');
+      const gate = document.getElementById('gate');
+      const content = document.getElementById('content');
+
+      const sb = window.DM && window.DM.supabase;
+      if (!sb) {
+        needsConfig.style.display = 'block';
+        return;
+      }
+
+      const { data } = await sb.auth.getSession();
+      const session = data && data.session ? data.session : null;
+      const user = session ? session.user : null;
+      const confirmed = !!(user && user.email_confirmed_at);
+
+      if (!session || !confirmed) {
+        gate.style.display = 'block';
+        return;
+      }
+
+      // Require profile (username) before entering gated areas.
+      try {
+        const { data: prof } = await sb.from('profiles').select('username').eq('id', user.id).maybeSingle();
+        if (!prof || !prof.username) {
+          window.location.href = `/account/?mode=profile&next=/library/`;
+          return;
+        }
+      } catch (_) {
+        window.location.href = `/account/?mode=profile&next=/library/`;
+        return;
+      }
+
+      content.style.display = 'block';
+    })();
+  </script>
+</body>
+</html>
