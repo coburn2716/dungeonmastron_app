@@ -349,8 +349,39 @@
     .carousel-dot.is-active { background: var(--shell-accent); }
 
     /* ── 03 · Two ways to play ────────────────────────────────────────── */
-    .duo-photo { position: relative; margin-top: 10px; }
-    .duo-photo img { width: 100%; height: auto; display: block; }
+
+    /* technical line-art duo (console + web player) */
+    .duo-art {
+      position: relative;
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      border: 1px solid var(--shell-border);
+      background: radial-gradient(ellipse 70% 55% at 50% 42%, rgba(226,104,60,0.045), transparent 72%);
+    }
+    .duo-art-fig {
+      margin: 0;
+      padding: 38px 26px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+    }
+    .duo-art-fig + .duo-art-fig { border-left: 1px solid var(--shell-border); }
+    .duo-art-fig img { width: auto; max-width: 100%; max-height: 470px; display: block; }
+    .duo-art-fig figcaption {
+      font-family: var(--shell-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--shell-faint);
+    }
+    @media (max-width: 780px) {
+      .duo-art { grid-template-columns: 1fr; }
+      .duo-art-fig + .duo-art-fig { border-left: none; border-top: 1px solid var(--shell-border); }
+      .duo-art-fig img { max-height: 400px; }
+    }
     .duo-cols {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -569,8 +600,7 @@
     }
     .cart-figure { position: relative; text-align: center; }
     .cart-figure img {
-      width: min(100%, 440px);
-      mix-blend-mode: multiply;
+      width: min(100%, 400px);
       transform: rotate(-2deg);
     }
     .cart-figure figcaption {
@@ -764,8 +794,15 @@
         </div>
         <h2 class="dm-h dm-h--lg" data-reveal>One platform.<br /><em>Two ways to play.</em></h2>
         <p class="dm-kicker-line" style="margin-top:22px; max-width:58ch;" data-reveal>The web is the invitation. The physical console is the aspiration. Same game file, same story — two completely different rituals.</p>
-        <div class="duo-photo dm-corners" data-reveal="2">
-          <img src="web_assets/console_pictures/Images_web/combined_console_player.jpg" alt="The Dungeon Mastron physical console next to the web player running the same game" loading="lazy" />
+        <div class="duo-art dm-corners" data-reveal="2">
+          <figure class="duo-art-fig">
+            <img src="web_assets/lineart/console.svg" alt="Technical line drawing of the Dungeon Mastron physical console with a cartridge inserted, LED arrays and keys annotated" loading="lazy" />
+            <figcaption>Fig. 03-A · Console — cartridge media</figcaption>
+          </figure>
+          <figure class="duo-art-fig">
+            <img src="web_assets/lineart/webplayer.svg" alt="Technical line drawing of the Dungeon Mastron web player interface — portrait screen, LED array, and choice keys" loading="lazy" />
+            <figcaption>Fig. 03-B · Web player — any browser</figcaption>
+          </figure>
         </div>
         <div class="duo-cols" data-reveal="2">
           <div class="duo-col">
@@ -901,7 +938,7 @@
           </div>
           <div>
             <figure class="cart-figure" style="margin:0;" data-reveal="2">
-              <img src="web_assets/console_pictures/Images_web/cart_front_web.png" alt="A blank Dungeon Mastron cartridge, waiting for a label" loading="lazy" />
+              <img src="web_assets/lineart/cartridge.svg" alt="Technical line drawing of a blank Dungeon Mastron cartridge, its label area waiting for a title" loading="lazy" />
               <figcaption>Fig. 06 — your story, with your label on it</figcaption>
             </figure>
             <p class="paper-cart-copy" data-reveal="3">From a blank page, you write the story and shape the world. Define its choices, give it a name, put your label on the cartridge — and make it your own. The platform keeps evolving with the stories people create; every new tool lands here, for everyone.</p>

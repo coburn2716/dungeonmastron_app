@@ -89,6 +89,12 @@
     .con-hero .sub strong { color: var(--shell-text); font-weight: 500; }
     .con-photo { position: relative; }
     .con-photo img { width: 100%; height: auto; display: block; }
+    .con-photo--lineart {
+      border: 1px solid var(--shell-border);
+      background: radial-gradient(ellipse 70% 55% at 50% 42%, rgba(226,104,60,0.045), transparent 72%);
+      padding: 26px 18px;
+    }
+    .con-photo--lineart img { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
     .con-photo .plate {
       position: absolute;
       left: 14px; bottom: 12px;
@@ -290,9 +296,9 @@
           <a class="dm-btn" href="/guides/">Read the guides</a>
         </div>
       </div>
-      <div class="con-photo dm-corners" data-reveal>
-        <img src="../web_assets/console_pictures/Images_web/console_side_web1.jpg" alt="The Dungeon Mastron console with a cartridge inserted, screen lit" fetchpriority="high" />
-        <span class="plate">Unit 001 · reference build</span>
+      <div class="con-photo con-photo--lineart dm-corners" data-reveal>
+        <img src="../web_assets/lineart/console.svg" alt="Technical line drawing of the Dungeon Mastron console with a cartridge inserted — LED arrays, keys, and cartridge port annotated" fetchpriority="high" />
+        <span class="plate">DM·C1 · reference drawing — build yours</span>
       </div>
     </div>
   </header>
