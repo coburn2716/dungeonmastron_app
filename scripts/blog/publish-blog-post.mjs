@@ -78,6 +78,18 @@ function buildPostHtml({ slug, title, description, date, contentHtml, readingTim
   const ogImage = image
     ? (image.startsWith("http") ? image : `https://www.dungeonmastron.com${image}`)
     : "https://www.dungeonmastron.com/web_assets/og-image.jpg";
+
+  // Header/hero image block. Markers are ALWAYS emitted (even when empty) so
+  // scripts/blog/sync-header-images.mjs can later swap in a generated header
+  // (from Supabase blog_posts.image) without re-rendering the whole post.
+  const heroHtml = image
+    ? `<!-- POST_HERO_START -->
+  <div class="post-hero-wrap">
+    <figure class="post-hero"><img src="${escAttr(image)}" alt="${escAttr(title)}" width="1536" height="1024" fetchpriority="high" /></figure>
+  </div>
+  <!-- POST_HERO_END -->`
+    : `<!-- POST_HERO_START -->
+  <!-- POST_HERO_END -->`;
   const displayDate = formatDisplayDate(date);
   const cat = category || "Blog";
   const postAuthor = author || "Dungeon Mastron";
@@ -182,6 +194,13 @@ function buildPostHtml({ slug, title, description, date, contentHtml, readingTim
     }
     .post-meta-row .meta-author { color: var(--shell-sub); }
     .post-meta-row .sep { opacity: 0.4; }
+    /* NOTE: keep .post-hero styles in sync with scripts/blog/sync-header-images.mjs (HERO_CSS) */
+    .post-hero-wrap { max-width: 800px; margin: 30px auto 0; padding: 0 18px; }
+    .post-hero { position: relative; margin: 0; }
+    .post-hero img { display: block; width: 100%; height: auto; border: 1px solid var(--shell-border-strong); filter: saturate(0.97); }
+    .post-hero::before, .post-hero::after { content: ""; position: absolute; width: 16px; height: 16px; pointer-events: none; border: 0 solid rgba(226,104,60,0.6); }
+    .post-hero::before { top: -6px; left: -6px; border-top-width: 1px; border-left-width: 1px; }
+    .post-hero::after { bottom: -6px; right: -6px; border-bottom-width: 1px; border-right-width: 1px; }
     .post-prose-wrap { max-width: 800px; margin: 0 auto; padding: 0 18px 80px; }
     .post-prose { margin-top: 38px; counter-reset: dm-h2; }
     .post-prose h2 {
@@ -300,6 +319,8 @@ function buildPostHtml({ slug, title, description, date, contentHtml, readingTim
     </header>
   </div>
 
+  ${heroHtml}
+
   <div class="post-prose-wrap">
     <article class="post-prose">
       ${contentHtml}
@@ -323,7 +344,7 @@ function buildPostHtml({ slug, title, description, date, contentHtml, readingTim
 }
 
 /** Generate a post-card HTML block for the new grid blog index. */
-function buildPostCard({ slug, title, description, date, category, readingTimeMinutes }) {
+function buildPostCard({ slug, title, description, date, category, readingTimeMinutes, image }) {
   // Short date: "Jul 9, 2026"
   const d = new Date(date + "T12:00:00Z");
   const shortDate = d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" });
@@ -341,8 +362,13 @@ function buildPostCard({ slug, title, description, date, category, readingTimeMi
     ? "Read the essay"
     : "Read the post";
 
+  const cardImg = image
+    ? `
+      <a class="card-img" href="/blog/${slug}/" tabindex="-1" aria-hidden="true"><img src="${escAttr(image)}" alt="" loading="lazy" /></a>`
+    : "";
+
   return `
-    <article class="post-card">
+    <article class="post-card">${cardImg}
       <span class="card-cat">${escHtml(cat)}</span>
       <h2><a href="/blog/${slug}/" style="color:inherit;text-decoration:none;">${escHtml(title)}</a></h2>
       <p class="card-excerpt">${escHtml(description)}</p>
@@ -565,6 +591,7 @@ async function main() {
       date: data.date || new Date().toISOString().slice(0, 10),
       category: data.category || "Blog",
       readingTimeMinutes,
+      image: data.image || "",
     });
     insertCardIntoBlogIndex(blogIndexPath, card, data.slug);
   } else {
