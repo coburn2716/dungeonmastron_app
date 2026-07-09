@@ -122,6 +122,7 @@
       return /\/(play|console|builder|ai|tools|guides|blog)(\/|$)/.test(p) ? '../' : '';
     })();
     const licenseHref = isFile ? `${rootPrefix}LICENSE.txt` : '/LICENSE.txt';
+    const mascotSrc = isFile ? `${rootPrefix}web_assets/mascot/mascot-sm.webp` : '/web_assets/mascot/mascot-sm.webp';
 
     const socials = [
       { key: 'x', label: 'X', href: 'https://x.com/DungeonMastron' },
@@ -147,11 +148,42 @@
     const copy = el('div', { class: 'footer-copy' }, []);
     copy.textContent = '\u00A9 2026 Artifextron \u00B7 Dungeon Mastron';
 
+    // End-card wordmark: ghost serif brand + mascot sign-off.
+    const wm = el('div', { class: 'footer-wordmark', 'aria-hidden': 'true' }, []);
+    const wmText = el('div', { class: 'wm', html: 'Dungeon <em>Mastron</em>' }, []);
+    const wmMascot = el('img', {
+      class: 'footer-mascot', src: mascotSrc, alt: '',
+      loading: 'lazy', decoding: 'async',
+    }, []);
+    wm.appendChild(wmText);
+    wm.appendChild(wmMascot);
+
     const footer = el('footer', { class: 'site-footer' }, [
+      wm,
       el('div', { class: 'inner' }, [copy, iconsEl, licenseEl]),
     ]);
     container.innerHTML = '';
     container.appendChild(footer);
+  }
+
+  // Scroll-reveal: pages opt in by putting data-reveal on elements.
+  function initReveal() {
+    const els = document.querySelectorAll('[data-reveal]');
+    if (!els.length) return;
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced || !('IntersectionObserver' in window)) {
+      els.forEach((e) => e.classList.add('is-in'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
+    els.forEach((e) => io.observe(e));
   }
 
   async function bootstrap() {
@@ -168,6 +200,7 @@
     }
     const footerContainer = document.getElementById('site-footer');
     if (footerContainer) renderFooter(footerContainer);
+    initReveal();
   }
 
   window.DM = window.DM || {};
