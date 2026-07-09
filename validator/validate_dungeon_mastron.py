@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Dungeon Mastron Game Validator (v1.0)
+Dungeon Mastron Game Validator (v1.1)
 
 Usage:
   python validate_dungeon_mastron.py path/to/game.json
@@ -9,6 +9,24 @@ Usage:
 Exit codes:
   0 = valid (no errors)
   1 = errors found
+
+Changelog v1.0 → v1.1
+  BUG-1  Accept action.type="boss" — validate stage chain (stage_page targets exist,
+          boss-action fields present). Each stage is validated for success/failure targets.
+  BUG-2  Support all 3 item formats (stats / stat_mods / item_mods) in has_any_items()
+          and extract_item_name() so requires_item reachability sees them all.
+  BUG-3  Ending pages WITH choices (replay loops: reset_game=true) are now allowed;
+          downgraded to info if choices present and only replay (reset_game) choices exist,
+          plain info if any forward choice. No longer an error.
+  BUG-4  Accept next_page as alias for target everywhere (choice target resolution,
+          action success/failure fields). Validator resolves target = target or next_page.
+  BUG-5  Page keys with leading/trailing whitespace → warning. References that resolve
+          only after trimming → warning with clear message.
+  BUG-6  Double-damage detection: action page whose failure_page ALSO has negative
+          stat_mods.health → WARNING (authoring bug).
+  BUG-7  Flags support (requires_flags / set_flags / set_flags_on_enter) — best-effort
+          warning (not error) if required flags never set upstream.
+  COMPAT Also accept requires_items (plural list) as alias for locked-page gating.
 """
 
 from __future__ import annotations
@@ -129,11 +147,27 @@ def normalize_stat_mods(stat_mods: Any, issues: List[Issue], page_id: str, path:
     return {}
 
 
+def resolve_choice_target(choice: Dict[str, Any]) -> Optional[str]:
+    """
+    BUG-4: Accept target or next_page as the destination field.
+    Returns the target string, or None if neither is present.
+    """
+    t = choice.get("target")
+    if isinstance(t, str):
+        return t
+    t = choice.get("next_page")
+    if isinstance(t, str):
+        return t
+    return None
+
+
 def extract_choice_requires_item(choice: Dict[str, Any], issues: List[Issue], page_id: str, choice_path: str) -> Optional[str]:
     """
     Supports:
-      - requires_item: "id"
+      - requires_item: "id"           (singular string)
       - condition: { has_item: "id" } (legacy)
+    Returns the first required item id, or None.
+    Note: requires_items (plural list) is handled separately via extract_choice_requires_items_list.
     """
     if isinstance(choice.get("requires_item"), str):
         return choice["requires_item"]
@@ -151,6 +185,28 @@ def extract_choice_requires_item(choice: Dict[str, Any], issues: List[Issue], pa
         return cond["has_item"]
 
     return None
+
+
+def extract_choice_requires_items_list(choice: Dict[str, Any]) -> List[str]:
+    """
+    BUG-COMPAT: Accept requires_items (plural) as an array of item ids.
+    Returns a list (possibly empty).
+    """
+    ris = choice.get("requires_items")
+    if isinstance(ris, list):
+        return [r for r in ris if isinstance(r, str)]
+    return []
+
+
+def choice_has_any_item_requirement(choice: Dict[str, Any], issues: List[Issue], page_id: str, choice_path: str) -> bool:
+    """
+    Returns True if the choice has any item requirement (singular or plural).
+    """
+    if extract_choice_requires_item(choice, issues, page_id, choice_path) is not None:
+        return True
+    if extract_choice_requires_items_list(choice):
+        return True
+    return False
 
 
 def extract_choice_stat_condition(choice: Dict[str, Any]) -> Optional[Tuple[str, int]]:
@@ -187,6 +243,10 @@ def normalize_choice_add_items(choice: Dict[str, Any]) -> List[Dict[str, Any]]:
 
 def normalize_page_add_items(page: Dict[str, Any]) -> List[Dict[str, Any]]:
     items: List[Dict[str, Any]] = []
+    # add_item (singular dict) at page level
+    if isinstance(page.get("add_item"), dict):
+        items.append(page["add_item"])
+    # add_items (plural list) at page level
     if isinstance(page.get("add_items"), list):
         for it in page["add_items"]:
             if isinstance(it, dict):
@@ -210,9 +270,40 @@ def extract_item_stats(item: Dict[str, Any]) -> Dict[str, int]:
     return {}
 
 
+def extract_item_name(item: Dict[str, Any]) -> Optional[str]:
+    """
+    Extract the canonical item name from any item format:
+      - {name: "id", ...}                 → "id"
+      - {item_name: 1}  (simple format)   → "item_name" (first key if no 'name')
+    """
+    if isinstance(item.get("name"), str):
+        return item["name"]
+    # Simple quantity format: {"item_name": 1}
+    for k, v in item.items():
+        if k not in ("display_name", "stats", "stat_mods", "quantity"):
+            return k
+    return None
+
+
 def has_any_items(page: Dict[str, Any]) -> bool:
+    """
+    BUG-2: Support all 3 item formats:
+      - add_item (page level singular dict) — NEWLY SUPPORTED
+      - add_items (page level array)
+      - add_item / add_items on choices
+      - item_mods (page level or choice level dict, format {"item_name": qty})
+      - stats / stat_mods on items (covered by add_items above)
+    """
+    # Page-level add_item (singular dict)
+    if isinstance(page.get("add_item"), dict):
+        return True
+    # Page-level add_items (plural list)
     if isinstance(page.get("add_items"), list) and len(page["add_items"]) > 0:
         return True
+    # Page-level item_mods (BUG-2 fix)
+    if isinstance(page.get("item_mods"), dict) and len(page["item_mods"]) > 0:
+        return True
+    # Choice-level
     if isinstance(page.get("choices"), list):
         for c in page["choices"]:
             if isinstance(c, dict):
@@ -220,7 +311,42 @@ def has_any_items(page: Dict[str, Any]) -> bool:
                     return True
                 if isinstance(c.get("add_items"), list) and len(c["add_items"]) > 0:
                     return True
+                # Choice-level item_mods (BUG-2 fix)
+                if isinstance(c.get("item_mods"), dict) and len(c["item_mods"]) > 0:
+                    return True
     return False
+
+
+def collect_all_item_names(pages: Dict[str, Any]) -> Set[str]:
+    """
+    BUG-2: Collect all item names that can be acquired anywhere in the game.
+    Supports add_item (singular), add_items, and item_mods formats at both page and choice level.
+    """
+    names: Set[str] = set()
+    for pid, page in pages.items():
+        if not isinstance(page, dict):
+            continue
+        # Page-level add_item (singular) and add_items (plural)
+        # normalize_page_add_items handles both
+        for it in normalize_page_add_items(page):
+            n = extract_item_name(it)
+            if n:
+                names.add(n)
+        # Page-level item_mods
+        if isinstance(page.get("item_mods"), dict):
+            names.update(page["item_mods"].keys())
+        # Choice-level
+        for c in page.get("choices", []):
+            if not isinstance(c, dict):
+                continue
+            for it in normalize_choice_add_items(c):
+                n = extract_item_name(it)
+                if n:
+                    names.add(n)
+            # Choice-level item_mods
+            if isinstance(c.get("item_mods"), dict):
+                names.update(c["item_mods"].keys())
+    return names
 
 
 # ----------------------------
@@ -262,9 +388,32 @@ def validate(game: Dict[str, Any], strict: bool = False) -> Report:
         ))
         pages = {}
 
+    # BUG-5: Warn about page keys with leading/trailing whitespace
+    for pid in list(pages.keys()):
+        if pid != pid.strip():
+            add(Issue(
+                rule_id="PAGE_KEY_WHITESPACE",
+                severity="warning",
+                page_id=pid,
+                path=f"pages.{repr(pid)}",
+                message=f"Page key has leading/trailing whitespace: {repr(pid)}. This may cause broken references that only resolve after trimming.",
+                suggested_fix=f"Rename the page key to '{pid.strip()}' (remove surrounding whitespace)."
+            ))
+
+    # Build a trimmed-key lookup for BUG-5 reference warnings
+    trimmed_key_map: Dict[str, str] = {pid.strip(): pid for pid in pages.keys()}
+
+    def page_exists(pid: str) -> bool:
+        """Return True if pid exactly matches a page key."""
+        return pid in pages
+
+    def page_exists_trimmed(pid: str) -> bool:
+        """Return True if pid matches after trimming (only if exact match fails)."""
+        return pid.strip() in trimmed_key_map
+
     start_page = game.get("start_page")
     if isinstance(start_page, str):
-        if start_page not in pages:
+        if not page_exists(start_page):
             add(Issue(
                 rule_id="START_PAGE_NOT_FOUND",
                 severity="error",
@@ -388,6 +537,25 @@ def validate(game: Dict[str, Any], strict: bool = False) -> Report:
             return pt
         return "normal"
 
+    # Collect all known item names for requires_item reachability (BUG-2)
+    all_item_names = collect_all_item_names(pages)
+
+    # BUG-7: Collect all flag names that are set anywhere in the game
+    all_set_flags: Set[str] = set()
+    for pid, page in pages.items():
+        if not isinstance(page, dict):
+            continue
+        # set_flags_on_enter
+        sfe = page.get("set_flags_on_enter")
+        if isinstance(sfe, list):
+            all_set_flags.update(f for f in sfe if isinstance(f, str))
+        for c in page.get("choices", []):
+            if not isinstance(c, dict):
+                continue
+            sf = c.get("set_flags")
+            if isinstance(sf, list):
+                all_set_flags.update(f for f in sf if isinstance(f, str))
+
     # Iterate pages
     for pid, page in pages.items():
         if not isinstance(page, dict):
@@ -440,7 +608,36 @@ def validate(game: Dict[str, Any], strict: bool = False) -> Report:
             ))
             choices_list = []
 
-        # Action rules
+        # BUG-7: Validate requires_flags on choices
+        for idx, c in enumerate(choices_list):
+            req_flags = c.get("requires_flags")
+            if isinstance(req_flags, list):
+                for flag in req_flags:
+                    if isinstance(flag, str) and flag not in all_set_flags:
+                        add(Issue(
+                            rule_id="FLAG_NEVER_SET",
+                            severity="warning",
+                            page_id=pid,
+                            path=f"pages.{pid}.choices[{idx}].requires_flags",
+                            message=f"Flag '{flag}' is required here but never set anywhere in the game (set_flags / set_flags_on_enter).",
+                            suggested_fix=f"Add set_flags: [\"{flag}\"] to a choice or set_flags_on_enter: [\"{flag}\"] to a page earlier in the story."
+                        ))
+
+        # BUG-7: Validate requires_flags on page entry (set_flags_on_enter check)
+        req_page_flags = page.get("requires_flags")
+        if isinstance(req_page_flags, list):
+            for flag in req_page_flags:
+                if isinstance(flag, str) and flag not in all_set_flags:
+                    add(Issue(
+                        rule_id="FLAG_NEVER_SET",
+                        severity="warning",
+                        page_id=pid,
+                        path=f"pages.{pid}.requires_flags",
+                        message=f"Flag '{flag}' is required to reach this page but never set anywhere in the game.",
+                        suggested_fix=f"Add set_flags: [\"{flag}\"] to a choice or set_flags_on_enter: [\"{flag}\"] to an earlier page."
+                    ))
+
+        # ---- Action rules
         if pclass == "action":
             action = page.get("action", {})
             if not isinstance(action, dict):
@@ -474,18 +671,51 @@ def validate(game: Dict[str, Any], strict: bool = False) -> Report:
                 ))
 
             atype = action.get("type")
-            if atype not in ("combat", "dice"):
+
+            # BUG-1: Accept "boss" as a valid action type
+            if atype not in ("combat", "dice", "boss"):
                 add(Issue(
                     rule_id="ACTION_MISSING_FIELDS",
                     severity="error",
                     page_id=pid,
                     path=f"pages.{pid}.action.type",
-                    message="action.type must be 'combat' or 'dice'.",
-                    suggested_fix="Set action.type to 'combat' or 'dice'."
+                    message="action.type must be 'combat', 'dice', or 'boss'.",
+                    suggested_fix="Set action.type to 'combat', 'dice', or 'boss'."
                 ))
 
+            # BUG-4: Accept success_page and failure_page (no next_page alias needed here,
+            # but resolve them consistently)
             succ = action.get("success_page")
             fail = action.get("failure_page")
+
+            # BUG-1: For boss type, also validate the stage_page link
+            if atype == "boss":
+                stage_page = action.get("stage_page")
+                # stage_page is required unless this is a final stage (empty string or absent)
+                if stage_page and not page_exists(stage_page):
+                    # BUG-5: Check if it resolves with trimming
+                    if page_exists_trimmed(stage_page):
+                        add(Issue(
+                            rule_id="BOSS_STAGE_PAGE_WHITESPACE",
+                            severity="warning",
+                            page_id=pid,
+                            path=f"pages.{pid}.action.stage_page",
+                            message=f"Boss stage_page '{stage_page}' only resolves after trimming whitespace from the target key. This may fail at runtime.",
+                            suggested_fix=f"Rename the target page key to remove surrounding whitespace, or fix the stage_page reference."
+                        ))
+                    else:
+                        add(Issue(
+                            rule_id="BOSS_STAGE_PAGE_MISSING",
+                            severity="error",
+                            page_id=pid,
+                            path=f"pages.{pid}.action.stage_page",
+                            message=f"Boss action stage_page '{stage_page}' does not exist in pages.",
+                            suggested_fix="Set stage_page to an existing page_id (or empty string for the final stage)."
+                        ))
+                if stage_page and page_exists(stage_page):
+                    edges_all.append((pid, stage_page, "boss_stage"))
+                    edges_no_items.append((pid, stage_page))
+
             if not isinstance(succ, str) or not isinstance(fail, str):
                 add(Issue(
                     rule_id="ACTION_MISSING_FIELDS",
@@ -496,31 +726,77 @@ def validate(game: Dict[str, Any], strict: bool = False) -> Report:
                     suggested_fix="Add action.success_page and action.failure_page pointing to valid page_ids."
                 ))
             else:
-                if succ not in pages:
-                    add(Issue(
-                        rule_id="ACTION_TARGET_MISSING",
-                        severity="error",
-                        page_id=pid,
-                        path=f"pages.{pid}.action.success_page",
-                        message=f"Action success_page '{succ}' does not exist.",
-                    ))
+                if not page_exists(succ):
+                    # BUG-5: check trimmed
+                    if page_exists_trimmed(succ):
+                        add(Issue(
+                            rule_id="ACTION_TARGET_WHITESPACE",
+                            severity="warning",
+                            page_id=pid,
+                            path=f"pages.{pid}.action.success_page",
+                            message=f"Action success_page '{succ}' only resolves after trimming whitespace from the target key.",
+                            suggested_fix="Fix the page key or the success_page reference to remove surrounding whitespace."
+                        ))
+                    else:
+                        add(Issue(
+                            rule_id="ACTION_TARGET_MISSING",
+                            severity="error",
+                            page_id=pid,
+                            path=f"pages.{pid}.action.success_page",
+                            message=f"Action success_page '{succ}' does not exist.",
+                        ))
                 else:
                     edges_all.append((pid, succ, "action_success"))
                     edges_no_items.append((pid, succ))
 
-                if fail not in pages:
-                    add(Issue(
-                        rule_id="ACTION_TARGET_MISSING",
-                        severity="error",
-                        page_id=pid,
-                        path=f"pages.{pid}.action.failure_page",
-                        message=f"Action failure_page '{fail}' does not exist.",
-                    ))
+                if not page_exists(fail):
+                    # BUG-5: check trimmed
+                    if page_exists_trimmed(fail):
+                        add(Issue(
+                            rule_id="ACTION_TARGET_WHITESPACE",
+                            severity="warning",
+                            page_id=pid,
+                            path=f"pages.{pid}.action.failure_page",
+                            message=f"Action failure_page '{fail}' only resolves after trimming whitespace from the target key.",
+                            suggested_fix="Fix the page key or the failure_page reference to remove surrounding whitespace."
+                        ))
+                    else:
+                        add(Issue(
+                            rule_id="ACTION_TARGET_MISSING",
+                            severity="error",
+                            page_id=pid,
+                            path=f"pages.{pid}.action.failure_page",
+                            message=f"Action failure_page '{fail}' does not exist.",
+                        ))
                 else:
                     edges_all.append((pid, fail, "action_failure"))
                     edges_no_items.append((pid, fail))
 
-            if atype == "combat":
+                    # BUG-6: Double-damage detection
+                    # Check if failure_page also applies negative health via stat_mods
+                    if page_exists(fail):
+                        fail_pg = pages[fail]
+                        if isinstance(fail_pg, dict):
+                            fail_sm = normalize_stat_mods(
+                                fail_pg.get("stat_mods"), [], fail, f"pages.{fail}.stat_mods"
+                            )
+                            fail_health_mod = fail_sm.get("health", 0)
+                            if fail_health_mod < 0:
+                                action_damage = action.get("enemy_damage", action.get("failure_damage", 0))
+                                add(Issue(
+                                    rule_id="DOUBLE_DAMAGE_WARN",
+                                    severity="warning",
+                                    page_id=pid,
+                                    path=f"pages.{pid}.action",
+                                    message=(
+                                        f"Double-damage risk: action '{pid}' deals {action_damage} damage on failure "
+                                        f"AND its failure_page '{fail}' ALSO applies stat_mods.health={fail_health_mod}. "
+                                        f"Player takes both hits. This is the #1 authoring bug."
+                                    ),
+                                    suggested_fix=f"Remove stat_mods.health from '{fail}' — damage is already applied by the action itself."
+                                ))
+
+            if atype in ("combat", "boss"):
                 dmg = action.get("enemy_damage")
                 if not isinstance(dmg, (int, float)) or isinstance(dmg, bool) or dmg <= 0:
                     add(Issue(
@@ -528,7 +804,7 @@ def validate(game: Dict[str, Any], strict: bool = False) -> Report:
                         severity="error",
                         page_id=pid,
                         path=f"pages.{pid}.action.enemy_damage",
-                        message="Combat actions must have enemy_damage > 0.",
+                        message="Combat/boss actions must have enemy_damage > 0.",
                         suggested_fix="Set enemy_damage to a positive integer (e.g. 20-50)."
                     ))
                 else:
@@ -546,7 +822,7 @@ def validate(game: Dict[str, Any], strict: bool = False) -> Report:
                     suggested_fix="Add 1-4 choices that move forward to new pages."
                 ))
 
-        # Ending rules
+        # BUG-3: Ending rules — allow endings with choices (replay loops)
         if pclass == "ending":
             if "action" in page:
                 add(Issue(
@@ -558,14 +834,24 @@ def validate(game: Dict[str, Any], strict: bool = False) -> Report:
                     suggested_fix="Move action to a prior page, and end with choices: [] here."
                 ))
             if len(choices_list) > 0:
-                add(Issue(
-                    rule_id="ENDING_HAS_CHOICES",
-                    severity="error",
-                    page_id=pid,
-                    path=f"pages.{pid}.choices",
-                    message="Ending pages must have no forward choices (choices must be []).",
-                    suggested_fix="Set choices to [] or remove choices."
-                ))
+                # Check if all choices are replay loops (reset_game: true)
+                all_replay = all(c.get("reset_game") is True for c in choices_list)
+                if all_replay:
+                    add(Issue(
+                        rule_id="ENDING_HAS_REPLAY_CHOICES",
+                        severity="info",
+                        page_id=pid,
+                        path=f"pages.{pid}.choices",
+                        message="Ending page has replay choices (reset_game: true). This is a valid replay loop design pattern.",
+                    ))
+                else:
+                    add(Issue(
+                        rule_id="ENDING_HAS_FORWARD_CHOICES",
+                        severity="info",
+                        page_id=pid,
+                        path=f"pages.{pid}.choices",
+                        message="Ending page has forward choices (soft ending / multi-act design). This is allowed.",
+                    ))
 
         # Sanctuary rules
         if pclass == "sanctuary":
@@ -651,11 +937,11 @@ def validate(game: Dict[str, Any], strict: bool = False) -> Report:
             gated = 0
             unlocked = 0
             for idx, c in enumerate(choices_list):
-                req_item = extract_choice_requires_item(c, warnings, pid, f"pages.{pid}.choices[{idx}]")
-                cond_stat = extract_choice_stat_condition(c)
-                if req_item is not None:
+                # BUG-COMPAT: Count requires_items (plural list) as a gate too
+                if choice_has_any_item_requirement(c, warnings, pid, f"pages.{pid}.choices[{idx}]"):
                     gated += 1
                 else:
+                    cond_stat = extract_choice_stat_condition(c)
                     if cond_stat is not None:
                         stat_name, minv = cond_stat
                         if base_stats.get(stat_name, -10**9) >= minv:
@@ -669,7 +955,7 @@ def validate(game: Dict[str, Any], strict: bool = False) -> Report:
                     severity="error",
                     page_id=pid,
                     path=f"pages.{pid}.choices",
-                    message="Locked pages must have at least one choice requiring an item.",
+                    message="Locked pages must have at least one choice requiring an item (requires_item or requires_items).",
                     suggested_fix="Add requires_item to at least one choice."
                 ))
             if unlocked == 0:
@@ -684,32 +970,51 @@ def validate(game: Dict[str, Any], strict: bool = False) -> Report:
 
         # Choice target integrity + edges
         for idx, c in enumerate(choices_list):
-            target = c.get("target")
-            if not isinstance(target, str):
+            # BUG-4: resolve target = target or next_page
+            target = resolve_choice_target(c)
+            if target is None:
                 add(Issue(
                     rule_id="CHOICE_TARGET_MISSING",
                     severity="error",
                     page_id=pid,
                     path=f"pages.{pid}.choices[{idx}].target",
-                    message="Choice is missing a string 'target'.",
+                    message="Choice is missing a string 'target' (or 'next_page').",
                     suggested_fix="Set target to a valid page_id."
                 ))
                 continue
-            if target not in pages:
-                add(Issue(
-                    rule_id="CHOICE_TARGET_MISSING",
-                    severity="error",
-                    page_id=pid,
-                    path=f"pages.{pid}.choices[{idx}].target",
-                    message=f"Choice target '{target}' does not exist.",
-                ))
+            if not page_exists(target):
+                # BUG-5: Check if target resolves after trimming
+                if page_exists_trimmed(target):
+                    add(Issue(
+                        rule_id="CHOICE_TARGET_WHITESPACE",
+                        severity="warning",
+                        page_id=pid,
+                        path=f"pages.{pid}.choices[{idx}].target",
+                        message=f"Choice target '{target}' only resolves after trimming whitespace from the page key. May fail at runtime.",
+                        suggested_fix=f"Rename the destination page key to '{target.strip()}' (remove surrounding whitespace)."
+                    ))
+                    # Still add the edge using trimmed key for reachability
+                    real_target = trimmed_key_map[target.strip()]
+                    edges_all.append((pid, real_target, "choice_whitespace"))
+                else:
+                    add(Issue(
+                        rule_id="CHOICE_TARGET_MISSING",
+                        severity="error",
+                        page_id=pid,
+                        path=f"pages.{pid}.choices[{idx}].target",
+                        message=f"Choice target '{target}' does not exist.",
+                    ))
                 continue
 
             edges_all.append((pid, target, "choice"))
 
-            req_item = extract_choice_requires_item(c, warnings, pid, f"pages.{pid}.choices[{idx}]")
+            # Determine if this edge is traversable without items/flags
+            has_item_req = choice_has_any_item_requirement(c, warnings, pid, f"pages.{pid}.choices[{idx}]")
             cond_stat = extract_choice_stat_condition(c)
-            if req_item is None:
+            req_flags = c.get("requires_flags")
+            has_flag_req = isinstance(req_flags, list) and len(req_flags) > 0
+
+            if not has_item_req and not has_flag_req:
                 if cond_stat is None:
                     edges_no_items.append((pid, target))
                 else:
@@ -738,13 +1043,26 @@ def validate(game: Dict[str, Any], strict: bool = False) -> Report:
                 suggested_fix="Add choices or an action to move forward."
             ))
 
-    # Cycle detection (allow only game_over -> start_page)
-    allow_edge = ("game_over", start_page) if start_page else None
+    # Cycle detection — allow game_over -> start_page AND any page whose choices
+    # are all reset_game: true back to start (e.g. a 'the_end' credit screen with
+    # a 'Play Again' button — same semantics as game_over but a different page_id).
+    allow_edges: Set[Tuple[str, str]] = set()
+    if start_page:
+        for pid, page in pages.items():
+            if not isinstance(page, dict):
+                continue
+            choices_here = [c for c in page.get("choices", []) if isinstance(c, dict)]
+            if choices_here and all(
+                c.get("reset_game") is True
+                and (c.get("target") == start_page or c.get("next_page") == start_page)
+                for c in choices_here
+            ):
+                allow_edges.add((pid, start_page))
     graph: Dict[str, List[str]] = {pid: [] for pid in pages.keys()}
     for src, dst, _ in edges_all:
         graph.setdefault(src, []).append(dst)
 
-    cycle = find_cycle(graph, allow_edge=allow_edge)
+    cycle = find_cycle(graph, allow_edges=allow_edges)
     if cycle:
         add(Issue(
             rule_id="NAVIGATION_CYCLE_DETECTED",
@@ -782,6 +1100,37 @@ def validate(game: Dict[str, Any], strict: bool = False) -> Report:
                     message="Page is unreachable from start_page (ignoring conditions).",
                     suggested_fix="Add a path to this page or remove it."
                 ))
+
+    # BUG-2: requires_item reachability check — warn if required item never acquirable
+    # Collect all requires_item/requires_items across all choices
+    for pid, page in pages.items():
+        if not isinstance(page, dict):
+            continue
+        for idx, c in enumerate(page.get("choices", [])):
+            if not isinstance(c, dict):
+                continue
+            ri = c.get("requires_item")
+            if isinstance(ri, str) and ri not in all_item_names:
+                add(Issue(
+                    rule_id="REQUIRES_ITEM_NEVER_GIVEN",
+                    severity="warning",
+                    page_id=pid,
+                    path=f"pages.{pid}.choices[{idx}].requires_item",
+                    message=f"Choice requires item '{ri}' but this item is never given anywhere in the game.",
+                    suggested_fix=f"Add an armory page or choice that grants '{ri}', or remove the requires_item gate."
+                ))
+            ris = c.get("requires_items")
+            if isinstance(ris, list):
+                for ri_item in ris:
+                    if isinstance(ri_item, str) and ri_item not in all_item_names:
+                        add(Issue(
+                            rule_id="REQUIRES_ITEM_NEVER_GIVEN",
+                            severity="warning",
+                            page_id=pid,
+                            path=f"pages.{pid}.choices[{idx}].requires_items",
+                            message=f"Choice requires item '{ri_item}' (from requires_items list) but this item is never given anywhere in the game.",
+                            suggested_fix=f"Add an armory page or choice that grants '{ri_item}', or remove the gate."
+                        ))
 
     # Balance warnings
     total_pages = len([p for p in pages.values() if isinstance(p, dict)])
@@ -855,10 +1204,11 @@ def reachable_nodes(start: str, edges: List[Tuple[str, str]]) -> Set[str]:
     return seen
 
 
-def find_cycle(graph: Dict[str, List[str]], allow_edge: Optional[Tuple[str, str]] = None) -> Optional[List[str]]:
+def find_cycle(graph: Dict[str, List[str]], allow_edges: Optional[Set[Tuple[str, str]]] = None) -> Optional[List[str]]:
     """
     Detect any cycle in directed graph.
-    If allow_edge is provided, ignore that single edge for cycle detection.
+    If allow_edges is provided, ignore those edges for cycle detection.
+    This is used to exempt intentional replay loops (game_over -> start, the_end -> start).
     Returns a cycle path list if found.
     """
     WHITE, GRAY, BLACK = 0, 1, 2
@@ -867,8 +1217,8 @@ def find_cycle(graph: Dict[str, List[str]], allow_edge: Optional[Tuple[str, str]
 
     def neighbors(u: str) -> List[str]:
         nbrs = graph.get(u, [])
-        if allow_edge and u == allow_edge[0]:
-            return [v for v in nbrs if v != allow_edge[1]]
+        if allow_edges:
+            return [v for v in nbrs if (u, v) not in allow_edges]
         return nbrs
 
     def dfs(u: str) -> Optional[List[str]]:
@@ -944,6 +1294,8 @@ def main() -> int:
                 loc = f"[{w.page_id}]" if w.page_id else ""
                 where = f" @ {w.path}" if w.path else ""
                 print(f" - {w.rule_id} {loc}{where}: {w.message}")
+                if w.suggested_fix:
+                    print(f"   fix: {w.suggested_fix}")
         if report.info:
             print(f"\nInfo ({len(report.info)}):")
             for i in report.info:

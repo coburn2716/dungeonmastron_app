@@ -97,13 +97,91 @@ import json
 import time
 import random
 import pygame
-import pyudev
-import cv2  # OpenCV for video playback
-import numpy as np
 from pathlib import Path
 from threading import Thread, Timer
-from gpiozero import Button
 from signal import pause
+
+# --- v2 parity: dev-mode / hardware-optional imports ---
+# All hardware dependencies are wrapped so the console can run on a dev
+# machine (laptop/desktop) without a Raspberry Pi, GPIO, or OpenCV installed.
+# Set env-var DM_DEV_MODE=1 to force dev mode even on a Pi.
+
+try:
+    import pyudev
+    _PYUDEV_AVAILABLE = True
+except ImportError:
+    pyudev = None  # type: ignore
+    _PYUDEV_AVAILABLE = False
+
+try:
+    import cv2  # OpenCV for video / Ken Burns animation playback
+    import numpy as np
+    _CV2_AVAILABLE = True
+except ImportError:
+    cv2 = None  # type: ignore
+    np = None   # type: ignore
+    _CV2_AVAILABLE = False
+
+try:
+    from gpiozero import Button as _GPIOButton
+    from gpiozero import PWMLED as _PWMLED
+    _GPIO_AVAILABLE = True
+except (ImportError, Exception):
+    _GPIOButton = None  # type: ignore
+    _PWMLED = None      # type: ignore
+    _GPIO_AVAILABLE = False
+
+# Detect dev/headless mode
+DEV_MODE = (
+    not _GPIO_AVAILABLE
+    or os.environ.get("DM_DEV_MODE", "").lower() in ("1", "true", "yes")
+)
+
+if DEV_MODE:
+    print("[DEV MODE] Running without GPIO/LED hardware.")
+    print("  Controls: 1/2/3 = choices, SPACE/ENTER = action, ESC = quit")
+    print("  Set DM_GAME=/path/to/game/folder to load a game directly.")
+    print()
+
+# --- v2 parity: mock hardware stubs (used when DEV_MODE is active) ---
+
+class _MockButton:
+    """No-op GPIO button for dev mode — actual input via keyboard."""
+    def __init__(self, *args, **kwargs):
+        self._when_pressed = None
+    @property
+    def when_pressed(self):
+        return self._when_pressed
+    @when_pressed.setter
+    def when_pressed(self, fn):
+        self._when_pressed = fn
+    def fire(self):
+        """Called by keyboard handler to simulate a button press."""
+        if self._when_pressed:
+            self._when_pressed()
+
+class _MockPWMLED:
+    """No-op PWM LED for dev mode."""
+    def __init__(self, *args, **kwargs):
+        self._value = 0.0
+    @property
+    def value(self):
+        return self._value
+    @value.setter
+    def value(self, v):
+        self._value = float(v)
+    def on(self): self._value = 1.0
+    def off(self): self._value = 0.0
+    def pulse(self, *args, **kwargs): pass
+    def blink(self, *args, **kwargs): pass
+
+class _MockMonitorObserver:
+    def start(self): pass
+    def stop(self): pass
+
+# Resolve the Button / PWMLED classes to use at runtime
+Button  = _GPIOButton  if _GPIO_AVAILABLE else _MockButton
+_PWMLED_CLS = _PWMLED if _GPIO_AVAILABLE else _MockPWMLED
 
 # Configuration
 SCREEN_WIDTH = 720
@@ -362,14 +440,13 @@ class SimpleLEDController:
     """
     
     def __init__(self, led_pins):
-        from gpiozero import PWMLED
-        
+        # --- v2 parity: use resolved PWMLED class (real or mock) ---
         self.leds = {}
         
         # Initialize each LED pair with PWM support
         for color, pin in led_pins.items():
             try:
-                led = PWMLED(pin)
+                led = _PWMLED_CLS(pin)
                 self.leds[color] = led
                 print(f"Ã†â€™Ãƒâ€šÃ‚Â¢Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃ‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦ LED initialized: {color} (2 LEDs) on GPIO {pin}")
             except Exception as e:
@@ -436,6 +513,19 @@ class GameEngine:
     """Handles game logic and state"""
     
     def __init__(self, game_data):
+        # --- v2 parity: page-key whitespace trimming ---
+        # Trim whitespace from all page keys on load so typos like
+        # " servant_passage" (leading space) are silently corrected.
+        raw_pages = game_data.get('pages', {})
+        trimmed_pages = {k.strip(): v for k, v in raw_pages.items()}
+        if len(trimmed_pages) != len(raw_pages):
+            # Keys were trimmed; rebuild to avoid silent duplicates
+            trimmed_pages = {}
+            for k, v in raw_pages.items():
+                trimmed_pages[k.strip()] = v
+        game_data = dict(game_data)
+        game_data['pages'] = trimmed_pages
+
         self.game_data = game_data
         self.inventory = {}  # Changed to dict to store item objects with stats
         self.variables = {}
@@ -741,6 +831,8 @@ class GameEngine:
         This method should be used instead of directly setting self.current_page
         to ensure all page-entry logic is executed properly.
         """
+        # --- v2 parity: page-key whitespace trimming (runtime guard) ---
+        page_id = str(page_id).strip()
         if page_id not in self.game_data['pages']:
             print(f"ERROR: Page '{page_id}' not found!")
             return False
@@ -896,27 +988,41 @@ class DungeonMastronConsole:
     """Main console application"""
     
     def __init__(self):
+        # --- v2 parity: dev mode flag ---
+        self.dev_mode = DEV_MODE
+
         # Initialize Pygame (NO audio/mixer - we use pure ALSA!)
         pygame.init()
         
         # Initialize clock for animations and fade transitions
         self.clock = pygame.time.Clock()
         
-        self.screen = pygame.display.set_mode(
-            (SCREEN_WIDTH, SCREEN_HEIGHT), 
-            pygame.FULLSCREEN | pygame.HWSURFACE | pygame.DOUBLEBUF
-        )
-        pygame.display.set_caption("Dungeon Mastron")
-        pygame.mouse.set_visible(False)
+        # --- v2 parity: dev mode uses a windowed (non-fullscreen) display ---
+        if self.dev_mode:
+            self.screen = pygame.display.set_mode(
+                (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2),  # Half-size for dev
+                pygame.RESIZABLE
+            )
+        else:
+            self.screen = pygame.display.set_mode(
+                (SCREEN_WIDTH, SCREEN_HEIGHT),
+                pygame.FULLSCREEN | pygame.HWSURFACE | pygame.DOUBLEBUF
+            )
+        pygame.display.set_caption("Dungeon Mastron" + (" [DEV MODE]" if self.dev_mode else ""))
+        pygame.mouse.set_visible(self.dev_mode)  # Show cursor in dev mode
         
         # Load assets
         self.splash_image = self.load_image(ASSETS_PATH / "splash.jpg")
         self.insert_cart_image = self.load_image(ASSETS_PATH / "insert_cart.png")
         
+        # --- v2 parity: initialize hardware only when GPIO is available ---
         # Initialize hardware - BUTTONS FIRST (simple GPIO)
         self.buttons = {}
         for name, pin in BUTTON_PINS.items():
-            btn = Button(pin, pull_up=True, bounce_time=0.1)
+            if self.dev_mode:
+                btn = _MockButton()  # keyboard input substitutes in dev mode
+            else:
+                btn = Button(pin, pull_up=True, bounce_time=0.1)
             self.buttons[name] = btn
         
         # Initialize LEDs
@@ -997,18 +1103,36 @@ class DungeonMastronConsole:
         self.image_cache = {}  # Cache for loaded/scaled images (page images + bezels)
         self.font_cache = {}
         # UI state
-        self.configure_fonts('fantasy')# Setup button callbacks
+        self.configure_fonts('fantasy')
+
+        # Setup button callbacks (GPIO hardware or mock for dev mode)
         self.buttons['choice1'].when_pressed = lambda: self.handle_choice(0)
         self.buttons['choice2'].when_pressed = lambda: self.handle_choice(1)
         self.buttons['choice3'].when_pressed = lambda: self.handle_choice(2)
         self.buttons['action'].when_pressed = self.handle_action
         
-        # USB monitoring
-        self.context = pyudev.Context()
-        self.monitor = pyudev.Monitor.from_netlink(self.context)
-        self.monitor.filter_by(subsystem='block', device_type='partition')
-        self.observer = pyudev.MonitorObserver(self.monitor, self.usb_callback)
-        self.observer.start()
+        # --- v2 parity: USB monitoring (skip in dev mode / when pyudev unavailable) ---
+        if not self.dev_mode and _PYUDEV_AVAILABLE and pyudev is not None:
+            self.context = pyudev.Context()
+            self.monitor = pyudev.Monitor.from_netlink(self.context)
+            self.monitor.filter_by(subsystem='block', device_type='partition')
+            self.observer = pyudev.MonitorObserver(self.monitor, self.usb_callback)
+            self.observer.start()
+        else:
+            # No USB monitoring in dev mode; games are loaded via DM_GAME env var
+            self.context = None
+            self.monitor = None
+            self.observer = _MockMonitorObserver()
+
+        # --- v2 parity: dev mode auto-load game from DM_GAME env var ---
+        dev_game_path = os.environ.get("DM_GAME", "").strip()
+        if self.dev_mode and dev_game_path:
+            print(f"[DEV MODE] Auto-loading game from DM_GAME={dev_game_path}")
+            self.usb_check_pending = False
+            try:
+                self.load_game(Path(dev_game_path))
+            except Exception as _e:
+                print(f"[DEV MODE] Failed to load game: {_e}")
     
     def detect_usb_audio(self):
         """Auto-detect USB audio device"""
@@ -1293,6 +1417,17 @@ class DungeonMastronConsole:
     
     def check_for_game(self):
         """Check mounted USB devices for game data"""
+        # --- v2 parity: dev mode loads games via DM_GAME env var, not USB ---
+        if getattr(self, 'dev_mode', False):
+            dev_game_path = os.environ.get("DM_GAME", "").strip()
+            if dev_game_path and not self.current_game:
+                try:
+                    self.load_game(Path(dev_game_path))
+                    return bool(self.current_game)
+                except Exception as _e:
+                    print(f"[DEV MODE] Failed to load DM_GAME: {_e}")
+            return bool(self.current_game)  # Already loaded (or not)
+
         print(f"[CHECK] check_for_game() called")
         print(f"   Looking in: {USB_MOUNT_BASE}")
         
@@ -1484,14 +1619,19 @@ class DungeonMastronConsole:
             print(f"[OK] Game engine created")
             
             # Load theme - handle both string and dict formats
+            # --- v2 parity: tolerant theme fallback with warning ---
             theme_value = self.current_game.get("theme", "fantasy")
             if isinstance(theme_value, str):
-                theme_name = theme_value
+                theme_name = theme_value.strip() or "fantasy"
             elif isinstance(theme_value, dict):
-                theme_name = theme_value.get("preset", "fantasy")
+                theme_name = (theme_value.get("preset") or "fantasy").strip()
             else:
                 theme_name = "fantasy"
-            self.theme = THEMES.get(theme_name, THEMES['fantasy']).copy()
+            if theme_name not in THEMES:
+                print(f"[WARNING] Unknown theme preset '{theme_name}' - falling back to 'fantasy'. "
+                      f"Valid presets: {list(THEMES.keys())}")
+                theme_name = "fantasy"
+            self.theme = THEMES[theme_name].copy()
             print(f"[RENDER] Loading theme: {theme_name}")
             self.configure_fonts(theme_name)
             
@@ -1571,8 +1711,6 @@ class DungeonMastronConsole:
                     except Exception as e:
                         print(f"   ÃƒÂ¢Ã…Â¡Ã‚Â ÃƒÂ¯Ã‚Â¸Ã‚Â Failed to load action bezel: {e}")
             
-                    except Exception as e:
-                        print(f"[WARNING]Ãƒâ€šÃ‚Â  Failed to load action bezel: {e}")
             
             # LED effect for game loaded
             print(f"[LED] Pulsing green LED...")
@@ -2399,6 +2537,10 @@ class DungeonMastronConsole:
     
     def load_video(self, video_path, page_id):
         """Load video for Ken Burns animation playback"""
+        # --- v2 parity: dev mode / no-cv2 guard ---
+        if cv2 is None:
+            print("[VIDEO] Skipping video load (cv2 not available)")
+            return False
         try:
             # Release previous video if exists
             if self.video_capture is not None:
@@ -2427,6 +2569,9 @@ class DungeonMastronConsole:
     
     def get_video_frame(self):
         """Get current video frame as pygame surface"""
+        # --- v2 parity: dev mode / no-cv2 guard ---
+        if cv2 is None:
+            return None
         if self.video_capture is None:
             return None
         
@@ -2906,8 +3051,67 @@ class DungeonMastronConsole:
         # ALWAYS FLIP THE DISPLAY
         pygame.display.flip()
     
+    def _resolve_audio_path(self, audio_dir: 'Path', filename: str) -> 'Path | None':
+        """Resolve an audio file, trying .mp3 <-> .wav fallback.
+
+        --- v2 parity: MP3 support ---
+        Games now ship .mp3 files (were .wav). This helper:
+          1. Tries the filename exactly as given.
+          2. If missing and ends in .wav, tries the .mp3 version.
+          3. If missing and ends in .mp3, tries the .wav version.
+        Returns the first existing path, or None.
+        """
+        p = audio_dir / filename
+        if p.exists():
+            return p
+        stem = Path(filename).stem
+        ext  = Path(filename).suffix.lower()
+        if ext == '.wav':
+            alt = audio_dir / (stem + '.mp3')
+        elif ext == '.mp3':
+            alt = audio_dir / (stem + '.wav')
+        else:
+            return None
+        return alt if alt.exists() else None
+
+    def _build_audio_cmd(self, audio_path: 'Path') -> list:
+        """Return the shell command list to play an audio file.
+
+        --- v2 parity: MP3 support ---
+        WAV  -> aplay  (ALSA, low-latency)
+        MP3  -> mpg123 if available, else ffplay, else vlc
+        """
+        import shutil
+        ext = audio_path.suffix.lower()
+        device = self.audio_device if getattr(self, 'audio_device', None) else None
+        if ext != '.mp3':
+            # WAV or any other format: aplay
+            if device:
+                return ['aplay', '-D', device, str(audio_path)]
+            return ['aplay', str(audio_path)]
+        # MP3: try mpg123 first (lightweight), then ffplay
+        if shutil.which('mpg123'):
+            cmd = ['mpg123', '-q']
+            if device:
+                # mpg123 uses -a for ALSA device; strip 'plughw:' prefix if needed
+                alsa_dev = device.replace('plughw:', '') if device.startswith('plughw:') else device
+                cmd += ['-a', alsa_dev]
+            cmd.append(str(audio_path))
+            return cmd
+        if shutil.which('ffplay'):
+            cmd = ['ffplay', '-nodisp', '-autoexit', '-loglevel', 'quiet']
+            if device:
+                cmd += ['-f', 'alsa', '-acodec', 'pcm_s16le']
+            cmd.append(str(audio_path))
+            return cmd
+        # Last resort: aplay (will likely fail for mp3, but at least won't crash)
+        print('[WARNING] mpg123/ffplay not found; MP3 playback may fail. Install mpg123.')
+        if device:
+            return ['aplay', '-D', device, str(audio_path)]
+        return ['aplay', str(audio_path)]
+
     def play_page_audio(self, page):
-        """Play speech and sound effects using aplay (pure ALSA, no SDL)"""
+        """Play speech and sound effects using aplay/mpg123 (pure ALSA, no SDL)"""
         if not hasattr(self, 'audio_available') or not self.audio_available:
             return
         
@@ -2916,13 +3120,13 @@ class DungeonMastronConsole:
         
         # Get current page ID for debugging
         page_id = self.game_engine.current_page if self.game_engine else "unknown"
-        print(f"Ã†â€™Ãƒâ€šÃ‚Â°Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¸Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â½Ã¢â‚¬Å¡Ãƒâ€šÃ‚Âµ Page '{page_id}' - Checking for audio...")
+        print(f"[AUDIO] Page '{page_id}' - Checking for audio...")
         
         # REDUCE LED PWM activity during audio to minimize interference
         # Stop any animated effects and use static color
         if hasattr(self, 'leds'):
             self.leds.stop_effect()  # Stop animations
-            self.leds.set_color('white', 0.3)  # Static dim white
+            self.leds.set_color('blue', 0.3)  # Static dim blue (valid LED color)
         
         # Stop previous audio IMMEDIATELY
         if hasattr(self, '_audio_process') and self._audio_process:
@@ -2958,148 +3162,57 @@ class DungeonMastronConsole:
         
         # Get audio files with auto-loading support
         speech_file = page.get('speech_file', '')
-        sound_file = page.get('sound_file', '')
-        
-        # Auto-load speech file: {page_id}.wav if not specified
+        sound_file  = page.get('sound_file', '')
+        audio_dir = self.usb_path / "audio"
+
+        # --- v2 parity: MP3 support + .wav/.mp3 fallback ---
+        # Auto-discover speech: prefer explicit name, then {page_id}.mp3, then .wav
         if not speech_file:
-            speech_file = f"{page_id}.wav"
-        
-        # Auto-load sound file: {page_id}_sfx.wav if not specified
+            # Try mp3 first (current game asset format), then wav (legacy)
+            speech_file = f"{page_id}.mp3"
         if not sound_file:
-            sound_file = f"{page_id}_sfx.wav"
-        
-        print(f"Ã†â€™Ãƒâ€šÃ‚Â°Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¸Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚ÂÃ¢â‚¬Å¡Ãƒâ€šÃ‚Â Page '{page_id}' audio files:")
-        print(f"   - speech_file: '{speech_file}'")
-        print(f"   - sound_file: '{sound_file}'")
-        
-        # Play speech - USE USB AUDIO (auto-detected) to avoid PWM interference!
-        # USB audio is completely separate from NeoPixel GPIO/PWM hardware
-        if speech_file:
-            speech_path = self.usb_path / "audio" / speech_file
-            print(f"Ã†â€™Ãƒâ€šÃ‚Â°Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¸Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚ÂÃ¢â‚¬Å¡Ãƒâ€šÃ‚Â DEBUG: Looking for audio file: {speech_path}")
-            print(f"Ã†â€™Ãƒâ€šÃ‚Â°Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¸Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚ÂÃ¢â‚¬Å¡Ãƒâ€šÃ‚Â DEBUG: File exists? {speech_path.exists()}")
-            if speech_path.exists():
-                try:
-                    # Use USB audio device (or default if not found)
-                    device = self.audio_device if hasattr(self, 'audio_device') and self.audio_device else "default"
-                    if device == "default":
-                        cmd = ['aplay', str(speech_path)]
-                    else:
-                        cmd = ['aplay', '-D', device, str(speech_path)]
-                    
-                    print(f"Ã†â€™Ãƒâ€šÃ‚Â°Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¸Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚ÂÃ¢â‚¬Å¡Ãƒâ€šÃ‚Â DEBUG: Running command: {' '.join(cmd)}")
-                    
-                    self._audio_process = subprocess.Popen(
-                        cmd,
-                        stdout=subprocess.PIPE,  # Capture output for debugging
-                        stderr=subprocess.PIPE
-                    )
-                    print(f"Ã†â€™Ãƒâ€šÃ‚Â°Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¸Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚ÂÃ¢â‚¬Â¦Ãƒâ€šÃ‚Â  Playing speech: {speech_file} Ã†â€™Ãƒâ€šÃ‚Â¢Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ USB audio ({device})")
-                    
-                    # Check for immediate errors (non-blocking)
-                    import select
-                    import time
-                    time.sleep(0.1)  # Slightly longer wait
-                    if self._audio_process.poll() is not None:
-                        # Process died - show error
-                        stdout = self._audio_process.stdout.read().decode()
-                        stderr = self._audio_process.stderr.read().decode()
-                        print(f"Ã†â€™Ãƒâ€šÃ‚Â¢Ã¢â‚¬Å¡Ãƒâ€šÃ‚ÂÃ¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ aplay output: {stdout}")
-                        print(f"Ã†â€™Ãƒâ€šÃ‚Â¢Ã¢â‚¬Å¡Ãƒâ€šÃ‚ÂÃ¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ aplay error: {stderr}")
-                    else:
-                        print(f"Ã†â€™Ãƒâ€šÃ‚Â¢Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃ‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦ Audio process running (PID: {self._audio_process.pid})")
-                    
-                except Exception as e:
-                    print(f"Ã†â€™Ãƒâ€šÃ‚Â¢Ã¢â‚¬Å¡Ãƒâ€šÃ‚ÂÃ¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ Audio error: {e}")
-                    import traceback
-                    traceback.print_exc()
-        
-        # Play sound effect - USE USB AUDIO (auto-detected)
-        if sound_file:
-            sound_path = self.usb_path / "audio" / sound_file
-            if sound_path.exists():
-                try:
-                    # Use USB audio device (or default if not found)
-                    device = self.audio_device if hasattr(self, 'audio_device') and self.audio_device else "default"
-                    if device == "default":
-                        cmd = ['aplay', str(sound_path)]
-                    else:
-                        cmd = ['aplay', '-D', device, str(sound_path)]
-                    
-                    # Store the sound process so we can kill it on page change
-                    self._sound_process = subprocess.Popen(
-                        cmd,
-                        stdout=subprocess.DEVNULL,
-                        stderr=subprocess.PIPE
-                    )
-                    print(f"Ã†â€™Ãƒâ€šÃ‚Â°Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¸Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚ÂÃ¢â‚¬Â¦Ãƒâ€šÃ‚Â  Playing sound: {sound_file} Ã†â€™Ãƒâ€šÃ‚Â¢Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ USB audio ({device})")
-                except Exception as e:
-                    print(f"Ã†â€™Ãƒâ€šÃ‚Â¢Ã¢â‚¬Å¡Ãƒâ€šÃ‚ÂÃ¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ Audio error: {e}")
+            sound_file = f"{page_id}_sfx.mp3"
 
-    
-    def draw_themed_bottom_bezel(self, theme_name):
-        """Draw themed bottom bezel with simple decorations"""
-        x, y = BOTTOM_BEZEL_X, BOTTOM_BEZEL_Y
-        w, h = BOTTOM_BEZEL_WIDTH, BOTTOM_BEZEL_HEIGHT
-        
-        if theme_name == 'fantasy':
-            # Brown base
-            pygame.draw.rect(self.screen, (60, 50, 40), (x, y, w, h))
-            # Border
-            pygame.draw.rect(self.screen, self.theme['accent'], (x, y, w, h), 4)
-            # Corner circles (simple decoration)
-            corner_r = 15
-            pygame.draw.circle(self.screen, self.theme['accent'], (x+corner_r, y+corner_r), corner_r)
-            pygame.draw.circle(self.screen, (60, 50, 40), (x+corner_r, y+corner_r), corner_r-4)
-            pygame.draw.circle(self.screen, self.theme['accent'], (x+w-corner_r, y+corner_r), corner_r)
-            pygame.draw.circle(self.screen, (60, 50, 40), (x+w-corner_r, y+corner_r), corner_r-4)
-            pygame.draw.circle(self.screen, self.theme['accent'], (x+corner_r, y+h-corner_r), corner_r)
-            pygame.draw.circle(self.screen, (60, 50, 40), (x+corner_r, y+h-corner_r), corner_r-4)
-            pygame.draw.circle(self.screen, self.theme['accent'], (x+w-corner_r, y+h-corner_r), corner_r)
-            pygame.draw.circle(self.screen, (60, 50, 40), (x+w-corner_r, y+h-corner_r), corner_r-4)
-            
-        elif theme_name == 'scifi':
-            # Dark metallic base
-            pygame.draw.rect(self.screen, (15, 25, 35), (x, y, w, h))
-            # Cyan border
-            pygame.draw.rect(self.screen, self.theme['accent'], (x, y, w, h), 3)
-            # Corner squares (simple decoration)
-            corner_s = 12
-            pygame.draw.rect(self.screen, self.theme['accent'], (x+8, y+8, corner_s, corner_s))
-            pygame.draw.rect(self.screen, self.theme['accent'], (x+w-8-corner_s, y+8, corner_s, corner_s))
-            pygame.draw.rect(self.screen, self.theme['accent'], (x+8, y+h-8-corner_s, corner_s, corner_s))
-            pygame.draw.rect(self.screen, self.theme['accent'], (x+w-8-corner_s, y+h-8-corner_s, corner_s, corner_s))
-            
-        elif theme_name == 'horror':
-            # Very dark base
-            pygame.draw.rect(self.screen, (12, 8, 8), (x, y, w, h))
-            # Dark red border
-            pygame.draw.rect(self.screen, self.theme['accent'], (x, y, w, h), 5)
-            # Blood drips at top (simple)
-            drip_color = self.theme['accent']
-            for i in range(6):
-                pygame.draw.circle(self.screen, drip_color, (x+100+i*150, y+10), 4)
-                pygame.draw.rect(self.screen, drip_color, (x+98+i*150, y+10, 4, 15))
-            
-        elif theme_name == 'steampunk':
-            # Brass base
-            pygame.draw.rect(self.screen, (50, 35, 25), (x, y, w, h))
-            # Brass border
-            pygame.draw.rect(self.screen, self.theme['accent'], (x, y, w, h), 6)
-            # Rivet dots (simple decoration)
-            rivet_color = (139, 101, 8)
-            for i in range(10):
-                pygame.draw.circle(self.screen, rivet_color, (x+60+i*80, y+12), 4)
-                pygame.draw.circle(self.screen, rivet_color, (x+60+i*80, y+h-12), 4)
-            for i in range(3):
-                pygame.draw.circle(self.screen, rivet_color, (x+12, y+70+i*70), 4)
-                pygame.draw.circle(self.screen, rivet_color, (x+w-12, y+70+i*70), 4)
-        else:
-            # Default fantasy
-            pygame.draw.rect(self.screen, (60, 50, 40), (x, y, w, h))
-            pygame.draw.rect(self.screen, self.theme['accent'], (x, y, w, h), 4)
+        print(f"[AUDIO] Page '{page_id}' speech='{speech_file}' sound='{sound_file}'")
 
-    
+        # Play speech (narration)
+        speech_path = self._resolve_audio_path(audio_dir, speech_file)
+        if speech_path:
+            try:
+                cmd = self._build_audio_cmd(speech_path)
+                print(f"[AUDIO] Playing speech: {speech_path.name} via {cmd[0]}")
+                self._audio_process = subprocess.Popen(
+                    cmd,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE
+                )
+                time.sleep(0.1)  # Brief wait to catch immediate errors
+                if self._audio_process.poll() is not None:
+                    stderr_out = self._audio_process.stderr.read().decode().strip()
+                    if stderr_out:
+                        print(f"[AUDIO WARNING] {cmd[0]} error: {stderr_out}")
+                else:
+                    print(f"[AUDIO] Speech playing (PID {self._audio_process.pid})")
+            except Exception as e:
+                print(f"[AUDIO ERROR] Speech playback failed: {e}")
+        
+        # Play sound effect (ambient / SFX)
+        sound_path = self._resolve_audio_path(audio_dir, sound_file)
+        if sound_path:
+            try:
+                cmd = self._build_audio_cmd(sound_path)
+                print(f"[AUDIO] Playing SFX: {sound_path.name} via {cmd[0]}")
+                self._sound_process = subprocess.Popen(
+                    cmd,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.PIPE
+                )
+            except Exception as e:
+                print(f"[AUDIO ERROR] SFX playback failed: {e}")
+
+    # draw_themed_bottom_bezel: the authoritative implementation is below (the PNG-aware one).
+    # The old purely-drawn version was removed here as part of v2 parity cleanup.
+
     def draw_themed_bottom_bezel(self, theme_name):
         """Draw the appropriate themed bottom bezel"""
         # Draw bezel image (theme preset or game override)
@@ -3281,11 +3394,12 @@ class DungeonMastronConsole:
         
         # Show splash with STATIC LED (not animated) to reduce audio interference
         self.draw_splash()
-        self.leds.set_color('cyan', 0.5)  # Static cyan instead of pulsing
-        time.sleep(5)
+        self.leds.set_color('blue', 0.5)  # Static blue instead of pulsing
+        if not self.dev_mode:
+            time.sleep(5)
         
-        # Check for game
-        if not self.check_for_game():
+        # Check for game (only if not already loaded via DM_GAME in dev mode)
+        if not self.current_game and not self.check_for_game():
             self.leds.set_color('orange', 0.5)
         
         last_state = None
@@ -3307,6 +3421,21 @@ class DungeonMastronConsole:
                         if event.key == pygame.K_ESCAPE:
                             self.cleanup()
                             return
+                        # --- v2 parity: dev-mode keyboard input ---
+                        # 1/2/3 = choice buttons, SPACE or ENTER = action button
+                        # L = load game folder (prints instructions)
+                        elif self.dev_mode:
+                            if event.key == pygame.K_1:
+                                self.buttons['choice1'].fire()
+                            elif event.key == pygame.K_2:
+                                self.buttons['choice2'].fire()
+                            elif event.key == pygame.K_3:
+                                self.buttons['choice3'].fire()
+                            elif event.key in (pygame.K_SPACE, pygame.K_RETURN):
+                                self.buttons['action'].fire()
+                            elif event.key == pygame.K_l:
+                                print("[DEV MODE] To load a game, restart with:")
+                                print("  DM_GAME=/path/to/game/folder python3 console.py")
                 
                 # Check for USB insertion/removal (flagged by USB thread)
                 if self.usb_check_pending:

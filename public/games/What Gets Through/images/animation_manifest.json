@@ -1,0 +1,686 @@
+{
+  "game_title": "June & Rivet: Paper Roads",
+  "total_pages": 136,
+  "pages": [
+    {
+      "pageId": "p001_prologue",
+      "imageName": "p001_prologue.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p002_library_safe",
+      "imageName": "p002_library_safe.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p003_loadout",
+      "imageName": "p003_loadout.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p004_library_search",
+      "imageName": "p004_library_search.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p005_exit_library",
+      "imageName": "p005_exit_library.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p006_main_street",
+      "imageName": "p006_main_street.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p006_back_alleys",
+      "imageName": "p006_back_alleys.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p007_crossfire_action",
+      "imageName": "p007_crossfire_action.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p008_metro_stairs",
+      "imageName": "p008_metro_stairs.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p009_rooftop_ladder",
+      "imageName": "p009_rooftop_ladder.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p010_alley_tripwire",
+      "imageName": "p010_alley_tripwire.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p017_tripwire_disarm_action",
+      "imageName": "p017_tripwire_disarm_action.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p019_tripwire_spotted",
+      "imageName": "p019_tripwire_spotted.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p011_after_crossfire",
+      "imageName": "p011_after_crossfire.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p013_tunnel_signs",
+      "imageName": "p013_tunnel_signs.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p014_mezzanine_market",
+      "imageName": "p014_mezzanine_market.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p015_rooftop_run",
+      "imageName": "p015_rooftop_run.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p025_rooftop_jump_action",
+      "imageName": "p025_rooftop_jump_action.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p027_rooftop_tether",
+      "imageName": "p027_rooftop_tether.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p028_rooftop_tether_fail",
+      "imageName": "p028_rooftop_tether_fail.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p016_skylight_drop",
+      "imageName": "p016_skylight_drop.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p020_river_district",
+      "imageName": "p020_river_district.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p030_bridge_approach",
+      "imageName": "p030_bridge_approach.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p032_bridge_sneak_action",
+      "imageName": "p032_bridge_sneak_action.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p035_bridge_midspan_wounded",
+      "imageName": "p035_bridge_midspan_wounded.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p031_overpass_detour",
+      "imageName": "p031_overpass_detour.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p037_storm_drain",
+      "imageName": "p037_storm_drain.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p038_flood_push_action",
+      "imageName": "p038_flood_push_action.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p039_drain_exit",
+      "imageName": "p039_drain_exit.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p034_bridge_midspan",
+      "imageName": "p034_bridge_midspan.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p036_underbridge_route",
+      "imageName": "p036_underbridge_route.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p043_tollbooth_shrine",
+      "imageName": "p043_tollbooth_shrine.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p044_decode_routes",
+      "imageName": "p044_decode_routes.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p041_rail_yard_entry",
+      "imageName": "p041_rail_yard_entry.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p045_yard_skirt_action",
+      "imageName": "p045_yard_skirt_action.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p046_yard_cutthrough_action",
+      "imageName": "p046_yard_cutthrough_action.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p049_yard_hit_wounded",
+      "imageName": "p049_yard_hit_wounded.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p047_boxcar_find",
+      "imageName": "p047_boxcar_find.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p050_out_of_yard",
+      "imageName": "p050_out_of_yard.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p051_sanctuary_shed",
+      "imageName": "p051_sanctuary_shed.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p052_industrial_strip",
+      "imageName": "p052_industrial_strip.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p053_gas_station",
+      "imageName": "p053_gas_station.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p055_after_gas",
+      "imageName": "p055_after_gas.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p054_school_ruins",
+      "imageName": "p054_school_ruins.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p057_gym_reveal",
+      "imageName": "p057_gym_reveal.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p058_miniboss_stage1",
+      "imageName": "p058_miniboss_stage1.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p059_miniboss_stage2",
+      "imageName": "p059_miniboss_stage2.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p060_miniboss_stage3",
+      "imageName": "p060_miniboss_stage3.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p061_post_miniboss",
+      "imageName": "p061_post_miniboss.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p056_service_road",
+      "imageName": "p056_service_road.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p062_interchange_edge",
+      "imageName": "p062_interchange_edge.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p064_ramp_climb_action",
+      "imageName": "p064_ramp_climb_action.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p065_ramp_top",
+      "imageName": "p065_ramp_top.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p063_service_tunnels",
+      "imageName": "p063_service_tunnels.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p069_breach_cabinet_action",
+      "imageName": "p069_breach_cabinet_action.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p070_firstaid_cache",
+      "imageName": "p070_firstaid_cache.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p067_suburb_entry",
+      "imageName": "p067_suburb_entry.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p072_street_sweep_action",
+      "imageName": "p072_street_sweep_action.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p073_fence_maze",
+      "imageName": "p073_fence_maze.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p074_neighborhood_exit",
+      "imageName": "p074_neighborhood_exit.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p075_sanctuary_gazebo",
+      "imageName": "p075_sanctuary_gazebo.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p076_highway_verge",
+      "imageName": "p076_highway_verge.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p077_ditch_hide_action",
+      "imageName": "p077_ditch_hide_action.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p080_patrol_spotted",
+      "imageName": "p080_patrol_spotted.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p079_patrol_passed",
+      "imageName": "p079_patrol_passed.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p078_billboard_field",
+      "imageName": "p078_billboard_field.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p081_trunk_breach",
+      "imageName": "p081_trunk_breach.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p082_tree_line",
+      "imageName": "p082_tree_line.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p083_valley_cross_action",
+      "imageName": "p083_valley_cross_action.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p086_valley_far_side_wounded",
+      "imageName": "p086_valley_far_side_wounded.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p084_scout_ridge",
+      "imageName": "p084_scout_ridge.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p087_culvert_route",
+      "imageName": "p087_culvert_route.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p088_culvert_action",
+      "imageName": "p088_culvert_action.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p089_culvert_after_wounded",
+      "imageName": "p089_culvert_after_wounded.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p085_valley_far_side",
+      "imageName": "p085_valley_far_side.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p090_chapel_sanctuary",
+      "imageName": "p090_chapel_sanctuary.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p091_dirt_lane",
+      "imageName": "p091_dirt_lane.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p092_barn_approach",
+      "imageName": "p092_barn_approach.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p093_field_circle",
+      "imageName": "p093_field_circle.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p094_barn_scout_action",
+      "imageName": "p094_barn_scout_action.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p095_barn_sneak_action",
+      "imageName": "p095_barn_sneak_action.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p098_barn_aftermath_wounded",
+      "imageName": "p098_barn_aftermath_wounded.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p097_barn_aftermath",
+      "imageName": "p097_barn_aftermath.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p096_boot_prints",
+      "imageName": "p096_boot_prints.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p099_fence_line",
+      "imageName": "p099_fence_line.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p100_gate_call",
+      "imageName": "p100_gate_call.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p101_maintenance_culvert",
+      "imageName": "p101_maintenance_culvert.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p102_final_reveal",
+      "imageName": "p102_final_reveal.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p105_final_stage1",
+      "imageName": "p105_final_stage1.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p107_final_stage2",
+      "imageName": "p107_final_stage2.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p109_final_stage3",
+      "imageName": "p109_final_stage3.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p111_final_stage4",
+      "imageName": "p111_final_stage4.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p113_final_stage5",
+      "imageName": "p113_final_stage5.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p114_victory_yard",
+      "imageName": "p114_victory_yard.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p115_gatehouse_meet",
+      "imageName": "p115_gatehouse_meet.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p117_elias_status",
+      "imageName": "p117_elias_status.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p119_end_choice",
+      "imageName": "p119_end_choice.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p120_ending_1",
+      "imageName": "p120_ending_1.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p121_ending_2",
+      "imageName": "p121_ending_2.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p122_ending_3",
+      "imageName": "p122_ending_3.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "game_over",
+      "imageName": "game_over.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p021_generator_room",
+      "imageName": "p021_generator_room.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p021a_sabotage_action",
+      "imageName": "p021a_sabotage_action.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p022_service_corridor",
+      "imageName": "p022_service_corridor.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p042_warehouse_row",
+      "imageName": "p042_warehouse_row.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p068_drainage_channel",
+      "imageName": "p068_drainage_channel.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p114b_wounded_victory",
+      "imageName": "p114b_wounded_victory.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p076b_exhaustion_check",
+      "imageName": "p076b_exhaustion_check.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p052a_industrial_sprint_action",
+      "imageName": "p052a_industrial_sprint_action.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p076c_exhausted_after",
+      "imageName": "p076c_exhausted_after.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p010_crossfire_wounded",
+      "imageName": "p010_crossfire_wounded.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p038b_flood_wounded",
+      "imageName": "p038b_flood_wounded.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p045b_yard_wounded",
+      "imageName": "p045b_yard_wounded.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p064b_ramp_wounded",
+      "imageName": "p064b_ramp_wounded.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p069b_breach_wounded",
+      "imageName": "p069b_breach_wounded.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p052b_sprint_wounded",
+      "imageName": "p052b_sprint_wounded.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p021b_sabotage_wounded",
+      "imageName": "p021b_sabotage_wounded.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p058_miniboss_stage1_win",
+      "imageName": "p058_miniboss_stage1_win.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p058_miniboss_stage1_lose",
+      "imageName": "p058_miniboss_stage1_lose.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p059_miniboss_stage2_win",
+      "imageName": "p059_miniboss_stage2_win.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p059_miniboss_stage2_lose",
+      "imageName": "p059_miniboss_stage2_lose.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p105_final_stage1_win",
+      "imageName": "p105_final_stage1_win.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p105_final_stage1_lose",
+      "imageName": "p105_final_stage1_lose.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p107_final_stage2_win",
+      "imageName": "p107_final_stage2_win.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p107_final_stage2_lose",
+      "imageName": "p107_final_stage2_lose.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p109_final_stage3_win",
+      "imageName": "p109_final_stage3_win.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p109_final_stage3_lose",
+      "imageName": "p109_final_stage3_lose.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p111_final_stage4_win",
+      "imageName": "p111_final_stage4_win.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p111_final_stage4_lose",
+      "imageName": "p111_final_stage4_lose.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p072b_street_wounded",
+      "imageName": "p072b_street_wounded.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p042b_open_route",
+      "imageName": "p042b_open_route.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p060_miniboss_stage3_win",
+      "imageName": "p060_miniboss_stage3_win.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p060_miniboss_stage3_lose",
+      "imageName": "p060_miniboss_stage3_lose.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p113_final_stage5_win",
+      "imageName": "p113_final_stage5_win.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p113_final_stage5_lose",
+      "imageName": "p113_final_stage5_lose.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "the_end",
+      "imageName": "the_end.jpg",
+      "effect": "random"
+    }
+  ]
+}

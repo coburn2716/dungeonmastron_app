@@ -4134,8 +4134,13 @@ Project website: www.dungeonmastron.com
 
             const unlinked = Object.keys(outgoing).filter(id => outgoing[id].length === 0);
 
+            // FIX(1): boss intermediate stages use stage_page, not success/failure pages
             const unlinkedActions = Object.entries(pages)
-                .filter(([, page]) => page.action && (!page.action.success_page || !page.action.failure_page))
+                .filter(([, page]) => {
+                    if (!page.action) return false;
+                    const isBossIntermediate = page.action.type === 'boss' && !!page.action.stage_page;
+                    return !isBossIntermediate && (!page.action.success_page || !page.action.failure_page);
+                })
                 .map(([id]) => id);
 
             const reachable = new Set();
@@ -6524,6 +6529,37 @@ layers.forEach((layer, layerIndex) => {
             return { errors, warnings };
         }
 
+        // FIX(5): VALIDATION — Locked pages without item/flag gates
+        // Returns warnings (not hard errors) for locked pages that have no requires_item/requires_flags.
+        // These are likely authoring oversights (forgot to add the gate) rather than fatal bugs.
+        function validateLockedPageGates(game) {
+            const warnings = [];
+            const pages = game.pages || {};
+
+            for (const pageId in pages) {
+                const page = pages[pageId];
+                if (page.page_type !== 'locked') continue;
+
+                const choices = page.choices || [];
+                const hasGate = choices.some(c =>
+                    c.requires_item ||
+                    c.requires_items ||
+                    c.required_item ||
+                    (Array.isArray(c.requires_flags) && c.requires_flags.length > 0)
+                );
+
+                if (!hasGate) {
+                    warnings.push(
+                        `⚠️ LOCKED page "${pageId}" has no requires_item or requires_flags on any choice.\n` +
+                        `  The 'locked' label implies a gate — add requires_item or requires_flags to\n` +
+                        `  at least one choice, or change page_type to 'normal'.`
+                    );
+                }
+            }
+
+            return warnings;
+        }
+
         function downloadGame() {
             // VALIDATION: Check for double-damage bug before export (WARNING ONLY)
             const doubleDamageErrors = validateNoDoubleDamage(gameData);
@@ -6563,6 +6599,18 @@ layers.forEach((layer, layerIndex) => {
                 }
             }
 
+            // FIX(5): VALIDATION: Locked pages without item/flag gates (soft warning on export)
+            const lockedGateWarnings = validateLockedPageGates(gameData);
+            if (lockedGateWarnings.length > 0) {
+                const errorMessage = "⚠️ LOCKED PAGE WARNING:\n\n" +
+                    lockedGateWarnings.join('\n\n') +
+                    "\n\nThese pages are labelled 'locked' but have no item/flag gate on any choice." +
+                    "\n\nDo you want to download anyway?";
+                if (!confirm(errorMessage)) {
+                    return;
+                }
+            }
+
             // Clean up for export
             const exportData = JSON.parse(JSON.stringify(gameData)); // Deep copy
             delete exportData.node_positions; // Don't export visual positions
@@ -6592,17 +6640,55 @@ layers.forEach((layer, layerIndex) => {
                 // Clean up old 'audio' field if it exists (from previous version)
                 delete page.audio;
 
-                // NORMALIZE ITEM FIELDS: Convert stat_mods → stats for console.py compatibility
+                // FIX(4): NORMALIZE ITEM FIELDS: Canonical export format is `stats`.
+                // Accept stat_mods / item_mods on input and convert to stats on export
+                // so round-trips never corrupt games.
                 const normalizeItem = (item) => {
-                    if (item && item.stat_mods && !item.stats) {
+                    if (!item || typeof item !== 'object') return;
+                    // stat_mods → stats
+                    if (item.stat_mods && !item.stats) {
                         item.stats = item.stat_mods;
                         delete item.stat_mods;
                     }
+                    // item_mods → stats (AI companion sometimes generates this)
+                    if (item.item_mods && !item.stats) {
+                        item.stats = item.item_mods;
+                        delete item.item_mods;
+                    }
+                    // Clean up whichever legacy key is now redundant
+                    if (item.stats) {
+                        delete item.stat_mods; // already promoted
+                        delete item.item_mods; // already promoted
+                    }
                 };
 
+                // Normalize page-level item grants
                 if (page.add_item) normalizeItem(page.add_item);
-                if (page.add_items) {
+                if (page.add_items && Array.isArray(page.add_items)) {
                     page.add_items.forEach(normalizeItem);
+                }
+
+                // FIX(4): Also normalize items inside choices
+                if (page.choices && Array.isArray(page.choices)) {
+                    page.choices.forEach(choice => {
+                        if (choice.add_item) normalizeItem(choice.add_item);
+                        if (choice.add_items && Array.isArray(choice.add_items)) {
+                            choice.add_items.forEach(normalizeItem);
+                        }
+                    });
+                }
+
+                // FIX(3): Normalize choice navigation: export uses `target` (canonical),
+                // strip internal `next_page` from the exported file
+                if (page.choices && Array.isArray(page.choices)) {
+                    page.choices.forEach(choice => {
+                        // Prefer target; fall back to next_page; set target from next_page if missing
+                        if (!choice.target && choice.next_page) {
+                            choice.target = choice.next_page;
+                        }
+                        // Strip the internal-only next_page field from export
+                        delete choice.next_page;
+                    });
                 }
             });
 
@@ -6765,16 +6851,66 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
                         console.log('[COMPAT] Converted old font_positions to bottom_pixel_positions:', gameData.bottom_pixel_positions);
                     }
 
-                    // Normalize choice properties: convert 'target' to 'next_page' for editor compatibility
+                    // FIX(6): Trim whitespace from page keys; warn on keys that differ only by whitespace.
+                    // Build a remap table first, then rename keys AND update all navigation references.
+                    const keyRemap = {}; // oldKey -> newKey
+                    const trimmedKeyWarnings = [];
+                    const seenTrimmed = {};
+                    Object.keys(gameData.pages).forEach(k => {
+                        const trimmed = k.trim();
+                        if (trimmed !== k) {
+                            keyRemap[k] = trimmed;
+                            trimmedKeyWarnings.push(`"${k}" → "${trimmed}"`);
+                        }
+                        if (seenTrimmed[trimmed]) {
+                            trimmedKeyWarnings.push(`⚠️ Duplicate after trim: "${trimmed}" (collision — review manually)`);
+                        }
+                        seenTrimmed[trimmed] = true;
+                    });
+                    if (Object.keys(keyRemap).length > 0) {
+                        // Rename the page keys themselves
+                        Object.entries(keyRemap).forEach(([oldKey, newKey]) => {
+                            gameData.pages[newKey] = gameData.pages[oldKey];
+                            delete gameData.pages[oldKey];
+                        });
+                        // Update all navigation references in choices + actions
+                        Object.values(gameData.pages).forEach(pg => {
+                            if (pg.choices) pg.choices.forEach(ch => {
+                                if (ch.target && keyRemap[ch.target]) ch.target = keyRemap[ch.target];
+                                if (ch.next_page && keyRemap[ch.next_page]) ch.next_page = keyRemap[ch.next_page];
+                            });
+                            if (pg.action) {
+                                const ac = pg.action;
+                                if (ac.success_page && keyRemap[ac.success_page]) ac.success_page = keyRemap[ac.success_page];
+                                if (ac.failure_page && keyRemap[ac.failure_page]) ac.failure_page = keyRemap[ac.failure_page];
+                                if (ac.stage_page && keyRemap[ac.stage_page]) ac.stage_page = keyRemap[ac.stage_page];
+                            }
+                        });
+                        // Update start_page if needed
+                        if (gameData.start_page && keyRemap[gameData.start_page]) {
+                            gameData.start_page = keyRemap[gameData.start_page];
+                        }
+                        console.warn('[Import] Page key whitespace trimmed + references updated:', trimmedKeyWarnings);
+                        alert('⚠️ Import: fixed whitespace in page keys and updated all links:\n\n' + trimmedKeyWarnings.join('\n'));
+                    } else if (trimmedKeyWarnings.length > 0) {
+                        // Only collision warnings (no renames needed)
+                        console.warn('[Import] Page key warnings (no rename needed):', trimmedKeyWarnings);
+                    }
+
+                    // Normalize choice properties: bidirectional target ↔ next_page for editor compatibility
+                    // FIX(3): Also accept next_page-only files; normalize target on import so export round-trips cleanly
                     for (const pageId in gameData.pages) {
                         const page = gameData.pages[pageId];
                         if (page.choices && Array.isArray(page.choices)) {
                             page.choices.forEach(choice => {
-                                // If choice has 'target' but not 'next_page', copy it over
+                                // Ensure both fields are in sync; editor uses next_page internally
                                 if (choice.target && !choice.next_page) {
-                                    choice.next_page = choice.target;
+                                    choice.next_page = choice.target; // editor uses next_page
                                 }
-                                // Keep both for compatibility with both editor and game engine
+                                // FIX(3): also normalize next_page-only choices to set target
+                                if (choice.next_page && !choice.target) {
+                                    choice.target = choice.next_page;
+                                }
                             });
                         }
                     }
@@ -7233,11 +7369,16 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
 
                     const successTarget = action.success_page;
                     const failureTarget = action.failure_page;
-                    if (!successTarget || !failureTarget) {
+                    // FIX(1): Boss intermediate stages use stage_page instead of success/failure;
+                    // only flag as unlinked if the stage has NO stage_page either.
+                    const isBossIntermediate = (actionType === 'boss' && !!action.stage_page);
+                    if (!isBossIntermediate && (!successTarget || !failureTarget)) {
                         unlinkedActions.push(`${pageId} (missing ${!successTarget ? 'success' : ''}${!successTarget && !failureTarget ? ' & ' : ''}${!failureTarget ? 'failure' : ''} target)`);
                     }
                     if (successTarget && !pages[successTarget]) brokenLinks.push(`${pageId} → ${successTarget}`);
                     if (failureTarget && !pages[failureTarget]) brokenLinks.push(`${pageId} → ${failureTarget}`);
+                    // Also check stage_page for boss chains
+                    if (action.stage_page && !pages[action.stage_page]) brokenLinks.push(`${pageId} → ${action.stage_page} (boss stage)`);
 
                     if (actionType === 'combat') {
                         // Calculate difficulty from player_bonus + enemy_bonus
@@ -7682,12 +7823,17 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
                     }
                 });
 
-                // Handle action success/failure pages
+                // Handle action success/failure pages (and boss stage_page chains)
                 if (page.action) {
                     const success = page.action.success_page;
                     const failure = page.action.failure_page;
                     if (success) queue.push({ id: success, depth: depth + 1 });
                     if (failure && failure !== success) queue.push({ id: failure, depth: depth + 1 });
+                    // FIX(1): traverse boss stage_page chains so later stages are reachable
+                    const stagePage = page.action.stage_page;
+                    if (stagePage && stagePage !== success && stagePage !== failure) {
+                        queue.push({ id: stagePage, depth: depth + 1 });
+                    }
                 }
             }
 
@@ -7815,11 +7961,14 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
             const doubleDamageErrors = validateNoDoubleDamage(gameData);
             const actionBypassErrors = validateNoActionBypass(gameData);
             const fakeChoiceResult = validateNoFakeChoices(gameData);
+            // FIX(5): Locked page gate warnings in validation panel
+            const lockedGateWarnings = validateLockedPageGates(gameData);
 
             const validationResults = document.getElementById('validationResults');
             let validationHTML = '';
 
-            if (doubleDamageErrors.length === 0 && actionBypassErrors.length === 0 && fakeChoiceResult.errors.length === 0) {
+            const hasCritical = doubleDamageErrors.length > 0 || actionBypassErrors.length > 0 || fakeChoiceResult.errors.length > 0;
+            if (!hasCritical && lockedGateWarnings.length === 0) {
                 validationHTML += `
                     <div class="validation-success">
                         <h4> All Critical Validation Checks Passed!</h4>
@@ -7853,6 +8002,18 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
                         </div>
                     `;
                 }
+            }
+
+            // FIX(5): Locked page gate warnings (soft warning — not an error)
+            if (lockedGateWarnings.length > 0) {
+                validationHTML += `
+                    <div class="validation-warning">
+                        <h4>🔒 Locked Pages Without Gates (${lockedGateWarnings.length})</h4>
+                        <p>These pages are labelled <em>locked</em> but no choice has a <code>requires_item</code> or <code>requires_flags</code> gate. This may be an authoring oversight (forgot to add the gate) or a leftover label.</p>
+                        ${lockedGateWarnings.slice(0, 20).map(w => `<p>• <code>${w}</code></p>`).join('')}
+                        ${lockedGateWarnings.length > 20 ? `<p style="font-style: italic; margin-top: 10px;">...and ${lockedGateWarnings.length - 20} more</p>` : ''}
+                    </div>
+                `;
             }
 
             const brokenLinks = analysis.validation.brokenLinks || [];

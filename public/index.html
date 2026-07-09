@@ -4,18 +4,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dungeon Mastron — Design worlds. Shape stories. Play the outcome.</title>
-  <meta name="description" content="Design worlds. Shape stories. Play the outcome. Create and play bezel-style narrative games with Dungeon Mastron—Web Player, Visual Builder, Guides, and tools." />
-  <link rel="canonical" href="https://dungeonmastron.com/" />
+  <meta name="description" content="Design worlds. Shape stories. Play the outcome. Create and play bezel-style narrative games with Dungeon Mastron — Web Player, Visual Builder, Guides, and tools. Open source · MIT." />
+  <link rel="canonical" href="https://www.dungeonmastron.com/" />
   <meta property="og:site_name" content="Dungeon Mastron" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Dungeon Mastron — Design worlds. Shape stories. Play the outcome." />
-  <meta property="og:description" content="Design worlds. Shape stories. Play the outcome. Create and play bezel-style narrative games with Dungeon Mastron." />
-  <meta property="og:url" content="https://dungeonmastron.com/" />
-  <meta property="og:image" content="https://dungeonmastron.com/web_assets/splash.png" />
+  <meta property="og:description" content="Design worlds. Shape stories. Play the outcome. Create and play bezel-style narrative games with Dungeon Mastron. Open source · MIT licensed." />
+  <meta property="og:url" content="https://www.dungeonmastron.com/" />
+  <meta property="og:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Dungeon Mastron — Design worlds. Shape stories. Play the outcome." />
-  <meta name="twitter:description" content="Create and play bezel-style narrative games with Dungeon Mastron." />
-  <meta name="twitter:image" content="https://dungeonmastron.com/web_assets/splash.png" />
+  <meta name="twitter:description" content="Create and play bezel-style narrative games with Dungeon Mastron. Open source · MIT licensed." />
+  <meta name="twitter:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/web_assets/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/web_assets/apple-touch-icon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "url": "https://www.dungeonmastron.com/",
+    "name": "Dungeon Mastron — Design worlds. Shape stories. Play the outcome.",
+    "description": "Create and play bezel-style narrative games with Dungeon Mastron. Open source · MIT licensed.",
+    "mainEntity": {
+      "@type": "SoftwareApplication",
+      "name": "Dungeon Mastron",
+      "url": "https://www.dungeonmastron.com/",
+      "description": "A complete storytelling platform: write narrative games in the Visual Builder, play them in the Web Player, or load them onto the physical Raspberry Pi console. Open source and MIT licensed.",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web browser",
+      "image": "https://www.dungeonmastron.com/web_assets/og-image.jpg"
+    }
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
@@ -84,7 +104,7 @@
       min-height: 100%;
     }
     .hero-inner { max-width: 70ch; }
-    .hero h1 {
+    .hero h1, .hero h2 {
       font-family: var(--shell-heading);
       font-weight: 600;
       letter-spacing: 0.06em;
@@ -94,7 +114,7 @@
       line-height: 1.08;
       color: var(--shell-text);
     }
-    .hero h1 .nowrap { white-space: nowrap; }
+    .hero h2 .nowrap { white-space: nowrap; }
     .hero-sub {
       margin: 0;
       font-family: var(--shell-heading);
@@ -381,7 +401,7 @@
       justify-content: center;
       transform: translateY(-15px);
     }
-    .below-left h1 {
+    .below-left h1, .below-left h2 {
       font-family: var(--shell-heading);
       font-weight: 600;
       letter-spacing: 0.06em;
@@ -416,9 +436,9 @@
 
     <section class="top-grid" aria-label="Start page intro">
       <div class="top-left">
-        <p class="big-copy">
+        <h1 class="big-copy">
           <span class="line">Design worlds. Shape stories. Play the outcome.</span>
-        </p>
+        </h1>
 
         <p class="top-sub">Dungeon Mastron is the complete storytelling experience, bringing together writing, visual world-building, and play into one cohesive flow.</p>
 
@@ -489,20 +509,20 @@
           </div>
           <div class="hero-left">
             <div class="hero-inner">
-              <h1>One Platform. <span class="nowrap">Two Ways to Play.</span></h1>
+              <h2>One Platform. <span class="nowrap">Two Ways to Play.</span></h2>
               <p class="hero-sub">The web is the invitation. The physical console is the aspiration. Same format—two experiences.</p>
 
               <div class="two-modes" aria-label="Two ways to play">
                 <section>
                   <h3>Web Player</h3>
                   <p>Play in seconds, no installs, no setup. Download a game file and open it in the Web Player to explore new games, test your own creations, and share adventures with a single link.</p>
-                  <a class="btn small orange" href="play/index.html">Open Web Player</a>
+                  <a class="btn small orange" href="/play/">Open Web Player</a>
                 </section>
                 <div class="sep" aria-hidden="true"></div>
                 <section>
                   <h3>Physical Console</h3>
                   <p>A DIY, 3D-printable Raspberry Pi build that turns stories into objects you can keep on a shelf.<br>Buttons and LEDs give the game a physical rhythm, and cartridges turn play into a ritual again.</p>
-                  <a class="btn small orange" href="console/index.html">View Console</a>
+                  <a class="btn small orange" href="/console/">View Console</a>
                 </section>
               </div>
             </div>
@@ -551,7 +571,7 @@
       <div class="below-left">
         <div class="kicker">Creation &amp; Evolution</div>
         <div class="below-center">
-          <h1>From a blank page, you write the story and shape the world.</h1>
+          <h2>From a blank page, you write the story and shape the world.</h2>
           <p class="sub">Define its choices, give it a name, put your label on the cartridge, and make it your own.</p>
           <p class="body">Dungeon Mastron is built as an ongoing platform, shaped by the stories people create and the needs that emerge from them. New tools, systems, and ways to play are added over time, guided by the community and the kinds of adventures being made.</p>
         </div>
@@ -561,6 +581,17 @@
       </div>
     </section>
 
+    <div class="section-sep" aria-hidden="true"></div>
+
+    <section aria-label="Open source" style="margin-top: 26px; padding-top: 6px;">
+      <div class="kicker">Open Source</div>
+      <p style="margin: 0; font-family: var(--shell-heading); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; font-size: clamp(18px, 2vw, 28px); line-height: 1.15; color: var(--shell-text);">Dungeon Mastron is open source &mdash; MIT licensed.</p>
+      <p style="margin: 10px 0 0; color: var(--shell-sub); line-height: 1.6; font-size: 13px; max-width: 60ch;">Build with us on GitHub. Contributions, forks, and community builds are welcome. The source is yours.</p>
+      <div class="cta" style="margin-top: 14px;">
+        <a class="btn orange" href="https://github.com/coburn2716/dungeonmastron_app" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+        <a class="btn" href="/library/">Browse Games</a>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">
@@ -584,6 +615,8 @@
         <a href="https://discord.gg/QFdWE9Bm" target="_blank" rel="noopener noreferrer">Discord</a>
         <a href="https://www.patreon.com/Artifextron" target="_blank" rel="noopener noreferrer">Patreon</a>
         <a href="https://www.youtube.com/@Artifextron" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="https://github.com/coburn2716/dungeonmastron_app" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://ko-fi.com/artifextron" target="_blank" rel="noopener noreferrer">Support ☕</a>
         <a href="LICENSE.txt" target="_blank" rel="noopener noreferrer">License</a>
       </div>
     </div>

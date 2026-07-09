@@ -1,0 +1,76 @@
+{
+  "game_title": "Red Planet Field Lesson (Educational Example — Key Mastery + Review Ending)",
+  "total_pages": 14,
+  "pages": [
+    {
+      "pageId": "p1_landing",
+      "imageName": "p1_landing.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p2_radiation_lesson",
+      "imageName": "p2_radiation_lesson.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p3_armory",
+      "imageName": "p3_armory.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p4_atmosphere_lesson",
+      "imageName": "p4_atmosphere_lesson.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p5_walk",
+      "imageName": "p5_walk.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p6_radiation_check",
+      "imageName": "p6_radiation_check.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p7_radiation_success",
+      "imageName": "p7_radiation_success.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p8_radiation_failure",
+      "imageName": "p8_radiation_failure.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p9_gravity_check",
+      "imageName": "p9_gravity_check.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p10_gravity_success",
+      "imageName": "p10_gravity_success.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p11_gravity_failure",
+      "imageName": "p11_gravity_failure.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p12_ending",
+      "imageName": "p12_ending.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p11b_safety_checkout",
+      "imageName": "p11b_safety_checkout.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p13_ending_review",
+      "imageName": "p13_ending_review.jpg",
+      "effect": "random"
+    }
+  ]
+}

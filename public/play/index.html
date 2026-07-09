@@ -8,16 +8,19 @@ Browser game player (bezel-enabled variant). Based on web_player.html.
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Web Player — Dungeon Mastron</title>
-  <meta name="description" content="Play Dungeon Mastron games in the browser with bezel-style UI, featured games, and cart/folder loading." />
-  <meta name="robots" content="noindex,follow" />
-  <link rel="canonical" href="https://dungeonmastron.com/play/" />
+  <meta name="description" content="Play Dungeon Mastron story games free in your browser — choices, dice rolls, inventory, and a gorgeous bezel UI. No install needed." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://www.dungeonmastron.com/play/" />
   <meta property="og:site_name" content="Dungeon Mastron" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Web Player — Dungeon Mastron" />
-  <meta property="og:description" content="Play Dungeon Mastron games in the browser with bezel-style UI." />
-  <meta property="og:url" content="https://dungeonmastron.com/play/" />
-  <meta property="og:image" content="https://dungeonmastron.com/web_assets/splash.png" />
+  <meta property="og:description" content="Play Dungeon Mastron story games free in your browser — choices, dice rolls, inventory, and a gorgeous bezel UI. No install needed." />
+  <meta property="og:url" content="https://www.dungeonmastron.com/play/" />
+  <meta property="og:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Web Player — Dungeon Mastron" />
+  <meta name="twitter:description" content="Play Dungeon Mastron story games free in your browser — choices, dice rolls, inventory, and a gorgeous bezel UI. No install needed." />
+  <meta name="twitter:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
@@ -806,9 +809,137 @@ Browser game player (bezel-enabled variant). Based on web_player.html.
     .error { color: #f87171; }
     .hidden-input { display: none; }
     @media (max-width: 1100px) { .layout { grid-template-columns: 1fr; } }
+
+  /* --- Loading spinner (shown while fetching ?game= URL) --- */
+  .url-loading-screen {
+    position: absolute;
+    inset: 0;
+    background: #0e0e0e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    z-index: 30;
+    border-radius: 14px;
+  }
+  .url-loading-screen.hidden { display: none; }
+  .url-loading-spinner {
+    width: 52px;
+    height: 52px;
+    border: 3px solid rgba(217,119,87,0.18);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spinner-rotate 0.85s linear infinite;
+  }
+  @keyframes spinner-rotate {
+    to { transform: rotate(360deg); }
+  }
+  .url-loading-label {
+    font-family: var(--ui-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--subtext);
+    text-align: center;
+    max-width: 80%;
+  }
+
+  /* --- Error screen (shown when ?game= fails) --- */
+  .url-error-screen {
+    position: absolute;
+    inset: 0;
+    background: #0e0e0e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    z-index: 30;
+    border-radius: 14px;
+    padding: 32px;
+    text-align: center;
+  }
+  .url-error-screen.hidden { display: none; }
+  .url-error-icon {
+    font-size: 48px;
+    line-height: 1;
+  }
+  .url-error-title {
+    font-family: var(--ui-heading);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+  .url-error-msg {
+    font-family: var(--ui-mono);
+    font-size: 12px;
+    color: var(--subtext);
+    line-height: 1.6;
+    max-width: 560px;
+  }
+  .url-error-action {
+    margin-top: 8px;
+    padding: 10px 22px;
+    background: transparent;
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    color: var(--accent);
+    font-family: var(--ui-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .url-error-action:hover { background: rgba(217,119,87,0.10); }
+
+  /* --- Share / Copy-link button (visible while playing a ?game= loaded game) --- */
+  .share-btn {
+    position: fixed;
+    bottom: 12px;
+    right: 24px;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(0,0,0,0.62);
+    border: 1px solid #3D3D3D;
+    border-radius: 10px;
+    color: #A9A9A9;
+    font-family: var(--ui-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .share-btn.visible { display: flex; }
+  .share-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .share-btn.copied { color: #86efac; border-color: #86efac; }
+
+  /* Mobile: ensure choice buttons are >=44px tap targets */
+  @media (max-width: 900px) {
+    .choice {
+      min-height: 44px;
+      padding: 4px 0;
+    }
+  }
+  /* Visually-hidden H1 for SEO (fullscreen player has no visible heading) */
+  .visually-hidden {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
   </style>
 </head>
 <body>
+  <h1 class="visually-hidden">Dungeon Mastron Web Player</h1>
   <div id="site-nav"></div>
   <header>
     <div class="app-subtitle">W E B   P L A Y E R</div>
@@ -947,6 +1078,17 @@ Browser game player (bezel-enabled variant). Based on web_player.html.
             <img id="splash-logo" class="splash-logo" alt="Game logo" />
             <div id="splash-title" class="splash-title"></div>
           </div>
+        </div>
+        <!-- URL game loading screens -->
+        <div class="url-loading-screen hidden" id="url-loading-screen" aria-live="polite" aria-label="Loading game">
+          <div class="url-loading-spinner" aria-hidden="true"></div>
+          <div class="url-loading-label" id="url-loading-label">Loading game…</div>
+        </div>
+        <div class="url-error-screen hidden" id="url-error-screen" role="alert">
+          <div class="url-error-icon" aria-hidden="true">⚠️</div>
+          <div class="url-error-title">Could not load game</div>
+          <div class="url-error-msg" id="url-error-msg">The game file could not be fetched. Check the URL and try again.</div>
+          <button class="url-error-action" id="url-error-dismiss" type="button">Use file picker instead</button>
         </div>
       </div>
       </div>
@@ -1185,6 +1327,7 @@ Browser game player (bezel-enabled variant). Based on web_player.html.
     let engine = null;
     let audioPlayer = null;
     let sfxPlayer = null;
+    let currentGameParam = null; // the raw ?game= param value (for save keys + share URL)
     let lastPageId = null;
     let lastActionResult = null;
     // Cache media per page to avoid recreating <video> on re-renders (which looks like looping).
@@ -1352,15 +1495,81 @@ Browser game player (bezel-enabled variant). Based on web_player.html.
       }
     }
 
+    // Asset source for games loaded via ?game= URL param.
+    // Media paths in game.json are relative to the game folder (baseDir).
+    class QueryParamAssetSource {
+      constructor(label, baseDir) {
+        // baseDir: the directory portion of the ?game= URL, e.g. "/games/Forest Memory Circle/"
+        // May be a full absolute URL (https://...) or a same-origin path.
+        this.label = label;
+        this.baseDir = baseDir.endsWith('/') ? baseDir : baseDir + '/';
+        this.urlCache = new Map();
+      }
+      getFile(_) { return null; }
+      findPathEnding(_) { return null; }
+      async getUrl(path) {
+        if (!path) return null;
+        // For shared web_assets, use relative ../web_assets path (same-origin)
+        const p = String(path).replace(/\\/g, '/');
+        const norm = p.replace(/^\//, '');
+        if (this.urlCache.has(norm)) return this.urlCache.get(norm);
+        let url;
+        if (norm.startsWith('web_assets/')) {
+          url = `../${norm}`;
+        } else if (norm.startsWith('special_pages/')) {
+          url = `../web_assets/${norm}`;
+        } else {
+          // Resolve relative to the game’s directory
+          // If baseDir is absolute URL, just concatenate
+          url = this.baseDir + norm;
+        }
+        this.urlCache.set(norm, url);
+        return url;
+      }
+    }
+
     class GameEngine {
       constructor(data) {
         this.game = data;
+        // Normalize page map: trim whitespace from keys to fix leading-space key bug
+        if (data.pages) {
+          const trimmed = {};
+          for (const [k, v] of Object.entries(data.pages)) {
+            const cleanKey = k.trim();
+            trimmed[cleanKey] = v;
+          }
+          data.pages = trimmed;
+        }
+        // Normalize item stat mods: unify stats/stat_mods/item_mods into .stats
+        if (data.pages) {
+          for (const page of Object.values(data.pages)) {
+            const normalizeItem = (item) => {
+              if (!item || typeof item !== 'object') return item;
+              const mods = item.stats || item.stat_mods || item.item_mods;
+              if (mods && typeof mods === 'object') item.stats = mods;
+              return item;
+            };
+            if (page.add_item) page.add_item = normalizeItem(page.add_item);
+            if (Array.isArray(page.add_items)) page.add_items = page.add_items.map(normalizeItem);
+            if (Array.isArray(page.choices)) {
+              page.choices = page.choices.map((c) => {
+                if (!c) return c;
+                // Accept both target and next_page
+                if (!c.next_page && c.target) c.next_page = c.target;
+                if (!c.target && c.next_page) c.target = c.next_page;
+                if (c.add_item) c.add_item = normalizeItem(c.add_item);
+                if (Array.isArray(c.add_items)) c.add_items = c.add_items.map(normalizeItem);
+                return c;
+              });
+            }
+          }
+        }
         this.inventory = {};
         this.variables = {};
         this.history = [];
         const defaults = { strength: 0, luck: 0, health: 100 };
         this.playerStats = { ...defaults, ...(data.player_stats || {}) };
-        this.currentPage = data.start_page || 'start';
+        this.currentPage = (data.start_page || 'start').trim();
         this.enterPage(this.currentPage);
       }
       getPage(id = this.currentPage) { return (this.game.pages || {})[id] || {}; }
@@ -1469,7 +1678,7 @@ Browser game player (bezel-enabled variant). Based on web_player.html.
           flags.filter(Boolean).forEach((f) => { this.variables[String(f)] = true; });
         }
         this.history.push({ page: this.currentPage, choice: index });
-        const next = choice.next_page || choice.target;
+        const next = (choice.next_page || choice.target || '').trim();
         if (next) this.enterPage(next);
         return true;
       }
@@ -1506,6 +1715,201 @@ Browser game player (bezel-enabled variant). Based on web_player.html.
         }
         const next = result.success ? result.success_page : result.failure_page;
         if (next) this.enterPage(next);
+      }
+    }
+
+    // ========== SAVE / RESUME ==========
+    function saveKey(game, param) {
+      const slug = param ? param : ((game && game.title) ? game.title : 'unnamed');
+      return 'dm_save_' + slug.replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 80);
+    }
+
+    function saveProgress() {
+      if (!engine || !currentGame) return;
+      const key = saveKey(currentGame, currentGameParam);
+      const state = {
+        pageId: engine.currentPage,
+        stats: { ...engine.playerStats },
+        inventory: JSON.parse(JSON.stringify(engine.inventory)),
+        variables: { ...engine.variables },
+        ts: Date.now(),
+      };
+      try { localStorage.setItem(key, JSON.stringify(state)); } catch (_) {}
+    }
+
+    function clearSave() {
+      if (!currentGame) return;
+      const key = saveKey(currentGame, currentGameParam);
+      try { localStorage.removeItem(key); } catch (_) {}
+    }
+
+    function loadSave() {
+      if (!currentGame) return null;
+      const key = saveKey(currentGame, currentGameParam);
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : null;
+      } catch (_) { return null; }
+    }
+
+    function applySave(save) {
+      if (!engine || !save) return;
+      engine.currentPage = (save.pageId || engine.currentPage).trim();
+      if (save.stats) engine.playerStats = { ...engine.playerStats, ...save.stats };
+      if (save.inventory) engine.inventory = save.inventory;
+      if (save.variables) engine.variables = save.variables;
+    }
+
+    async function offerContinue(save) {
+      return new Promise((resolve) => {
+        const card = document.createElement('div');
+        card.style.cssText = 'position:absolute;inset:0;background:rgba(0,0,0,0.82);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;z-index:25;border-radius:14px;padding:28px;text-align:center;';
+        const title = document.createElement('div');
+        title.style.cssText = 'font-family:var(--ui-heading);font-size:18px;font-weight:700;color:var(--accent);letter-spacing:0.04em;';
+        title.textContent = 'Resume your adventure?';
+        const sub = document.createElement('div');
+        sub.style.cssText = 'font-family:var(--ui-mono);font-size:11px;color:var(--subtext);letter-spacing:0.06em;';
+        const ago = save.ts ? Math.round((Date.now() - save.ts) / 60000) : null;
+        sub.textContent = ago != null ? `Saved ${ago < 2 ? 'just now' : ago + ' min ago'}` : 'Progress found';
+        const btnRow = document.createElement('div');
+        btnRow.style.cssText = 'display:flex;gap:12px;';
+        const cont = document.createElement('button');
+        cont.style.cssText = 'padding:10px 22px;border-radius:10px;border:1px solid var(--accent);background:transparent;color:var(--accent);font-family:var(--ui-mono);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;';
+        cont.textContent = 'Continue';
+        const restart = document.createElement('button');
+        restart.style.cssText = 'padding:10px 22px;border-radius:10px;border:1px solid #444;background:transparent;color:var(--subtext);font-family:var(--ui-mono);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;';
+        restart.textContent = 'Restart';
+        cont.addEventListener('click', () => { card.remove(); resolve(true); });
+        restart.addEventListener('click', () => { card.remove(); resolve(false); });
+        btnRow.appendChild(cont);
+        btnRow.appendChild(restart);
+        card.appendChild(title);
+        card.appendChild(sub);
+        card.appendChild(btnRow);
+        const screenEl = document.getElementById('screen');
+        if (screenEl) screenEl.appendChild(card);
+      });
+    }
+
+    // ========== ?game= URL PARAM LOADING ==========
+    function computeBaseDir(gameParam) {
+      // gameParam is the raw ?game= value, e.g. /games/Forest%20Memory%20Circle/game.json
+      // or https://cdn.example.com/games/demo/game.json
+      // Return everything up to and including the last '/'
+      const decoded = decodeURIComponent(gameParam);
+      const lastSlash = decoded.lastIndexOf('/');
+      return lastSlash >= 0 ? decoded.slice(0, lastSlash + 1) : './';
+    }
+
+    function showUrlLoadingScreen(label) {
+      const el = document.getElementById('url-loading-screen');
+      const lbl = document.getElementById('url-loading-label');
+      if (el) el.classList.remove('hidden');
+      if (lbl) lbl.textContent = label || 'Loading game…';
+    }
+
+    function hideUrlLoadingScreen() {
+      const el = document.getElementById('url-loading-screen');
+      if (el) el.classList.add('hidden');
+    }
+
+    function showUrlErrorScreen(msg) {
+      hideUrlLoadingScreen();
+      const el = document.getElementById('url-error-screen');
+      const msgEl = document.getElementById('url-error-msg');
+      if (el) el.classList.remove('hidden');
+      if (msgEl) msgEl.textContent = msg || 'Could not load the game file.';
+      const dismissBtn = document.getElementById('url-error-dismiss');
+      if (dismissBtn) {
+        dismissBtn.onclick = () => {
+          el.classList.add('hidden');
+          document.getElementById('asset-folder') && document.getElementById('asset-folder').click();
+        };
+      }
+    }
+
+    function updateShareButton() {
+      const btn = document.getElementById('share-btn');
+      if (!btn) return;
+      if (currentGameParam) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    }
+
+    async function loadGameFromQueryParam(gameParam) {
+      currentGameParam = gameParam;
+      const baseDir = computeBaseDir(gameParam);
+      const decoded = decodeURIComponent(gameParam);
+
+      // Build the fetch URL: if it's already absolute, use it; else same-origin
+      let fetchUrl;
+      try {
+        // Test if it's an absolute URL
+        const u = new URL(decoded);
+        fetchUrl = u.href;
+      } catch (_) {
+        // Relative: same-origin, path starts with /
+        fetchUrl = decoded.startsWith('/') ? decoded : '/' + decoded;
+      }
+
+      showUrlLoadingScreen(`Loading ${baseDir.split('/').filter(Boolean).pop() || 'game'}…`);
+
+      try {
+        const res = await fetch(fetchUrl, { cache: 'no-cache' });
+        if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+        const data = await res.json();
+
+        currentGame = data;
+        currentAssets = new QueryParamAssetSource(
+          `URL: ${decodeURIComponent(gameParam)}`,
+          baseDir
+        );
+        engine = new GameEngine(data);
+        assetSourceEl.textContent = currentAssets.label;
+
+        // Stat popup styling
+        const sp = (data && (data.stat_popup_web || data.stat_popup)) || {};
+        const px = (n, d) => `${Number.isFinite(Number(n)) ? Number(n) : d}px`;
+        const ms2 = (n, d) => `${Number.isFinite(Number(n)) ? Number(n) : d}ms`;
+        document.documentElement.style.setProperty('--stat-popup-font-size', px(sp.font_size, 24));
+        document.documentElement.style.setProperty('--stat-popup-positive', sp.positive_color || '#86efac');
+        document.documentElement.style.setProperty('--stat-popup-negative', sp.negative_color || '#fca5a5');
+        document.documentElement.style.setProperty('--stat-popup-duration', ms2(sp.duration_ms, 900));
+        document.documentElement.style.setProperty('--stat-popup-move', px(sp.move_px, 26));
+
+        gameTitleEl.textContent = data.title || 'Untitled Game';
+        applyTheme();
+        applyTypography();
+        await loadFontIfNeeded();
+        await loadBezelImage('main');
+        separatorEl.textContent = '';
+        statsEl.style.display = '';
+
+        hideUrlLoadingScreen();
+        updateShareButton();
+
+        // Save/resume
+        const save = loadSave();
+        let useSave = false;
+        if (save && save.pageId && (engine.game.pages || {})[save.pageId]) {
+          useSave = await offerContinue(save);
+          if (useSave) applySave(save);
+          else clearSave();
+        }
+
+        await showLogoSplash(3000);
+        renderPage(true);
+        closeFeatured();
+        log(`Loaded game via ?game= (baseDir: ${baseDir})`);
+      } catch (e) {
+        console.error('[DM] ?game= load failed', e);
+        let friendly = String(e && e.message ? e.message : e);
+        if (friendly.includes('Failed to fetch') || friendly.includes('NetworkError') || friendly.includes('CORS')) {
+          friendly = 'Could not fetch the game file. This may be a CORS restriction (cross-origin games must allow browser access) or a network error. Try hosting the game file on the same server.';
+        }
+        showUrlErrorScreen(friendly);
       }
     }
 
@@ -2025,6 +2429,7 @@ Browser game player (bezel-enabled variant). Based on web_player.html.
         horror: { bg: '#120808', panel: '#1e0f0f', text: '#cccccc', sub: '#a0a0a0', accent: '#8b0000', accentDark: '#640000' },
         steampunk: { bg: '#2c1810', panel: '#3c2319', text: '#d4a574', sub: '#b48c64', accent: '#b8860b', accentDark: '#8b6508' },
       };
+      if (!presets[preset]) console.warn(`[DM] Unknown theme preset "${preset}"; falling back to fantasy.`);
       const base = presets[preset] || presets.fantasy;
       const merged = {
         bg: custom.background_color || base.bg,
@@ -2219,22 +2624,83 @@ Browser game player (bezel-enabled variant). Based on web_player.html.
       return { type: 'none' };
     }
 
+    // Returns the audio URL, trying the given extension first, then the alternate.
+    async function resolveAudioUrl(basePath) {
+      if (!currentAssets || !basePath) return null;
+      // Try the path as-is first
+      const direct = await currentAssets.getUrl(basePath);
+      if (direct) {
+        // For UrlAssetSource (URL-based), just return it; we can't verify existence cheaply.
+        // For FileList-based sources, getUrl returns null if the file isn't in the map.
+        return direct;
+      }
+      // If path ends in .wav, also try .mp3 (and vice versa)
+      const altPath = basePath.replace(/\.wav$/i, '.mp3').replace(/\.mp3$/i, (m) => basePath.endsWith('.wav') ? m : '.wav');
+      if (altPath !== basePath) {
+        const alt = await currentAssets.getUrl(altPath);
+        if (alt) return alt;
+      }
+      return null;
+    }
+
+    async function tryPlayAudio(url, vol) {
+      if (!url) return null;
+      const player = new Audio(url);
+      if (vol != null) player.volume = vol;
+      try {
+        await player.play();
+      } catch (err) {
+        // If .wav fails to play (404 or codec), try swapping extension
+        const altUrl = url.replace(/\.wav([?#]|$)/i, '.mp3$1').replace(/\.mp3([?#]|$)/i, (m, s) => url.match(/\.wav/i) ? m : '.wav' + s);
+        if (altUrl !== url) {
+          const fallbackPlayer = new Audio(altUrl);
+          if (vol != null) fallbackPlayer.volume = vol;
+          fallbackPlayer.play().catch(() => {});
+          return fallbackPlayer;
+        }
+      }
+      return player;
+    }
+
     async function playAudioForPage(page) {
       if (!currentAssets) return;
       const pageId = engine.currentPage;
-      const speechFile = page.speech_file || `${pageId}.wav`;
-      // Only play SFX when explicitly specified; many games don't provide per-page *_sfx.wav files.
+      // Accept both .wav and .mp3 — resolve whichever exists
+      const speechFileRaw = page.speech_file || `${pageId}.mp3`;
       const soundFile = page.sound_file || null;
       if (audioPlayer) { audioPlayer.pause(); audioPlayer = null; }
       if (sfxPlayer) { sfxPlayer.pause(); sfxPlayer = null; }
-      const speechUrl = await currentAssets.getUrl(`audio/${speechFile}`);
-      if (speechUrl) { audioPlayer = new Audio(speechUrl); audioPlayer.play().catch(()=>{}); }
+
+      // Try speech: resolve the file, with wav<->mp3 fallback
+      const speechBase = `audio/${speechFileRaw}`;
+      const speechAlt = speechBase.replace(/\.wav$/i, '.mp3').replace(/\.mp3$/i, '.wav');
+      let speechUrl = await currentAssets.getUrl(speechBase);
+      if (!speechUrl && speechAlt !== speechBase) speechUrl = await currentAssets.getUrl(speechAlt);
+      if (speechUrl) {
+        audioPlayer = new Audio(speechUrl);
+        audioPlayer.play().catch(() => {
+          // On network/codec error try the alternate extension
+          const alt = speechUrl.replace(/\.wav([?#]|$)/i, '.mp3$1').replace(/\.mp3([?#]|$)/i, '.wav$1');
+          if (alt !== speechUrl) new Audio(alt).play().catch(() => {});
+        });
+      }
+
       if (soundFile) {
-        const sfxUrl = await currentAssets.getUrl(`audio/${soundFile}`);
+        const sfxBase = `audio/${soundFile}`;
+        const sfxAlt = sfxBase.replace(/\.wav$/i, '.mp3').replace(/\.mp3$/i, '.wav');
+        let sfxUrl = await currentAssets.getUrl(sfxBase);
+        if (!sfxUrl && sfxAlt !== sfxBase) sfxUrl = await currentAssets.getUrl(sfxAlt);
         if (!sfxUrl) return;
         sfxPlayer = new Audio(sfxUrl);
         sfxPlayer.volume = (audioPlayer?.volume ?? 1) * 0.6;
-        sfxPlayer.play().catch(()=>{});
+        sfxPlayer.play().catch(() => {
+          const alt = sfxUrl.replace(/\.wav([?#]|$)/i, '.mp3$1').replace(/\.mp3([?#]|$)/i, '.wav$1');
+          if (alt !== sfxUrl) {
+            const fb = new Audio(alt);
+            fb.volume = (audioPlayer?.volume ?? 1) * 0.6;
+            fb.play().catch(() => {});
+          }
+        });
       }
     }
 
@@ -2743,6 +3209,16 @@ Browser game player (bezel-enabled variant). Based on web_player.html.
       flushPendingStatDelta();
 
       lastRenderedPageId = engine.currentPage;
+
+      // Autosave progress on each page (clear on terminal pages)
+      if (engine && currentGame) {
+        const pageType = page && (page.type || page.page_type || '');
+        const isTerminal = pageType === 'ending' || pageType === 'game_over' ||
+          engine.currentPage === 'game_over' || engine.currentPage === 'ending';
+        if (isTerminal) clearSave();
+        else saveProgress();
+      }
+
       if (isNewPage && !splashActive) await fadeFromBlack();
     }
 
@@ -3505,8 +3981,42 @@ Project website: www.dungeonmastron.com
       window.visualViewport.addEventListener('resize', () => scheduleLayoutRecalc());
       window.visualViewport.addEventListener('scroll', () => scheduleLayoutRecalc());
     }
+    // ========== SHARE BUTTON ==========
+    const shareBtnEl = document.getElementById('share-btn');
+    if (shareBtnEl) {
+      shareBtnEl.addEventListener('click', async () => {
+        const url = window.location.href;
+        try {
+          await navigator.clipboard.writeText(url);
+          shareBtnEl.textContent = '\u2705 Copied!';
+          shareBtnEl.classList.add('copied');
+          setTimeout(() => {
+            shareBtnEl.textContent = '\uD83D\uDD17 Copy link';
+            shareBtnEl.classList.remove('copied');
+          }, 2000);
+        } catch (_) {
+          // Clipboard API not available; show the URL in the overlay
+          showOverlay('Share', [url]);
+        }
+      });
+    }
+
+    // ========== ?game= URL PARAM INIT ==========
+    (function initQueryParamGame() {
+      const params = new URLSearchParams(window.location.search);
+      const gameParam = params.get('game');
+      if (gameParam) {
+        // Hide the featured fold-down when loading via URL
+        closeFeatured();
+        // Defer to next tick so DOM is ready
+        setTimeout(() => loadGameFromQueryParam(gameParam), 0);
+      }
+    })();
+
     log('Ready. Pick a game folder (preferred) or load game.json and assets.');
   </script>
+
+  <button id="share-btn" class="share-btn" type="button" title="Copy shareable game link">🔗 Copy link</button>
 
   <button id="copyrightBadge" type="button" onclick="showLicense()" style="position: fixed; bottom: 12px; left: 24px; font-size: 11px; color: #A9A9A9; font-weight: 600; font-family: var(--ui-mono); z-index: 9999; background: rgba(0,0,0,0.6); padding: 4px 10px; border-radius: 4px; border: 1px solid #3D3D3D; line-height: 1.1; cursor: pointer; pointer-events: auto;"><span style="font-size: 15px; position: relative; top: 1px;">©</span> 2026 Artifextron</button>
 </body>

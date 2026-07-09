@@ -1,0 +1,27 @@
+The lander settles into the Martian dust with a dull, heavy thump. Inside your helmet, the sound feels closer than it should, as if the planet itself is listening. Outside the small window stretches a red landscape shaped by wind, cold, and time. This mission is not about speed or heroics. It is about learning how Mars works, and how to survive by understanding it.
+
+Before moving far from the lander, you review one of Mars’ most serious dangers: radiation. Unlike Earth, Mars has a very thin atmosphere and no strong global magnetic field. These two features normally help block high-energy particles from space. On Mars, much more radiation reaches the surface, slowly damaging living tissue and electronics over time.
+
+Inside the compact storage locker, everything is strapped down and labeled. On Mars, you don’t carry extra gear for fun, every item adds weight, complexity, and risk. You run a quick mental checklist instead: suit integrity, air pressure, exposure time, and route discipline. This mission isn’t about having the ‘best item’… it’s about having the right knowledge.
+
+As you seal your helmet, you are reminded that Mars’ atmosphere is extremely thin and mostly carbon dioxide. There is almost no breathable oxygen and far too little pressure for the human body. This is why habitats and suits are not optional, they are the only reason you can stand here at all.
+
+Each step kicks up fine red dust that takes longer than expected to fall back down. The ridge ahead offers a good place to deploy a sensor mast. As you walk, you repeat earlier lessons in your head. On Mars, memory is a survival tool, not trivia.
+
+Training mode activates. The system asks you to confirm your understanding: Why is radiation exposure on Mars higher than on Earth?
+
+Nice job, you are correct. Mars does not have the thick atmosphere or global magnetic field that helps protect Earth. As a result, more cosmic rays and solar radiation reach the surface. Knowing this helps you plan exposure time and seek shelter when possible.
+
+Here’s the key idea to remember: Mars receives more radiation because its atmosphere is very thin and it lacks a strong global magnetic field. These normally act as shields on Earth. Keeping this in mind helps reduce long-term risk during surface missions.
+
+As the terrain becomes uneven, your movement feels different than it would on Earth. Training mode asks another question: Mars gravity is about 38% of Earth’s. What does this mean for how you move?
+
+Nice job, you are correct. Lower gravity means you weigh less and can lift more, but your mass does not change. Once you start moving, momentum still applies. This is why careful movement is important on slopes and loose ground.
+
+The important takeaway is this: Mars’ gravity makes you lighter, but it does not remove momentum. You still need to control your movement carefully, especially on uneven terrain, because stopping is not instant.
+
+Just before the ridge top, Mission Control pings your headset: a quick safety checkout. It’s not meant to catch you out—it’s a standard procedure. On Mars, misunderstandings become emergencies. If you answered every knowledge check correctly, you can proceed to the certified deployment. Otherwise, you can still finish the mission, but you’ll receive a short review outcome.
+
+Just before the ridge top, Mission Control pings your headset: a quick safety checkout. It’s not meant to catch you out, it’s a standard procedure. On Mars, misunderstandings become emergencies. If you answered every knowledge check correctly, you can proceed to the certified deployment. Otherwise, you can still finish the mission, but you’ll receive a short review outcome.
+
+Review ending — You deploy the sensor mast successfully, but Mission Control flags your checkout as ‘Needs Review.’ That doesn’t mean you failed the mission. It means Mars is demanding, and the basics must become automatic. Quick recap: - Radiation is higher on Mars because the atmosphere is thin and there is no strong global magnetic field. - Mars gravity is about 38% of Earth’s: you weigh less, but your mass and momentum still matter. You head back to the lander with good data, and a clear plan to study and try again.

@@ -1,94 +1,38 @@
-Dungeon Mastron © Artifextron
-Community-shared source files. Official development and releases remain with Artifextron.
+Dungeon Mastron © Artifextron — released under the MIT License
 
 ---
 
 ## License
 
 ```
-DUNGEON MASTRON LICENSE
+MIT License
 
-Copyright (c) 2026 Artifextron, Henrik Åberg
-All Rights Reserved.
+Copyright (c) 2026 Artifextron
 
-================================================================================
-TERMS AND CONDITIONS
-================================================================================
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-This software and content (Dungeon Mastron Console, Web Player, Game Builder, 
-and AI Companion) is proprietary material made available in source 
-form for transparency and personal use.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-PERMISSIONS
------------
-You are permitted to:
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
-  ✓ Use this software to play games
-  ✓ Use this software to create games with the included Game Builder
-  ✓ Use the AI Companion to create games with AI assistants
-  ✓ Modify this software and templates for personal, private, non-commercial use
-  ✓ Study and learn from the source code and templates
-  ✓ Create, distribute, and sell games made with the Game Builder or AI Companion
-    (you own full rights to your created games)
-
-RESTRICTIONS
-------------
-You may NOT:
-
-  ✗ Distribute this software or templates (original or modified versions)
-  ✗ Publish, share, or make available any fork, derivative, or modified template
-  ✗ Use this software or templates for commercial purposes
-  ✗ Sublicense, sell, rent, or lease this software or templates
-  ✗ Remove or modify this license or copyright notices
-  ✗ Use this software to create competing products or services
-  ✗ Reverse engineer this software (beyond what's visible in source)
-
-GAME OWNERSHIP AND PLAYBACK
----------------------------
-Games created using the Dungeon Mastron Game Builder or AI Companion 
-are owned entirely by their creators. You may distribute, sell, or license 
-your games freely.
-
-However, games are designed to be played using official Dungeon Mastron players:
-- Dungeon Mastron Web Player (free)
-- Dungeon Mastron Console (console.py on Raspberry Pi)
-
-Creating alternative players or software that executes Dungeon Mastron game 
-files requires written permission from the copyright holder.
-
-Attribution to Dungeon Mastron is appreciated but not required when 
-distributing your games.
-
-ATTRIBUTION
------------
-When sharing games or content created with this software, you should credit:
-"Created with Dungeon Mastron / www.dungeonmastron.com"
-
-DISCLAIMER
-----------
-THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT
-HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE
-USE OF THIS SOFTWARE.
-
-ENFORCEMENT
------------
-Violations of this license may result in:
-- DMCA takedown notices
-- Cease and desist orders
-- Legal action for damages
-
-If you're unsure whether your use case is permitted, please contact the
-copyright holder before proceeding.
-
-================================================================================
-For questions or licensing inquiries: [dungeonmastron@gmail.com / Henrik Åberg]
+Games created with the AI Companion or Game Builder are fully owned by their
+creators. No royalties, no lock-in. Attribution appreciated but not required.
 Project website: www.dungeonmastron.com
-================================================================================
 ```
 
-# 🎮 Dungeon Mastron Game Generator - AI Template V7.1
+# 🎮 Dungeon Mastron Game Generator - AI Template V7.2
 
 ## 📋 INSTRUCTIONS FOR AI
 
@@ -101,7 +45,7 @@ When a user asks you to create a game, generate a complete `game.json` file foll
 **CRITICAL REQUIREMENTS:**
 1. **CORRECT JSON STRUCTURE** (no game_info wrapper - see section below!)
 2. **NO double-damage bugs** (action + failure page damage)
-3. **RICH, immersive text** (minimum 150 characters per page, target 300-500)
+3. **RICH, immersive text** (minimum 300 characters per story page, target 300-500)
 4. **Multi-sensory descriptions** (engage sight, sound, smell, touch, emotion)
 5. **COMPELLING NARRATIVE** (continuous story arc, not isolated scenes)
 
@@ -1094,6 +1038,54 @@ Before generating a single page, you MUST complete this planning phase. Skipping
 - [ ]Page count and structure planned
 
 **⚠️ DO NOT proceed to page generation without completing ALL items above!**
+
+---
+
+## 🗃️ 5. Structural Map (Recommended Before Page Generation)
+
+Print a compact structural map **before writing any pages**. This gives the user a chance to
+sanity-check your plan, and gives you an inspectable commitment to follow.
+
+```json
+{
+  "structural_map": {
+    "metadata": {
+      "total_pages": 80,
+      "difficulty_profile": "horror",
+      "theme": "Dark medieval dungeon",
+      "narrative_mode": "Limited Voice"
+    },
+    "acts": [
+      {"name": "The Descent",    "pages": "1-25",  "mood": "Ominous dread"},
+      {"name": "The Deep",       "pages": "26-65", "mood": "Escalating tension"},
+      {"name": "The Reckoning",  "pages": "66-80", "mood": "Climactic desperation"}
+    ],
+    "action_encounters": {
+      "total": 14,
+      "combat": 9,
+      "dice": 5
+    },
+    "bosses": [
+      {"type": "mini",  "name": "The Jailer",      "location": "page_28", "stages": 3},
+      {"type": "final", "name": "The Bone Warden", "location": "page_76", "stages": 5}
+    ],
+    "sanctuaries": {
+      "locations": [20, 48, 70],
+      "healing": 20
+    },
+    "endings": {
+      "total": 3,
+      "types": ["Victory (defeat warden)", "Sacrifice (seal the rift)", "Escape (flee wounded)"]
+    }
+  }
+}
+```
+
+**Structural Map Checklist:**
+- [ ] Mini-boss at ~30-40% of total pages, final boss at ~90-95%
+- [ ] Sanctuaries spaced 20-30 pages apart (fewer for HORROR/NIGHTMARE)
+- [ ] At least 2 endings planned and reachable
+- [ ] Boss stages: mini = exactly 3, final = exactly 5
 
 ---
 
@@ -2653,17 +2645,19 @@ The Visual Builder's Diagnostics Panel actively checks for:
 
 ### Choice Target Fields
 
-**Both field names are supported by the Visual Builder and console:**
+**Always use `"target"` — it is the only field validated by the console and the game validator:**
 
 ```json
-✅ PREFERRED (use consistently):
-{"text": "Go left", "target": "next_page"}
+✅ CORRECT (always use this):
+{"text": "Go left", "target": "next_area"}
 
-✅ ALSO ACCEPTED (legacy compatibility):
-{"text": "Go right", "next_page": "next_page"}
+❌ WRONG (legacy, not validated):
+{"text": "Go right", "next_page": "next_area"}
 ```
 
-**Recommendation:** Always use `"target"` for consistency and clarity.
+**Important:** `next_page` is a legacy field name. The validator (`validate_dungeon_mastron.py`) only
+checks `target`. Games using `next_page` will produce `CHOICE_TARGET_MISSING` validation errors.
+Always use `"target"` for all choice navigation.
 
 ---
 
@@ -3185,7 +3179,8 @@ The console.py runtime and Visual Builder use different field sets for combat:
   "text": "The Guardian finally falls, but you're battered and bleeding. Victory, but at a cost. Every breath is a struggle, and your vision swims. Yet somehow, you're still standing.",
   "page_type": "normal",
   "led_effect": {"type": "solid", "color": "orange"},
-  "stat_mods": {"health": -35}, // Show cumulative damage in the text aftermath page
+  // ✅ NO stat_mods here — the enemy_damage in the boss action already dealt the 35 HP loss.
+  // Failure pages after a damaging action must NOT add more damage (double-damage bug).
   "choices": [
     {"text": "Stagger forward", "target": "next_area"}
   ]
@@ -3423,7 +3418,7 @@ The console.py runtime and Visual Builder use different field sets for combat:
 "player_stats": {
   "health": 100,      // Current HP (modified during play)
   "strength": 2,      // Combat bonus
-  "luck": 1          // Reserved for future use
+  "luck": 1          // Passive bonus stat; items grant luck. No mechanical console effect yet — planned for future dice modifiers.
 }
 ```
 
@@ -3736,9 +3731,8 @@ Create audio files named after keywords that appear in page text:
     "type": "solid",
     "color": "orange"
   },
-  "stat_mods": {
-    "health": -35
-  },
+  // ✅ NO stat_mods health penalty here — enemy_damage in the action already applied 35 HP loss.
+  // Failure pages must NOT re-apply damage (double-damage bug).
   "item_mods": {
     "guardian_essence": 1
   },
@@ -3754,7 +3748,7 @@ Create audio files named after keywords that appear in page text:
 "ancient_sanctuary": {
   "text": "You discover a chamber untouched by the corruption outside. Soft light filters through stained glass windows, casting colored patterns across clean stone floors. A simple altar holds fresh water and dried herbs. For the first time since entering this nightmare, you feel like you can breathe. Rest here. Recover. The darkness can wait a little longer.",
   "led_effect": {
-    "type": "breath",
+    "type": "pulse",  // ✅ 'pulse' = smooth breathing effect (supported). 'breath' is NOT supported.
     "color": "green",
     "speed": 0.6
   },
@@ -3808,6 +3802,9 @@ Create audio files named after keywords that appear in page text:
 ## Validation Checklist
 
 **Before submitting your game, verify:**
+
+> 🔧 **Machine validator available:** After generating your game, run `python validate_dungeon_mastron.py game.json --pretty` to catch structural errors automatically. The validator checks JSON structure, LED semantics, action fields, choice targets, boss stage chains, and more. Fix all reported errors before sharing your game.
+
 
 **Structure:**
 - [ ] game.json is valid JSON
@@ -3995,7 +3992,9 @@ When a user requests a game:
   "display_name": "Wounded: Barely Survived",
   "text": "Wounded but alive (300-500 chars)...",
   "led_effect": {"type": "solid", "color": "orange"},
-  "stat_mods": {"health": -30},
+  // ✅ NO stat_mods health penalty here when this is the failure_page of a damaging action.
+  // The action's enemy_damage / failure_damage already applied HP loss.
+  // Only add stat_mods.health if this page is reached WITHOUT a prior damaging action.
   "item_mods": {"key_item": 1},
   "choices": [
     {"text": "Press on wounded", "target": "next"}
@@ -4043,7 +4042,7 @@ When a user requests a game:
 | Armory | armory | Brown | Items/rewards |
 | Ending | ending | Yellow | End of story |
 | Locked | locked | Sand | Gated content |
-| Game Over | game_over | Red/Orange | HP = 0 |
+| Game Over | game_over | Orange only | HP = 0 |
 
 **⚠️ IMPORTANT:** Action pages should use `page_type: "normal"`. The presence of an `action` field + RED LED is what makes a page an action node. The Visual Builder does NOT recognize `page_type: "action"`.
 
@@ -4067,11 +4066,14 @@ When a user requests a game:
 
 | Context | Field Used | Format | Where |
 |---------|-----------|--------|-------|
-| Single item pickup | `add_item` | string or object | page or choice |
-| Multiple items | `add_items` | array | page or choice |
+| Page-level item pickup (canonical) | `item_mods` | object `{"item_name": qty}` | page object |
+| Choice-level item pickup | `add_item` | object (enhanced format) | inside choice |
+| Multiple items on a choice | `add_items` | array | inside choice |
 | Page-level stats | `stat_mods` | object | page object |
 | Choice-level stats | `modify_stats` | object | choice object |
 | Item gating | `requires_item`, `requires_amount` | string, int | choice object |
+
+**Canonical pattern:** Use `item_mods` for page-level item pickups (victory pages, armory pages). Use `add_item`/`add_items` for choice-level item grants. These are different field names with different scopes — do not mix them.
 
 **Builder visibility:** Use `modify_stats`/`add_item` on **choices** for fake choice detection.
 
@@ -4259,3 +4261,30 @@ You've verified everything is correct. Go ahead and output:
 2. The complete game JSON
 
 Good luck! 🎯
+
+---
+
+## 📜 CHANGELOG
+
+### V7.2 (2026-07-09)
+- **[FIX] Boss double-damage bug in canonical example** — Removed `stat_mods: {health: -35}` from `guardian_wounded_victory` (boss stage 3 failure page). Enemy_damage in the action object already applies the HP loss; failure pages must not re-apply it. (`§3.3 Boss Example`, `§R1`)
+- **[FIX] Combat double-damage bug in canonical example** — Removed `stat_mods: {health: -35}` from `guardian_defeated_wounded` (combat action failure page). Same double-damage pattern; fixed to match the 8 documented warnings. (`§Combat Action with Emotional Stakes`)
+- **[FIX] Double-damage bug in QUICK REFERENCE GUIDE failure page template** — Removed `stat_mods: {health: -30}` from the Failure/Wounded Page Template (it follows an action with `enemy_damage: 30`). Added clarifying comment explaining when `stat_mods` is and is not appropriate on failure pages. (`§QUICK REFERENCE GUIDE`)
+- **[FIX] Unsupported LED type `"breath"` in sanctuary example** — Changed to `"pulse"` (supported) with inline comment. (`§3.4 LED type`, `§R2`)
+- **[FIX] Text-minimum contradiction** — Unified to 300 characters minimum for story pages throughout. The inherited V4 “minimum 150 characters” in CRITICAL REQUIREMENTS has been corrected. (`§3.1`, `§R4`)
+- **[FIX] Page Type Quick Reference — Game Over LED** — Changed “Red/Orange” to “Orange only” to match the semantic color rules and validator check. (`§3.2`, `§R3`)
+- **[FIX] `luck` stat `Reserved for future use` comment** — Replaced with accurate description: luck is stored and granted by items; no current console effect but planned for future dice modifiers. (`§3.5`, `§R12`)
+- **[FIX] Choice target field consistency** — Removed claim that `next_page` is an accepted alias. `target` is the ONLY field checked by the validator. Using `next_page` produces `CHOICE_TARGET_MISSING` errors. (`§4.4`)
+- **[FIX] Item field quick reference** — Added `item_mods` as the canonical page-level item pickup format (most common pattern in examples). Clarified `add_item`/`add_items` are for choice-level pickups. (`§4.2`)
+- **[FIX] License** — Updated from proprietary “All Rights Reserved” to MIT License. (`§License`)
+- **[ADD] Machine validator mention** — Added `validate_dungeon_mastron.py` reference in the Validation Checklist so users know it exists. (`§R8`)
+- **[ADD] Pre-generation structural map (P1 restore)** — Restored lightweight V4-style structural map output as step 5 of STEP 0 planning phase. Gives users an inspectable commit before 100 pages of prose are generated. (`§3.6`, `§R9`)
+- **[UPDATE] Version bump** — Template header updated from V7.1 → V7.2.
+
+### V7.1 (prior)
+- Multi-stage boss system (mini = 3 stages, final = 5 stages)
+- Special pages (cinematic full-screen pages)
+- Action bypass validation
+- 12-point narrative + technical verification checklist
+- QUICK START SUMMARY at top of file
+- Pseudocode verification algorithms for double-damage, sentence repetition, page connectivity

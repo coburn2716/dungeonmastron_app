@@ -1,0 +1,176 @@
+{
+  "game_title": "The Forest Memory Circle",
+  "total_pages": 34,
+  "pages": [
+    {
+      "pageId": "p1_image_1",
+      "imageName": "p1_image_1.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p2_q1",
+      "imageName": "p2_q1.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p3_image_2a",
+      "imageName": "p3_image_2a.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p3_image_2b",
+      "imageName": "p3_image_2b.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p4_q2",
+      "imageName": "p4_q2.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p5_image_3a",
+      "imageName": "p5_image_3a.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p5_image_3b",
+      "imageName": "p5_image_3b.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p6_q3",
+      "imageName": "p6_q3.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p7_image_4a",
+      "imageName": "p7_image_4a.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p7_image_4b",
+      "imageName": "p7_image_4b.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p8_q4",
+      "imageName": "p8_q4.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p9_image_5a",
+      "imageName": "p9_image_5a.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p9_image_5b",
+      "imageName": "p9_image_5b.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p10_q5",
+      "imageName": "p10_q5.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p11_image_6a",
+      "imageName": "p11_image_6a.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p11_image_6b",
+      "imageName": "p11_image_6b.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p12_q6",
+      "imageName": "p12_q6.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p13_image_7a",
+      "imageName": "p13_image_7a.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p13_image_7b",
+      "imageName": "p13_image_7b.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p14_q7",
+      "imageName": "p14_q7.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p15_image_8a",
+      "imageName": "p15_image_8a.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p15_image_8b",
+      "imageName": "p15_image_8b.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p16_q8",
+      "imageName": "p16_q8.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p17_image_9a",
+      "imageName": "p17_image_9a.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p17_image_9b",
+      "imageName": "p17_image_9b.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p18_q9",
+      "imageName": "p18_q9.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p19_image_10a",
+      "imageName": "p19_image_10a.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p19_image_10b",
+      "imageName": "p19_image_10b.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p20_q10",
+      "imageName": "p20_q10.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p21_result10_a",
+      "imageName": "p21_result10_a.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p21_result10_b",
+      "imageName": "p21_result10_b.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p22_gate",
+      "imageName": "p22_gate.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p23_perfect_ending",
+      "imageName": "p23_perfect_ending.jpg",
+      "effect": "random"
+    },
+    {
+      "pageId": "p24_regular_ending",
+      "imageName": "p24_regular_ending.jpg",
+      "effect": "random"
+    }
+  ]
+}

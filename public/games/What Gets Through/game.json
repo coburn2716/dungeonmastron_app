@@ -2404,8 +2404,8 @@
         },
         {
           "text": "Abort the channel and climb out elsewhere",
-          "target": "p068b_abort_channel",
-          "next_page": "p068b_abort_channel"
+          "target": "p065_ramp_top",
+          "next_page": "p065_ramp_top"
         }
       ],
       "display_name": "The drainage channel runs under the ramp l…"

@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Companion – Dungeon Mastron</title>
-  <meta name="description" content="AI Companion prompts and templates for making Dungeon Mastron games faster: story, choices, stats, items, and balancing." />
-  <link rel="canonical" href="https://dungeonmastron.com/ai/" />
+  <title>AI Companion V7.2 – Dungeon Mastron</title>
+  <meta name="description" content="AI Companion V7.2 — paste-and-play prompt for ChatGPT or Claude that generates complete, validated Dungeon Mastron game.json files with enforced narrative structure and hardware-accurate rules." />
+  <link rel="canonical" href="https://www.dungeonmastron.com/ai/" />
   <meta property="og:site_name" content="Dungeon Mastron" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="AI Companion — Dungeon Mastron" />
-  <meta property="og:description" content="AI Companion prompts and templates for making Dungeon Mastron games faster." />
-  <meta property="og:url" content="https://dungeonmastron.com/ai/" />
-  <meta property="og:image" content="https://dungeonmastron.com/web_assets/splash.png" />
+  <meta property="og:title" content="AI Companion V7.2 — Dungeon Mastron" />
+  <meta property="og:description" content="Paste-and-play AI prompt for ChatGPT or Claude. Generates complete, validated Dungeon Mastron game.json files with enforced narrative structure and hardware-accurate rules." />
+  <meta property="og:url" content="https://www.dungeonmastron.com/ai/" />
+  <meta property="og:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
@@ -324,7 +325,8 @@
 <body>
   <div id="site-nav"></div>
   <main class="wrap">
-    <div class="kicker">AI Companion</div>
+    <h1 class="kicker" style="font-family:var(--shell-heading);font-size:clamp(28px,4vw,52px);font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin:0 0 6px;">AI Companion <span style="font-size:0.55em;opacity:0.55;font-weight:400;">V7.2</span></h1>
+    <p class="lead" style="margin:0 0 28px;">Paste-and-play AI prompt for ChatGPT or Claude. Generates complete, validated Dungeon Mastron game&nbsp;files with enforced narrative structure, hardware-accurate LED rules, and built-in verification.</p>
 
     <section class="grid">
       <div>
@@ -333,7 +335,7 @@
             <div class="terminal-title"><span class="accent">AI</span> Companion — Template</div>
             <div class="terminal-actions">
               <a class="btn" href="../LICENSE.txt" download="LICENSE.txt">License</a>
-              <a class="btn" href="../Guides/ai_companion.md" download="ai_companion.md">Open raw</a>
+              <a class="btn" href="../guides/ai_companion.md" download="ai_companion.md">Open raw</a>
             </div>
           </div>
           <pre id="aiTemplate" class="terminal-body terminal-body--green">Loading…</pre>
@@ -502,7 +504,7 @@
             <div class="terminal-title"><span class="accent">AI</span> Game Balancer — Template</div>
             <div class="terminal-actions">
               <a class="btn" href="../LICENSE.txt" download="LICENSE.txt">License</a>
-              <a class="btn" href="../Guides/ai_game_balancer.md" download="ai_game_balancer.md">Open raw</a>
+              <a class="btn" href="../guides/ai_game_balancer.md" download="ai_game_balancer.md">Open raw</a>
             </div>
           </div>
           <pre id="aiBalancerTemplate" class="terminal-body terminal-body--orange">Loading…</pre>
@@ -559,7 +561,7 @@
       if (!el) return;
       try {
         let text = await fetchFirstText([
-          '../Guides/ai_companion.md',
+          '../guides/ai_companion.md',
           '../guides/ai_companion.md',
         ]);
 
@@ -581,7 +583,7 @@
         text = text.replace(/^\s+/, '');
         el.textContent = text;
       } catch (e) {
-        el.textContent = `Failed to load Guides/ai_companion.md\n\n${String(e)}`;
+        el.textContent = `Failed to load guides/ai_companion.md\n\n${String(e)}`;
       }
     })();
 
@@ -590,12 +592,12 @@
       if (!el) return;
       try {
         const text = await fetchFirstText([
-          '../Guides/ai_game_balancer.md',
+          '../guides/ai_game_balancer.md',
           '../guides/ai_game_balancer.md',
         ]);
         el.textContent = text.replace(/^\s+/, '');
       } catch (e) {
-        el.textContent = `Failed to load Guides/ai_game_balancer.md\n\n${String(e)}`;
+        el.textContent = `Failed to load guides/ai_game_balancer.md\n\n${String(e)}`;
       }
     })();
   </script>
