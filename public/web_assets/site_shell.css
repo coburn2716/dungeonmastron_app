@@ -321,3 +321,6 @@ html { scrollbar-gutter: stable; }
   font-size: clamp(20px, 3vw, 30px);
   color: var(--shell-text, #f0f0f0);
 }
+
+/* Homepage GitHub/Ko-fi card logos (white SVGs on dark tiles) */
+.community-tile-logo { max-width: 62%; max-height: 46px; width: auto; height: auto; object-fit: contain; }

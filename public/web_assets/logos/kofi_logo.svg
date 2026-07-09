@@ -1,0 +1,12 @@
+<svg viewBox="0 0 300 84" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ko-fi">
+  <!-- Cup body -->
+  <rect x="18" y="24" width="58" height="40" rx="12" fill="none" stroke="#ffffff" stroke-width="6"/>
+  <!-- Handle -->
+  <path d="M76 32 h9 a11 11 0 0 1 0 22 h-6" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+  <!-- Steam -->
+  <path d="M34 12 q4 5 0 10 M47 10 q4 5 0 10 M60 12 q4 5 0 10" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+  <!-- Heart (Ko-fi orange) -->
+  <path d="M47 36 c-3.5 -6 -13 -3.6 -13 3.2 c0 5.4 8 10 13 13 c5 -3 13 -7.6 13 -13 c0 -6.8 -9.5 -9.2 -13 -3.2 z" fill="#ff5e2b"/>
+  <!-- Wordmark -->
+  <text x="104" y="57" font-family="Outfit, Arial, sans-serif" font-size="50" font-weight="800" fill="#ffffff" letter-spacing="-1">Ko-fi</text>
+</svg>
