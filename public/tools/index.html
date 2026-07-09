@@ -20,8 +20,8 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/web_assets/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../web_assets/site_shell.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../web_assets/site_shell.css?v=3" />
   <style>
     body { margin: 0; background: var(--shell-bg); color: var(--shell-text); font-family: var(--shell-font); }
     .wrap { max-width: 1560px; margin: 0 auto; padding: 46px 18px 80px; }
@@ -31,7 +31,7 @@
       font-size: 11px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: #D97757;
+      color: var(--shell-accent);
       margin-bottom: 10px;
       display: inline-flex;
       align-items: center;
@@ -46,17 +46,17 @@
       opacity: 0.95;
     }
 
-    .kicker--green { color: #6B9B7F; }
-    .kicker--yellow { color: #e8a356; }
+    .kicker--green { color: var(--shell-green); }
+    .kicker--yellow { color: var(--shell-gold); }
 
     h1 {
-      font-family: var(--shell-heading);
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      font-family: var(--shell-serif);
+      font-weight: 480;
+      letter-spacing: -0.015em;
+      text-transform: none;
       margin: 0;
-      font-size: clamp(28px, 3.2vw, 52px);
-      line-height: 1.08;
+      font-size: clamp(38px, 5vw, 78px);
+      line-height: 1.0;
       color: var(--shell-text);
     }
 
@@ -70,12 +70,12 @@
     @media (max-width: 980px) { .grid { grid-template-columns: 1fr; } }
 
     .big-copy {
-      font-family: var(--shell-heading);
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      font-size: clamp(18px, 2.2vw, 30px);
-      line-height: 1.15;
+      font-family: var(--shell-serif);
+      font-weight: 500;
+      letter-spacing: 0;
+      text-transform: none;
+      font-size: clamp(21px, 2.3vw, 32px);
+      line-height: 1.12;
       color: var(--shell-text);
       margin: 0;
     }
@@ -120,27 +120,27 @@
       font-size: 10px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: #D97757;
+      color: var(--shell-accent);
     }
-    .block h3.green { color: #6B9B7F; }
-    .block h3.yellow { color: #e8a356; }
+    .block h3.green { color: var(--shell-green); }
+    .block h3.yellow { color: var(--shell-gold); }
     .block p { margin: 0 0 10px; color: var(--shell-sub); font-size: 12px; line-height: 1.55; }
     .bullets { margin: 0; padding-left: 18px; color: var(--shell-sub); line-height: 1.6; font-size: 12px; }
     .bullets li { margin: 6px 0; }
     .bullets li::marker { color: var(--marker, rgba(232,227,217,0.55)); }
-    .bullets.bullets--orange li::marker { color: #D97757; }
-    .bullets.bullets--green li::marker { color: #6B9B7F; }
-    .bullets.bullets--yellow li::marker { color: #e8a356; }
+    .bullets.bullets--orange li::marker { color: var(--shell-accent); }
+    .bullets.bullets--green li::marker { color: var(--shell-green); }
+    .bullets.bullets--yellow li::marker { color: var(--shell-gold); }
 
     .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: var(--shell-text); text-decoration: none; font-family: var(--shell-mono); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 14px; border-radius: 0; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: var(--shell-text); text-decoration: none; font-family: var(--shell-mono); }
     .btn:hover { background: rgba(255,255,255,0.08); }
-    .btn.primary { background: rgba(217,119,87,0.16); border-color: rgba(217,119,87,0.40); }
+    .btn.primary { background: rgba(226,104,60,0.16); border-color: rgba(226,104,60,0.40); }
 
     .terminal {
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.02);
+      border-radius: 0;
+      border: 1px solid var(--shell-border-strong);
+      background: var(--shell-bg-elev);
       overflow: hidden;
     }
     .terminal-bar {
@@ -167,12 +167,12 @@
       height: 472px;
       max-height: none;
       scrollbar-width: thin;
-      scrollbar-color: rgba(217,119,87,0.95) rgba(255,255,255,0.10);
+      scrollbar-color: rgba(226,104,60,0.95) rgba(255,255,255,0.10);
     }
     .terminal-body::-webkit-scrollbar { width: 10px; height: 10px; }
     .terminal-body::-webkit-scrollbar-track { background: rgba(255,255,255,0.08); border-radius: 999px; }
-    .terminal-body::-webkit-scrollbar-thumb { background: rgba(217,119,87,0.95); border-radius: 999px; }
-    .terminal-body::-webkit-scrollbar-thumb:hover { background: rgba(217,119,87,1); }
+    .terminal-body::-webkit-scrollbar-thumb { background: rgba(226,104,60,0.95); border-radius: 999px; }
+    .terminal-body::-webkit-scrollbar-thumb:hover { background: rgba(226,104,60,1); }
     @media (max-width: 980px) { .terminal-body { height: 420px; } }
     @media (max-width: 560px) { .terminal-body { height: 360px; } }
 
@@ -245,13 +245,13 @@
     .media-box {
       border: 1px solid rgba(255,255,255,0.10);
       background: rgba(255,255,255,0.02);
-      border-radius: 16px;
+      border-radius: 0;
       overflow: hidden;
       transition: border-color 0.22s ease, box-shadow 0.22s ease;
     }
     .media-box:hover {
-      border-color: rgba(217,119,87,0.40);
-      box-shadow: 0 0 22px rgba(217,119,87,0.08);
+      border-color: rgba(226,104,60,0.40);
+      box-shadow: 0 0 22px rgba(226,104,60,0.08);
     }
     .media-box img,
     .media-box video {
@@ -276,7 +276,7 @@
       aspect-ratio: 1 / 1;
       object-fit: cover;
       display: block;
-      border-radius: 16px;
+      border-radius: 0;
       border: 1px solid rgba(255,255,255,0.10);
       background: rgba(255,255,255,0.02);
       transition: border-color 0.22s ease, box-shadow 0.22s ease;
@@ -291,7 +291,7 @@
       padding: 12px;
       border: 1px solid rgba(255,255,255,0.10);
       background: rgba(255,255,255,0.02);
-      border-radius: 14px;
+      border-radius: 0;
       font-family: var(--shell-mono);
       font-size: 12px;
       line-height: 1.45;
@@ -305,7 +305,8 @@
   <div id="site-nav"></div>
 
   <main class="wrap">
-    <h1>Creator Tools &amp; Scripts</h1>
+    <h1>Tools of the <em style="font-style:italic;color:var(--shell-accent);">trade.</em></h1>
+    <p style="font-family:var(--shell-mono);font-size:clamp(12.5px,1.1vw,14px);line-height:1.75;color:var(--shell-sub);max-width:60ch;margin:16px 0 0;">Creator scripts and references for Dungeon Mastron games — animation generators, AI audio renaming, and the visual style rulebook. Free, open, copy-paste ready.</p>
     <div class="dm-rule dm-rule--orange" aria-hidden="true"></div>
 
     <div class="dm-sechead dm-sechead--orange" style="margin-top: 34px;">
@@ -316,8 +317,8 @@
     <section class="grid">
       <div>
         <p class="big-copy">
-          <span class="line">IMAGE ANIMATION GENERATOR.</span>
-          <span class="line">KEN BURNS–STYLE VIDEO.</span>
+          <span class="line">Still images,</span>
+          <span class="line"><em style="font-style:italic;color:var(--shell-accent);">set in motion.</em></span>
         </p>
 
         <div class="guide-grid">
@@ -449,8 +450,8 @@
       </div>
       <div>
         <p class="big-copy">
-          <span class="line">LET THE AI LISTEN, MATCH,</span>
-          <span class="line">AND ORGANIZE YOUR VOICE LINES</span>
+          <span class="line">Let the AI listen, match,</span>
+          <span class="line">and <em style="font-style:italic;color:var(--shell-accent);">organize your voice lines.</em></span>
         </p>
 
         <div class="guide-grid" style="margin-top: 16px;">
@@ -530,7 +531,7 @@
     <section class="visual-grid">
       <div>
         <p class="big-copy">
-          <span class="line">YOUR WORLD, VISUALLY UNIFIED.</span>
+          <span class="line">Your world, <em style="font-style:italic;color:var(--shell-accent);">visually unified.</em></span>
         </p>
 
         <div class="guide-grid" style="margin-top: 16px;">
@@ -581,7 +582,7 @@
 
   <div id="site-footer"></div>
 
-  <script src="../web_assets/site_shell.js?v=2" defer></script>
+  <script src="../web_assets/site_shell.js?v=3" defer></script>
   <script>
     (async () => {
       const el = document.getElementById('toolSquare');

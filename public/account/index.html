@@ -19,21 +19,21 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/web_assets/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="/web_assets/site_shell.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/web_assets/site_shell.css?v=3" />
   <style>
     body { margin: 0; background: var(--shell-bg); color: var(--shell-text); font-family: var(--shell-font); }
     .wrap { max-width: 720px; margin: 0 auto; padding: 30px 18px 70px; }
-    h1 { font-family: var(--shell-heading); font-weight: 600; letter-spacing: 0.10em; text-transform: uppercase; margin: 0 0 14px; }
-    .panel { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.10); border-radius: 16px; padding: 16px; }
+    h1 { font-family: var(--shell-serif); font-weight: 480; letter-spacing: -0.015em; text-transform: none; font-size: clamp(34px, 4vw, 60px); line-height: 1.02; margin: 0 0 14px; }
+    .panel { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.10); border-radius: 0; padding: 16px; }
     .tabs { display:flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
     .tab { font-family: var(--shell-mono); font-size: 12px; padding: 8px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.18); color: var(--shell-text); cursor: pointer; }
-    .tab.active { background: rgba(217,119,87,0.16); border-color: rgba(217,119,87,0.40); }
+    .tab.active { background: rgba(226,104,60,0.16); border-color: rgba(226,104,60,0.40); }
     label { display:block; font-family: var(--shell-mono); font-size: 12px; color: var(--shell-sub); margin: 10px 0 6px; }
     input { width: 100%; padding: 11px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.25); color: var(--shell-text); font-family: var(--shell-mono); }
     .row { display:flex; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
     .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: var(--shell-text); text-decoration: none; font-family: var(--shell-mono); cursor: pointer; }
-    .btn.primary { background: rgba(217,119,87,0.16); border-color: rgba(217,119,87,0.40); }
+    .btn.primary { background: rgba(226,104,60,0.16); border-color: rgba(226,104,60,0.40); }
     .note { margin-top: 10px; color: var(--shell-sub); font-family: var(--shell-mono); font-size: 12px; line-height: 1.55; }
     .err { color: #fca5a5; }
     .ok { color: #86efac; }
