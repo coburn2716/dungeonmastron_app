@@ -24,21 +24,21 @@ Browser game player (bezel-enabled variant). Based on web_player.html.
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../web_assets/site_shell.css" />
+  <link rel="stylesheet" href="../web_assets/site_shell.css?v=3" />
   <style>
     /* --- Site shell overrides (kept here since you're iterating in play/index.html) --- */
-    .site-nav { background: #1e1c1c; border-bottom: none; box-shadow: none; }
+    .site-nav { background: rgba(11,11,10,0.92); border-bottom: 1px solid rgba(236,230,218,0.10); box-shadow: none; }
     .site-nav .inner { padding: 6px 20px; }
     .site-nav a { padding: 6px 10px; }
 
     :root {
-      --bg: #1a1a1a;
+      --bg: #121110;
       --panel: #222;
       --panel-alt: #2c2c2c;
       --text: #e8e3d9;
       --subtext: #b8b3a9;
-      --accent: #d97757;
-      --accent-dark: #c65d3b;
+      --accent: #E2683C;
+      --accent-dark: #C4552E;
       --nav-accent: #6B9B7F;
 
       /* UI (site chrome) fonts: fixed to match game_builder.html */
@@ -61,7 +61,7 @@ Browser game player (bezel-enabled variant). Based on web_player.html.
     * { box-sizing: border-box; }
     html, body { overflow: hidden; }
     body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--ui-font); height: 100vh; display: flex; flex-direction: column; }
-    header { background: #1e1c1c; padding: 6px 20px; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; border-bottom: 1px solid #2f2f2f; box-shadow: none; position: sticky; top: 0; z-index: 10; box-sizing: border-box; }
+    header { background: #0f0e0d; padding: 6px 20px; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; border-bottom: 1px solid rgba(236,230,218,0.10); box-shadow: none; position: sticky; top: 0; z-index: 10; box-sizing: border-box; }
     /* Top-right separator line: fixed right edge at 100px from window */
     header::before {
       content: "";
@@ -77,8 +77,8 @@ Browser game player (bezel-enabled variant). Based on web_player.html.
     }
     .title { font-family: var(--ui-heading); font-weight: 700; letter-spacing: 0.02em; color: var(--accent); display: flex; align-items: center; gap: 10px; }
     .badge { background: #2c2c2c; color: var(--accent); padding: 4px 10px; border-radius: 10px; font-size: 12px; font-family: var(--ui-mono); letter-spacing: 0.02em; }
-    .ascii-logo { font-family: 'JetBrains Mono', monospace; font-size: 8px; line-height: 1; color: #D97757; margin: 0; padding: 0; white-space: pre; font-weight: bold; text-shadow: 0 0 10px rgba(217, 119, 87, 0.3); }
-    .logo-subtitle { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #D97757; letter-spacing: 0.32em; margin-top: 4px; margin-left: 2px; white-space: pre; text-shadow: 0 0 10px rgba(217, 119, 87, 0.3); line-height: 1; }
+    .ascii-logo { font-family: 'JetBrains Mono', monospace; font-size: 8px; line-height: 1; color: #E2683C; margin: 0; padding: 0; white-space: pre; font-weight: bold; text-shadow: 0 0 10px rgba(226, 104, 60, 0.3); }
+    .logo-subtitle { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #E2683C; letter-spacing: 0.32em; margin-top: 4px; margin-left: 2px; white-space: pre; text-shadow: 0 0 10px rgba(226, 104, 60, 0.3); line-height: 1; }
     .led-stack { position: absolute; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 14px; pointer-events: none; z-index: 10; }
     /* Centered in the open bezel space:
        Screen Edge: 0
@@ -1126,7 +1126,7 @@ Browser game player (bezel-enabled variant). Based on web_player.html.
   <input id="game-file" class="hidden-input" type="file" accept="application/json" />
   <input id="asset-folder" class="hidden-input" type="file" webkitdirectory directory mozdirectory multiple />
 
-  <script src="../web_assets/site_shell.js?v=2" defer></script>
+  <script src="../web_assets/site_shell.js?v=3" defer></script>
   <script>
     const logEl = document.getElementById('log');
     const assetSourceEl = document.getElementById('asset-source');
