@@ -38,516 +38,836 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="web_assets/site_shell.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="web_assets/site_shell.css?v=3" />
   <style>
     body { margin: 0; background: var(--shell-bg); color: var(--shell-text); font-family: var(--shell-font); }
-    .wrap { max-width: 1560px; margin: 0 auto; padding: 42px 18px 70px; }
-    p { margin: 0 0 18px; color: var(--shell-sub); line-height: 1.6; }
+    .wrap { max-width: 1560px; margin: 0 auto; padding: 0 22px; }
+    p { margin: 0 0 18px; color: var(--shell-sub); line-height: 1.65; }
+    img { max-width: 100%; }
 
-    .kicker {
-      font-family: var(--shell-mono);
-      font-size: 11px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #6B9B7F;
-      margin-bottom: 10px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .kicker::before {
-      content: "";
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: currentColor;
-      opacity: 0.9;
-    }
-    .kicker.kicker--orange { color: #D97757; }
-    .kicker.kicker--yellow { color: #e8a356; }
-
+    /* ── HERO ─────────────────────────────────────────────────────────── */
     .hero {
       position: relative;
       overflow: hidden;
-      padding: 0;
-      width: 100%;
+      border-bottom: 1px solid var(--shell-border);
     }
-    .hero-grid {
+    .hero .wrap {
       display: grid;
-      grid-template-columns: 0.6fr 0.4fr;
-      gap: 18px;
-      align-items: start;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: 24px;
+      align-items: end;
+      min-height: min(86vh, 900px);
     }
-    .hero-right { height: auto; }
     @media (max-width: 980px) {
-      .hero-grid { grid-template-columns: 1fr; }
+      .hero .wrap { grid-template-columns: 1fr; min-height: 0; }
     }
-
-    .hero-right img {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: contain;
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+      padding: 72px 0 84px;
+      align-self: center;
     }
-    /* keep aspect-ratio responsive; no fixed min-height */
+    @media (max-width: 980px) { .hero-copy { padding: 48px 0 8px; } }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--shell-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--shell-accent);
+      margin-bottom: 30px;
+    }
+    .hero-eyebrow::before {
+      content: "";
+      width: 6px; height: 6px; border-radius: 999px;
+      background: currentColor;
+      animation: dm-dot-pulse 3.6s ease-in-out infinite;
+    }
+    .hero-eyebrow .dim { color: var(--shell-faint); letter-spacing: 0.14em; }
+    .hero h1 {
+      font-family: var(--shell-serif);
+      font-weight: 480;
+      font-size: clamp(46px, 6.6vw, 108px);
+      line-height: 0.99;
+      letter-spacing: -0.015em;
+      margin: 0 0 30px;
+      color: var(--shell-text);
+    }
+    .hero h1 .l { display: block; }
+    .hero h1 .l2 { padding-left: clamp(0px, 3vw, 56px); }
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 420;
+      color: var(--shell-accent);
+    }
+    .hero-sub {
+      font-family: var(--shell-mono);
+      font-size: clamp(12.5px, 1.1vw, 14px);
+      line-height: 1.75;
+      letter-spacing: 0.02em;
+      color: var(--shell-sub);
+      max-width: 56ch;
+      margin: 0 0 34px;
+    }
+    .hero-sub strong { color: var(--shell-text); font-weight: 500; }
+    .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-bottom: 30px; }
+    .hero-facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 26px;
+      font-family: var(--shell-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--shell-faint);
+    }
+    .hero-facts span { display: inline-flex; align-items: center; gap: 8px; }
+    .hero-facts span::before { content: "✓"; color: var(--shell-green); }
 
-    .hero-content {
+    .hero-art {
       position: relative;
       z-index: 1;
-      padding: 0;
+      align-self: end;
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
     }
-    .hero-left {
+    .hero-art .mascot {
+      display: block;
+      width: min(100%, 460px);
+      height: auto;
+      margin-bottom: -6px;
+      filter:
+        drop-shadow(0 0 1px rgba(236,230,218,0.4))
+        drop-shadow(0 0 90px rgba(226,104,60,0.14));
+    }
+    @media (max-width: 980px) {
+      .hero-art .mascot { width: min(72%, 360px); }
+    }
+    /* orbit ring + stars behind her — echo of the Saturn patch */
+    .hero-orbit {
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      overflow: visible;
+    }
+    .hero-orbit svg { width: 100%; height: 100%; display: block; }
+    .hero-ghost {
+      position: absolute;
+      right: -2%;
+      top: 4%;
+      font-size: clamp(160px, 26vw, 420px);
+      z-index: 0;
+    }
+    @media (max-width: 980px) { .hero-ghost { display: none; } }
+
+    /* ── Section scaffolding ──────────────────────────────────────────── */
+    .sec { position: relative; padding: 96px 0 0; }
+    .sec .wrap { position: relative; }
+    .sec-ghost {
+      right: 0;
+      top: -34px;
+      font-size: clamp(120px, 16vw, 260px);
+    }
+
+    /* ── 01 · Pillars bento ───────────────────────────────────────────── */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--shell-border);
+      background: rgba(236,230,218,0.012);
+    }
+    @media (max-width: 1100px) { .pillars { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 620px) { .pillars { grid-template-columns: 1fr; } }
+    .pillar {
+      position: relative;
+      padding: 30px 28px 26px;
+      border-right: 1px solid var(--shell-border);
+      border-bottom: 1px solid var(--shell-border);
+      text-decoration: none;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      min-height: 100%;
-    }
-    .hero-inner { max-width: 70ch; }
-    .hero h1, .hero h2 {
-      font-family: var(--shell-heading);
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin: 0 0 10px;
-      font-size: clamp(28px, 3.2vw, 52px);
-      line-height: 1.08;
-      color: var(--shell-text);
-    }
-    .hero h2 .nowrap { white-space: nowrap; }
-    .hero-sub {
-      margin: 0;
-      font-family: var(--shell-heading);
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: clamp(12px, 1.2vw, 16px);
-      line-height: 1.55;
-      color: #D97757;
-    }
-
-    .two-modes {
-      display: grid;
-      grid-template-columns: 1fr 1px 1fr;
-      gap: 16px;
-      margin-top: 18px;
-      align-items: stretch;
-    }
-    .two-modes .sep {
-      background: linear-gradient(
-        to bottom,
-        rgba(255,255,255,0),
-        rgba(255,255,255,0.06),
-        rgba(255,255,255,0)
-      );
-      width: 1px;
-      align-self: stretch;
-    }
-    .two-modes section { padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.10); }
-    .two-modes h3 {
-      margin: 0 0 8px;
-      font-family: var(--shell-mono);
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #D97757;
-    }
-    .two-modes p { margin: 0; color: var(--shell-sub); font-size: 12px; line-height: 1.55; }
-    @media (max-width: 980px) {
-      .two-modes { grid-template-columns: 1fr; gap: 14px; }
-      .two-modes .sep { display: none; }
-    }
-    .hero-inner { padding-top: 26px; }
-    .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: var(--shell-text); text-decoration: none; font-family: var(--shell-mono); }
-    .btn.primary { background: rgba(217,119,87,0.16); border-color: rgba(217,119,87,0.40); }
-    .btn { transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease; }
-    .btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.22); }
-    .btn.small { padding: 7px 10px; border-radius: 10px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 12px; }
-    .btn.orange { background: rgba(217,119,87,0.22); border-color: rgba(217,119,87,0.55); color: #FFFCF7; }
-    .btn.orange:hover { background: rgba(217,119,87,0.30); border-color: rgba(217,119,87,0.80); box-shadow: 0 0 18px rgba(217,119,87,0.22); }
-    /* (cards removed) */
-    @media (max-width: 820px) {
-      .hero-content { padding: 0; }
-    }
-
-    .section-sep {
-      margin-top: 50px;
-      margin-bottom: 16px;
-      height: 1px;
-      width: 100%;
-      background: rgba(255,255,255,0.10);
-    }
-
-
-    .top-grid {
-      display: grid;
-      grid-template-columns: 0.6fr 0.4fr;
-      gap: 34px;
-      align-items: start;
-      margin-top: 30px;
-    }
-    @media (max-width: 980px) { .top-grid { grid-template-columns: 1fr; } }
-
-    .big-copy {
-      font-family: var(--shell-heading);
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      font-size: clamp(28px, 3.2vw, 52px);
-      line-height: 1.08;
-      color: var(--shell-text);
-      margin: 0;
-    }
-    .big-copy .line { display: block; margin: 0 0 14px; }
-    .big-copy .line:last-child { margin-bottom: 0; }
-
-    .top-sub {
-      margin: 14px 0 0;
-      font-family: var(--shell-heading);
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: clamp(12px, 1.2vw, 16px);
-      line-height: 1.55;
-      color: #6B9B7F;
-    }
-
-    .top-body {
-      margin: 14px 0 0;
-      color: var(--shell-text);
-      line-height: 1.7;
-      font-size: 13px;
-    }
-
-    .top-lists {
-      display: grid;
-      grid-template-columns: 1fr 1px 1fr 1px 1fr;
       gap: 14px;
-      margin-top: 18px;
-      align-items: start;
+      min-height: 250px;
+      transition: background 0.22s ease;
+      overflow: hidden;
     }
-    .top-lists .sep {
-      background: linear-gradient(
-        to bottom,
-        rgba(255,255,255,0),
-        rgba(255,255,255,0.06),
-        rgba(255,255,255,0)
-      );
-      width: 1px;
-      align-self: stretch;
+    .pillar:hover { background: rgba(236,230,218,0.03); }
+    .pillar:nth-child(4n) { border-right: none; }
+    @media (max-width: 1100px) {
+      .pillar:nth-child(4n) { border-right: 1px solid var(--shell-border); }
+      .pillar:nth-child(2n) { border-right: none; }
     }
-    .top-lists .sep.sep--blend { background: transparent; }
-    .top-lists section { padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.10); }
-    .top-lists h3 {
-      margin: 0 0 8px;
+    @media (max-width: 620px) { .pillar { border-right: none !important; } }
+    .pillar .idx {
+      font-family: var(--shell-mono);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      color: var(--shell-accent);
+    }
+    .pillar h3 {
+      font-family: var(--shell-serif);
+      font-weight: 520;
+      font-size: clamp(24px, 2.2vw, 32px);
+      line-height: 1.05;
+      margin: 0;
+      color: var(--shell-text);
+    }
+    .pillar p {
+      font-family: var(--shell-mono);
+      font-size: 12px;
+      line-height: 1.65;
+      color: var(--shell-sub);
+      margin: 0;
+      flex: 1;
+    }
+    .pillar .go {
+      font-family: var(--shell-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--shell-faint);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.18s ease, gap 0.18s ease;
+    }
+    .pillar:hover .go { color: var(--shell-accent); gap: 13px; }
+    .pillar .bignum {
+      position: absolute;
+      right: 14px;
+      bottom: -18px;
+      font-family: var(--shell-serif);
+      font-weight: 600;
+      font-size: 120px;
+      line-height: 1;
+      color: rgba(236,230,218,0.04);
+      user-select: none;
+      pointer-events: none;
+      transition: color 0.25s ease;
+    }
+    .pillar:hover .bignum { color: rgba(226,104,60,0.10); }
+
+    /* ── 02 · Worlds ──────────────────────────────────────────────────── */
+    .worlds-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      gap: 48px;
+      align-items: center;
+    }
+    @media (max-width: 980px) { .worlds-grid { grid-template-columns: 1fr; } }
+    .worlds-lists {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-top: 34px;
+    }
+    @media (max-width: 560px) { .worlds-lists { grid-template-columns: 1fr; } }
+    .worlds-lists section { border-top: 1px solid var(--shell-border); padding-top: 16px; }
+    .worlds-lists h3 {
+      margin: 0 0 12px;
       font-family: var(--shell-mono);
       font-size: 10px;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: #6B9B7F;
+      color: var(--shell-accent);
     }
-    .top-lists .bullets {
-      margin: 0;
-      padding-left: 18px;
-      color: var(--shell-sub);
-      line-height: 1.6;
+    .worlds-lists ul {
+      margin: 0; padding: 0; list-style: none;
+      font-family: var(--shell-mono);
       font-size: 12px;
+      line-height: 2.0;
+      color: var(--shell-sub);
     }
-    .top-lists .bullets li::marker { color: #6B9B7F; }
-    .top-lists .bullets li { margin: 6px 0; }
-    @media (max-width: 980px) { .top-lists { grid-template-columns: 1fr; } }
+    .worlds-lists li { display: flex; gap: 10px; align-items: baseline; }
+    .worlds-lists li::before { content: "·"; color: var(--shell-accent); }
 
-    .carousel {
-      position: relative;
-      padding: 0;
-      background: transparent;
-      border: none;
-    }
+    .carousel { position: relative; }
     .carousel-viewport {
       position: relative;
       aspect-ratio: 4 / 3;
-      border-radius: 12px;
       overflow: hidden;
-      background: transparent;
-      border: none;
-      box-shadow:
-        0 16px 32px rgba(0,0,0,0.55),
-        0 1px 0 rgba(255,255,255,0.03) inset;
+      background: #000;
+      border: 1px solid var(--shell-border-strong);
     }
-    .carousel-frame { --dm-acc: rgba(107,155,127,0.75); }
-    .carousel-slide {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity 420ms ease;
-    }
+    .carousel-frame { --dm-acc: rgba(226,104,60,0.75); }
+    .carousel-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 480ms ease; }
     .carousel-slide.is-active { opacity: 1; }
-    .carousel-slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .carousel-caption {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 14px 16px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(transparent, rgba(0,0,0,0.72));
+      font-family: var(--shell-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(236,230,218,0.75);
+      pointer-events: none;
+      z-index: 2;
     }
-
     .carousel-arrow {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 44px;
-      height: 44px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(0,0,0,0.35);
+      width: 42px; height: 42px;
+      border-radius: 0;
+      border: 1px solid var(--shell-border-strong);
+      background: rgba(0,0,0,0.5);
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
-      color: rgba(232,227,217,0.92);
+      color: rgba(236,230,218,0.92);
       display: grid;
       place-items: center;
       cursor: pointer;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 140ms ease, transform 140ms ease, background 140ms ease;
-      z-index: 2;
+      transition: opacity 140ms ease, background 140ms ease;
+      z-index: 3;
     }
-    .carousel-viewport:hover .carousel-arrow {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .carousel-arrow:hover { background: rgba(0,0,0,0.50); }
-    .carousel-arrow.left { left: 10px; }
-    .carousel-arrow.right { right: 10px; }
+    .carousel-viewport:hover .carousel-arrow { opacity: 1; pointer-events: auto; }
+    .carousel-arrow:hover { background: rgba(226,104,60,0.35); }
+    .carousel-arrow.left { left: 0; border-left: none; }
+    .carousel-arrow.right { right: 0; border-right: none; }
     .carousel-arrow svg { width: 18px; height: 18px; display: block; }
-
-    .carousel-dots {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-      justify-content: center;
-      margin-top: 10px;
-    }
+    .carousel-dots { display: flex; gap: 6px; align-items: center; justify-content: flex-start; margin-top: 12px; }
     .carousel-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.06);
+      width: 18px; height: 3px; border-radius: 0;
+      border: none;
+      background: rgba(236,230,218,0.16);
       cursor: pointer;
+      padding: 0;
+      transition: background 0.2s ease;
     }
-    .carousel-dot.is-active {
-      background: rgba(107,155,127,0.85);
-      border-color: rgba(107,155,127,0.95);
-    }
+    .carousel-dot.is-active { background: var(--shell-accent); }
 
-    .community-grid {
+    /* ── 03 · Two ways to play ────────────────────────────────────────── */
+    .duo-photo { position: relative; margin-top: 10px; }
+    .duo-photo img { width: 100%; height: auto; display: block; }
+    .duo-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--shell-border);
+      border-top: none;
+    }
+    @media (max-width: 780px) { .duo-cols { grid-template-columns: 1fr; } }
+    .duo-col { padding: 30px 30px 30px; }
+    .duo-col + .duo-col { border-left: 1px solid var(--shell-border); }
+    @media (max-width: 780px) {
+      .duo-col + .duo-col { border-left: none; border-top: 1px solid var(--shell-border); }
+    }
+    .duo-col h3 {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin: 0 0 12px;
+      font-family: var(--shell-serif);
+      font-weight: 520;
+      font-size: clamp(22px, 2vw, 30px);
+      color: var(--shell-text);
+    }
+    .duo-col h3 .tag {
+      font-family: var(--shell-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--shell-accent);
+    }
+    .duo-col p { font-size: 13.5px; margin-bottom: 20px; }
+
+    /* ── 04 · Featured games ──────────────────────────────────────────── */
+    .games-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin-top: 16px;
+      gap: 22px;
+    }
+    @media (max-width: 980px) { .games-grid { grid-template-columns: 1fr; } }
+    .game-card { text-decoration: none; display: block; }
+    .game-card .shot {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      border: 1px solid var(--shell-border-strong);
+      background: #000;
+    }
+    .game-card .shot img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    }
+    .game-card:hover .shot img { transform: scale(1.045); }
+    .game-card .shot::after {
+      content: "PRESS PLAY ▸";
+      position: absolute;
+      right: 10px; bottom: 10px;
+      font-family: var(--shell-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: #FFD9C4;
+      background: rgba(11,11,10,0.82);
+      border: 1px solid rgba(226,104,60,0.5);
+      padding: 6px 10px;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+    .game-card:hover .shot::after { opacity: 1; transform: none; }
+    .game-card h3 {
+      font-family: var(--shell-serif);
+      font-weight: 520;
+      font-size: 24px;
+      margin: 16px 0 6px;
+      color: var(--shell-text);
+    }
+    .game-card .meta {
+      font-family: var(--shell-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--shell-faint);
+    }
+    .games-more { margin-top: 30px; }
+
+    /* ── 05 · AI Companion ────────────────────────────────────────────── */
+    .ai-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: 48px;
       align-items: center;
     }
-    @media (max-width: 820px) { .community-grid { grid-template-columns: 1fr; } }
-    .community-grid.community-grid--two {
-      grid-template-columns: repeat(2, minmax(0, 380px));
-      justify-content: center;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    @media (max-width: 820px) {
-      .community-grid.community-grid--two { grid-template-columns: minmax(0, 420px); }
-    }
-    .community-tile-logo { max-width: 62%; max-height: 46px; width: auto; height: auto; object-fit: contain; }
-    .community-tile {
+    @media (max-width: 980px) { .ai-grid { grid-template-columns: 1fr; } }
+    .ai-steps { margin-top: 30px; display: grid; gap: 0; border-top: 1px solid var(--shell-border); }
+    .ai-step {
       display: grid;
-      place-items: center;
-      min-height: 92px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(255,255,255,0.02);
-      --dm-acc: rgba(232,163,86,0.75);
-      transition: border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+      grid-template-columns: 64px 1fr;
+      gap: 18px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--shell-border);
+      align-items: baseline;
     }
-    .community-card:hover .community-tile {
-      border-color: rgba(232,163,86,0.40);
-      background: rgba(232,163,86,0.03);
-      box-shadow: 0 0 26px rgba(232,163,86,0.09);
-    }
-    .community-card { display: grid; gap: 10px; align-items: start; }
-    .community-copy {
-      margin: 0;
-      color: var(--shell-sub);
-      line-height: 1.6;
-      font-size: 12px;
-    }
-    .community-tag {
-      margin: 0;
-      font-family: var(--shell-heading);
+    .ai-step .n {
+      font-family: var(--shell-serif);
+      font-style: italic;
       font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: 12px;
-      line-height: 1.4;
-      color: #e8a356;
+      font-size: 30px;
+      color: var(--shell-accent);
     }
-    .community-tile img {
-      height: 34px;
-      width: auto;
-      opacity: 0.92;
-      display: block;
-    }
-
-    .below-grid {
-      display: grid;
-      grid-template-columns: 0.6fr 0.4fr;
-      gap: 34px;
-      margin-top: 8px;
-      align-items: start;
-    }
-    @media (max-width: 980px) { .below-grid { grid-template-columns: 1fr; } }
-    .below-right img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    .below-left {
-      display: grid;
-      grid-template-rows: 1fr;
-      min-height: 100%;
-    }
-    .below-center {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .below-left h1, .below-left h2 {
+    .ai-step h3 {
+      margin: 0 0 4px;
       font-family: var(--shell-heading);
       font-weight: 600;
-      letter-spacing: 0.06em;
+      font-size: 14px;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
+      color: var(--shell-text);
+    }
+    .ai-step p { margin: 0; font-size: 13px; }
+
+    .term {
+      border: 1px solid var(--shell-border-strong);
+      background: var(--shell-bg-elev);
+      font-family: var(--shell-mono);
+    }
+    .term-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--shell-border);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--shell-faint);
+      text-transform: uppercase;
+    }
+    .term-bar .dots { display: inline-flex; gap: 6px; }
+    .term-bar .dots i { width: 9px; height: 9px; border-radius: 999px; display: block; }
+    .term-bar .dots i:nth-child(1) { background: var(--shell-accent); }
+    .term-bar .dots i:nth-child(2) { background: var(--shell-gold); }
+    .term-bar .dots i:nth-child(3) { background: var(--shell-green); }
+    .term-body {
+      padding: 20px 20px 24px;
+      font-size: 12.5px;
+      line-height: 1.9;
+      color: var(--shell-sub);
+      min-height: 300px;
+    }
+    .term-body .ln { display: block; opacity: 0; transform: translateY(4px); transition: opacity 0.4s ease, transform 0.4s ease; }
+    .term-body.is-in .ln { opacity: 1; transform: none; }
+    .term-body.is-in .ln:nth-child(1) { transition-delay: 0.15s; }
+    .term-body.is-in .ln:nth-child(2) { transition-delay: 0.55s; }
+    .term-body.is-in .ln:nth-child(3) { transition-delay: 1.1s; }
+    .term-body.is-in .ln:nth-child(4) { transition-delay: 1.75s; }
+    .term-body.is-in .ln:nth-child(5) { transition-delay: 2.2s; }
+    .term-body.is-in .ln:nth-child(6) { transition-delay: 2.65s; }
+    .term-body.is-in .ln:nth-child(7) { transition-delay: 3.1s; }
+    .term-body.is-in .ln:nth-child(8) { transition-delay: 3.7s; }
+    @media (prefers-reduced-motion: reduce) {
+      .term-body .ln { opacity: 1; transform: none; transition: none; }
+    }
+    .term-body .p { color: var(--shell-green); }
+    .term-body .c { color: var(--shell-faint); }
+    .term-body .q { color: var(--shell-text); font-style: italic; }
+    .term-body .ok { color: var(--shell-green); }
+    .term-body .hot { color: var(--shell-accent); }
+
+    /* ── Paper band: open source + cartridge ──────────────────────────── */
+    .paper-band {
+      margin-top: 110px;
+      padding: 88px 0 96px;
+      position: relative;
+    }
+    .paper-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 56px;
+      align-items: center;
+    }
+    @media (max-width: 980px) { .paper-grid { grid-template-columns: 1fr; } }
+    .paper-band .lead {
+      font-size: 15px;
+      line-height: 1.75;
+      max-width: 58ch;
+    }
+    .support-tiles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 36px;
+    }
+    @media (max-width: 560px) { .support-tiles { grid-template-columns: 1fr; } }
+    .support-tile {
+      display: block;
+      text-decoration: none;
+      border: 1px solid rgba(23,21,15,0.9);
+      background: #131210;
+      padding: 26px 24px 22px;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+    .support-tile:hover { transform: translateY(-3px); box-shadow: 6px 6px 0 rgba(23,21,15,0.9); }
+    .support-tile img { height: 34px; width: auto; display: block; margin-bottom: 16px; }
+    .support-tile .tag {
+      font-family: var(--shell-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--shell-gold);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .support-tile p {
       margin: 0;
-      font-size: clamp(28px, 3.2vw, 52px);
-      line-height: 1.08;
-      color: var(--shell-text);
+      font-size: 12px;
+      line-height: 1.6;
+      color: rgba(236,230,218,0.66);
     }
-    .below-left .sub {
-      margin: 14px 0 0;
-      font-family: var(--shell-heading);
-      font-weight: 500;
-      letter-spacing: 0.08em;
+    .cart-figure { position: relative; text-align: center; }
+    .cart-figure img {
+      width: min(100%, 440px);
+      mix-blend-mode: multiply;
+      transform: rotate(-2deg);
+    }
+    .cart-figure figcaption {
+      font-family: var(--shell-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      font-size: clamp(12px, 1.2vw, 16px);
-      line-height: 1.55;
-      color: #6B9B7F;
+      color: rgba(23,21,15,0.55);
+      margin-top: 14px;
     }
-    .below-left .body {
-      margin: 14px 0 0;
-      color: var(--shell-text);
-      line-height: 1.7;
-      font-size: 13px;
+    .paper-band .dm-h--lg { margin-bottom: 22px; }
+    .paper-cart-copy { margin-top: 26px; font-size: 13.5px; }
+
+    /* mid-page CTA */
+    .last-call {
+      padding: 120px 0 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
     }
+    .last-call .dm-h { margin-bottom: 30px; }
+    .last-call .hero-cta { justify-content: center; }
   </style>
 </head>
 <body class="dm-surface">
   <div id="site-nav"></div>
-  <main class="wrap">
-    <div class="kicker">Dungeon Mastron</div>
 
-    <section class="top-grid" aria-label="Start page intro">
-      <div class="top-left">
-        <h1 class="big-copy">
-          <span class="line">Design worlds. Shape stories. Play the outcome.</span>
+  <!-- ════════ HERO ════════ -->
+  <header class="hero" aria-label="Dungeon Mastron">
+    <div class="hero-ghost dm-ghost" aria-hidden="true">DM</div>
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="hero-eyebrow">Open-source story-game platform <span class="dim">/ MIT / EST. 2026</span></span>
+        <h1>
+          <span class="l">Design worlds.</span>
+          <span class="l l2">Shape stories.</span>
+          <span class="l"><em>Play the outcome.</em></span>
         </h1>
-
-        <p class="top-sub">Dungeon Mastron is the complete storytelling experience, bringing together writing, visual world-building, and play into one cohesive flow.</p>
-
-        <p class="top-body">With the help of the AI Companion, you can draft stories, explore visual styles, or hand-craft every detail yourself. Build your game in the editor,<br>then play it instantly in the web player — or load it onto the physical console and experience it the old-fashioned way.</p>
-        <div class="dm-rule" aria-hidden="true"></div>
-
-        <div class="top-lists" aria-label="Genres and formats">
-          <section>
-            <h3>Stories in any genre</h3>
-            <ul class="bullets">
-              <li>Adventure</li>
-              <li>Fantasy &amp; Sword-and-Sorcery</li>
-              <li>Horror &amp; Psychological Thriller</li>
-              <li>Science Fiction</li>
-              <li>Superhero</li>
-              <li>Noir &amp; Mystery</li>
-              <li>Cozy &amp; Slice of Life</li>
-            </ul>
-          </section>
-
-          <div class="sep" aria-hidden="true"></div>
-
-          <section>
-            <h3>Play it your way</h3>
-            <ul class="bullets">
-              <li>Create Your Own Adventure (CYOA)</li>
-              <li>Visual Novel</li>
-              <li>Narrative RPG (Lite)</li>
-              <li>Maze &amp; Exploration Games</li>
-              <li>Puzzle &amp; Logic Games</li>
-              <li>Escape / Exit-Style Experiences</li>
-              <li>Story-Driven Strategy</li>
-            </ul>
-          </section>
-
-          <div class="sep sep--blend" aria-hidden="true"></div>
-
-          <div aria-hidden="true"></div>
+        <p class="hero-sub">Dungeon Mastron is the complete storytelling machine: write branching adventures in a <strong>visual builder</strong>, play them instantly in the <strong>web player</strong> — or flash them onto a <strong>DIY Raspberry&nbsp;Pi console</strong> and put your story on a shelf.</p>
+        <div class="hero-cta">
+          <a class="dm-btn dm-btn--primary" href="/builder/">Start creating →</a>
+          <a class="dm-btn" href="/play/">Play a game</a>
+        </div>
+        <div class="hero-facts" aria-label="Facts">
+          <span>Free forever</span>
+          <span>No account</span>
+          <span>Runs in your browser</span>
+          <span>MIT licensed</span>
         </div>
       </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="hero-orbit">
+          <svg viewBox="0 0 600 900" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
+            <ellipse cx="300" cy="560" rx="290" ry="86" stroke="rgba(226,104,60,0.28)" stroke-width="1" transform="rotate(-14 300 560)"/>
+            <ellipse cx="300" cy="560" rx="252" ry="70" stroke="rgba(236,230,218,0.10)" stroke-width="1" transform="rotate(-14 300 560)"/>
+            <circle cx="86" cy="180" r="1.6" fill="rgba(236,230,218,0.55)"/>
+            <circle cx="512" cy="118" r="1.2" fill="rgba(236,230,218,0.4)"/>
+            <circle cx="468" cy="292" r="1.8" fill="rgba(226,104,60,0.6)"/>
+            <circle cx="140" cy="368" r="1.1" fill="rgba(236,230,218,0.35)"/>
+            <circle cx="548" cy="446" r="1.4" fill="rgba(236,230,218,0.45)"/>
+            <circle cx="60" cy="520" r="1.3" fill="rgba(226,104,60,0.45)"/>
+            <circle cx="522" cy="662" r="1.5" fill="rgba(236,230,218,0.4)"/>
+          </svg>
+        </div>
+        <img class="mascot" src="web_assets/mascot/mascot.webp" alt="" width="935" height="1600" fetchpriority="high" />
+      </div>
+    </div>
+  </header>
 
-      <div class="top-right">
-        <div class="carousel" id="startCarousel" aria-label="Start page images">
-          <div class="carousel-frame dm-corners">
-          <div class="carousel-viewport">
-            <button class="carousel-arrow left" type="button" data-action="prev" aria-label="Previous image">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-            <button class="carousel-arrow right" type="button" data-action="next" aria-label="Next image">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-          </div>
-          </div>
-          <div class="carousel-dots" aria-label="Carousel dots"></div>
+  <!-- ════════ MARQUEE ════════ -->
+  <div class="dm-marquee" aria-hidden="true">
+    <div class="track">
+      <div class="seq">
+        <span>Create</span><span class="star">✦</span><span>Play</span><span class="star">✦</span><span>Console</span><span class="star">✦</span><span>AI Companion</span><span class="star">✦</span><span>Open source</span><span class="star">✦</span><span>One format, every screen</span><span class="star">✦</span><span>Design worlds</span><span class="star">✦</span><span>Shape stories</span><span class="star">✦</span><span>Play the outcome</span><span class="star">✦</span>
+      </div>
+      <div class="seq">
+        <span>Create</span><span class="star">✦</span><span>Play</span><span class="star">✦</span><span>Console</span><span class="star">✦</span><span>AI Companion</span><span class="star">✦</span><span>Open source</span><span class="star">✦</span><span>One format, every screen</span><span class="star">✦</span><span>Design worlds</span><span class="star">✦</span><span>Shape stories</span><span class="star">✦</span><span>Play the outcome</span><span class="star">✦</span>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- ════════ 01 · THE PLATFORM ════════ -->
+    <section class="sec" aria-label="The platform">
+      <div class="wrap">
+        <span class="dm-ghost dm-ghost--fill sec-ghost" aria-hidden="true">01</span>
+        <div class="dm-eyebrow" data-reveal>
+          <span class="dm-num">01</span>
+          <span class="dm-label">The platform</span>
+        </div>
+        <h2 class="dm-h dm-h--lg" data-reveal style="margin-bottom:44px;">One story format.<br /><em>Four ways in.</em></h2>
+        <div class="pillars">
+          <a class="pillar" href="/builder/" data-reveal>
+            <span class="idx">№ 01</span>
+            <h3>Create</h3>
+            <p>A visual node editor for branching stories. Pages, choices, dice, inventory, bezels — wired together on a canvas, exported as one game file. No code.</p>
+            <span class="go">Open the builder →</span>
+            <span class="bignum" aria-hidden="true">1</span>
+          </a>
+          <a class="pillar" href="/play/" data-reveal="2">
+            <span class="idx">№ 02</span>
+            <h3>Play</h3>
+            <p>The web player runs any Dungeon Mastron game in seconds. No installs, no setup, no account. Open a file, make a choice, live with it.</p>
+            <span class="go">Open the player →</span>
+            <span class="bignum" aria-hidden="true">2</span>
+          </a>
+          <a class="pillar" href="/console/" data-reveal="3">
+            <span class="idx">№ 03</span>
+            <h3>Console</h3>
+            <p>A DIY, 3D-printable Raspberry Pi console with buttons, LEDs, and swappable cartridges. The same games — made physical.</p>
+            <span class="go">See the hardware →</span>
+            <span class="bignum" aria-hidden="true">3</span>
+          </a>
+          <a class="pillar" href="/ai/" data-reveal="4">
+            <span class="idx">№ 04</span>
+            <h3>AI Companion</h3>
+            <p>Paste one template into ChatGPT or Claude and co-write a complete, validated game — structure enforced, dead ends forbidden.</p>
+            <span class="go">Get the template →</span>
+            <span class="bignum" aria-hidden="true">4</span>
+          </a>
         </div>
       </div>
     </section>
 
-    <div class="dm-sechead dm-sechead--orange">
-      <span class="dm-num">01</span>
-      <span class="dm-label">Console &amp; Web-Player</span>
-    </div>
-
-    <section class="hero" aria-label="Hero">
-      <div class="hero-content">
-        <div class="hero-grid">
-          <div class="hero-right" aria-label="Console and Web Player">
-            <img src="web_assets/console_pictures/Images_web/combined_console_player.jpg" alt="" />
+    <!-- ════════ 02 · WORLDS ════════ -->
+    <section class="sec" aria-label="Worlds and genres">
+      <div class="wrap">
+        <span class="dm-ghost dm-ghost--fill sec-ghost" aria-hidden="true">02</span>
+        <div class="dm-eyebrow" data-reveal>
+          <span class="dm-num">02</span>
+          <span class="dm-label">Worlds</span>
+        </div>
+        <div class="worlds-grid">
+          <div>
+            <h2 class="dm-h dm-h--lg" data-reveal>Any genre.<br /><em>Any world.</em></h2>
+            <p class="dm-kicker-line" style="margin-top:22px; max-width:52ch;" data-reveal>Haunted schools, dying starships, cozy villages, noir alleys. If you can branch it, Dungeon Mastron can run it — with art, audio, dice, and consequences.</p>
+            <div class="worlds-lists" aria-label="Genres and formats" data-reveal="2">
+              <section>
+                <h3>Stories in any genre</h3>
+                <ul>
+                  <li>Adventure</li>
+                  <li>Fantasy &amp; sword-and-sorcery</li>
+                  <li>Horror &amp; psychological thriller</li>
+                  <li>Science fiction</li>
+                  <li>Superhero</li>
+                  <li>Noir &amp; mystery</li>
+                  <li>Cozy &amp; slice of life</li>
+                </ul>
+              </section>
+              <section>
+                <h3>Play it your way</h3>
+                <ul>
+                  <li>Choose-your-own-adventure</li>
+                  <li>Visual novel</li>
+                  <li>Narrative RPG (lite)</li>
+                  <li>Maze &amp; exploration</li>
+                  <li>Puzzle &amp; logic</li>
+                  <li>Escape-room experiences</li>
+                  <li>Story-driven strategy</li>
+                </ul>
+              </section>
+            </div>
           </div>
-          <div class="hero-left">
-            <div class="hero-inner">
-              <h2>One Platform. <span class="nowrap">Two Ways to Play.</span></h2>
-              <p class="hero-sub">The web is the invitation. The physical console is the aspiration. Same format—two experiences.</p>
+          <div data-reveal="2">
+            <div class="carousel" id="startCarousel" aria-label="Game world artwork">
+              <div class="carousel-frame dm-corners">
+                <div class="carousel-viewport">
+                  <button class="carousel-arrow left" type="button" data-action="prev" aria-label="Previous image">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </button>
+                  <button class="carousel-arrow right" type="button" data-action="next" aria-label="Next image">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </button>
+                  <div class="carousel-caption"><span>Scenes from playable worlds</span><span id="caruCount">01 / 12</span></div>
+                </div>
+              </div>
+              <div class="carousel-dots" aria-label="Carousel dots"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-              <div class="two-modes" aria-label="Two ways to play">
-                <section>
-                  <h3>Web Player</h3>
-                  <p>Play in seconds, no installs, no setup. Download a game file and open it in the Web Player to explore new games, test your own creations, and share adventures with a single link.</p>
-                  <a class="btn small orange" href="/play/">Open Web Player</a>
-                </section>
-                <div class="sep" aria-hidden="true"></div>
-                <section>
-                  <h3>Physical Console</h3>
-                  <p>A DIY, 3D-printable Raspberry Pi build that turns stories into objects you can keep on a shelf.<br>Buttons and LEDs give the game a physical rhythm, and cartridges turn play into a ritual again.</p>
-                  <a class="btn small orange" href="/console/">View Console</a>
-                </section>
+    <!-- ════════ 03 · TWO WAYS TO PLAY ════════ -->
+    <section class="sec" aria-label="Two ways to play">
+      <div class="wrap">
+        <span class="dm-ghost dm-ghost--fill sec-ghost" aria-hidden="true">03</span>
+        <div class="dm-eyebrow" data-reveal>
+          <span class="dm-num">03</span>
+          <span class="dm-label">Console &amp; web player</span>
+        </div>
+        <h2 class="dm-h dm-h--lg" data-reveal>One platform.<br /><em>Two ways to play.</em></h2>
+        <p class="dm-kicker-line" style="margin-top:22px; max-width:58ch;" data-reveal>The web is the invitation. The physical console is the aspiration. Same game file, same story — two completely different rituals.</p>
+        <div class="duo-photo dm-corners" data-reveal="2">
+          <img src="web_assets/console_pictures/Images_web/combined_console_player.jpg" alt="The Dungeon Mastron physical console next to the web player running the same game" loading="lazy" />
+        </div>
+        <div class="duo-cols" data-reveal="2">
+          <div class="duo-col">
+            <h3><span class="tag">A /</span> Web player</h3>
+            <p>Play in seconds — no installs, no setup. Open a game file in the player to explore new worlds, test your own builds, and share adventures with a single link.</p>
+            <a class="dm-btn dm-btn--ember dm-btn--sm" href="/play/">Open web player</a>
+          </div>
+          <div class="duo-col">
+            <h3><span class="tag">B /</span> Physical console</h3>
+            <p>A DIY, 3D-printable Raspberry Pi build. Buttons and LEDs give the game a physical rhythm — and cartridges turn play into a ritual again.</p>
+            <a class="dm-btn dm-btn--ember dm-btn--sm" href="/console/">View console</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════ 04 · FEATURED GAMES ════════ -->
+    <section class="sec" aria-label="Featured games">
+      <div class="wrap">
+        <span class="dm-ghost dm-ghost--fill sec-ghost" aria-hidden="true">04</span>
+        <div class="dm-eyebrow" data-reveal>
+          <span class="dm-num">04</span>
+          <span class="dm-label">Featured games</span>
+        </div>
+        <h2 class="dm-h dm-h--lg" data-reveal style="margin-bottom:44px;">Proof, <em>playable.</em></h2>
+        <div class="games-grid">
+          <a class="game-card" href="/play/?game=/games/What%20Gets%20Through/game.json" data-reveal>
+            <span class="shot"><img src="web_assets/featured_games/What_Gets_Through_thumb.jpg" alt="What Gets Through — key art" loading="lazy" /></span>
+            <h3>What Gets Through</h3>
+            <span class="meta">Post-apocalypse · survival · a dog</span>
+          </a>
+          <a class="game-card" href="/play/?game=/games/The%20Red%20Planet/game.json" data-reveal="2">
+            <span class="shot"><img src="web_assets/featured_games/The_Red_Planet_thumb.jpg" alt="The Red Planet — key art" loading="lazy" /></span>
+            <h3>The Red Planet</h3>
+            <span class="meta">Science fiction · exploration</span>
+          </a>
+          <a class="game-card" href="/play/?game=/games/Forest%20Memory%20Circle/game.json" data-reveal="3">
+            <span class="shot"><img src="web_assets/featured_games/Forest_Memory_Circle_thumb.jpg" alt="The Forest Memory Circle — key art" loading="lazy" /></span>
+            <h3>The Forest Memory Circle</h3>
+            <span class="meta">Mystery · memory · the woods</span>
+          </a>
+        </div>
+        <div class="games-more" data-reveal>
+          <a class="dm-btn dm-btn--sm" href="/library/">Browse the library →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════ 05 · AI COMPANION ════════ -->
+    <section class="sec" aria-label="AI Companion">
+      <div class="wrap">
+        <span class="dm-ghost dm-ghost--fill sec-ghost" aria-hidden="true">05</span>
+        <div class="dm-eyebrow dm-eyebrow--green" data-reveal>
+          <span class="dm-num">05</span>
+          <span class="dm-label">AI Companion</span>
+        </div>
+        <div class="ai-grid">
+          <div>
+            <h2 class="dm-h dm-h--lg" data-reveal>A co-author that<br /><em>never breaks the rules.</em></h2>
+            <div class="ai-steps" data-reveal="2">
+              <div class="ai-step">
+                <span class="n">01</span>
+                <div>
+                  <h3>Copy the template</h3>
+                  <p>One free prompt file — the entire ruleset of Dungeon Mastron, encoded for AI.</p>
+                </div>
+              </div>
+              <div class="ai-step">
+                <span class="n">02</span>
+                <div>
+                  <h3>Paste it into ChatGPT or Claude</h3>
+                  <p>Describe your world, or let the AI surprise you. It drafts, you direct.</p>
+                </div>
+              </div>
+              <div class="ai-step">
+                <span class="n">03</span>
+                <div>
+                  <h3>Play the result</h3>
+                  <p>You get a complete, validated game file. No dead ends, no broken logic — drop it straight into the player.</p>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:28px;" data-reveal="3">
+              <a class="dm-btn dm-btn--primary dm-btn--sm" href="/ai/">Get the AI Companion →</a>
+            </div>
+          </div>
+          <div data-reveal="2">
+            <div class="term dm-corners">
+              <div class="term-bar">
+                <span class="dots"><i></i><i></i><i></i></span>
+                <span>ai_companion — session</span>
+                <span>v7.2</span>
+              </div>
+              <div class="term-body" id="aiTermDemo">
+                <span class="ln"><span class="p">&gt;</span> template pasted <span class="ok">✓</span> <span class="c">— 1,400 lines of rules loaded</span></span>
+                <span class="ln"><span class="p">&gt;</span> describe your world:</span>
+                <span class="ln">&nbsp;&nbsp;<span class="q">"a lighthouse keeper who hears knocking from the sea"</span></span>
+                <span class="ln"><span class="c">building structure … 46 pages, 3 endings</span></span>
+                <span class="ln"><span class="c">validating choices …</span> <span class="ok">ok</span></span>
+                <span class="ln"><span class="c">checking dead ends …</span> <span class="ok">none found</span></span>
+                <span class="ln"><span class="c">LED &amp; hardware rules …</span> <span class="ok">accurate</span></span>
+                <span class="ln"><span class="hot">✓ game.json ready</span> <span class="c">— open it in the player</span></span>
               </div>
             </div>
           </div>
@@ -555,77 +875,68 @@
       </div>
     </section>
 
-    <div class="dm-sechead dm-sechead--yellow">
-      <span class="dm-num">02</span>
-      <span class="dm-label">Open Source &amp; Support</span>
-    </div>
-
-    <section class="community-grid community-grid--two" aria-label="Open source and support">
-      <div class="community-card">
-        <div class="community-tile dm-corners">
-          <a href="https://github.com/coburn2716/dungeonmastron_app" target="_blank" rel="noopener noreferrer" aria-label="Dungeon Mastron on GitHub">
-            <img src="web_assets/logos/github_logo.svg" alt="GitHub" class="community-tile-logo" />
-          </a>
+    <!-- ════════ PAPER BAND · OPEN SOURCE + CARTRIDGE ════════ -->
+    <section class="dm-paper paper-band" aria-label="Open source and support">
+      <div class="wrap">
+        <div class="dm-eyebrow dm-eyebrow--gold" data-reveal>
+          <span class="dm-num">06</span>
+          <span class="dm-label">Open source &amp; support</span>
         </div>
-        <p class="community-tag">Open source, MIT licensed.</p>
-        <p class="community-copy">The whole platform is open on GitHub. Contributions, forks, and community builds are welcome. Read the code, file an issue, or build your own version. The source is yours.</p>
-      </div>
-      <div class="community-card">
-        <div class="community-tile dm-corners">
-          <a href="https://ko-fi.com/dungeonmastron" target="_blank" rel="noopener noreferrer" aria-label="Support Dungeon Mastron on Ko-fi">
-            <img src="web_assets/logos/kofi_logo.svg" alt="Ko-fi" class="community-tile-logo" />
-          </a>
+        <div class="paper-grid">
+          <div>
+            <h2 class="dm-h dm-h--lg" data-reveal>Open source,<br />down to <em>the last page.</em></h2>
+            <p class="lead" data-reveal>The whole platform lives on GitHub under the MIT license — the builder, the player, the console designs, the AI templates. Read the code, fork it, build your own version. Dungeon Mastron is a one-person passion project, free for everyone; if it brings you joy, a coffee keeps new tools, worlds, and console builds coming.</p>
+            <div class="support-tiles">
+              <a class="support-tile" href="https://github.com/coburn2716/dungeonmastron_app" target="_blank" rel="noopener noreferrer" aria-label="Dungeon Mastron on GitHub" data-reveal>
+                <img src="web_assets/logos/github_logo.svg" alt="GitHub" loading="lazy" />
+                <span class="tag">Open source · MIT</span>
+                <p>Stars, issues, forks, and community builds welcome. The source is yours.</p>
+              </a>
+              <a class="support-tile" href="https://ko-fi.com/dungeonmastron" target="_blank" rel="noopener noreferrer" aria-label="Support Dungeon Mastron on Ko-fi" data-reveal="2">
+                <img src="web_assets/logos/kofi_logo.svg" alt="Ko-fi" loading="lazy" />
+                <span class="tag">Support the project</span>
+                <p>Keep it free and growing — one coffee at a time.</p>
+              </a>
+            </div>
+          </div>
+          <div>
+            <figure class="cart-figure" style="margin:0;" data-reveal="2">
+              <img src="web_assets/console_pictures/Images_web/cart_front_web.png" alt="A blank Dungeon Mastron cartridge, waiting for a label" loading="lazy" />
+              <figcaption>Fig. 06 — your story, with your label on it</figcaption>
+            </figure>
+            <p class="paper-cart-copy" data-reveal="3">From a blank page, you write the story and shape the world. Define its choices, give it a name, put your label on the cartridge — and make it your own. The platform keeps evolving with the stories people create; every new tool lands here, for everyone.</p>
+          </div>
         </div>
-        <p class="community-tag">Support the project. Keep it free.</p>
-        <p class="community-copy">Dungeon Mastron is a one-person passion project, free and open for everyone. If it brings you joy, a coffee helps keep it growing with new tools, worlds, and console builds.</p>
       </div>
     </section>
 
-    <div class="dm-sechead">
-      <span class="dm-num">03</span>
-      <span class="dm-label">Creation &amp; Evolution</span>
-    </div>
-
-    <section class="below-grid" aria-label="Cart section">
-      <div class="below-left">
-        <div class="below-center">
-          <h2>From a blank page, you write the story and shape the world.</h2>
-          <p class="sub">Define its choices, give it a name, put your label on the cartridge, and make it your own.</p>
-          <p class="body">Dungeon Mastron is built as an ongoing platform, shaped by the stories people create and the needs that emerge from them. New tools, systems, and ways to play are added over time, guided by the community and the kinds of adventures being made.</p>
+    <!-- ════════ LAST CALL ════════ -->
+    <section class="last-call" aria-label="Start now">
+      <div class="wrap">
+        <h2 class="dm-h dm-h--xl" data-reveal>The next world<br />is <em>yours.</em></h2>
+        <div class="hero-cta" data-reveal="2">
+          <a class="dm-btn dm-btn--primary" href="/builder/">Open the builder →</a>
+          <a class="dm-btn" href="/guides/">Read the guides</a>
         </div>
       </div>
-      <div class="below-right">
-        <img src="web_assets/console_pictures/Images_web/cart_front_web.png" alt="" />
-      </div>
     </section>
-
   </main>
 
   <div id="site-footer"></div>
 
-  <script src="web_assets/site_shell.js?v=2" defer></script>
+  <script src="web_assets/site_shell.js?v=3" defer></script>
   <script>
+    // ── Carousel ──────────────────────────────────────────────────────────
     (() => {
       const root = document.getElementById('startCarousel');
       if (!root) return;
 
-      const images = [
-        'web_assets/images/startpage/caru1.jpg',
-        'web_assets/images/startpage/caru2.jpg',
-        'web_assets/images/startpage/caru3.jpg',
-        'web_assets/images/startpage/caru4.jpg',
-        'web_assets/images/startpage/caru5.jpg',
-        'web_assets/images/startpage/caru6.jpg',
-        'web_assets/images/startpage/caru7.jpg',
-        'web_assets/images/startpage/caru8.jpg',
-        'web_assets/images/startpage/caru9.jpg',
-        'web_assets/images/startpage/caru10.jpg',
-        'web_assets/images/startpage/caru11.jpg',
-        'web_assets/images/startpage/caru12.jpg',
-      ];
+      const images = [];
+      for (let i = 1; i <= 12; i++) images.push(`web_assets/images/startpage/caru${i}.jpg`);
 
       const viewport = root.querySelector('.carousel-viewport');
       const dotsEl = root.querySelector('.carousel-dots');
+      const countEl = document.getElementById('caruCount');
       if (!viewport || !dotsEl) return;
 
       const slides = images.map((src, idx) => {
@@ -637,7 +948,7 @@
         img.alt = '';
         img.src = src;
         slide.appendChild(img);
-        viewport.appendChild(slide);
+        viewport.insertBefore(slide, viewport.firstChild);
         return slide;
       });
 
@@ -653,6 +964,7 @@
 
       let index = 0;
       let timer = null;
+      const pad = (n) => String(n).padStart(2, '0');
 
       function setIndex(next, user = false) {
         const n = ((next % images.length) + images.length) % images.length;
@@ -662,31 +974,34 @@
         index = n;
         slides[index].classList.add('is-active');
         dots[index].classList.add('is-active');
+        if (countEl) countEl.textContent = `${pad(index + 1)} / ${pad(images.length)}`;
         if (user) restart();
       }
 
       function next() { setIndex(index + 1); }
-      function start() {
-        if (timer) return;
-        timer = window.setInterval(next, 3800);
-      }
-      function stop() {
-        if (!timer) return;
-        window.clearInterval(timer);
-        timer = null;
-      }
-      function restart() {
-        stop();
-        start();
-      }
+      function start() { if (!timer) timer = window.setInterval(next, 4200); }
+      function stop() { if (timer) { window.clearInterval(timer); timer = null; } }
+      function restart() { stop(); start(); }
 
       root.addEventListener('mouseenter', stop);
       root.addEventListener('mouseleave', start);
-
       root.querySelector('[data-action="next"]')?.addEventListener('click', () => setIndex(index + 1, true));
       root.querySelector('[data-action="prev"]')?.addEventListener('click', () => setIndex(index - 1, true));
 
-      start();
+      if (!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) start();
+    })();
+
+    // ── AI terminal demo: reveal lines when scrolled into view ───────────
+    (() => {
+      const body = document.getElementById('aiTermDemo');
+      if (!body) return;
+      if (!('IntersectionObserver' in window)) { body.classList.add('is-in'); return; }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) { body.classList.add('is-in'); io.disconnect(); }
+        });
+      }, { threshold: 0.35 });
+      io.observe(body);
     })();
   </script>
 
