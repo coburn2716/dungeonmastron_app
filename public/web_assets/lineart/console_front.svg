@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-24 -392 248 464" role="img" aria-label="Front elevation technical drawing of the Dungeon Mastron console">
+<style>
+  .note { font: 500 9px ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace; letter-spacing: .14em; fill: #ECE6DA; fill-opacity: .55; }
+  .note.title { fill-opacity: .40; letter-spacing: .18em; }
+  .keycap { font: 600 7px ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace; fill: #ECE6DA; fill-opacity: .60; }
+  .lead { stroke: #ECE6DA; stroke-opacity: .30; stroke-width: .7; fill: none; }
+  .ext, .dim { stroke: #ECE6DA; stroke-opacity: .25; stroke-width: .7; fill: none; }
+  .arr { fill: #ECE6DA; fill-opacity: .35; }
+  .led { opacity: .35; animation: ledPulse 5.4s ease-in-out infinite; }
+  .led-0 { animation-delay: 0s; } .led-1 { animation-delay: 1.35s; }
+  .led-2 { animation-delay: 2.7s; } .led-3 { animation-delay: 4.05s; }
+  .ledB.led-0 { animation-delay: .7s; } .ledB.led-1 { animation-delay: 2.05s; }
+  .ledB.led-2 { animation-delay: 3.4s; } .ledB.led-3 { animation-delay: 4.75s; }
+  @keyframes ledPulse { 0%,100% { opacity: .3; } 50% { opacity: 1; } }
+  .cursor { animation: curBlink 1.3s steps(1) infinite; }
+  @keyframes curBlink { 0%,55% { opacity: 1; } 56%,100% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; }
+    .shine { opacity: 0; } .led { opacity: .75; }
+  }
+
+  .shine { stroke-dasharray: 4 96; opacity: 0; animation: feShine 10s linear infinite; animation-delay: -2s; }
+  .shine2 { stroke-dasharray: 1.6 98.4; animation-delay: -1.94s; }
+  @keyframes feShine {
+    0% { stroke-dashoffset: 100; opacity: 0; }
+    4% { opacity: .9; } 46% { opacity: .9; }
+    50% { stroke-dashoffset: 0; opacity: 0; }
+    100% { stroke-dashoffset: 0; opacity: 0; }
+  }
+  .mark { animation: markBreath 6s ease-in-out infinite; }
+  @keyframes markBreath { 0%,100% { stroke-opacity: .5; } 50% { stroke-opacity: 1; } }</style>
+  <path d="M100,-378 V16" stroke="#ECE6DA" stroke-opacity=".12" stroke-width=".7" stroke-dasharray="5 5" fill="none"/>
+  <path d="M0,0 H200 V-280 H0 Z" stroke="#ECE6DA" stroke-opacity=".78" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+  <path class="shine" d="M0,0 H200 V-280 H0 Z" pathLength="100" stroke="#E2683C" stroke-width="1.6" fill="none"/>
+  <path class="shine shine2" d="M0,0 H200 V-280 H0 Z" pathLength="100" stroke="#FFF6EC" stroke-width="1" fill="none"/>
+  <path d="M52,-280 V-358 Q52,-364 58,-364 H142 Q148,-364 148,-358 V-280" stroke="#ECE6DA" stroke-opacity=".70" stroke-width="1.2" fill="none"/>
+  <path d="M44,-280 h8 M148,-280 h8" stroke="#ECE6DA" stroke-opacity=".45" stroke-width="1.4" fill="none"/>
+  <path d="M72,-360 V-354 M80,-360 V-354 M88,-360 V-354 M96,-360 V-354 M104,-360 V-354 M112,-360 V-354" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <rect x="60" y="-350" width="80" height="62" stroke="#ECE6DA" stroke-opacity=".40" stroke-width=".9" fill="none"/>
+  <path class="mark" d="M100,-339 L106,-332 L100,-325 L94,-332 Z" stroke="#E2683C" stroke-width="1" fill="none"/>
+  <path d="M74,-306 h52 M84,-298 h32" stroke="#ECE6DA" stroke-opacity=".30" stroke-width="1" fill="none"/>
+  <path d="M0,-58 H200" stroke="#ECE6DA" stroke-opacity=".38" stroke-width="1" fill="none"/>
+  <path d="M0,-66 H28 M58,-66 H66 M96,-66 H104 M134,-66 H146 M180,-66 H200" stroke="#ECE6DA" stroke-opacity=".38" stroke-width="1" fill="none"/>
+  <rect x="42" y="-250" width="116" height="162.6" stroke="#ECE6DA" stroke-opacity=".62" stroke-width="1.1" fill="none"/>
+  <rect x="47" y="-244.7" width="106" height="151.9" stroke="#ECE6DA" stroke-opacity=".28" stroke-width=".8" fill="none"/>
+  <path d="M47,-173 H153" stroke="#ECE6DA" stroke-opacity=".25" stroke-width=".8" stroke-dasharray="3 4" fill="none"/>
+  <path d="M62,-185.8 L84,-215.8 L99,-197.6 L114,-226.5 L138,-185.8" stroke="#ECE6DA" stroke-opacity=".40" stroke-width="1" fill="none" stroke-linejoin="round"/>
+  <circle cx="127" cy="-231.9" r="6" stroke="#ECE6DA" stroke-opacity=".40" stroke-width="1" fill="none"/>
+  <path d="M52,-155.9 h96" stroke="#ECE6DA" stroke-opacity=".28" stroke-width="1" fill="none"/>
+  <path d="M52,-143 h84" stroke="#ECE6DA" stroke-opacity=".28" stroke-width="1" fill="none"/>
+  <path d="M52,-130.2 h92" stroke="#ECE6DA" stroke-opacity=".28" stroke-width="1" fill="none"/>
+  <path d="M52,-117.4 h58" stroke="#ECE6DA" stroke-opacity=".28" stroke-width="1" fill="none"/>
+  <path class="cursor" d="M114,-117.4 h6" stroke="#E2683C" stroke-width="2.4" fill="none"/>
+  <circle cx="21" cy="-206.2" r="5.2" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-0 " cx="21" cy="-206.2" r="3" fill="#B85C4E"/>
+  <circle cx="21" cy="-183.7" r="5.2" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-1 " cx="21" cy="-183.7" r="3" fill="#E8A356"/>
+  <circle cx="21" cy="-161.2" r="5.2" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-2 " cx="21" cy="-161.2" r="3" fill="#7B93A8"/>
+  <circle cx="21" cy="-138.8" r="5.2" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-3 " cx="21" cy="-138.8" r="3" fill="#6B9B7F"/>
+  <circle cx="179" cy="-206.2" r="5.2" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-0 ledB" cx="179" cy="-206.2" r="3" fill="#B85C4E"/>
+  <circle cx="179" cy="-183.7" r="5.2" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-1 ledB" cx="179" cy="-183.7" r="3" fill="#E8A356"/>
+  <circle cx="179" cy="-161.2" r="5.2" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-2 ledB" cx="179" cy="-161.2" r="3" fill="#7B93A8"/>
+  <circle cx="179" cy="-138.8" r="5.2" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-3 ledB" cx="179" cy="-138.8" r="3" fill="#6B9B7F"/>
+  <path d="M10,-72.4 H36 M10,-75.8 H36 M10,-79.3 H36 M10,-82.7 H36" stroke="#ECE6DA" stroke-opacity=".38" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+  <rect x="28" y="-70.3" width="30" height="10" stroke="#ECE6DA" stroke-opacity=".55" stroke-width="1" fill="none"/>
+  <text x="43" y="-62.9" text-anchor="middle" class="keycap">I</text>
+  <rect x="66" y="-70.3" width="30" height="10" stroke="#ECE6DA" stroke-opacity=".55" stroke-width="1" fill="none"/>
+  <text x="81" y="-62.9" text-anchor="middle" class="keycap">II</text>
+  <rect x="104" y="-70.3" width="30" height="10" stroke="#ECE6DA" stroke-opacity=".55" stroke-width="1" fill="none"/>
+  <text x="119" y="-62.9" text-anchor="middle" class="keycap">III</text>
+  <rect x="146" y="-71.6" width="34" height="10" rx="2" stroke="#ECE6DA" stroke-opacity=".45" stroke-width="1" fill="none"/>
+  <path d="M0,6 V32 M200,6 V32" class="ext"/>
+  <path d="M0,26 H200" class="dim"/>
+  <path d="M0,26 l6,-2.4 v4.8 Z M200,26 l-6,-2.4 v4.8 Z" class="arr"/>
+  <text x="100" y="40" text-anchor="middle" class="note">200 MM</text>
+  <text x="-4" y="64" class="note title">DM·C1 — FRONT ELEVATION</text>
+</svg>

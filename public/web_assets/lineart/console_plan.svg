@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-72 -34 340 292" role="img" aria-label="Plan view technical drawing of the Dungeon Mastron console from above">
+<style>
+  .note { font: 500 9px ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace; letter-spacing: .14em; fill: #ECE6DA; fill-opacity: .55; }
+  .note.title { fill-opacity: .40; letter-spacing: .18em; }
+  .keycap { font: 600 7px ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace; fill: #ECE6DA; fill-opacity: .60; }
+  .lead { stroke: #ECE6DA; stroke-opacity: .30; stroke-width: .7; fill: none; }
+  .ext, .dim { stroke: #ECE6DA; stroke-opacity: .25; stroke-width: .7; fill: none; }
+  .arr { fill: #ECE6DA; fill-opacity: .35; }
+  .led { opacity: .35; animation: ledPulse 5.4s ease-in-out infinite; }
+  .led-0 { animation-delay: 0s; } .led-1 { animation-delay: 1.35s; }
+  .led-2 { animation-delay: 2.7s; } .led-3 { animation-delay: 4.05s; }
+  .ledB.led-0 { animation-delay: .7s; } .ledB.led-1 { animation-delay: 2.05s; }
+  .ledB.led-2 { animation-delay: 3.4s; } .ledB.led-3 { animation-delay: 4.75s; }
+  @keyframes ledPulse { 0%,100% { opacity: .3; } 50% { opacity: 1; } }
+  .cursor { animation: curBlink 1.3s steps(1) infinite; }
+  @keyframes curBlink { 0%,55% { opacity: 1; } 56%,100% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; }
+    .shine { opacity: 0; } .led { opacity: .75; }
+  }
+
+  .shine { stroke-dasharray: 4 96; opacity: 0; animation: pvShine 11s linear infinite; animation-delay: -4s; }
+  .shine2 { stroke-dasharray: 1.6 98.4; animation-delay: -3.94s; }
+  @keyframes pvShine {
+    0% { stroke-dashoffset: 100; opacity: 0; }
+    4% { opacity: .9; } 46% { opacity: .9; }
+    50% { stroke-dashoffset: 0; opacity: 0; }
+    100% { stroke-dashoffset: 0; opacity: 0; }
+  }</style>
+  <path d="M0,210 H200 V0 H0 Z" stroke="#ECE6DA" stroke-opacity=".78" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+  <path class="shine" d="M0,210 H200 V0 H0 Z" pathLength="100" stroke="#E2683C" stroke-width="1.6" fill="none"/>
+  <path class="shine shine2" d="M0,210 H200 V0 H0 Z" pathLength="100" stroke="#FFF6EC" stroke-width="1" fill="none"/>
+  <path d="M0,120 H200 M0,40 H200" stroke="#ECE6DA" stroke-opacity=".38" stroke-width="1" fill="none"/>
+  <rect x="42" y="51.2" width="116" height="60.8" stroke="#ECE6DA" stroke-opacity=".55" stroke-width="1" fill="none"/>
+  <circle cx="21" cy="67.6" r="3.4" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-0 " cx="21" cy="67.6" r="1.8" fill="#B85C4E"/>
+  <circle cx="21" cy="76" r="3.4" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-1 " cx="21" cy="76" r="1.8" fill="#E8A356"/>
+  <circle cx="21" cy="84.4" r="3.4" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-2 " cx="21" cy="84.4" r="1.8" fill="#7B93A8"/>
+  <circle cx="21" cy="92.8" r="3.4" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-3 " cx="21" cy="92.8" r="1.8" fill="#6B9B7F"/>
+  <circle cx="179" cy="67.6" r="3.4" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-0 ledB" cx="179" cy="67.6" r="1.8" fill="#B85C4E"/>
+  <circle cx="179" cy="76" r="3.4" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-1 ledB" cx="179" cy="76" r="1.8" fill="#E8A356"/>
+  <circle cx="179" cy="84.4" r="3.4" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-2 ledB" cx="179" cy="84.4" r="1.8" fill="#7B93A8"/>
+  <circle cx="179" cy="92.8" r="3.4" stroke="#ECE6DA" stroke-opacity=".35" stroke-width=".9" fill="none"/>
+  <circle class="led led-3 ledB" cx="179" cy="92.8" r="1.8" fill="#6B9B7F"/>
+  <path d="M10,117.6 H36 M10,113.8 H36" stroke="#ECE6DA" stroke-opacity=".25" stroke-width=".8" fill="none"/>
+  <rect x="28" y="154" width="30" height="30" rx="2" stroke="#ECE6DA" stroke-opacity=".55" stroke-width="1" fill="none"/>
+  <text x="43" y="171.6" text-anchor="middle" class="keycap">I</text>
+  <rect x="66" y="154" width="30" height="30" rx="2" stroke="#ECE6DA" stroke-opacity=".55" stroke-width="1" fill="none"/>
+  <text x="81" y="171.6" text-anchor="middle" class="keycap">II</text>
+  <rect x="104" y="154" width="30" height="30" rx="2" stroke="#ECE6DA" stroke-opacity=".55" stroke-width="1" fill="none"/>
+  <text x="119" y="171.6" text-anchor="middle" class="keycap">III</text>
+  <circle cx="163" cy="169" r="17" stroke="#ECE6DA" stroke-opacity=".55" stroke-width="1" fill="none"/>
+  <circle cx="163" cy="169" r="12" stroke="#ECE6DA" stroke-opacity=".25" stroke-width=".8" fill="none"/>
+  <rect x="44" y="12" width="112" height="22" stroke="#ECE6DA" stroke-opacity=".45" stroke-width="1" fill="none"/>
+  <rect x="52" y="16" width="96" height="14" rx="2" stroke="#ECE6DA" stroke-opacity=".70" stroke-width="1.2" fill="none"/>
+  <path d="M72,18 V28 M80,18 V28 M88,18 V28 M96,18 V28 M104,18 V28 M112,18 V28" stroke="#ECE6DA" stroke-opacity=".30" stroke-width=".8" fill="none"/>
+  <path d="M100,-12 V222" stroke="#ECE6DA" stroke-opacity=".12" stroke-width=".7" stroke-dasharray="5 5" fill="none"/>
+  <path d="M204,210 H232 M204,0 H232" class="ext"/>
+  <path d="M226,210 V0" class="dim"/>
+  <path d="M226,0 l-2.4,6 h4.8 Z M226,210 l-2.4,-6 h4.8 Z" class="arr"/>
+  <text x="235" y="105" class="note" transform="rotate(90 235 105)" text-anchor="middle">210 MM</text>
+  <path d="M6,-6 L34,10 L50,15" class="lead"/>
+  <text x="4" y="-10" text-anchor="end" class="note">PORT</text>
+  <text x="-4" y="244" class="note title">DM·C1 — PLAN VIEW</text>
+</svg>
