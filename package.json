@@ -1,0 +1,20 @@
+{
+  "name": "dungeonmastron-app",
+  "version": "1.0.0",
+  "description": "Dungeon Mastron — static site scripts (blog publish, SEO, indexing)",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "seo:keywords": "node --env-file=.env.local scripts/seo/keyword-research.mjs",
+    "seo:reports": "node --env-file=.env.local scripts/seo/publish-reports.mjs",
+    "blog:publish": "node --env-file=.env.local scripts/blog/publish-blog-post.mjs",
+    "blog:check-indexing": "node --env-file=.env.local scripts/blog/check-blog-indexing.mjs",
+    "check-indexing": "node --env-file=.env.local scripts/check-page-indexing.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.110.0",
+    "google-auth-library": "^10.9.0",
+    "gray-matter": "^4.0.3",
+    "marked": "^13.0.0"
+  }
+}
