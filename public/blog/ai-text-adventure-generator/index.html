@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Use AI to Generate a Text Adventure — Dungeon Mastron</title>
+  <meta name="description" content="How to use ChatGPT or Claude with the Dungeon Mastron AI Companion to generate a complete, playable text adventure game — plus an honest look at AI's limits." />
+  <link rel="canonical" href="https://www.dungeonmastron.com/blog/ai-text-adventure-generator/" />
+  <meta property="og:site_name" content="Dungeon Mastron" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Use AI to Generate a Complete Text Adventure Game" />
+  <meta property="og:description" content="Paste one template into ChatGPT or Claude and get back a playable game file. How it works — and where AI still needs you." />
+  <meta property="og:url" content="https://www.dungeonmastron.com/blog/ai-text-adventure-generator/" />
+  <meta property="og:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Use AI to Generate a Complete Text Adventure Game" />
+  <meta name="twitter:description" content="Paste one template into ChatGPT or Claude and get back a playable game file. How it works — and where AI still needs you." />
+  <meta name="twitter:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/web_assets/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/web_assets/apple-touch-icon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "url": "https://www.dungeonmastron.com/blog/ai-text-adventure-generator/",
+    "name": "Use AI to Generate a Complete Text Adventure Game",
+    "mainEntity": {
+      "@type": "BlogPosting",
+      "headline": "Use AI to Generate a Complete Text Adventure Game",
+      "description": "How to use ChatGPT or Claude with the Dungeon Mastron AI Companion to generate a complete, playable text adventure game — plus an honest look at AI's limits.",
+      "url": "https://www.dungeonmastron.com/blog/ai-text-adventure-generator/",
+      "datePublished": "2026-07-09",
+      "dateModified": "2026-07-09",
+      "image": "https://www.dungeonmastron.com/web_assets/og-image.jpg",
+      "author": { "@type": "Organization", "name": "Dungeon Mastron", "url": "https://www.dungeonmastron.com/" },
+      "publisher": { "@type": "Organization", "name": "Dungeon Mastron", "url": "https://www.dungeonmastron.com/" }
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Blog", "item": "https://www.dungeonmastron.com/blog/" },
+        { "@type": "ListItem", "position": 2, "name": "Use AI to Generate a Complete Text Adventure Game", "item": "https://www.dungeonmastron.com/blog/ai-text-adventure-generator/" }
+      ]
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/web_assets/site_shell.css" />
+  <style>
+    body { margin: 0; background: var(--shell-bg); color: var(--shell-text); font-family: var(--shell-font); }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 46px 18px 80px; }
+    .kicker {
+      font-family: var(--shell-mono); font-size: 11px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(232,227,217,0.70); margin-bottom: 10px;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .kicker::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: #e8a356; opacity: 0.95; }
+    h1 {
+      font-family: var(--shell-heading); font-weight: 600; letter-spacing: 0.02em;
+      margin: 0 0 8px; font-size: clamp(26px, 3vw, 38px); line-height: 1.15; color: var(--shell-text);
+    }
+    .meta { font-family: var(--shell-mono); font-size: 12px; color: rgba(232,227,217,0.55); margin: 0 0 34px; }
+    article h2 { font-family: var(--shell-heading); font-weight: 600; font-size: 23px; margin: 38px 0 12px; color: var(--shell-text); }
+    article h3 { font-family: var(--shell-heading); font-weight: 600; font-size: 17px; margin: 26px 0 8px; color: var(--shell-text); }
+    article p, article li { color: var(--shell-sub); line-height: 1.7; }
+    article p { margin: 0 0 16px; }
+    article ul, article ol { margin: 0 0 16px; padding-left: 22px; }
+    article li { margin-bottom: 6px; }
+    article a { color: #6B9B7F; }
+    article strong { color: var(--shell-text); }
+    code { font-family: var(--shell-mono); font-size: 0.9em; background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 5px; color: #e8a356; }
+    .backlink { display: inline-block; margin: 40px 0 0; font-family: var(--shell-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #D97757; text-decoration: none; }
+    .backlink:hover { text-decoration: underline; }
+    .cta { border: 1px solid var(--shell-border); border-radius: 12px; background: rgba(0,0,0,0.18); padding: 20px 22px; margin-top: 34px; }
+    .cta p { margin: 0 0 10px; }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+  <main class="wrap">
+    <span class="kicker">Guide</span>
+    <h1>Use AI to Generate a Complete Text Adventure Game</h1>
+    <p class="meta">July 9, 2026 · 7 min read</p>
+
+    <article>
+      <p>Here's a thing that genuinely wasn't possible a few years ago: you can describe a story idea to an AI, and ten minutes later be <em>playing</em> it — real choices, real branches, real endings — in your browser. Not a chat transcript that pretends to be a game, but an actual structured game file you can save, edit, and share.</p>
+      <p>This post explains exactly how the <a href="/ai/">Dungeon Mastron AI Companion</a> workflow works, and — because we'd rather be useful than hype-y — an honest accounting of what AI does well and badly when it writes interactive fiction.</p>
+
+      <h2>The core idea: a template, not an app</h2>
+      <p>The AI Companion isn't a chatbot we built, and it doesn't require an API key or a subscription to anything of ours. It's a carefully engineered <strong>prompt template</strong>. The workflow:</p>
+      <ol>
+        <li><strong>Copy the template</strong> from the <a href="/ai/">AI Companion page</a>. It contains the full specification of Dungeon Mastron's game format, the structural rules of a good branching story, and instructions for the AI.</li>
+        <li><strong>Paste it into ChatGPT, Claude, or any capable LLM</strong> — whichever you already use and pay for (or use free).</li>
+        <li><strong>Describe your game.</strong> A premise, a tone, maybe a setting: "a melancholy mystery on an arctic research station, 20 scenes, three endings."</li>
+        <li><strong>Receive a complete <code>game.json</code> file.</strong> The AI writes every scene, every choice, every branch, in valid Dungeon Mastron format.</li>
+        <li><strong>Play it immediately</strong> in the <a href="/play/">Web Player</a> — drop the file in and go. Or open it in the <a href="/builder/">Visual Builder</a> to see the whole branching map and start editing.</li>
+      </ol>
+      <p>That's the whole trick. The template does the heavy lifting: it teaches the AI the format and, just as importantly, the <em>craft rules</em> — branch-and-merge structure, meaningful choices, consequence tracking — so what comes back is a game, not a linear story with decorative buttons.</p>
+      <p>Because the output is plain JSON, you own it completely. Hand-edit it, regenerate one branch, or rebuild half of it in the builder. There's no lock-in and no black box.</p>
+
+      <h2>What AI is genuinely good at</h2>
+      <ul>
+        <li><strong>Structure and scaffolding.</strong> Modern LLMs are excellent at producing a valid, well-formed branching skeleton. Twenty connected scenes with sensible choice architecture, in minutes — this used to be an afternoon of tedious wiring.</li>
+        <li><strong>First-draft prose volume.</strong> Getting from blank page to "everything has words in it" is where most first-time creators quit. AI removes that wall entirely.</li>
+        <li><strong>Genre competence.</strong> Ask for noir, cozy fantasy, or survival horror and you'll get scenes that reliably hit the expected notes. For a first game or a game-jam entry, that's plenty.</li>
+        <li><strong>Iteration speed.</strong> "Make the middle act darker." "Add a branch where the player trusts the stranger." Regenerating a section costs nothing but a prompt.</li>
+      </ul>
+
+      <h2>What AI is honestly bad at</h2>
+      <p>We'd be lying if we stopped at the previous section. Here's what you should expect to fix:</p>
+      <ul>
+        <li><strong>Sameness.</strong> AI prose gravitates to the statistical middle. Every door "creaks ominously"; every stranger has "eyes that betray a hidden sorrow." A game full of unedited AI text reads competent and forgettable. Your weirdness is the asset AI can't supply.</li>
+        <li><strong>Choices that don't really differ.</strong> AIs sometimes generate three choices that lead to nearly identical outcomes — the structure of choice without the substance. Play every path and check that branches actually diverge.</li>
+        <li><strong>Endings.</strong> AI endings tend to resolve too neatly and too quickly. The last scene of every path deserves a human rewrite; it's what players remember.</li>
+        <li><strong>Long-range consequence.</strong> An LLM writing scene 18 has fuzzy awareness of the promise it made in scene 3. Continuity across branches — items, injuries, relationships — is where you'll find the most bugs.</li>
+        <li><strong>Occasional format slips.</strong> Rarely, a model will produce slightly malformed JSON or reference a scene that doesn't exist. The Web Player and Builder will surface these fast, and a quick regenerate-or-patch fixes them.</li>
+      </ul>
+
+      <h2>The workflow that actually works: AI drafts, you direct</h2>
+      <p>After watching a lot of games get made this way, the pattern that produces things worth playing is:</p>
+      <ol>
+        <li><strong>Generate the skeleton with AI.</strong> Get a complete, playable draft in one shot.</li>
+        <li><strong>Play it twice</strong> — once following your instincts, once deliberately choosing "wrong."</li>
+        <li><strong>Open it in the <a href="/builder/">builder</a></strong> and look at the map. Prune fake choices, merge redundant scenes, add one branch the AI didn't dare to.</li>
+        <li><strong>Rewrite the scenes that matter by hand:</strong> the opening, every ending, and the two or three pivotal decision scenes. Maybe 20% of the text — the 20% that carries the whole game.</li>
+      </ol>
+      <p>Think of the AI as an enthusiastic collaborator who types fast and never gets writer's block, but has read too many of the same books. You're the director. (If you'd rather build from scratch and skip AI entirely, our <a href="/blog/make-a-choose-your-own-adventure-game/">no-code tutorial</a> covers that path.)</p>
+
+      <h2>A design tip for your prompt</h2>
+      <p>One instruction dramatically improves AI-generated games: tell it that <strong>failure should wound the story, not end it</strong>. Ask for branches where bad choices cost the player something they carry forward — an injury, a lost ally, a burned bridge — instead of "game over" screens. The Companion template bakes this philosophy in, and it's the single biggest difference between AI games that feel cheap and ones that feel authored. We wrote about why this works: <a href="/blog/wounds-not-death-game-design/">Wounds, Not Death</a>.</p>
+
+      <h2>Where this goes next</h2>
+      <p>Games made this way aren't stuck in a browser tab, either. Any game.json — AI-generated or handmade — runs on the <a href="/console/">DIY Raspberry Pi console</a>, which is a strange and delightful thing: a story you described to a chatbot on Tuesday, playable on physical arcade buttons by the weekend.</p>
+
+      <div class="cta">
+        <p><strong>Try it:</strong> grab the template on the <a href="/ai/">AI Companion page</a>, generate something, and play it in the <a href="/play/">Web Player</a>. If your AI produces something wonderful or hilariously broken, we genuinely want to see it — share it on <a href="https://discord.gg/QFdWE9Bm" target="_blank" rel="noopener noreferrer">Discord</a>.</p>
+      </div>
+
+      <a class="backlink" href="/blog/">← Back to blog</a>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <div class="left">© 2026 Artifextron</div>
+      <form action="https://buttondown.com/api/emails/embed-subscribe/Dungeon_Mastron" method="post" class="newsletter">
+        <label for="bd-email">Get project updates</label>
+        <p class="desc">Occasional updates as Dungeon Mastron evolves.</p>
+        <div class="row">
+          <input type="email" name="email" id="bd-email" placeholder="Enter your email" required />
+          <input type="submit" value="Subscribe" />
+        </div>
+      </form>
+      <div class="links">
+        <a href="https://discord.gg/QFdWE9Bm" target="_blank" rel="noopener noreferrer">Discord</a>
+        <a href="https://www.patreon.com/Artifextron" target="_blank" rel="noopener noreferrer">Patreon</a>
+        <a href="https://www.youtube.com/@Artifextron" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="https://github.com/coburn2716/dungeonmastron_app" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://ko-fi.com/artifextron" target="_blank" rel="noopener noreferrer">Support ☕</a>
+        <a href="/LICENSE.txt" target="_blank" rel="noopener noreferrer">License</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/web_assets/site_shell.js?v=2" defer></script>
+</body>
+</html>

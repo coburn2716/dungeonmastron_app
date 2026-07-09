@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Make a Choose Your Own Adventure Game — Dungeon Mastron</title>
+  <meta name="description" content="A free, no-code tutorial for making a choose your own adventure game: shape the idea, sketch the branching map, build it visually, and play it in a browser." />
+  <link rel="canonical" href="https://www.dungeonmastron.com/blog/make-a-choose-your-own-adventure-game/" />
+  <meta property="og:site_name" content="Dungeon Mastron" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="How to Make a Choose Your Own Adventure Game (Free, No Code)" />
+  <meta property="og:description" content="Turn one story idea into a branching map and a playable browser game — without writing a line of code." />
+  <meta property="og:url" content="https://www.dungeonmastron.com/blog/make-a-choose-your-own-adventure-game/" />
+  <meta property="og:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="How to Make a Choose Your Own Adventure Game (Free, No Code)" />
+  <meta name="twitter:description" content="Turn one story idea into a branching map and a playable browser game — without writing a line of code." />
+  <meta name="twitter:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/web_assets/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/web_assets/apple-touch-icon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "url": "https://www.dungeonmastron.com/blog/make-a-choose-your-own-adventure-game/",
+    "name": "How to Make a Choose Your Own Adventure Game (Free, No Code)",
+    "mainEntity": {
+      "@type": "BlogPosting",
+      "headline": "How to Make a Choose Your Own Adventure Game (Free, No Code)",
+      "description": "A free, no-code tutorial for making your own choose your own adventure game: shape the idea, sketch the branching map, build it visually, and play it in a browser.",
+      "url": "https://www.dungeonmastron.com/blog/make-a-choose-your-own-adventure-game/",
+      "datePublished": "2026-07-09",
+      "dateModified": "2026-07-09",
+      "image": "https://www.dungeonmastron.com/web_assets/og-image.jpg",
+      "author": { "@type": "Organization", "name": "Dungeon Mastron", "url": "https://www.dungeonmastron.com/" },
+      "publisher": { "@type": "Organization", "name": "Dungeon Mastron", "url": "https://www.dungeonmastron.com/" }
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Blog", "item": "https://www.dungeonmastron.com/blog/" },
+        { "@type": "ListItem", "position": 2, "name": "How to Make a Choose Your Own Adventure Game", "item": "https://www.dungeonmastron.com/blog/make-a-choose-your-own-adventure-game/" }
+      ]
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/web_assets/site_shell.css" />
+  <style>
+    body { margin: 0; background: var(--shell-bg); color: var(--shell-text); font-family: var(--shell-font); }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 46px 18px 80px; }
+    .kicker {
+      font-family: var(--shell-mono); font-size: 11px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(232,227,217,0.70); margin-bottom: 10px;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .kicker::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: #6B9B7F; opacity: 0.9; }
+    h1 {
+      font-family: var(--shell-heading); font-weight: 600; letter-spacing: 0.02em;
+      margin: 0 0 8px; font-size: clamp(26px, 3vw, 38px); line-height: 1.15; color: var(--shell-text);
+    }
+    .meta { font-family: var(--shell-mono); font-size: 12px; color: rgba(232,227,217,0.55); margin: 0 0 34px; }
+    article h2 { font-family: var(--shell-heading); font-weight: 600; font-size: 23px; margin: 38px 0 12px; color: var(--shell-text); }
+    article h3 { font-family: var(--shell-heading); font-weight: 600; font-size: 17px; margin: 26px 0 8px; color: var(--shell-text); }
+    article p, article li { color: var(--shell-sub); line-height: 1.7; }
+    article p { margin: 0 0 16px; }
+    article ul, article ol { margin: 0 0 16px; padding-left: 22px; }
+    article li { margin-bottom: 6px; }
+    article a { color: #6B9B7F; }
+    article strong { color: var(--shell-text); }
+    blockquote { border-left: 3px solid #D97757; margin: 0 0 16px; padding: 4px 0 4px 16px; color: var(--shell-sub); font-style: italic; }
+    .backlink { display: inline-block; margin: 40px 0 0; font-family: var(--shell-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #D97757; text-decoration: none; }
+    .backlink:hover { text-decoration: underline; }
+    .cta { border: 1px solid var(--shell-border); border-radius: 12px; background: rgba(0,0,0,0.18); padding: 20px 22px; margin-top: 34px; }
+    .cta p { margin: 0 0 10px; }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+  <main class="wrap">
+    <span class="kicker">Tutorial</span>
+    <h1>How to Make a Choose Your Own Adventure Game (Free, No Code)</h1>
+    <p class="meta">July 9, 2026 · 8 min read</p>
+
+    <article>
+      <p>You don't need to know how to program to make a branching story game. You need one decent idea, an hour or two, and a tool that gets out of your way. This tutorial walks you from a blank page to a game your friends can play in their browser — using <a href="/builder/">Dungeon Mastron's free Visual Builder</a>, which runs entirely in your browser with nothing to install and no account required.</p>
+
+      <h2>Step 1: Start with one strong situation, not a whole world</h2>
+      <p>The most common way people fail at their first choose-your-own-adventure (CYOA) game is by starting too big. A hundred-node epic with three kingdoms and a magic system will collapse under its own weight before you finish the second chapter.</p>
+      <p>Instead, start with a <strong>situation</strong> — a moment with pressure built in. Some examples that work well at small scale:</p>
+      <ul>
+        <li>You wake up on a night train and your bag is gone. The train stops in 20 minutes.</li>
+        <li>A lighthouse keeper finds a rowboat washed ashore with a locked box inside.</li>
+        <li>Your ship's AI has started lying to you, and you're three months from home.</li>
+      </ul>
+      <p>Notice what these have in common: a clear protagonist, an immediate problem, and an obvious first choice. If you can't imagine the first two choices the player faces, the idea isn't ready yet.</p>
+
+      <h2>Step 2: Sketch the branching map on paper first</h2>
+      <p>Before you touch any tool, draw circles and arrows on paper (or a whiteboard, or a notes app). Each circle is a <strong>scene</strong> — a chunk of story the player reads. Each arrow is a <strong>choice</strong>.</p>
+      <p>A good first game has roughly <strong>15–30 scenes</strong>. That sounds small, but branching multiplies fast: a story that branches twice at every scene needs over a thousand scenes to go ten choices deep. Nobody writes that, and nobody needs to. The trick professionals use is the <strong>branch-and-merge</strong> structure:</p>
+      <ul>
+        <li>The story splits into two or three paths at a decision point.</li>
+        <li>The paths play out differently for a scene or two.</li>
+        <li>They merge back into a shared spine — but the player carries a <em>consequence</em> forward (an item, an injury, a suspicious ally).</li>
+      </ul>
+      <p>This keeps the writing workload sane while still making choices feel like they matter. If you want to go deeper on making consequences interesting, we wrote a whole essay on it: <a href="/blog/wounds-not-death-game-design/">Wounds, Not Death</a>.</p>
+
+      <h2>Step 3: Build it in the Visual Builder</h2>
+      <p>Open the <a href="/builder/">Visual Builder</a>. You'll see a node canvas — this is your paper sketch, made real. The workflow is:</p>
+      <ol>
+        <li><strong>Create a scene node</strong> for your opening. Write the scene text — aim for 50–150 words per scene. Short scenes keep momentum; players are choosing, not reading a novel.</li>
+        <li><strong>Add choices</strong> to the node. Each choice is a line of text ("Force the lock" / "Wait and listen") plus an arrow to the scene it leads to.</li>
+        <li><strong>Drag connections</strong> between nodes. The canvas shows your whole story as a map, so orphaned scenes and dead ends are visible at a glance — this is the big advantage of a visual builder over writing branches in a document.</li>
+        <li><strong>Mark your endings.</strong> Aim for 3–6 distinct endings in a first game. At least one should be genuinely good, at least one genuinely costly, and the rest somewhere in between.</li>
+      </ol>
+      <p>Everything saves as a single portable <strong>game.json</strong> file. That file <em>is</em> your game — you can back it up, share it, version it, or hand-edit it later. No lock-in, no proprietary format.</p>
+
+      <h3>Writing tips that make scenes land</h3>
+      <ul>
+        <li><strong>Write in second person, present tense.</strong> "You step onto the platform" pulls the player in; "Sarah stepped onto the platform" holds them at a distance.</li>
+        <li><strong>End every scene on the choice.</strong> Don't resolve tension in the scene text and then ask a limp question. The scene builds pressure; the choices release it.</li>
+        <li><strong>Make choices differ in kind, not degree.</strong> "Attack with sword" vs "Attack with axe" is a fake choice. "Attack" vs "Bluff" vs "Run" is a real one.</li>
+      </ul>
+
+      <h2>Step 4: Playtest ruthlessly</h2>
+      <p>Load your game.json into the <a href="/play/">Web Player</a> and play every path — yes, every path. You're looking for three kinds of bugs:</p>
+      <ul>
+        <li><strong>Broken links:</strong> choices that go nowhere or to the wrong scene.</li>
+        <li><strong>Continuity errors:</strong> the player picks up the lantern on one path but a merged scene assumes they don't have it.</li>
+        <li><strong>Boring stretches:</strong> two or more scenes in a row with no meaningful choice. Cut or compress them.</li>
+      </ul>
+      <p>Then hand it to one friend and watch them play without talking. Where they hesitate, your choice text is unclear. Where they skim, your scenes are too long. One silent playtest teaches you more than ten rounds of self-editing.</p>
+
+      <h2>Step 5 (optional): Let AI draft, you direct</h2>
+      <p>If drafting prose is the part that stalls you, Dungeon Mastron has an <a href="/ai/">AI Companion template</a>: you paste a structured prompt into ChatGPT or Claude, describe your premise, and get back a complete playable game file you can then edit in the builder. It's a genuinely fast way to get a first draft — with real caveats about what AI does and doesn't do well, which we cover honestly in <a href="/blog/ai-text-adventure-generator/">this guide</a>.</p>
+      <p>The best workflow we've found: AI generates the skeleton, you rewrite the scenes that matter. The opening, the endings, and the two or three pivotal choices deserve human sentences.</p>
+
+      <h2>What about other tools?</h2>
+      <p>Dungeon Mastron isn't the only way to do this — Twine has been the beloved standard for interactive fiction for over a decade, and it might suit you better depending on what you're making. We wrote an honest side-by-side: <a href="/blog/twine-vs-dungeon-mastron/">Twine vs Dungeon Mastron</a>.</p>
+
+      <h2>Your first game will be small. That's the point.</h2>
+      <p>A finished 20-scene game that three people actually play is worth infinitely more than an abandoned epic. Finish something tiny, learn what choices feel good, then build the bigger thing. Want to see what finished small games look like? Play the <a href="/library/">featured games</a> — none of them are huge, and all of them work.</p>
+
+      <div class="cta">
+        <p><strong>Ready to build?</strong> Open the <a href="/builder/">Visual Builder</a> — free, in your browser, no signup. If you get stuck or want feedback on your branching map, the <a href="https://discord.gg/QFdWE9Bm" target="_blank" rel="noopener noreferrer">Discord</a> is friendly to first-timers.</p>
+      </div>
+
+      <a class="backlink" href="/blog/">← Back to blog</a>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <div class="left">© 2026 Artifextron</div>
+      <form action="https://buttondown.com/api/emails/embed-subscribe/Dungeon_Mastron" method="post" class="newsletter">
+        <label for="bd-email">Get project updates</label>
+        <p class="desc">Occasional updates as Dungeon Mastron evolves.</p>
+        <div class="row">
+          <input type="email" name="email" id="bd-email" placeholder="Enter your email" required />
+          <input type="submit" value="Subscribe" />
+        </div>
+      </form>
+      <div class="links">
+        <a href="https://discord.gg/QFdWE9Bm" target="_blank" rel="noopener noreferrer">Discord</a>
+        <a href="https://www.patreon.com/Artifextron" target="_blank" rel="noopener noreferrer">Patreon</a>
+        <a href="https://www.youtube.com/@Artifextron" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="https://github.com/coburn2716/dungeonmastron_app" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://ko-fi.com/artifextron" target="_blank" rel="noopener noreferrer">Support ☕</a>
+        <a href="/LICENSE.txt" target="_blank" rel="noopener noreferrer">License</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/web_assets/site_shell.js?v=2" defer></script>
+</body>
+</html>

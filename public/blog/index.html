@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — Dungeon Mastron</title>
+  <meta name="description" content="Essays and tutorials on interactive fiction, choose-your-own-adventure design, AI-assisted storytelling, and building narrative games with Dungeon Mastron." />
+  <link rel="canonical" href="https://www.dungeonmastron.com/blog/" />
+  <meta property="og:site_name" content="Dungeon Mastron" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Blog — Dungeon Mastron" />
+  <meta property="og:description" content="Essays and tutorials on interactive fiction, CYOA design, AI-assisted storytelling, and building narrative games." />
+  <meta property="og:url" content="https://www.dungeonmastron.com/blog/" />
+  <meta property="og:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Blog — Dungeon Mastron" />
+  <meta name="twitter:description" content="Essays and tutorials on interactive fiction, CYOA design, AI-assisted storytelling, and building narrative games." />
+  <meta name="twitter:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/web_assets/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/web_assets/apple-touch-icon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "url": "https://www.dungeonmastron.com/blog/",
+    "name": "Blog — Dungeon Mastron",
+    "description": "Essays and tutorials on interactive fiction, CYOA design, AI-assisted storytelling, and building narrative games.",
+    "mainEntity": {
+      "@type": "Blog",
+      "name": "Dungeon Mastron Blog",
+      "url": "https://www.dungeonmastron.com/blog/",
+      "description": "Writing about interactive fiction craft, choose-your-own-adventure tools, and the Dungeon Mastron project.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Dungeon Mastron",
+        "url": "https://www.dungeonmastron.com/"
+      }
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/web_assets/site_shell.css" />
+  <style>
+    body { margin: 0; background: var(--shell-bg); color: var(--shell-text); font-family: var(--shell-font); }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 46px 18px 80px; }
+
+    .kicker {
+      font-family: var(--shell-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(232,227,217,0.70);
+      margin-bottom: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .kicker::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #6B9B7F;
+      opacity: 0.9;
+    }
+
+    h1 {
+      font-family: var(--shell-heading);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+      font-size: clamp(28px, 3.2vw, 44px);
+      line-height: 1.08;
+      color: var(--shell-text);
+    }
+    .sub { color: var(--shell-sub); line-height: 1.6; margin: 0 0 38px; max-width: 640px; }
+
+    .post-card {
+      border: 1px solid var(--shell-border);
+      border-radius: 12px;
+      background: rgba(0,0,0,0.18);
+      padding: 24px 26px;
+      margin-bottom: 18px;
+      transition: border-color 0.15s ease;
+    }
+    .post-card:hover { border-color: #6B9B7F; }
+    .post-card .date {
+      font-family: var(--shell-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(232,227,217,0.55);
+      margin: 0 0 8px;
+    }
+    .post-card h2 {
+      font-family: var(--shell-heading);
+      font-weight: 600;
+      font-size: 21px;
+      line-height: 1.25;
+      margin: 0 0 8px;
+    }
+    .post-card h2 a { color: var(--shell-text); text-decoration: none; }
+    .post-card h2 a:hover { color: #6B9B7F; }
+    .post-card p { margin: 0 0 12px; color: var(--shell-sub); line-height: 1.6; }
+    .post-card .more {
+      font-family: var(--shell-mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #D97757;
+      text-decoration: none;
+    }
+    .post-card .more:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+  <main class="wrap">
+    <span class="kicker">From the workshop</span>
+    <h1>Dungeon Mastron Blog</h1>
+    <p class="sub">Essays and tutorials on interactive fiction: how to build choose-your-own-adventure games, how AI fits into storytelling, and the design ideas behind Dungeon Mastron.</p>
+
+    <article class="post-card">
+      <p class="date">July 9, 2026</p>
+      <h2><a href="/blog/make-a-choose-your-own-adventure-game/">How to Make a Choose Your Own Adventure Game (Free, No Code)</a></h2>
+      <p>A practical, start-to-finish tutorial: turn one story idea into a branching map and a playable browser game — without writing a line of code.</p>
+      <a class="more" href="/blog/make-a-choose-your-own-adventure-game/">Read the tutorial →</a>
+    </article>
+
+    <article class="post-card">
+      <p class="date">July 9, 2026</p>
+      <h2><a href="/blog/twine-vs-dungeon-mastron/">Twine vs Dungeon Mastron: Which CYOA Tool Is Right for You?</a></h2>
+      <p>An honest comparison of two very different tools for interactive fiction — where Twine shines, where Dungeon Mastron fits, and how to pick.</p>
+      <a class="more" href="/blog/twine-vs-dungeon-mastron/">Read the comparison →</a>
+    </article>
+
+    <article class="post-card">
+      <p class="date">July 9, 2026</p>
+      <h2><a href="/blog/ai-text-adventure-generator/">Use AI to Generate a Complete Text Adventure Game</a></h2>
+      <p>Paste one template into ChatGPT or Claude and get back a playable game file. Here's exactly how the AI Companion workflow works — and where AI still needs you.</p>
+      <a class="more" href="/blog/ai-text-adventure-generator/">Read the guide →</a>
+    </article>
+
+    <article class="post-card">
+      <p class="date">July 9, 2026</p>
+      <h2><a href="/blog/wounds-not-death-game-design/">Wounds, Not Death: A Better Way to Handle Failure in Story Games</a></h2>
+      <p>A design essay on why "game over" is the least interesting thing failure can do — and how letting failure bend the story makes branching games worth replaying.</p>
+      <a class="more" href="/blog/wounds-not-death-game-design/">Read the essay →</a>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <div class="left">© 2026 Artifextron</div>
+
+      <form
+        action="https://buttondown.com/api/emails/embed-subscribe/Dungeon_Mastron"
+        method="post"
+        class="newsletter"
+      >
+        <label for="bd-email">Get project updates</label>
+        <p class="desc">Occasional updates as Dungeon Mastron evolves.</p>
+        <div class="row">
+          <input type="email" name="email" id="bd-email" placeholder="Enter your email" required />
+          <input type="submit" value="Subscribe" />
+        </div>
+      </form>
+
+      <div class="links">
+        <a href="https://discord.gg/QFdWE9Bm" target="_blank" rel="noopener noreferrer">Discord</a>
+        <a href="https://www.patreon.com/Artifextron" target="_blank" rel="noopener noreferrer">Patreon</a>
+        <a href="https://www.youtube.com/@Artifextron" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="https://github.com/coburn2716/dungeonmastron_app" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://ko-fi.com/artifextron" target="_blank" rel="noopener noreferrer">Support ☕</a>
+        <a href="/LICENSE.txt" target="_blank" rel="noopener noreferrer">License</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/web_assets/site_shell.js?v=2" defer></script>
+</body>
+</html>

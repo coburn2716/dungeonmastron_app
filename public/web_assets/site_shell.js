@@ -25,6 +25,7 @@
     if (p.startsWith('/ai')) return 'ai';
     if (p.startsWith('/tools')) return 'tools';
     if (p.startsWith('/guides')) return 'guides';
+    if (p.startsWith('/blog')) return 'blog';
     return 'home';
   }
 
@@ -60,7 +61,7 @@
       if (!isFile) return '';
       const p = (window.location && window.location.pathname) ? window.location.pathname : '';
       // If we are inside a known section folder (e.g. /play/index.html), links should point back to the project root.
-      return /\/(play|console|builder|ai|tools|guides)(\/|$)/.test(p) ? '../' : '';
+      return /\/(play|console|builder|ai|tools|guides|blog)(\/|$)/.test(p) ? '../' : '';
     })();
 
     const links = [
@@ -70,6 +71,7 @@
       { key: 'ai', label: 'AI Companion', href: isFile ? `${rootPrefix}ai/index.html` : '/ai/' },
       { key: 'tools', label: 'Tools', href: isFile ? `${rootPrefix}tools/index.html` : '/tools/' },
       { key: 'guides', label: 'Guides', href: isFile ? `${rootPrefix}guides/` : '/guides/' },
+      { key: 'blog', label: 'Blog', href: isFile ? `${rootPrefix}blog/index.html` : '/blog/' },
     ];
 
     const linksEl = el('div', { class: 'links' }, links.map((l) => {

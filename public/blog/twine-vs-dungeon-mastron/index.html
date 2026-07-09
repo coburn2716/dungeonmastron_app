@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Twine vs Dungeon Mastron: Which Tool Is Right for You?</title>
+  <meta name="description" content="An honest comparison of Twine and Dungeon Mastron for making interactive fiction: strengths, trade-offs, formats, AI features, and which tool fits your project." />
+  <link rel="canonical" href="https://www.dungeonmastron.com/blog/twine-vs-dungeon-mastron/" />
+  <meta property="og:site_name" content="Dungeon Mastron" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Twine vs Dungeon Mastron: Which CYOA Tool Is Right for You?" />
+  <meta property="og:description" content="An honest comparison of two very different tools for interactive fiction — where Twine shines, where Dungeon Mastron fits, and how to pick." />
+  <meta property="og:url" content="https://www.dungeonmastron.com/blog/twine-vs-dungeon-mastron/" />
+  <meta property="og:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Twine vs Dungeon Mastron: Which CYOA Tool Is Right for You?" />
+  <meta name="twitter:description" content="An honest comparison of two very different tools for interactive fiction — where Twine shines, where Dungeon Mastron fits, and how to pick." />
+  <meta name="twitter:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/web_assets/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/web_assets/apple-touch-icon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "url": "https://www.dungeonmastron.com/blog/twine-vs-dungeon-mastron/",
+    "name": "Twine vs Dungeon Mastron: Which CYOA Tool Is Right for You?",
+    "mainEntity": {
+      "@type": "BlogPosting",
+      "headline": "Twine vs Dungeon Mastron: Which CYOA Tool Is Right for You?",
+      "description": "An honest comparison of Twine and Dungeon Mastron for making interactive fiction: strengths, trade-offs, formats, AI features, and which tool fits your project.",
+      "url": "https://www.dungeonmastron.com/blog/twine-vs-dungeon-mastron/",
+      "datePublished": "2026-07-09",
+      "dateModified": "2026-07-09",
+      "image": "https://www.dungeonmastron.com/web_assets/og-image.jpg",
+      "author": { "@type": "Organization", "name": "Dungeon Mastron", "url": "https://www.dungeonmastron.com/" },
+      "publisher": { "@type": "Organization", "name": "Dungeon Mastron", "url": "https://www.dungeonmastron.com/" }
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Blog", "item": "https://www.dungeonmastron.com/blog/" },
+        { "@type": "ListItem", "position": 2, "name": "Twine vs Dungeon Mastron", "item": "https://www.dungeonmastron.com/blog/twine-vs-dungeon-mastron/" }
+      ]
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/web_assets/site_shell.css" />
+  <style>
+    body { margin: 0; background: var(--shell-bg); color: var(--shell-text); font-family: var(--shell-font); }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 46px 18px 80px; }
+    .kicker {
+      font-family: var(--shell-mono); font-size: 11px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(232,227,217,0.70); margin-bottom: 10px;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .kicker::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: #D97757; opacity: 0.95; }
+    h1 {
+      font-family: var(--shell-heading); font-weight: 600; letter-spacing: 0.02em;
+      margin: 0 0 8px; font-size: clamp(26px, 3vw, 38px); line-height: 1.15; color: var(--shell-text);
+    }
+    .meta { font-family: var(--shell-mono); font-size: 12px; color: rgba(232,227,217,0.55); margin: 0 0 34px; }
+    article h2 { font-family: var(--shell-heading); font-weight: 600; font-size: 23px; margin: 38px 0 12px; color: var(--shell-text); }
+    article h3 { font-family: var(--shell-heading); font-weight: 600; font-size: 17px; margin: 26px 0 8px; color: var(--shell-text); }
+    article p, article li { color: var(--shell-sub); line-height: 1.7; }
+    article p { margin: 0 0 16px; }
+    article ul, article ol { margin: 0 0 16px; padding-left: 22px; }
+    article li { margin-bottom: 6px; }
+    article a { color: #6B9B7F; }
+    article strong { color: var(--shell-text); }
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0 0 20px; }
+    @media (max-width: 640px) { .compare { grid-template-columns: 1fr; } }
+    .compare .col { border: 1px solid var(--shell-border); border-radius: 12px; background: rgba(0,0,0,0.18); padding: 16px 18px; }
+    .compare .col h3 { margin: 0 0 10px; }
+    .compare .col ul { margin: 0; }
+    .backlink { display: inline-block; margin: 40px 0 0; font-family: var(--shell-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #D97757; text-decoration: none; }
+    .backlink:hover { text-decoration: underline; }
+    .cta { border: 1px solid var(--shell-border); border-radius: 12px; background: rgba(0,0,0,0.18); padding: 20px 22px; margin-top: 34px; }
+    .cta p { margin: 0 0 10px; }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+  <main class="wrap">
+    <span class="kicker">Comparison</span>
+    <h1>Twine vs Dungeon Mastron: Which CYOA Tool Is Right for You?</h1>
+    <p class="meta">July 9, 2026 · 7 min read</p>
+
+    <article>
+      <p>Let's get one thing straight up front: <strong>Twine is excellent.</strong> It has been the standard tool for hypertext interactive fiction for over fifteen years, it's open source, it has an enormous community, and thousands of remarkable games have been made with it — including commercial hits. If someone tells you their tool simply beats Twine, be suspicious.</p>
+      <p>Dungeon Mastron is also open source (MIT), also free, and also makes branching story games. But the two tools have genuinely different shapes, and which one fits you depends on what you're making. Here's the honest version.</p>
+
+      <h2>What Twine is great at</h2>
+      <ul>
+        <li><strong>Maturity and community.</strong> Twine has fifteen-plus years of tutorials, forums, cookbooks, and answered questions. Whatever problem you hit, someone has solved it and written it up.</li>
+        <li><strong>Deep customization.</strong> Twine stories are HTML at heart. With story formats like Harlowe, SugarCube, and Snowman you can style anything, script anything, and embed anything. Serious authors build entire custom systems inside Twine.</li>
+        <li><strong>Variables and logic.</strong> Twine's macro systems handle inventory, stats, conditional text, and complex state elegantly once you learn them. For stat-heavy or simulation-flavored IF, this is a real strength.</li>
+        <li><strong>Proven at every scale.</strong> From ten-passage poems to sprawling commercial games, Twine has shipped it all.</li>
+      </ul>
+      <p>The trade-off: that power comes with a learning curve. Doing anything beyond basic links means learning a macro syntax, and styling means CSS. Perfectly doable — many writers learn it happily — but it's there.</p>
+
+      <h2>What Dungeon Mastron is great at</h2>
+      <ul>
+        <li><strong>A visual node canvas as the primary interface.</strong> The <a href="/builder/">Visual Builder</a> shows your whole story as a connected map. Twine has a passage map too, but Dungeon Mastron's builder is built around directly editing scenes and choices on the canvas — for people who think spatially, this is the fastest way to see structural problems (orphan scenes, dead ends, lopsided branches).</li>
+        <li><strong>AI-assisted generation, built in as a first-class workflow.</strong> The <a href="/ai/">AI Companion</a> is a structured template you paste into ChatGPT or Claude to generate a complete, valid, playable game file. It's the fastest zero-to-playable path we know of. (We're candid about the limits of AI-written IF — <a href="/blog/ai-text-adventure-generator/">read the full guide</a>.)</li>
+        <li><strong>Instant web play with zero publishing steps.</strong> Your game is a single <strong>game.json</strong> file. Drop it into the <a href="/play/">Web Player</a> and it runs. No export, no build, no hosting decision required to share a draft.</li>
+        <li><strong>A physical console.</strong> This one is genuinely unique: Dungeon Mastron games run on a <a href="/console/">DIY Raspberry Pi console</a> you can build yourself — arcade buttons, a small screen, your story as a physical object on a shelf. Nothing else in the CYOA world does this.</li>
+        <li><strong>A simple, open format.</strong> game.json is human-readable JSON. You can hand-edit it, generate it, validate it, or write your own tools against it.</li>
+      </ul>
+      <p>The trade-off: Dungeon Mastron is young. The community is smaller, the ecosystem thinner, and if you need deep scripting, complex state machines, or pixel-perfect custom presentation, Twine's mature formats currently do more.</p>
+
+      <h2>Side by side</h2>
+      <div class="compare">
+        <div class="col">
+          <h3>Choose Twine if…</h3>
+          <ul>
+            <li>You want deep customization (CSS, JS, macros)</li>
+            <li>Your game leans on complex variables and stats</li>
+            <li>You want a huge community and 15 years of answers</li>
+            <li>You're comfortable learning a light syntax</li>
+            <li>You're targeting itch.io / standalone HTML export</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Choose Dungeon Mastron if…</h3>
+          <ul>
+            <li>You want to see the whole story as a visual map</li>
+            <li>You want AI to draft a playable game you refine</li>
+            <li>You want zero-setup browser play and sharing</li>
+            <li>You love the idea of a physical Pi console</li>
+            <li>You want a simple open JSON format, no lock-in</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>A note on formats and longevity</h2>
+      <p>One quieter factor worth weighing: what happens to your game in five years. Twine exports self-contained HTML files — about as future-proof as digital artifacts get, playable in any browser without a server. Dungeon Mastron's game.json is plain, documented JSON played by an open-source MIT-licensed player; even if every server on earth vanished, the format is readable by eye and trivially re-implementable. Both tools pass the longevity test, which is more than can be said for most proprietary story platforms. If a tool you're evaluating stores your work in a format you can't open in a text editor, think hard before pouring a year of writing into it.</p>
+
+      <h2>The question that actually decides it</h2>
+      <p>Ask yourself: <strong>is your bottleneck writing, or building?</strong></p>
+      <p>If your bottleneck is <em>building</em> — you have a story in your head but tools and syntax keep stalling you — Dungeon Mastron's canvas-first, AI-optional workflow will probably get you to a finished game faster. Our <a href="/blog/make-a-choose-your-own-adventure-game/">beginner tutorial</a> takes you from idea to playable in an afternoon.</p>
+      <p>If your bottleneck is <em>ambition</em> — you know exactly what you want and it involves custom systems, styled passages, and intricate state — Twine's depth is worth the learning curve, and you should use it without a second thought.</p>
+      <p>And honestly? Try both. Both are free and open source. A weekend with each will tell you more than any comparison post, including this one. Plenty of authors keep both in their toolbox: Twine for the big customized project, Dungeon Mastron for fast drafts, jams, and anything headed for the console.</p>
+
+      <h2>One design note that applies to either tool</h2>
+      <p>Whichever you pick, the hard part of CYOA isn't the tool — it's making failure interesting instead of punishing. That design philosophy (we call it "wounds, not death") shapes everything about how Dungeon Mastron games are structured, and it applies just as well to Twine games: <a href="/blog/wounds-not-death-game-design/">read the essay</a>.</p>
+
+      <div class="cta">
+        <p><strong>Want to feel the difference yourself?</strong> Open the <a href="/builder/">Visual Builder</a> or play a <a href="/library/">featured game</a> — both work in your browser right now, free. Questions? Come say hi on <a href="https://discord.gg/QFdWE9Bm" target="_blank" rel="noopener noreferrer">Discord</a>.</p>
+      </div>
+
+      <a class="backlink" href="/blog/">← Back to blog</a>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <div class="left">© 2026 Artifextron</div>
+      <form action="https://buttondown.com/api/emails/embed-subscribe/Dungeon_Mastron" method="post" class="newsletter">
+        <label for="bd-email">Get project updates</label>
+        <p class="desc">Occasional updates as Dungeon Mastron evolves.</p>
+        <div class="row">
+          <input type="email" name="email" id="bd-email" placeholder="Enter your email" required />
+          <input type="submit" value="Subscribe" />
+        </div>
+      </form>
+      <div class="links">
+        <a href="https://discord.gg/QFdWE9Bm" target="_blank" rel="noopener noreferrer">Discord</a>
+        <a href="https://www.patreon.com/Artifextron" target="_blank" rel="noopener noreferrer">Patreon</a>
+        <a href="https://www.youtube.com/@Artifextron" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="https://github.com/coburn2716/dungeonmastron_app" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://ko-fi.com/artifextron" target="_blank" rel="noopener noreferrer">Support ☕</a>
+        <a href="/LICENSE.txt" target="_blank" rel="noopener noreferrer">License</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/web_assets/site_shell.js?v=2" defer></script>
+</body>
+</html>

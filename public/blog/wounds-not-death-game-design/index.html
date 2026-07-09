@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wounds, Not Death: Failure in Story Games — Dungeon Mastron</title>
+  <meta name="description" content="A design essay on failure in interactive fiction: why 'game over' is the weakest consequence, and how letting failure bend the story makes better games." />
+  <link rel="canonical" href="https://www.dungeonmastron.com/blog/wounds-not-death-game-design/" />
+  <meta property="og:site_name" content="Dungeon Mastron" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Wounds, Not Death: A Better Way to Handle Failure in Story Games" />
+  <meta property="og:description" content="Why 'game over' is the least interesting thing failure can do — and how letting failure bend the story makes branching games worth replaying." />
+  <meta property="og:url" content="https://www.dungeonmastron.com/blog/wounds-not-death-game-design/" />
+  <meta property="og:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Wounds, Not Death: A Better Way to Handle Failure in Story Games" />
+  <meta name="twitter:description" content="Why 'game over' is the least interesting thing failure can do — and how letting failure bend the story makes branching games worth replaying." />
+  <meta name="twitter:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/web_assets/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/web_assets/apple-touch-icon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "url": "https://www.dungeonmastron.com/blog/wounds-not-death-game-design/",
+    "name": "Wounds, Not Death: A Better Way to Handle Failure in Story Games",
+    "mainEntity": {
+      "@type": "BlogPosting",
+      "headline": "Wounds, Not Death: A Better Way to Handle Failure in Story Games",
+      "description": "A game design essay on handling failure in interactive fiction: why 'game over' is the weakest consequence, and how letting failure bend the story creates better games.",
+      "url": "https://www.dungeonmastron.com/blog/wounds-not-death-game-design/",
+      "datePublished": "2026-07-09",
+      "dateModified": "2026-07-09",
+      "image": "https://www.dungeonmastron.com/web_assets/og-image.jpg",
+      "author": { "@type": "Organization", "name": "Dungeon Mastron", "url": "https://www.dungeonmastron.com/" },
+      "publisher": { "@type": "Organization", "name": "Dungeon Mastron", "url": "https://www.dungeonmastron.com/" }
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Blog", "item": "https://www.dungeonmastron.com/blog/" },
+        { "@type": "ListItem", "position": 2, "name": "Wounds, Not Death", "item": "https://www.dungeonmastron.com/blog/wounds-not-death-game-design/" }
+      ]
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/web_assets/site_shell.css" />
+  <style>
+    body { margin: 0; background: var(--shell-bg); color: var(--shell-text); font-family: var(--shell-font); }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 46px 18px 80px; }
+    .kicker {
+      font-family: var(--shell-mono); font-size: 11px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(232,227,217,0.70); margin-bottom: 10px;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .kicker::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: #D97757; opacity: 0.95; }
+    h1 {
+      font-family: var(--shell-heading); font-weight: 600; letter-spacing: 0.02em;
+      margin: 0 0 8px; font-size: clamp(26px, 3vw, 38px); line-height: 1.15; color: var(--shell-text);
+    }
+    .meta { font-family: var(--shell-mono); font-size: 12px; color: rgba(232,227,217,0.55); margin: 0 0 34px; }
+    article h2 { font-family: var(--shell-heading); font-weight: 600; font-size: 23px; margin: 38px 0 12px; color: var(--shell-text); }
+    article h3 { font-family: var(--shell-heading); font-weight: 600; font-size: 17px; margin: 26px 0 8px; color: var(--shell-text); }
+    article p, article li { color: var(--shell-sub); line-height: 1.7; }
+    article p { margin: 0 0 16px; }
+    article ul, article ol { margin: 0 0 16px; padding-left: 22px; }
+    article li { margin-bottom: 6px; }
+    article a { color: #6B9B7F; }
+    article strong { color: var(--shell-text); }
+    blockquote { border-left: 3px solid #D97757; margin: 0 0 16px; padding: 4px 0 4px 16px; color: var(--shell-sub); font-style: italic; }
+    .backlink { display: inline-block; margin: 40px 0 0; font-family: var(--shell-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #D97757; text-decoration: none; }
+    .backlink:hover { text-decoration: underline; }
+    .cta { border: 1px solid var(--shell-border); border-radius: 12px; background: rgba(0,0,0,0.18); padding: 20px 22px; margin-top: 34px; }
+    .cta p { margin: 0 0 10px; }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+  <main class="wrap">
+    <span class="kicker">Design essay</span>
+    <h1>Wounds, Not Death: A Better Way to Handle Failure in Story Games</h1>
+    <p class="meta">July 9, 2026 · 8 min read</p>
+
+    <article>
+      <p>Everyone who grew up with the classic Choose Your Own Adventure paperbacks remembers the ritual: you make a bold choice, turn to page 83, and — <em>you have been eaten by the shark. THE END.</em> Fingers wedged between pages as save points. Flip back, pick the other option, pretend it never happened.</p>
+      <p>It was charming in 1982. But as a design pattern, sudden death is the weakest thing failure can do in a story game — and it quietly teaches players the worst possible lesson: <strong>don't engage with the choices, just find the correct path.</strong></p>
+
+      <h2>What "game over" actually does to a story</h2>
+      <p>Think about what happens, structurally, when a branching game kills the player:</p>
+      <ul>
+        <li><strong>It erases the choice.</strong> The player restarts or rewinds, and the fiction proceeds as if the choice never occurred. The one thing your game exists to offer — consequence — is nullified.</li>
+        <li><strong>It converts drama into puzzle.</strong> Once players learn that wrong answers mean restarting, they stop asking "what would I do?" and start asking "what does the author want?" The story becomes a lock to pick.</li>
+        <li><strong>It punishes curiosity.</strong> The most interesting choice on the page is often the risky one. If risk reliably means death, you've trained players to be boring.</li>
+        <li><strong>It wastes your writing.</strong> A death page is a dead end you wrote that most players will experience as an interruption, not as story.</li>
+      </ul>
+      <p>None of this means stakes are bad. Stakes are everything. The question is what failure <em>costs</em> — and there are far more interesting currencies than existence.</p>
+
+      <h2>The alternative: failure bends the story</h2>
+      <p>The design philosophy at the heart of Dungeon Mastron is simple to state:</p>
+      <blockquote>When the player fails, don't end the story. Wound it. Let them keep playing — as someone carrying that wound.</blockquote>
+      <p>The player who got caught sneaking into the manor doesn't get a game-over screen. They get dragged before the countess — a scene the careful player never sees. The player who trusted the smuggler and got betrayed doesn't restart; they arrive at the port broke, angry, and with a name to curse. The story continues. It's just <em>bent</em> now.</p>
+      <p>Failure becomes content instead of a wall. And something subtle happens to the player's psychology: choices become <strong>expressive</strong> rather than <strong>tactical</strong>. You're not solving the author's maze anymore; you're finding out who you are in this story, one scar at a time.</p>
+
+      <h2>What wounds look like in practice</h2>
+      <p>A "wound" is any persistent consequence that travels with the player after a failure. In a branching game, the practical toolbox looks like this:</p>
+      <ul>
+        <li><strong>Physical marks.</strong> A limp from the fall means the rooftop escape later is no longer offered — a different route appears instead. The player <em>feels</em> the old choice in the new scene.</li>
+        <li><strong>Lost things.</strong> The lantern went into the river. Every dark place for the rest of the game is now a different, tenser scene.</li>
+        <li><strong>Burned relationships.</strong> The innkeeper saw you lie. She's still there in act three — and she remembers. Recurring characters who react to old failures are the cheapest, highest-impact wounds you can write.</li>
+        <li><strong>Reputation and knowledge.</strong> Word travels that you fled the fight. Or conversely: failing the heist taught you the guard rotation — a wound that carries a hidden gift.</li>
+        <li><strong>Diverted paths.</strong> The boldest version: failure routes the player onto an entirely different branch — captured instead of escaping, shipwrecked instead of arriving. Some of the best scenes in any branching game live on failure paths, precisely because only the players who <em>earned</em> them will see them.</li>
+      </ul>
+      <p>Notice that these are all cheaper to write than they sound. You don't need a parallel story for every failure. Structurally, most wounds are the <strong>branch-and-merge</strong> pattern (which we cover in our <a href="/blog/make-a-choose-your-own-adventure-game/">beginner tutorial</a>): paths split, diverge for a scene or two, then rejoin the spine — but the rejoining player carries a flag that colors scenes downstream. One variable, a handful of alternate paragraphs, and the whole game feels alive to your history.</p>
+
+      <h2>"But doesn't death have its place?"</h2>
+      <p>Sometimes, yes — honesty demands the caveat. Death endings can work when:</p>
+      <ul>
+        <li><strong>They're endings, not interruptions.</strong> A death in the final act, written with as much care as a victory, is a legitimate ending — the tragedy route. That's different from a mid-game trapdoor.</li>
+        <li><strong>The game is short and replay is the loop.</strong> In a ten-minute game designed to be replayed, deaths function like verses of a song. The Choose Your Own Adventure books lived here.</li>
+        <li><strong>The genre demands it.</strong> Survival horror without the possibility of dying is toothless. But even here, the interesting versions make each death <em>reveal</em> something, so dying is progress.</li>
+      </ul>
+      <p>The principle isn't "never kill the player." It's: <strong>death should never be the lazy default consequence.</strong> If a failure page exists only to say "wrong, go back," it can almost always be replaced by something that moves the story forward in a worse direction — and "worse direction" is where drama lives.</p>
+
+      <h2>Why replayability comes free</h2>
+      <p>Here's the economic argument for busy writers. In a death-based game, the failure branches are content most players skip past as fast as possible. In a wound-based game, every branch is real story — which means a second playthrough isn't "the same game, played correctly," it's <em>a different life</em>. Players replay not to fix mistakes but to find out who else they could have been. That's the deepest hook interactive fiction has, and it costs you nothing but a shift in how you write consequences.</p>
+
+      <h2>Try the philosophy, not just the tool</h2>
+      <p>This idea is tool-agnostic — it will improve a Twine game or a tabletop campaign just as much as a Dungeon Mastron game (we compare tools honestly <a href="/blog/twine-vs-dungeon-mastron/">here</a>). But it's baked into how Dungeon Mastron works: the <a href="/builder/">Visual Builder</a>'s node canvas makes branch-and-merge wounds easy to see and wire, and the <a href="/ai/">AI Companion template</a> explicitly instructs the AI to write failure as diversion, not termination. You can feel the difference in the <a href="/library/">featured games</a> — go make a genuinely bad choice in one, and watch the story lean into it instead of slapping your hand.</p>
+
+      <div class="cta">
+        <p><strong>Build a game where failure matters:</strong> open the <a href="/builder/">Visual Builder</a> and write one branch where things go wrong <em>interestingly</em>. Or come argue about death endings with us on <a href="https://discord.gg/QFdWE9Bm" target="_blank" rel="noopener noreferrer">Discord</a> — design talk is what it's for.</p>
+      </div>
+
+      <a class="backlink" href="/blog/">← Back to blog</a>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <div class="left">© 2026 Artifextron</div>
+      <form action="https://buttondown.com/api/emails/embed-subscribe/Dungeon_Mastron" method="post" class="newsletter">
+        <label for="bd-email">Get project updates</label>
+        <p class="desc">Occasional updates as Dungeon Mastron evolves.</p>
+        <div class="row">
+          <input type="email" name="email" id="bd-email" placeholder="Enter your email" required />
+          <input type="submit" value="Subscribe" />
+        </div>
+      </form>
+      <div class="links">
+        <a href="https://discord.gg/QFdWE9Bm" target="_blank" rel="noopener noreferrer">Discord</a>
+        <a href="https://www.patreon.com/Artifextron" target="_blank" rel="noopener noreferrer">Patreon</a>
+        <a href="https://www.youtube.com/@Artifextron" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="https://github.com/coburn2716/dungeonmastron_app" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://ko-fi.com/artifextron" target="_blank" rel="noopener noreferrer">Support ☕</a>
+        <a href="/LICENSE.txt" target="_blank" rel="noopener noreferrer">License</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/web_assets/site_shell.js?v=2" defer></script>
+</body>
+</html>
