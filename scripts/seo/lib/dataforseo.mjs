@@ -4,6 +4,9 @@
  * SEPARATION: reads config from DM's config.mjs. Never touches other products' DBs.
  *
  * Docs: https://docs.dataforseo.com/v3/
+ *
+ * Added Jul 10 2026: serpOrganic, backlinksSummary, referringDomains,
+ * llmResponses, onpageInstant — required by the 6 ported report scripts.
  */
 import { AUTH, BASE_URL, LOCATION_CODE, LANGUAGE_CODE } from "../config.mjs";
 
@@ -172,4 +175,141 @@ export async function bulkDifficulty(keywords) {
     }
   }
   return out;
+}
+
+/**
+ * Google organic SERP for a keyword. Returns ranked organic results (domain+url+title).
+ * ~ $0.002 per query (live/regular).
+ */
+export async function serpOrganic(keyword, depth = 10) {
+  const result = await post("/serp/google/organic/live/regular", [
+    { keyword, location_code: LOCATION_CODE, language_code: LANGUAGE_CODE, depth },
+  ]);
+  const items = result?.[0]?.items || [];
+  return items
+    .filter((it) => it.type === "organic")
+    .map((it) => ({
+      rank: it.rank_absolute,
+      domain: it.domain,
+      url: it.url,
+      title: it.title,
+      description: it.description,
+    }));
+}
+
+/**
+ * Backlinks summary for a domain (Backlinks API). Returns aggregate authority
+ * metrics: total backlinks, referring domains, domain rank, etc. ~ $0.02 per call.
+ *
+ * ⚠️  Requires DataForSEO Backlinks subscription (~$100/mo addon). Returns
+ * status 40204 without it.
+ */
+export async function backlinksSummary(target) {
+  const result = await post("/backlinks/summary/live", [
+    { target, internal_list_limit: 10, include_subdomains: true },
+  ]);
+  const r = result?.[0] || {};
+  return {
+    target: r.target ?? target,
+    rank: r.rank ?? null, // domain rank 0-1000
+    backlinks: r.backlinks ?? 0,
+    referringDomains: r.referring_domains ?? 0,
+    referringMainDomains: r.referring_main_domains ?? 0,
+    brokenBacklinks: r.broken_backlinks ?? 0,
+    referringPages: r.referring_pages ?? 0,
+  };
+}
+
+/**
+ * Referring domains for a target (who links to it). Sorted by domain authority.
+ * Used to find a competitor's backlink sources. ~ $0.02 per call.
+ *
+ * ⚠️  Requires DataForSEO Backlinks subscription (~$100/mo addon).
+ */
+export async function referringDomains(target, limit = 500) {
+  const result = await post("/backlinks/referring_domains/live", [
+    {
+      target,
+      limit,
+      include_subdomains: true,
+      order_by: ["rank,desc"],
+      // only live links, exclude nofollow-only sources for prospecting quality
+      filters: [["backlinks", ">", 0]],
+    },
+  ]);
+  const items = result?.[0]?.items || [];
+  return items.map((it) => ({
+    domain: it.domain,
+    rank: it.rank ?? 0, // referring domain rank (authority proxy)
+    backlinks: it.backlinks ?? 0,
+    firstSeen: it.first_seen ?? null,
+    lostDate: it.lost_date ?? null,
+    isLost: !!it.lost_date,
+    dofollow: (it.backlinks ?? 0) - (it.backlinks_nofollow ?? 0) > 0,
+  }));
+}
+
+/**
+ * LLM Mentions -- query ChatGPT (or another model) via DataForSEO's AI Optimization
+ * endpoint and return the full response text. Used to measure brand visibility
+ * in AI-generated answers ("does the AI recommend us?").
+ *
+ * Endpoint: POST /ai_optimization/chat_gpt/llm_responses/live
+ * Cost: ~$0.0003-0.001 per call depending on model + response length.
+ *
+ * @param {string} userPrompt  The user question to ask the LLM.
+ * @param {object} [opts]
+ * @param {string} [opts.model="gpt-4o-mini"]  Model name.
+ * @param {boolean} [opts.webSearch=true]       Let the model search the web.
+ * @returns {{ text: string, cost: number }}    Concatenated response text + cost.
+ */
+export async function llmResponses(userPrompt, { model = "gpt-4o-mini", webSearch = true } = {}) {
+  const before = TOTAL_COST;
+  const result = await post("/ai_optimization/chat_gpt/llm_responses/live", [
+    {
+      user_prompt: userPrompt,
+      model_name: model,
+      web_search: webSearch,
+    },
+  ]);
+  // post() returns task.result (array). For this endpoint:
+  //   result[0] = { model_name, items: [{ type: "message", sections: [{type,text},...] }], ... }
+  const resultObj = result?.[0] || {};
+  const items = resultObj.items || [];
+  // Concatenate all section texts across all message items.
+  const text = items
+    .flatMap((it) => it.sections || [])
+    .map((s) => s.text || "")
+    .join("\n")
+    .trim();
+  const cost = TOTAL_COST - before;
+  return { text, cost };
+}
+
+/**
+ * OnPage instant page audit (single URL, synchronous). Returns the page's
+ * on-page SEO checks + meta. ~ $0.0006 per page.
+ */
+export async function onpageInstant(url) {
+  const result = await post("/on_page/instant_pages", [
+    { url, enable_javascript: false, load_resources: false },
+  ]);
+  const item = result?.[0]?.items?.[0] || {};
+  const meta = item.meta || {};
+  const checks = item.checks || {};
+  return {
+    url: item.url ?? url,
+    statusCode: item.status_code ?? null,
+    fetchTime: item.fetch_time ?? null,
+    title: meta.title ?? null,
+    titleLength: meta.title?.length ?? 0,
+    description: meta.description ?? null,
+    descriptionLength: meta.description?.length ?? 0,
+    h1: meta.htags?.h1 ?? [],
+    internalLinks: meta.internal_links_count ?? null,
+    externalLinks: meta.external_links_count ?? null,
+    wordCount: meta.content?.plain_text_word_count ?? null,
+    checks, // object of boolean on-page checks
+    loadTimeMs: item.page_timing?.duration_time ?? null,
+  };
 }
