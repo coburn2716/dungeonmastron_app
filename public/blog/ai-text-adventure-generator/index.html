@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Use AI to Generate a Complete Text Adventure Game — Dungeon Mastron</title>
+  <title>Use AI to Generate a Complete Text Adventure Game – Dungeon Mastron</title>
   <meta name="description" content="How to use ChatGPT or Claude with the Dungeon Mastron AI Companion to generate a complete, playable text adventure game - plus an honest look at AI&#39;s limits." />
   <link rel="canonical" href="https://www.dungeonmastron.com/blog/ai-text-adventure-generator/" />
   <meta property="og:site_name" content="Dungeon Mastron" />
@@ -230,22 +230,22 @@
 
   <div class="post-prose-wrap">
     <article class="post-prose">
-      <p>Here&#39;s a thing that genuinely wasn&#39;t possible a few years ago: you can describe a story idea to an AI, and ten minutes later be <em>playing</em> it — real choices, real branches, real endings — in your browser. Not a chat transcript that pretends to be a game, but an actual structured game file you can save, edit, and share.</p>
-<p>This post explains exactly how the <a href="/ai/">Dungeon Mastron AI Companion</a> workflow works, and — because we&#39;d rather be useful than hype-y — an honest accounting of what AI does well and badly when it writes interactive fiction.</p>
+      <p>Here&#39;s a thing that genuinely wasn&#39;t possible a few years ago: you can describe a story idea to an AI, and ten minutes later be <em>playing</em> it – real choices, real branches, real endings – in your browser. Not a chat transcript that pretends to be a game, but an actual structured game file you can save, edit, and share.</p>
+<p>This post explains exactly how the <a href="/ai/">Dungeon Mastron AI Companion</a> workflow works, and – because we&#39;d rather be useful than hype-y – an honest accounting of what AI does well and badly when it writes interactive fiction.</p>
 <h2>The core idea: a template, not an app</h2>
 <p>The AI Companion isn&#39;t a chatbot we built, and it doesn&#39;t require an API key or a subscription to anything of ours. It&#39;s a carefully engineered <strong>prompt template</strong>. The workflow:</p>
 <ol>
 <li><strong>Copy the template</strong> from the <a href="/ai/">AI Companion page</a>. It contains the full specification of Dungeon Mastron&#39;s game format, the structural rules of a good branching story, and instructions for the AI.</li>
-<li><strong>Paste it into ChatGPT, Claude, or any capable LLM</strong> — whichever you already use and pay for (or use free).</li>
+<li><strong>Paste it into ChatGPT, Claude, or any capable LLM</strong> – whichever you already use and pay for (or use free).</li>
 <li><strong>Describe your game.</strong> A premise, a tone, maybe a setting: &quot;a melancholy mystery on an arctic research station, 20 scenes, three endings.&quot;</li>
 <li><strong>Receive a complete <code>game.json</code> file.</strong> The AI writes every scene, every choice, every branch, in valid Dungeon Mastron format.</li>
-<li><strong>Play it immediately</strong> in the <a href="/play/">Web Player</a> — drop the file in and go. Or open it in the <a href="/builder/">Visual Builder</a> to see the whole branching map and start editing.</li>
+<li><strong>Play it immediately</strong> in the <a href="/play/">Web Player</a> – drop the file in and go. Or open it in the <a href="/builder/">Visual Builder</a> to see the whole branching map and start editing.</li>
 </ol>
-<p>That&#39;s the whole trick. The template does the heavy lifting: it teaches the AI the format and, just as importantly, the <em>craft rules</em> — branch-and-merge structure, meaningful choices, consequence tracking — so what comes back is a game, not a linear story with decorative buttons.</p>
+<p>That&#39;s the whole trick. The template does the heavy lifting: it teaches the AI the format and, just as importantly, the <em>craft rules</em> – branch-and-merge structure, meaningful choices, consequence tracking – so what comes back is a game, not a linear story with decorative buttons.</p>
 <p>Because the output is plain JSON, you own it completely. Hand-edit it, regenerate one branch, or rebuild half of it in the builder. There&#39;s no lock-in and no black box.</p>
 <h2>What AI is genuinely good at</h2>
 <ul>
-<li><strong>Structure and scaffolding.</strong> Modern LLMs are excellent at producing a valid, well-formed branching skeleton. Twenty connected scenes with sensible choice architecture, in minutes — this used to be an afternoon of tedious wiring.</li>
+<li><strong>Structure and scaffolding.</strong> Modern LLMs are excellent at producing a valid, well-formed branching skeleton. Twenty connected scenes with sensible choice architecture, in minutes – this used to be an afternoon of tedious wiring.</li>
 <li><strong>First-draft prose volume.</strong> Getting from blank page to &quot;everything has words in it&quot; is where most first-time creators quit. AI removes that wall entirely.</li>
 <li><strong>Genre competence.</strong> Ask for noir, cozy fantasy, or survival horror and you&#39;ll get scenes that reliably hit the expected notes. For a first game or a game-jam entry, that&#39;s plenty.</li>
 <li><strong>Iteration speed.</strong> &quot;Make the middle act darker.&quot; &quot;Add a branch where the player trusts the stranger.&quot; Regenerating a section costs nothing but a prompt.</li>
@@ -254,26 +254,26 @@
 <p>We&#39;d be lying if we stopped at the previous section. Here&#39;s what you should expect to fix:</p>
 <ul>
 <li><strong>Sameness.</strong> AI prose gravitates to the statistical middle. Every door &quot;creaks ominously&quot;; every stranger has &quot;eyes that betray a hidden sorrow.&quot; A game full of unedited AI text reads competent and forgettable. Your weirdness is the asset AI can&#39;t supply.</li>
-<li><strong>Choices that don&#39;t really differ.</strong> AIs sometimes generate three choices that lead to nearly identical outcomes — the structure of choice without the substance. Play every path and check that branches actually diverge.</li>
+<li><strong>Choices that don&#39;t really differ.</strong> AIs sometimes generate three choices that lead to nearly identical outcomes – the structure of choice without the substance. Play every path and check that branches actually diverge.</li>
 <li><strong>Endings.</strong> AI endings tend to resolve too neatly and too quickly. The last scene of every path deserves a human rewrite; it&#39;s what players remember.</li>
-<li><strong>Long-range consequence.</strong> An LLM writing scene 18 has fuzzy awareness of the promise it made in scene 3. Continuity across branches — items, injuries, relationships — is where you&#39;ll find the most bugs.</li>
+<li><strong>Long-range consequence.</strong> An LLM writing scene 18 has fuzzy awareness of the promise it made in scene 3. Continuity across branches – items, injuries, relationships – is where you&#39;ll find the most bugs.</li>
 <li><strong>Occasional format slips.</strong> Rarely, a model will produce slightly malformed JSON or reference a scene that doesn&#39;t exist. The Web Player and Builder will surface these fast, and a quick regenerate-or-patch fixes them.</li>
 </ul>
 <h2>The workflow that actually works: AI drafts, you direct</h2>
 <p>After watching a lot of games get made this way, the pattern that produces things worth playing is:</p>
 <ol>
 <li><strong>Generate the skeleton with AI.</strong> Get a complete, playable draft in one shot.</li>
-<li><strong>Play it twice</strong> — once following your instincts, once deliberately choosing &quot;wrong.&quot;</li>
+<li><strong>Play it twice</strong> – once following your instincts, once deliberately choosing &quot;wrong.&quot;</li>
 <li><strong>Open it in the <a href="/builder/">builder</a></strong> and look at the map. Prune fake choices, merge redundant scenes, add one branch the AI didn&#39;t dare to.</li>
-<li><strong>Rewrite the scenes that matter by hand:</strong> the opening, every ending, and the two or three pivotal decision scenes. Maybe 20% of the text — the 20% that carries the whole game.</li>
+<li><strong>Rewrite the scenes that matter by hand:</strong> the opening, every ending, and the two or three pivotal decision scenes. Maybe 20% of the text – the 20% that carries the whole game.</li>
 </ol>
 <p>Think of the AI as an enthusiastic collaborator who types fast and never gets writer&#39;s block, but has read too many of the same books. You&#39;re the director. (If you&#39;d rather build from scratch and skip AI entirely, our <a href="/blog/make-a-choose-your-own-adventure-game/">no-code tutorial</a> covers that path.)</p>
 <h2>A design tip for your prompt</h2>
-<p>One instruction dramatically improves AI-generated games: tell it that <strong>failure should wound the story, not end it</strong>. Ask for branches where bad choices cost the player something they carry forward — an injury, a lost ally, a burned bridge — instead of &quot;game over&quot; screens. The Companion template bakes this philosophy in, and it&#39;s the single biggest difference between AI games that feel cheap and ones that feel authored. We wrote about why this works: <a href="/blog/wounds-not-death-game-design/">Wounds, Not Death</a>.</p>
+<p>One instruction dramatically improves AI-generated games: tell it that <strong>failure should wound the story, not end it</strong>. Ask for branches where bad choices cost the player something they carry forward – an injury, a lost ally, a burned bridge – instead of &quot;game over&quot; screens. The Companion template bakes this philosophy in, and it&#39;s the single biggest difference between AI games that feel cheap and ones that feel authored. We wrote about why this works: <a href="/blog/wounds-not-death-game-design/">Wounds, Not Death</a>.</p>
 <h2>Where this goes next</h2>
-<p>Games made this way aren&#39;t stuck in a browser tab, either. Any game.json — AI-generated or handmade — runs on the <a href="/console/">DIY Raspberry Pi console</a>, which is a strange and delightful thing: a story you described to a chatbot on Tuesday, playable on physical arcade buttons by the weekend.</p>
+<p>Games made this way aren&#39;t stuck in a browser tab, either. Any game.json – AI-generated or handmade – runs on the <a href="/console/">DIY Raspberry Pi console</a>, which is a strange and delightful thing: a story you described to a chatbot on Tuesday, playable on physical arcade buttons by the weekend.</p>
 <div class="cta">
-<p><strong>Try it:</strong> grab the template on the <a href="/ai/">AI Companion page</a>, generate something, and play it in the <a href="/play/">Web Player</a>. If your AI produces something wonderful or hilariously broken, we genuinely want to see it — share it on <a href="https://discord.gg/QFdWE9Bm" target="_blank" rel="noopener noreferrer">Discord</a>.</p>
+<p><strong>Try it:</strong> grab the template on the <a href="/ai/">AI Companion page</a>, generate something, and play it in the <a href="/play/">Web Player</a>. If your AI produces something wonderful or hilariously broken, we genuinely want to see it – share it on <a href="https://discord.gg/QFdWE9Bm" target="_blank" rel="noopener noreferrer">Discord</a>.</p>
 </div>
 
       

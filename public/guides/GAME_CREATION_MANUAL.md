@@ -3,7 +3,7 @@ Dungeon Mastron © Artifextron
 Community-shared source files. Official development and releases remain with Artifextron.
 -->
 
-# Dungeon Mastron — Game Creation Manual (Start → Finish)
+# Dungeon Mastron – Game Creation Manual (Start → Finish)
 
 This is a practical, step-by-step guide for creating a complete Dungeon Mastron game using the **Visual Game Builder**.
 
@@ -37,7 +37,7 @@ You’ll test it in:
 
 ## 1) Two ways to build a game
 
-### Path A — Visual Builder first (recommended)
+### Path A – Visual Builder first (recommended)
 1. Sketch your story (start, a few branches, an ending).
 2. Build pages and links in the Visual Game Builder.
 3. Add images/audio later.
@@ -45,7 +45,7 @@ You’ll test it in:
 5. Put it in a game folder with optional assets.
 6. Test in Web Player and/or on the Console.
 
-### Path B — AI draft → import → edit
+### Path B – AI draft → import → edit
 1. Use the AI Companion template (`/ai/` → `ai/index.md`) to generate a full `game.json` draft.
 2. Upload it into the Visual Builder.
 3. Fix structure issues, wiring, and pacing.
@@ -99,12 +99,12 @@ At a high level, your `game.json` contains:
 ### Page types
 Use `page_type` to describe what a page *is*:
 
-- `normal` — most pages
-- `locked` — any page that has at least one gated choice (`requires_item` / `requires_flags`)
-- `sanctuary` — rest/healing moments
-- `armory` — reward/equipment moments
-- `ending` — a real ending
-- `game_over` — shown when HP hits 0 (usually)
+- `normal` – most pages
+- `locked` – any page that has at least one gated choice (`requires_item` / `requires_flags`)
+- `sanctuary` – rest/healing moments
+- `armory` – reward/equipment moments
+- `ending` – a real ending
+- `game_over` – shown when HP hits 0 (usually)
 
 ### Choices vs Actions (important)
 - **Choice pages** have `choices: [...]`.
@@ -118,16 +118,16 @@ Use `page_type` to describe what a page *is*:
 
 Buttons in the builder header:
 
-- **Settings** — game-wide settings (title, theme, fonts, layout positions)
-- **Add Page** — creates a new page node
-- **Auto-Layout** — reorganizes nodes into a readable layout
-- **Layout Style dropdown** — changes how Auto-Layout behaves
-- **Example** — replaces your current project with a feature-rich example game
-- **Upload** — imports a `game.json` file (replaces current work)
-- **Animations** — downloads `animation_manifest.json` for Ken Burns video generation
-- **Download** — exports your `game.json` (with cleanup/normalization)
-- **Analysis** — opens the analysis/validation modal (stats + warnings)
-- **Clear** — wipes the current project data
+- **Settings** – game-wide settings (title, theme, fonts, layout positions)
+- **Add Page** – creates a new page node
+- **Auto-Layout** – reorganizes nodes into a readable layout
+- **Layout Style dropdown** – changes how Auto-Layout behaves
+- **Example** – replaces your current project with a feature-rich example game
+- **Upload** – imports a `game.json` file (replaces current work)
+- **Animations** – downloads `animation_manifest.json` for Ken Burns video generation
+- **Download** – exports your `game.json` (with cleanup/normalization)
+- **Analysis** – opens the analysis/validation modal (stats + warnings)
+- **Clear** – wipes the current project data
 
 Notes from the implementation:
 

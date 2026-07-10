@@ -8,12 +8,12 @@ Community-shared source files. Official development and releases remain with Art
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Visual Game Builder — Dungeon Mastron</title>
+<title>Visual Game Builder – Dungeon Mastron</title>
 <meta name="description" content="Build Dungeon Mastron games in a visual node editor. Place bezels, typography, choices, actions, special pages, and export your cart." />
 <link rel="canonical" href="https://dungeonmastron.com/builder/" />
 <meta property="og:site_name" content="Dungeon Mastron" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Visual Game Builder — Dungeon Mastron" />
+<meta property="og:title" content="Visual Game Builder – Dungeon Mastron" />
 <meta property="og:description" content="Build Dungeon Mastron games in a visual node editor." />
 <meta property="og:url" content="https://dungeonmastron.com/builder/" />
 <meta property="og:image" content="https://dungeonmastron.com/web_assets/splash.png" />
@@ -776,7 +776,7 @@ Community-shared source files. Official development and releases remain with Art
             box-shadow: 0 0 0 3px rgba(226, 104, 60, 0.3);
         }
 
-        /* Styled file inputs — Ink & Ember */
+        /* Styled file inputs – Ink & Ember */
         input[type="file"],
         .upload-btn {
             padding: 0;
@@ -1341,7 +1341,7 @@ Community-shared source files. Official development and releases remain with Art
             align-items: center;
             gap: 8px;
         }
-        .modal-section h3::before { content: "—"; opacity: 0.4; font-size: 9px; }
+        .modal-section h3::before { content: " – "; opacity: 0.4; font-size: 9px; }
 
         .modal-buttons {
             display: flex;
@@ -1446,7 +1446,7 @@ Community-shared source files. Official development and releases remain with Art
             margin-bottom: 8px;
         }
 
-        /* Scrollbar styling — Ink & Ember */
+        /* Scrollbar styling – Ink & Ember */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb {
@@ -2166,7 +2166,7 @@ Community-shared source files. Official development and releases remain with Art
 <input accept=".json,application/json" id="uploadJsonInput" onchange="uploadJSON(event)" style="display:none;" type="file"/>
 </header>
 
-<!-- Fixed status badges: MUST live outside <header> — the header's backdrop-filter
+<!-- Fixed status badges: MUST live outside <header> – the header's backdrop-filter
      would otherwise become the containing block for position:fixed and pin these
      to the header instead of the viewport. -->
 <div id="statusStack" style="position: fixed; bottom: 12px; left: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: flex-start;">
@@ -6641,7 +6641,7 @@ layers.forEach((layer, layerIndex) => {
             return { errors, warnings };
         }
 
-        // FIX(5): VALIDATION — Locked pages without item/flag gates
+        // FIX(5): VALIDATION – Locked pages without item/flag gates
         // Returns warnings (not hard errors) for locked pages that have no requires_item/requires_flags.
         // These are likely authoring oversights (forgot to add the gate) rather than fatal bugs.
         function validateLockedPageGates(game) {
@@ -6663,7 +6663,7 @@ layers.forEach((layer, layerIndex) => {
                 if (!hasGate) {
                     warnings.push(
                         `⚠️ LOCKED page "${pageId}" has no requires_item or requires_flags on any choice.\n` +
-                        `  The 'locked' label implies a gate — add requires_item or requires_flags to\n` +
+                        `  The 'locked' label implies a gate – add requires_item or requires_flags to\n` +
                         `  at least one choice, or change page_type to 'normal'.`
                     );
                 }
@@ -6975,7 +6975,7 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
                             trimmedKeyWarnings.push(`"${k}" → "${trimmed}"`);
                         }
                         if (seenTrimmed[trimmed]) {
-                            trimmedKeyWarnings.push(`⚠️ Duplicate after trim: "${trimmed}" (collision — review manually)`);
+                            trimmedKeyWarnings.push(`⚠️ Duplicate after trim: "${trimmed}" (collision – review manually)`);
                         }
                         seenTrimmed[trimmed] = true;
                     });
@@ -8116,7 +8116,7 @@ The generator will use FFmpeg to create smooth Ken Burns animations for all page
                 }
             }
 
-            // FIX(5): Locked page gate warnings (soft warning — not an error)
+            // FIX(5): Locked page gate warnings (soft warning – not an error)
             if (lockedGateWarnings.length > 0) {
                 validationHTML += `
                     <div class="validation-warning">
@@ -10790,7 +10790,7 @@ Project website: www.dungeonmastron.com
                 row.innerHTML = `
                     <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
                         <div style="font-size:12px; opacity:.95;">
-                            <strong>Row ${r+1}</strong> — nodes: <strong id="lbRowLabel_${r}">${count}</strong>
+                            <strong>Row ${r+1}</strong> – nodes: <strong id="lbRowLabel_${r}">${count}</strong>
                         </div>
                         <div style="font-size:11px; opacity:.7;">max 30</div>
                     </div>

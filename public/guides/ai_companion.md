@@ -1,4 +1,4 @@
-Dungeon Mastron © Artifextron — released under the MIT License
+Dungeon Mastron © Artifextron – released under the MIT License
 
 ---
 
@@ -161,7 +161,7 @@ Even if a page has 2-3 regular choices, if EVEN ONE choice uses `requires_item` 
 
 **Reasoning:** The Visual Builder will not highlight individual gated choices within "normal" pages. Marking the entire page as "locked" makes it visible that this page contains gated content.
 
-⚠️ **Do not rely on a custom `"node_color"` field** — the Visual Builder ignores it.
+⚠️ **Do not rely on a custom `"node_color"` field** – the Visual Builder ignores it.
 
 **Why AIs often get this wrong:** most generator prompts only describe LED colors and page content, but **do not mention `page_type` at all**, so the AI outputs a valid console file that still looks “wrong” in the builder.
 
@@ -836,7 +836,7 @@ Add these fields to any page object to enable Special Page mode:
 
 ### Special Page Rules (CRITICAL)
 
-1. **Exactly ONE choice** (Continue) — Special Pages are not branching pages.
+1. **Exactly ONE choice** (Continue) – Special Pages are not branching pages.
 2. The Continue choice must link forward using the standard choice key: **`"target"`**.
 3. Special Pages must contain **NO**:
    - `action`
@@ -851,7 +851,7 @@ Add these fields to any page object to enable Special Page mode:
 "boss_reveal_black_star": {
   "page_type": "normal",
   "special_page": true,
-  "text": "The Black Star hangs in the air like a wound in the sky. For a moment you can only stare—because looking away feels like surrender.",
+  "text": "The Black Star hangs in the air like a wound in the sky. For a moment you can only stare – because looking away feels like surrender.",
   "special_padding": { "top": 120, "bottom": 160, "left": 140, "right": 140 },
   "continue_y": 640,
   "led_effect": { "type": "pulse", "color": "orange", "speed": 1.0 },
@@ -1244,7 +1244,7 @@ Page 3 (Future): Whatever lies beyond will change you. You know this.
 
 **Example - GOOD (385 chars):**
 ```
-"text": "The room stretches before you like a held breath. Dust motes dance in the light. Three walls hold memories—scratches, drawings, desperation. Only the fourth wall remains pristine, and that's where the door waits. It doesn't look like it was built. It looks like it was forced open, then sealed closed again."
+"text": "The room stretches before you like a held breath. Dust motes dance in the light. Three walls hold memories – scratches, drawings, desperation. Only the fourth wall remains pristine, and that's where the door waits. It doesn't look like it was built. It looks like it was forced open, then sealed closed again."
 ```
 
 ---
@@ -1449,7 +1449,7 @@ The story must be written as a **continuous internal narrative**, not isolated s
 
 **Example:**
 ❌ BAD: "You enter a hallway. It's dark. You see a door."
-✅ GOOD: "After that encounter, your hands still shake. The hallway ahead offers no comfort—just darkness and a single door that you know you'll have to open."
+✅ GOOD: "After that encounter, your hands still shake. The hallway ahead offers no comfort – just darkness and a single door that you know you'll have to open."
 
 ---
 
@@ -1561,7 +1561,7 @@ The story must be written as a **continuous internal narrative**, not isolated s
 **Examples:**
 - "I'm here to save someone" → "They don't want saving"
 - "This place is cursed" → "I brought the curse with me"
-- "I'm alone" → "I was never alone—and that's worse"
+- "I'm alone" → "I was never alone – and that's worse"
 
 **This creates meaning, not just survival.**
 
@@ -1580,7 +1580,7 @@ The story must be written as a **continuous internal narrative**, not isolated s
 - An object found earlier gains new meaning
 - A line of dialogue echoes later with irony
 
-**Callbacks do not require branching—only awareness.**
+**Callbacks do not require branching – only awareness.**
 
 ### Last Look Back (Before Endings)
 
@@ -1592,7 +1592,7 @@ The story must be written as a **continuous internal narrative**, not isolated s
 **This is one of the most reliable ways to make endings land.**
 
 **Example:**
-"You remember when you first stepped into this place. How naive that person seems now. How unprepared. You can't go back to who you were—even if you escape."
+"You remember when you first stepped into this place. How naive that person seems now. How unprepared. You can't go back to who you were – even if you escape."
 
 ---
 
@@ -2463,7 +2463,7 @@ They are implemented by adding `"special_page": true` to an existing page type (
 "chapter_break_01": {
   "page_type": "normal",
   "special_page": true,
-  "text": "For a moment, the world goes quiet—like the house is holding its breath with you.",
+  "text": "For a moment, the world goes quiet – like the house is holding its breath with you.",
   "special_padding": { "top": 120, "bottom": 160, "left": 140, "right": 140 },
   "continue_y": 640,
   "led_effect": { "type": "pulse", "color": "orange", "speed": 1.0 },
@@ -2645,7 +2645,7 @@ The Visual Builder's Diagnostics Panel actively checks for:
 
 ### Choice Target Fields
 
-**Always use `"target"` — it is the only field validated by the console and the game validator:**
+**Always use `"target"` – it is the only field validated by the console and the game validator:**
 
 ```json
 ✅ CORRECT (always use this):
@@ -2822,7 +2822,7 @@ These fields improve visualization in the Visual Builder but are **ignored by th
 ### ⚔️ COMBAT ACTION (`type: "combat"`)
 **Use for: Intentional confrontations where the PLAYER fights AGAINST AN ACTIVE OPPONENT who is trying to defeat them.**
 
-**Philosophy:** Combat represents a duel or battle where two sides actively oppose each other. The enemy has agency, makes choices, and fights back. This is not just risk—it's conflict.
+**Philosophy:** Combat represents a duel or battle where two sides actively oppose each other. The enemy has agency, makes choices, and fights back. This is not just risk – it's conflict.
 
 **✅ APPROPRIATE SCENARIOS:**
 - Fighting humanoid enemies (raiders, guards, cultists)
@@ -2856,7 +2856,7 @@ These fields improve visualization in the Visual Builder but are **ignored by th
 ### 👹 BOSS ACTION (`type: "boss"`)
 **Use for: Multi-stage epic battles that represent the climax or major challenge of a section or the entire game.**
 
-**Philosophy:** A boss is NOT just a strong enemy. It is a narrative and mechanical crescendo—a multi-phase confrontation that escalates, changes tactics, and tells a story through combat. Each stage is distinct, more intense, and represents progression toward victory.
+**Philosophy:** A boss is NOT just a strong enemy. It is a narrative and mechanical crescendo – a multi-phase confrontation that escalates, changes tactics, and tells a story through combat. Each stage is distinct, more intense, and represents progression toward victory.
 
 **✅ APPROPRIATE SCENARIOS:**
 - Mini bosses (3 stages - midpoint challenges between major sections)
@@ -3033,11 +3033,11 @@ The console.py runtime and Visual Builder use different field sets for combat:
 
 | Purpose | Console.py Field | Builder-Only Field | Notes |
 |---------|-----------------|-------------------|-------|
-| Enemy roll modifier | `enemy_bonus` | — | REQUIRED - added to enemy's 1d20 roll |
-| Damage on failure | `enemy_damage` | — | REQUIRED - HP player takes if they lose |
-| Enemy name display | — | `enemy` | Optional decoration only |
-| Enemy HP display | — | `enemy_hp` | Optional decoration only |
-| Enemy strength display | — | `enemy_str` | Optional decoration only |
+| Enemy roll modifier | `enemy_bonus` | – | REQUIRED - added to enemy's 1d20 roll |
+| Damage on failure | `enemy_damage` | – | REQUIRED - HP player takes if they lose |
+| Enemy name display | – | `enemy` | Optional decoration only |
+| Enemy HP display | – | `enemy_hp` | Optional decoration only |
+| Enemy strength display | – | `enemy_str` | Optional decoration only |
 
 **✅ CONSOLE-SPECIFIC FIELDS (MUST INCLUDE):**
 - `enemy_bonus` - Added to enemy's 1d20 roll
@@ -3179,7 +3179,7 @@ The console.py runtime and Visual Builder use different field sets for combat:
   "text": "The Guardian finally falls, but you're battered and bleeding. Victory, but at a cost. Every breath is a struggle, and your vision swims. Yet somehow, you're still standing.",
   "page_type": "normal",
   "led_effect": {"type": "solid", "color": "orange"},
-  // ✅ NO stat_mods here — the enemy_damage in the boss action already dealt the 35 HP loss.
+  // ✅ NO stat_mods here – the enemy_damage in the boss action already dealt the 35 HP loss.
   // Failure pages after a damaging action must NOT add more damage (double-damage bug).
   "choices": [
     {"text": "Stagger forward", "target": "next_area"}
@@ -3287,7 +3287,7 @@ The console.py runtime and Visual Builder use different field sets for combat:
 
 ```json
 "serum_consumed": {
-  "text": "The serum burns going down. Your muscles tense and strengthen, but the cost is clear—your body protests the sudden change. You feel more powerful, but wounded.",
+  "text": "The serum burns going down. Your muscles tense and strengthen, but the cost is clear – your body protests the sudden change. You feel more powerful, but wounded.",
   "led_effect": {"type": "solid", "color": "orange"},
   "choices": [
     {"text": "Push through the pain", "target": "next_area"}
@@ -3322,7 +3322,7 @@ The console.py runtime and Visual Builder use different field sets for combat:
 
 ```json
 {
-  "text": "You step into the light beyond the final door. The nightmare is over. Behind you, the tower crumbles into dust, taking its secrets with it. Freedom tastes like morning air—cold, clean, and impossibly sweet. You survived. That's enough. [ENDING: ESCAPE]",
+  "text": "You step into the light beyond the final door. The nightmare is over. Behind you, the tower crumbles into dust, taking its secrets with it. Freedom tastes like morning air – cold, clean, and impossibly sweet. You survived. That's enough. [ENDING: ESCAPE]",
   "led_effect": {
     "type": "pulse",
     "color": "green",
@@ -3379,7 +3379,7 @@ The console.py runtime and Visual Builder use different field sets for combat:
 
 ### Semantic Color Rules (CRITICAL!)
 
-**LED colors are NOT decorative—they have specific meanings tied to game mechanics:**
+**LED colors are NOT decorative – they have specific meanings tied to game mechanics:**
 
 - 🔴 **Red** = **ACTIONS ONLY** (combat/dice challenges)
   - Use ONLY on pages with `"action"` object
@@ -3418,7 +3418,7 @@ The console.py runtime and Visual Builder use different field sets for combat:
 "player_stats": {
   "health": 100,      // Current HP (modified during play)
   "strength": 2,      // Combat bonus
-  "luck": 1          // Passive bonus stat; items grant luck. No mechanical console effect yet — planned for future dice modifiers.
+  "luck": 1          // Passive bonus stat; items grant luck. No mechanical console effect yet – planned for future dice modifiers.
 }
 ```
 
@@ -3608,7 +3608,7 @@ start → choice → path_a → converge_point → boss → ending_a
 
 ```json
 "game_over": {
-  "text": "The darkness swallows you whole. Your strength finally gives out, and you collapse. This is where your story ends—but perhaps not forever. [GAME OVER]",
+  "text": "The darkness swallows you whole. Your strength finally gives out, and you collapse. This is where your story ends – but perhaps not forever. [GAME OVER]",
   "led_effect": {
     "type": "solid",
     "color": "orange"
@@ -3665,7 +3665,7 @@ Create audio files named after keywords that appear in page text:
 
 ```json
 "abandoned_hall": {
-  "text": "The hallway stretches into shadow, lined with portraits whose eyes seem to follow your movement. Dust hangs in the air like a held breath. Ahead, two doorways beckon—one marked with a crimson handprint, the other sealed with chains that look disturbingly fresh.",
+  "text": "The hallway stretches into shadow, lined with portraits whose eyes seem to follow your movement. Dust hangs in the air like a held breath. Ahead, two doorways beckon – one marked with a crimson handprint, the other sealed with chains that look disturbingly fresh.",
   "led_effect": {
     "type": "pulse",
     "color": "blue",
@@ -3683,7 +3683,7 @@ Create audio files named after keywords that appear in page text:
 
 ```json
 "guardian_encounter": {
-  "text": "The stone guardian steps from its alcove, eyes glowing with ancient fury. It recognizes you as an intruder, and its judgment is clear: you don't belong here. This isn't just a fight—it's a test of whether you deserve to continue. Your hand tightens on your weapon. There's no other way forward.",
+  "text": "The stone guardian steps from its alcove, eyes glowing with ancient fury. It recognizes you as an intruder, and its judgment is clear: you don't belong here. This isn't just a fight – it's a test of whether you deserve to continue. Your hand tightens on your weapon. There's no other way forward.",
   "led_effect": {
     "type": "pulse",
     "color": "red",
@@ -3707,7 +3707,7 @@ Create audio files named after keywords that appear in page text:
 
 ```json
 "guardian_defeated_clean": {
-  "text": "The guardian crumbles to dust, its purpose fulfilled or finally ended—you can't tell which. Your weapon didn't even take a scratch. Beyond where it stood, the way forward is clear. You step through, stronger for having faced it.",
+  "text": "The guardian crumbles to dust, its purpose fulfilled or finally ended – you can't tell which. Your weapon didn't even take a scratch. Beyond where it stood, the way forward is clear. You step through, stronger for having faced it.",
   "led_effect": {
     "type": "pulse",
     "color": "green",
@@ -3731,7 +3731,7 @@ Create audio files named after keywords that appear in page text:
     "type": "solid",
     "color": "orange"
   },
-  // ✅ NO stat_mods health penalty here — enemy_damage in the action already applied 35 HP loss.
+  // ✅ NO stat_mods health penalty here – enemy_damage in the action already applied 35 HP loss.
   // Failure pages must NOT re-apply damage (double-damage bug).
   "item_mods": {
     "guardian_essence": 1
@@ -3783,7 +3783,7 @@ Create audio files named after keywords that appear in page text:
 
 ```json
 "survivor_meeting": {
-  "text": "A figure emerges from the shadows—another survivor, by the looks of it. Their eyes are hollow, haunted. 'You're new here,' they say, voice rasping. 'That means you still think there's a way out.' They laugh, but there's no humor in it. 'There isn't. But maybe you'll prove me wrong. Maybe.' They watch you, waiting.",
+  "text": "A figure emerges from the shadows – another survivor, by the looks of it. Their eyes are hollow, haunted. 'You're new here,' they say, voice rasping. 'That means you still think there's a way out.' They laugh, but there's no humor in it. 'There isn't. But maybe you'll prove me wrong. Maybe.' They watch you, waiting.",
   "led_effect": {
     "type": "blink",
     "color": "orange",
@@ -4073,7 +4073,7 @@ When a user requests a game:
 | Choice-level stats | `modify_stats` | object | choice object |
 | Item gating | `requires_item`, `requires_amount` | string, int | choice object |
 
-**Canonical pattern:** Use `item_mods` for page-level item pickups (victory pages, armory pages). Use `add_item`/`add_items` for choice-level item grants. These are different field names with different scopes — do not mix them.
+**Canonical pattern:** Use `item_mods` for page-level item pickups (victory pages, armory pages). Use `add_item`/`add_items` for choice-level item grants. These are different field names with different scopes – do not mix them.
 
 **Builder visibility:** Use `modify_stats`/`add_item` on **choices** for fake choice detection.
 
@@ -4267,19 +4267,19 @@ Good luck! 🎯
 ## 📜 CHANGELOG
 
 ### V7.2 (2026-07-09)
-- **[FIX] Boss double-damage bug in canonical example** — Removed `stat_mods: {health: -35}` from `guardian_wounded_victory` (boss stage 3 failure page). Enemy_damage in the action object already applies the HP loss; failure pages must not re-apply it. (`§3.3 Boss Example`, `§R1`)
-- **[FIX] Combat double-damage bug in canonical example** — Removed `stat_mods: {health: -35}` from `guardian_defeated_wounded` (combat action failure page). Same double-damage pattern; fixed to match the 8 documented warnings. (`§Combat Action with Emotional Stakes`)
-- **[FIX] Double-damage bug in QUICK REFERENCE GUIDE failure page template** — Removed `stat_mods: {health: -30}` from the Failure/Wounded Page Template (it follows an action with `enemy_damage: 30`). Added clarifying comment explaining when `stat_mods` is and is not appropriate on failure pages. (`§QUICK REFERENCE GUIDE`)
-- **[FIX] Unsupported LED type `"breath"` in sanctuary example** — Changed to `"pulse"` (supported) with inline comment. (`§3.4 LED type`, `§R2`)
-- **[FIX] Text-minimum contradiction** — Unified to 300 characters minimum for story pages throughout. The inherited V4 “minimum 150 characters” in CRITICAL REQUIREMENTS has been corrected. (`§3.1`, `§R4`)
-- **[FIX] Page Type Quick Reference — Game Over LED** — Changed “Red/Orange” to “Orange only” to match the semantic color rules and validator check. (`§3.2`, `§R3`)
-- **[FIX] `luck` stat `Reserved for future use` comment** — Replaced with accurate description: luck is stored and granted by items; no current console effect but planned for future dice modifiers. (`§3.5`, `§R12`)
-- **[FIX] Choice target field consistency** — Removed claim that `next_page` is an accepted alias. `target` is the ONLY field checked by the validator. Using `next_page` produces `CHOICE_TARGET_MISSING` errors. (`§4.4`)
-- **[FIX] Item field quick reference** — Added `item_mods` as the canonical page-level item pickup format (most common pattern in examples). Clarified `add_item`/`add_items` are for choice-level pickups. (`§4.2`)
-- **[FIX] License** — Updated from proprietary “All Rights Reserved” to MIT License. (`§License`)
-- **[ADD] Machine validator mention** — Added `validate_dungeon_mastron.py` reference in the Validation Checklist so users know it exists. (`§R8`)
-- **[ADD] Pre-generation structural map (P1 restore)** — Restored lightweight V4-style structural map output as step 5 of STEP 0 planning phase. Gives users an inspectable commit before 100 pages of prose are generated. (`§3.6`, `§R9`)
-- **[UPDATE] Version bump** — Template header updated from V7.1 → V7.2.
+- **[FIX] Boss double-damage bug in canonical example** – Removed `stat_mods: {health: -35}` from `guardian_wounded_victory` (boss stage 3 failure page). Enemy_damage in the action object already applies the HP loss; failure pages must not re-apply it. (`§3.3 Boss Example`, `§R1`)
+- **[FIX] Combat double-damage bug in canonical example** – Removed `stat_mods: {health: -35}` from `guardian_defeated_wounded` (combat action failure page). Same double-damage pattern; fixed to match the 8 documented warnings. (`§Combat Action with Emotional Stakes`)
+- **[FIX] Double-damage bug in QUICK REFERENCE GUIDE failure page template** – Removed `stat_mods: {health: -30}` from the Failure/Wounded Page Template (it follows an action with `enemy_damage: 30`). Added clarifying comment explaining when `stat_mods` is and is not appropriate on failure pages. (`§QUICK REFERENCE GUIDE`)
+- **[FIX] Unsupported LED type `"breath"` in sanctuary example** – Changed to `"pulse"` (supported) with inline comment. (`§3.4 LED type`, `§R2`)
+- **[FIX] Text-minimum contradiction** – Unified to 300 characters minimum for story pages throughout. The inherited V4 “minimum 150 characters” in CRITICAL REQUIREMENTS has been corrected. (`§3.1`, `§R4`)
+- **[FIX] Page Type Quick Reference – Game Over LED** – Changed “Red/Orange” to “Orange only” to match the semantic color rules and validator check. (`§3.2`, `§R3`)
+- **[FIX] `luck` stat `Reserved for future use` comment** – Replaced with accurate description: luck is stored and granted by items; no current console effect but planned for future dice modifiers. (`§3.5`, `§R12`)
+- **[FIX] Choice target field consistency** – Removed claim that `next_page` is an accepted alias. `target` is the ONLY field checked by the validator. Using `next_page` produces `CHOICE_TARGET_MISSING` errors. (`§4.4`)
+- **[FIX] Item field quick reference** – Added `item_mods` as the canonical page-level item pickup format (most common pattern in examples). Clarified `add_item`/`add_items` are for choice-level pickups. (`§4.2`)
+- **[FIX] License** – Updated from proprietary “All Rights Reserved” to MIT License. (`§License`)
+- **[ADD] Machine validator mention** – Added `validate_dungeon_mastron.py` reference in the Validation Checklist so users know it exists. (`§R8`)
+- **[ADD] Pre-generation structural map (P1 restore)** – Restored lightweight V4-style structural map output as step 5 of STEP 0 planning phase. Gives users an inspectable commit before 100 pages of prose are generated. (`§3.6`, `§R9`)
+- **[UPDATE] Version bump** – Template header updated from V7.1 → V7.2.
 
 ### V7.1 (prior)
 - Multi-stage boss system (mini = 3 stages, final = 5 stages)

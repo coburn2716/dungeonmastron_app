@@ -7,19 +7,19 @@ Browser game player (bezel-enabled variant). Based on web_player.html.
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Web Player — Dungeon Mastron</title>
-  <meta name="description" content="Play Dungeon Mastron story games free in your browser — choices, dice rolls, inventory, and a gorgeous bezel UI. No install needed." />
+  <title>Web Player – Dungeon Mastron</title>
+  <meta name="description" content="Play Dungeon Mastron story games free in your browser – choices, dice rolls, inventory, and a gorgeous bezel UI. No install needed." />
   <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://www.dungeonmastron.com/play/" />
   <meta property="og:site_name" content="Dungeon Mastron" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Web Player — Dungeon Mastron" />
-  <meta property="og:description" content="Play Dungeon Mastron story games free in your browser — choices, dice rolls, inventory, and a gorgeous bezel UI. No install needed." />
+  <meta property="og:title" content="Web Player – Dungeon Mastron" />
+  <meta property="og:description" content="Play Dungeon Mastron story games free in your browser – choices, dice rolls, inventory, and a gorgeous bezel UI. No install needed." />
   <meta property="og:url" content="https://www.dungeonmastron.com/play/" />
   <meta property="og:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Web Player — Dungeon Mastron" />
-  <meta name="twitter:description" content="Play Dungeon Mastron story games free in your browser — choices, dice rolls, inventory, and a gorgeous bezel UI. No install needed." />
+  <meta name="twitter:title" content="Web Player – Dungeon Mastron" />
+  <meta name="twitter:description" content="Play Dungeon Mastron story games free in your browser – choices, dice rolls, inventory, and a gorgeous bezel UI. No install needed." />
   <meta name="twitter:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1062,7 +1062,7 @@ Browser game player (bezel-enabled variant). Based on web_player.html.
             <div class="choices" id="choices"></div>
             <div class="main-text" id="main-text"></div>
             <div class="separator" id="separator">INSERT CART</div>
-            <div class="stats" id="stats" style="display:none;">HP: — | STR: — | LCK: —</div>
+            <div class="stats" id="stats" style="display:none;">HP: – | STR: – | LCK: – </div>
             <div class="inventory" id="inventory"></div>
           </div>
         </div>
@@ -2142,9 +2142,9 @@ Browser game player (bezel-enabled variant). Based on web_player.html.
         // Pre-roll: show opponent info at result position.
         hudPromptEl.textContent = '';
         if (type === 'combat') {
-          hudStatusEl.textContent = (actionPreEnemyRoll != null) ? `${enemyName} Roll: ${actionPreEnemyRoll}` : `${enemyName} Roll: —`;
+          hudStatusEl.textContent = (actionPreEnemyRoll != null) ? `${enemyName} Roll: ${actionPreEnemyRoll}` : `${enemyName} Roll: – `;
         } else {
-          hudStatusEl.textContent = (target !== '' && target != null) ? `Target: ${target}` : 'Target: —';
+          hudStatusEl.textContent = (target !== '' && target != null) ? `Target: ${target}` : 'Target: – ';
         }
         hudStatusEl.style.color = actionTextColor();
       }
@@ -2671,7 +2671,7 @@ Browser game player (bezel-enabled variant). Based on web_player.html.
     async function playAudioForPage(page) {
       if (!currentAssets) return;
       const pageId = engine.currentPage;
-      // Accept both .wav and .mp3 — resolve whichever exists
+      // Accept both .wav and .mp3 – resolve whichever exists
       const speechFileRaw = page.speech_file || `${pageId}.mp3`;
       const soundFile = page.sound_file || null;
       if (audioPlayer) { audioPlayer.pause(); audioPlayer = null; }
@@ -3493,7 +3493,7 @@ Project website: www.dungeonmastron.com
       if (!pageBadgeOn) { pageBadgeEl.classList.remove('active'); return; }
       const id = engine ? (engine.currentPage || '') : '';
       const name = (page && page.display_name) ? String(page.display_name).trim() : '';
-      pageBadgeEl.textContent = name ? `${id} — ${name}` : id;
+      pageBadgeEl.textContent = name ? `${id} – ${name}` : id;
       pageBadgeEl.classList.add('active');
     }
 
@@ -3656,7 +3656,7 @@ Project website: www.dungeonmastron.com
       bezelEl.appendChild(bezelContentEl);
       choicesEl.innerHTML = '';
       textEl.textContent = '';
-      statsEl.textContent = 'HP: — | STR: — | LCK: —';
+      statsEl.textContent = 'HP: – | STR: – | LCK: – ';
       statsEl.style.display = 'none';
       inventoryEl.innerHTML = '';
       actionPanelEl.classList.add('hidden');

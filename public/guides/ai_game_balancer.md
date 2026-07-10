@@ -1,4 +1,4 @@
-# Deep-Dive JSON Game Balancing — Prompt Instructions (Reasonable Player)
+# Deep-Dive JSON Game Balancing – Prompt Instructions (Reasonable Player)
 
 Copy/paste this prompt into your AI tool and fill in the bracketed parts.
 

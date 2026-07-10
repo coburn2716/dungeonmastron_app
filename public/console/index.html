@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Console — Dungeon Mastron</title>
+  <title>Console – Dungeon Mastron</title>
   <meta name="description" content="Build the Dungeon Mastron physical console: a DIY Raspberry Pi game device with 3D-printed enclosure, physical buttons, LEDs, and cartridges. Beta · Open Source." />
   <link rel="canonical" href="https://www.dungeonmastron.com/console/" />
   <meta property="og:site_name" content="Dungeon Mastron" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Console — Dungeon Mastron" />
-  <meta property="og:description" content="A DIY Raspberry Pi console with 3D-printed enclosure, physical buttons, LEDs, and game cartridges. Beta build — community feedback welcome." />
+  <meta property="og:title" content="Console – Dungeon Mastron" />
+  <meta property="og:description" content="A DIY Raspberry Pi console with 3D-printed enclosure, physical buttons, LEDs, and game cartridges. Beta build – community feedback welcome." />
   <meta property="og:url" content="https://www.dungeonmastron.com/console/" />
   <meta property="og:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Console — Dungeon Mastron" />
-  <meta name="twitter:description" content="A DIY Raspberry Pi console with 3D-printed enclosure, physical buttons, LEDs, and game cartridges. Beta build — community feedback welcome." />
+  <meta name="twitter:title" content="Console – Dungeon Mastron" />
+  <meta name="twitter:description" content="A DIY Raspberry Pi console with 3D-printed enclosure, physical buttons, LEDs, and game cartridges. Beta build – community feedback welcome." />
   <meta name="twitter:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -179,7 +179,7 @@
       color: var(--shell-sub);
     }
     .build-cell li { display: flex; gap: 10px; align-items: baseline; }
-    .build-cell li::before { content: "—"; color: var(--shell-accent); flex: 0 0 auto; }
+    .build-cell li::before { content: " – "; color: var(--shell-accent); flex: 0 0 auto; }
 
     /* system image = terminal card */
     .flash-grid {
@@ -225,7 +225,7 @@
     .step h3 { margin: 0 0 3px; font-family: var(--shell-heading); font-weight: 600; font-size: 13.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--shell-text); }
     .step p { margin: 0; font-size: 13px; }
 
-    /* cartridge — paper band */
+    /* cartridge – paper band */
     .cart-band { margin-top: 100px; padding: 84px 0 90px; }
     .cart-grid {
       display: grid;
@@ -295,16 +295,16 @@
       <div>
         <span class="eyebrow">Hardware · DIY build <span class="beta">Beta</span></span>
         <h1>A story you can<br /><em>hold in your hands.</em></h1>
-        <p class="sub">The Dungeon Mastron console is Dungeon Mastron, <strong>made physical</strong>: a 3D-printed, Raspberry-Pi-powered machine with real buttons, real LEDs, and cartridges you label yourself. Built from parts anyone can buy — everything understandable, everything replaceable.</p>
-        <p class="sub" style="font-size:.9em; opacity:.85;">Where it honestly stands: version&nbsp;1 of the case is printed and working; the Pi game engine runs but hasn&rsquo;t been thoroughly tested yet. This is a beta — build one, break it, tell us what happened.</p>
+        <p class="sub">The Dungeon Mastron console is Dungeon Mastron, <strong>made physical</strong>: a 3D-printed, Raspberry-Pi-powered machine with real buttons, real LEDs, and cartridges you label yourself. Built from parts anyone can buy – everything understandable, everything replaceable.</p>
+        <p class="sub" style="font-size:.9em; opacity:.85;">Where it honestly stands: version&nbsp;1 of the case is printed and working; the Pi game engine runs but hasn&rsquo;t been thoroughly tested yet. This is a beta – build one, break it, tell us what happened.</p>
         <div style="display:flex; gap:14px; flex-wrap:wrap;">
           <a class="dm-btn dm-btn--primary" href="https://github.com/coburn2716/dungeonmastron_app" target="_blank" rel="noopener noreferrer">Get the build files →</a>
           <a class="dm-btn" href="/guides/">Read the guides</a>
         </div>
       </div>
       <div class="con-photo con-photo--lineart dm-corners" data-reveal>
-        <img src="../web_assets/lineart/console.svg" alt="Technical line drawing of the Dungeon Mastron console with a cartridge inserted — LED arrays, keys, and cartridge port annotated" fetchpriority="high" />
-        <span class="plate">DM·C1 · reference drawing — build yours</span>
+        <img src="../web_assets/lineart/console.svg" alt="Technical line drawing of the Dungeon Mastron console with a cartridge inserted – LED arrays, keys, and cartridge port annotated" fetchpriority="high" />
+        <span class="plate">DM·C1 · reference drawing – build yours</span>
       </div>
     </div>
   </header>
@@ -337,7 +337,7 @@
               <li>Physical buttons + LEDs for tactile feedback</li>
               <li>Raspberry Pi at the core</li>
               <li>Official Raspberry Pi 7″ screen</li>
-              <li>Basic electronic parts — that's it</li>
+              <li>Basic electronic parts – that's it</li>
             </ul>
           </div>
           <div class="build-cell" data-reveal="2">
@@ -411,7 +411,7 @@
             <div class="term dm-corners">
               <div class="term-bar">
                 <span class="dots"><i></i><i></i><i></i></span>
-                <span>mastron-os — boot</span>
+                <span>mastron-os – boot</span>
                 <span>sd://</span>
               </div>
               <div class="term-body">
@@ -419,7 +419,7 @@
                 <span class="c">[0.412]</span> screen · 7" touchscreen <span class="ok">ok</span><br />
                 <span class="c">[0.688]</span> buttons · 4 mapped <span class="ok">ok</span><br />
                 <span class="c">[0.941]</span> LEDs · narrative signals armed <span class="ok">ok</span><br />
-                <span class="c">[1.203]</span> cartridge inserted — <span class="hot">"Tower of the Black Star"</span><br />
+                <span class="c">[1.203]</span> cartridge inserted – <span class="hot">"Tower of the Black Star"</span><br />
                 <span class="c">[1.204]</span> game.json validated <span class="ok">✓</span><br />
                 <br />
                 <span class="p">&gt;</span> press any button to begin ▮
@@ -428,10 +428,10 @@
           </div>
         </div>
 
-        <div class="gallery" aria-label="Console technical views — reference drawings">
-          <figure class="dm-corners" data-reveal><img src="../web_assets/lineart/console_front.svg" alt="Front elevation line drawing of the console — screen, LED columns, keys, and inserted cartridge" loading="lazy" /><figcaption>Fig. 02-A — Front elevation · DM·C1</figcaption></figure>
-          <figure class="dm-corners" data-reveal="2"><img src="../web_assets/lineart/console_side.svg" alt="Side elevation line drawing of the console — the wedge profile, 69.5° screen slope, and cartridge slot" loading="lazy" /><figcaption>Fig. 02-B — Side elevation · DM·C1</figcaption></figure>
-          <figure class="dm-corners" data-reveal="3"><img src="../web_assets/lineart/console_plan.svg" alt="Plan view line drawing of the console from above — cartridge port, screen, keys, and action button" loading="lazy" /><figcaption>Fig. 02-C — Plan view · DM·C1</figcaption></figure>
+        <div class="gallery" aria-label="Console technical views – reference drawings">
+          <figure class="dm-corners" data-reveal><img src="../web_assets/lineart/console_front.svg" alt="Front elevation line drawing of the console – screen, LED columns, keys, and inserted cartridge" loading="lazy" /><figcaption>Fig. 02-A – Front elevation · DM·C1</figcaption></figure>
+          <figure class="dm-corners" data-reveal="2"><img src="../web_assets/lineart/console_side.svg" alt="Side elevation line drawing of the console – the wedge profile, 69.5° screen slope, and cartridge slot" loading="lazy" /><figcaption>Fig. 02-B – Side elevation · DM·C1</figcaption></figure>
+          <figure class="dm-corners" data-reveal="3"><img src="../web_assets/lineart/console_plan.svg" alt="Plan view line drawing of the console from above – cartridge port, screen, keys, and action button" loading="lazy" /><figcaption>Fig. 02-C – Plan view · DM·C1</figcaption></figure>
         </div>
       </div>
     </section>
@@ -446,11 +446,11 @@
         <div class="cart-grid">
           <figure class="cart-figure" data-reveal>
             <img src="../web_assets/lineart/cartridge-labelled.svg?v=2" alt="Technical line drawing of a Dungeon Mastron cartridge labelled Tower of the Black Star" loading="lazy" />
-            <figcaption>Fig. 03 — one story, one cartridge</figcaption>
+            <figcaption>Fig. 03 – one story, one cartridge</figcaption>
           </figure>
           <div>
             <h2 class="dm-h dm-h--lg" data-reveal>One story.<br /><em>One cartridge.</em></h2>
-            <p class="fine" data-reveal>A complete world, made physical. Every game you create can live on its own cartridge — swap them, shelve them, trade them.</p>
+            <p class="fine" data-reveal>A complete world, made physical. Every game you create can live on its own cartridge – swap them, shelve them, trade them.</p>
             <ul class="cart-list" data-reveal="2">
               <li>3D-printed, designed to be reused and re-labeled</li>
               <li>Houses a USB drive holding the complete game</li>
@@ -467,7 +467,7 @@
     <!-- open source strip -->
     <div class="os-strip" aria-label="Open source and community beta">
       <div class="wrap">
-        <p class="txt"><strong>Open source &amp; community beta.</strong> All hardware designs, the system image, and the Python runtime are freely available on GitHub. The case is at version&nbsp;1 and the engine is still proving itself — for this console to become what it could be, a community needs to form around it: testers, feature-builders, engine-polishers, and anyone who wants to redesign the shell entirely. Build one, remix it, improve it — it&rsquo;s yours to shape.</p>
+        <p class="txt"><strong>Open source &amp; community beta.</strong> All hardware designs, the system image, and the Python runtime are freely available on GitHub. The case is at version&nbsp;1 and the engine is still proving itself – for this console to become what it could be, a community needs to form around it: testers, feature-builders, engine-polishers, and anyone who wants to redesign the shell entirely. Build one, remix it, improve it – it&rsquo;s yours to shape.</p>
         <a class="dm-btn dm-btn--ember dm-btn--sm" href="https://github.com/coburn2716/dungeonmastron_app" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
       </div>
     </div>

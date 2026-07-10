@@ -1,4 +1,4 @@
-# Dungeon Mastron — Builder/Web Player/Console Reference (UI controls + JSON keys)
+# Dungeon Mastron – Builder/Web Player/Console Reference (UI controls + JSON keys)
 
 This is a working reference sheet that maps **what you see in the UI** → the **HTML element id** (and handler) → the **JSON key** written/read by the system.
 
@@ -9,7 +9,7 @@ Files covered:
 
 ---
 
-## 1) `game_builder.html` — Settings Modal (Game Settings)
+## 1) `game_builder.html` – Settings Modal (Game Settings)
 
 ### 1.1 Live Preview controls (left column)
 
@@ -145,7 +145,7 @@ Notes:
 
 ---
 
-## 2) `game_builder.html` — Page Properties Panel (right panel)
+## 2) `game_builder.html` – Page Properties Panel (right panel)
 
 Rendered dynamically by `showProperties(pageId)` into `#propertiesPanel`.
 
@@ -283,7 +283,7 @@ Advanced options block:
 
 ---
 
-## 3) `web_player.html` — User-facing controls and DOM ids
+## 3) `web_player.html` – User-facing controls and DOM ids
 
 ### 3.1 Top bar buttons / inputs
 
@@ -343,7 +343,7 @@ Per-page:
 
 ---
 
-## 4) `console.py` — JSON keys used (high level)
+## 4) `console.py` – JSON keys used (high level)
 
 Console behavior generally mirrors the builder’s JSON model.
 
