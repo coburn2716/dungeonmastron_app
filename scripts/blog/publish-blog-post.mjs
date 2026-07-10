@@ -292,6 +292,7 @@ function buildPostHtml({ slug, title, description, date, contentHtml, readingTim
     }
     .post-back:hover { color: #8fbfaa; }
   </style>
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="XCpcDwdyAWWJPp071j6eIQ" async></script>
 </head>
 <body class="dm-surface">
   <div id="site-nav"></div>
