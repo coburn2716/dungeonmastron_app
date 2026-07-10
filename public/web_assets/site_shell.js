@@ -26,6 +26,7 @@
     if (p.startsWith('/tools')) return 'tools';
     if (p.startsWith('/guides')) return 'guides';
     if (p.startsWith('/blog')) return 'blog';
+    if (p.startsWith('/faq')) return 'faq';
     return 'home';
   }
 
@@ -61,7 +62,7 @@
       if (!isFile) return '';
       const p = (window.location && window.location.pathname) ? window.location.pathname : '';
       // If we are inside a known section folder (e.g. /play/index.html), links should point back to the project root.
-      return /\/(play|console|builder|ai|tools|guides|blog)(\/|$)/.test(p) ? '../' : '';
+      return /\/(play|console|builder|ai|tools|guides|blog|faq)(\/|$)/.test(p) ? '../' : '';
     })();
 
     const links = [
@@ -72,6 +73,7 @@
       { key: 'tools', label: 'Tools', href: isFile ? `${rootPrefix}tools/index.html` : '/tools/' },
       { key: 'guides', label: 'Guides', href: isFile ? `${rootPrefix}guides/` : '/guides/' },
       { key: 'blog', label: 'Blog', href: isFile ? `${rootPrefix}blog/index.html` : '/blog/' },
+      { key: 'faq', label: 'FAQ', href: isFile ? `${rootPrefix}faq/index.html` : '/faq/' },
     ];
 
     const linksEl = el('div', { class: 'links' }, links.map((l) => {
@@ -119,7 +121,7 @@
     const rootPrefix = (() => {
       if (!isFile) return '';
       const p = (window.location && window.location.pathname) ? window.location.pathname : '';
-      return /\/(play|console|builder|ai|tools|guides|blog)(\/|$)/.test(p) ? '../' : '';
+      return /\/(play|console|builder|ai|tools|guides|blog|faq)(\/|$)/.test(p) ? '../' : '';
     })();
     const licenseHref = isFile ? `${rootPrefix}LICENSE.txt` : '/LICENSE.txt';
     const mascotSrc = isFile ? `${rootPrefix}web_assets/mascot/mascot-sm.webp?v=4` : '/web_assets/mascot/mascot-sm.webp?v=4';

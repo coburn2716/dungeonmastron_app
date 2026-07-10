@@ -338,7 +338,7 @@ function buildPostHtml({ slug, title, description, date, contentHtml, readingTim
 
   <div id="site-footer"></div>
 
-  <script src="/web_assets/site_shell.js?v=3" defer></script>
+  <script src="/web_assets/site_shell.js?v=4" defer></script>
 </body>
 </html>`;
 }
