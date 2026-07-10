@@ -73,7 +73,6 @@
       { key: 'tools', label: 'Tools', href: isFile ? `${rootPrefix}tools/index.html` : '/tools/' },
       { key: 'guides', label: 'Guides', href: isFile ? `${rootPrefix}guides/` : '/guides/' },
       { key: 'blog', label: 'Blog', href: isFile ? `${rootPrefix}blog/index.html` : '/blog/' },
-      { key: 'faq', label: 'FAQ', href: isFile ? `${rootPrefix}faq/index.html` : '/faq/' },
     ];
 
     const linksEl = el('div', { class: 'links' }, links.map((l) => {
@@ -143,6 +142,13 @@
     }));
 
     const licenseEl = el('div', { class: 'footer-license' }, []);
+    const faqHref = isFile ? `${rootPrefix}faq/index.html` : '/faq/';
+    const fa = el('a', { href: faqHref }, []);
+    fa.textContent = 'FAQ';
+    licenseEl.appendChild(fa);
+    const sep = el('span', { class: 'footer-sep', 'aria-hidden': 'true' }, []);
+    sep.textContent = ' | ';
+    licenseEl.appendChild(sep);
     const la = el('a', { href: licenseHref, target: '_blank', rel: 'noopener noreferrer' }, []);
     la.textContent = 'MIT License';
     licenseEl.appendChild(la);
