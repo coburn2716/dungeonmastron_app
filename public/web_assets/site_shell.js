@@ -122,7 +122,7 @@
       return /\/(play|console|builder|ai|tools|guides|blog)(\/|$)/.test(p) ? '../' : '';
     })();
     const licenseHref = isFile ? `${rootPrefix}LICENSE.txt` : '/LICENSE.txt';
-    const mascotSrc = isFile ? `${rootPrefix}web_assets/mascot/mascot-sm.webp?v=2` : '/web_assets/mascot/mascot-sm.webp?v=2';
+    const mascotSrc = isFile ? `${rootPrefix}web_assets/mascot/mascot-sm.webp?v=3` : '/web_assets/mascot/mascot-sm.webp?v=3';
 
     const socials = [
       { key: 'x', label: 'X', href: 'https://x.com/DungeonMastron' },
