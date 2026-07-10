@@ -30,7 +30,12 @@
       "description": "A complete storytelling platform: write narrative games in the Visual Builder, play them in the Web Player, or load them onto the physical Raspberry Pi console. Open source and MIT licensed.",
       "applicationCategory": "GameApplication",
       "operatingSystem": "Web browser",
-      "image": "https://www.dungeonmastron.com/web_assets/og-image.jpg"
+      "image": "https://www.dungeonmastron.com/web_assets/og-image.jpg",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
     }
   }
   </script>
@@ -987,7 +992,7 @@
         const img = document.createElement('img');
         img.loading = idx === 0 ? 'eager' : 'lazy';
         img.decoding = 'async';
-        img.alt = '';
+        img.alt = `Scene ${idx + 1} from a playable Dungeon Mastron narrative game`;
         img.src = src;
         slide.appendChild(img);
         viewport.insertBefore(slide, viewport.firstChild);
