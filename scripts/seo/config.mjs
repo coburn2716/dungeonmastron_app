@@ -4,10 +4,16 @@
  * SEPARATION: Dungeon Mastron only. Shares the DataForSEO ACCOUNT (research-only, no customer data).
  */
 
+// DataForSEO credentials — set DATAFORSEO_LOGIN and DATAFORSEO_PASSWORD in .env.local.
+// Never commit real values here; the fallback is intentionally empty.
+if (!process.env.DATAFORSEO_LOGIN || !process.env.DATAFORSEO_PASSWORD) {
+  throw new Error(
+    "Missing DataForSEO credentials. Set DATAFORSEO_LOGIN and DATAFORSEO_PASSWORD in .env.local."
+  );
+}
 export const AUTH = {
-  // Shared DataForSEO account (research-only). Env wins so creds can stay out of git.
-  login: process.env.DATAFORSEO_LOGIN || "henrik@vndly.io",
-  password: process.env.DATAFORSEO_PASSWORD || "01690964a744589f",
+  login: process.env.DATAFORSEO_LOGIN,
+  password: process.env.DATAFORSEO_PASSWORD,
 };
 
 export const BASE_URL = "https://api.dataforseo.com/v3";
