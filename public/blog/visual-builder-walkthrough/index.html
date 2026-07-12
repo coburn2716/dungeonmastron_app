@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Use the Visual Builder: A 10-Minute Walkthrough — Dungeon Mastron</title>
+  <meta name="description" content="Learn how to build a choose your own adventure game in Dungeon Mastron&#39;s free visual node builder. This walkthrough takes 10 minutes and needs no coding." />
+  <link rel="canonical" href="https://www.dungeonmastron.com/blog/visual-builder-walkthrough/" />
+  <meta property="og:site_name" content="Dungeon Mastron" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="How to Use the Visual Builder: A 10-Minute Walkthrough" />
+  <meta property="og:description" content="Learn how to build a choose your own adventure game in Dungeon Mastron&#39;s free visual node builder. This walkthrough takes 10 minutes and needs no coding." />
+  <meta property="og:url" content="https://www.dungeonmastron.com/blog/visual-builder-walkthrough/" />
+  <meta property="og:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="How to Use the Visual Builder: A 10-Minute Walkthrough" />
+  <meta name="twitter:description" content="Learn how to build a choose your own adventure game in Dungeon Mastron&#39;s free visual node builder. This walkthrough takes 10 minutes and needs no coding." />
+  <meta name="twitter:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/web_assets/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/web_assets/apple-touch-icon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "url": "https://www.dungeonmastron.com/blog/visual-builder-walkthrough/",
+    "name": "How to Use the Visual Builder: A 10-Minute Walkthrough",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.dungeonmastron.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.dungeonmastron.com/blog/" },
+        { "@type": "ListItem", "position": 3, "name": "How to Use the Visual Builder: A 10-Minute Walkthrough", "item": "https://www.dungeonmastron.com/blog/visual-builder-walkthrough/" }
+      ]
+    },
+    "mainEntity": {
+      "@type": "BlogPosting",
+      "headline": "How to Use the Visual Builder: A 10-Minute Walkthrough",
+      "description": "Learn how to build a choose your own adventure game in Dungeon Mastron's free visual node builder. This walkthrough takes 10 minutes and needs no coding.",
+      "url": "https://www.dungeonmastron.com/blog/visual-builder-walkthrough/",
+      "datePublished": "2026-07-12",
+      "dateModified": "2026-07-12",
+      "image": "https://www.dungeonmastron.com/web_assets/og-image.jpg",
+      "author": { "@type": "Organization", "name": "Dungeon Mastron", "url": "https://www.dungeonmastron.com/" },
+      "publisher": { "@type": "Organization", "name": "Dungeon Mastron", "url": "https://www.dungeonmastron.com/" }
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/web_assets/site_shell.css?v=3" />
+  <style>
+    /* ── Post page scoped styles · design system v3 "Ink & Ember" ── */
+    body { margin: 0; background: var(--shell-bg); color: var(--shell-text); font-family: var(--shell-font); }
+    .post-breadcrumb {
+      max-width: 800px; margin: 0 auto; padding: 26px 18px 0;
+      display: flex; align-items: center; gap: 6px;
+      font-family: var(--shell-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--shell-faint);
+    }
+    .post-breadcrumb a { color: var(--shell-faint); text-decoration: none; transition: color 0.15s; }
+    .post-breadcrumb a:hover { color: var(--shell-accent); }
+    .post-breadcrumb .sep { opacity: 0.4; }
+    .post-header-wrap { max-width: 800px; margin: 26px auto 0; padding: 0 18px; }
+    .post-header {
+      position: relative; border-radius: 0;
+      border: none;
+      border-top: 1px solid var(--shell-border-strong);
+      border-bottom: 1px solid var(--shell-border);
+      background: transparent;
+      padding: 30px 4px 26px; overflow: visible;
+    }
+    .post-header::before { content: none; }
+    @media (max-width: 640px) { .post-header { padding: 22px 2px 20px; } }
+    .post-cat {
+      font-family: var(--shell-mono); font-size: 10.5px; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--shell-accent); display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px;
+    }
+    .post-cat::before {
+      content: ""; width: 5px; height: 5px; border-radius: 999px;
+      background: currentColor; animation: dm-dot-pulse 3.6s ease-in-out infinite;
+    }
+    .post-header h1 {
+      font-family: var(--shell-serif); font-weight: 500;
+      font-size: clamp(1.9rem, 4.4vw, 3.1rem); line-height: 1.08;
+      letter-spacing: -0.015em; margin: 0 0 14px; color: var(--shell-text);
+    }
+    .post-lede { font-size: 1.05rem; line-height: 1.7; color: var(--shell-sub); margin: 0 0 20px; }
+    .post-meta-row {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 10px 16px;
+      font-family: var(--shell-mono); font-size: 10.5px; letter-spacing: 0.1em;
+      color: var(--shell-faint); text-transform: uppercase;
+    }
+    .post-meta-row .meta-author { color: var(--shell-sub); }
+    .post-meta-row .sep { opacity: 0.4; }
+    /* NOTE: keep .post-hero styles in sync with scripts/blog/sync-header-images.mjs (HERO_CSS) */
+    .post-hero-wrap { max-width: 800px; margin: 30px auto 0; padding: 0 18px; }
+    .post-hero { position: relative; margin: 0; }
+    .post-hero img { display: block; width: 100%; height: auto; border: 1px solid var(--shell-border-strong); filter: saturate(0.97); }
+    .post-hero::before, .post-hero::after { content: ""; position: absolute; width: 16px; height: 16px; pointer-events: none; border: 0 solid rgba(226,104,60,0.6); }
+    .post-hero::before { top: -6px; left: -6px; border-top-width: 1px; border-left-width: 1px; }
+    .post-hero::after { bottom: -6px; right: -6px; border-bottom-width: 1px; border-right-width: 1px; }
+    .post-prose-wrap { max-width: 800px; margin: 0 auto; padding: 0 18px 80px; }
+    .post-prose { margin-top: 38px; counter-reset: dm-h2; }
+    .post-prose h2 {
+      font-family: var(--shell-serif); font-weight: 520; font-size: 1.65rem; line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin: 52px 0 14px; color: var(--shell-text);
+    }
+    .post-prose h2::before {
+      counter-increment: dm-h2;
+      content: "№ " counter(dm-h2, decimal-leading-zero);
+      display: block;
+      font-family: var(--shell-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.2em;
+      color: var(--shell-accent);
+      margin-bottom: 10px;
+    }
+    .post-prose h3 {
+      font-family: var(--shell-heading); font-weight: 600; font-size: 1.1rem; line-height: 1.3;
+      margin: 32px 0 10px; color: var(--shell-text);
+    }
+    .post-prose p { font-size: 1rem; line-height: 1.8; color: var(--shell-sub); margin: 0 0 18px; }
+    .post-prose ul, .post-prose ol { margin: 0 0 18px; padding-left: 24px; color: var(--shell-sub); }
+    .post-prose li { line-height: 1.72; margin-bottom: 8px; }
+    .post-prose li::marker { color: var(--shell-accent); }
+    .post-prose a { color: var(--shell-green); text-decoration: underline; text-underline-offset: 2px; }
+    .post-prose a:hover { color: #8fbfaa; }
+    .post-prose strong { color: var(--shell-text); font-weight: 600; }
+    .post-prose em { color: rgba(236,230,218,0.82); }
+    .post-prose blockquote {
+      border-left: 2px solid var(--shell-accent); margin: 26px 0;
+      padding: 8px 0 8px 24px; color: rgba(236,230,218,0.8);
+      font-family: var(--shell-serif); font-style: italic; font-size: 1.15rem; line-height: 1.6;
+    }
+    .post-prose code {
+      font-family: var(--shell-mono); font-size: 0.875em;
+      background: rgba(0,0,0,0.35); padding: 2px 7px; border-radius: 3px; color: var(--shell-accent);
+    }
+    .post-prose pre {
+      background: var(--shell-bg-elev); border: 1px solid var(--shell-border-strong);
+      border-radius: 0; padding: 18px 20px; overflow-x: auto; margin: 0 0 20px;
+    }
+    .post-prose pre code { background: none; padding: 0; font-size: 0.875rem; color: var(--shell-sub); }
+    .post-prose hr { border: none; border-top: 1px solid var(--shell-border); margin: 40px 0; }
+    .post-prose .cta {
+      border: 1px solid rgba(226,104,60,0.35); border-radius: 0;
+      background: rgba(226,104,60,0.06); padding: 22px 26px; margin: 32px 0;
+    }
+    .post-prose .cta p { margin: 0; color: var(--shell-sub); }
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0 0 22px; }
+    @media (max-width: 620px) { .compare { grid-template-columns: 1fr; } }
+    .compare .col { border: 1px solid var(--shell-border); border-radius: 0; background: rgba(236,230,218,0.02); padding: 18px 20px; }
+    .compare .col h3 { margin: 0 0 10px; font-family: var(--shell-heading); font-weight: 700; font-size: 1rem; color: var(--shell-text); }
+    .compare .col ul { margin: 0; font-size: 0.9rem; }
+    .post-tags { margin-top: 44px; padding-top: 24px; border-top: 1px solid var(--shell-border); display: flex; flex-wrap: wrap; gap: 8px; }
+    .post-tag {
+      font-family: var(--shell-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--shell-faint); border: 1px solid var(--shell-border); border-radius: 0;
+      padding: 5px 12px; text-decoration: none; transition: color 0.15s, border-color 0.15s;
+    }
+    .post-tag:hover { color: var(--shell-green); border-color: rgba(107,155,127,0.45); }
+    .post-cta-panel {
+      margin-top: 48px; padding: 34px 30px;
+      border: 1px solid var(--shell-border-strong); border-radius: 0;
+      background: var(--shell-bg-elev);
+      text-align: center;
+      position: relative;
+    }
+    .post-cta-panel::before, .post-cta-panel::after {
+      content: ""; position: absolute; width: 16px; height: 16px; pointer-events: none;
+      border: 0 solid rgba(226,104,60,0.6);
+    }
+    .post-cta-panel::before { top: -6px; left: -6px; border-top-width: 1px; border-left-width: 1px; }
+    .post-cta-panel::after { bottom: -6px; right: -6px; border-bottom-width: 1px; border-right-width: 1px; }
+    .post-cta-panel h3 { font-family: var(--shell-serif); font-weight: 520; font-size: 1.5rem; margin: 0 0 10px; color: var(--shell-text); }
+    .post-cta-panel p { margin: 0 0 20px; color: var(--shell-sub); font-size: 0.9375rem; line-height: 1.6; }
+    .post-cta-btn {
+      display: inline-block; padding: 12px 24px; border-radius: 2px;
+      border: 1px solid var(--shell-text); background: var(--shell-text);
+      color: #131210; font-family: var(--shell-mono); font-size: 12px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+      transition: background 0.15s, box-shadow 0.15s;
+    }
+    .post-cta-btn:hover { background: #FFFDF7; box-shadow: 0 0 22px rgba(236,230,218,0.14); }
+    .post-back {
+      display: inline-flex; align-items: center; gap: 6px; margin-top: 40px;
+      font-family: var(--shell-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--shell-green); text-decoration: none; transition: color 0.15s;
+    }
+    .post-back:hover { color: #8fbfaa; }
+  </style>
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="XCpcDwdyAWWJPp071j6eIQ" async></script>
+</head>
+<body class="dm-surface">
+  <div id="site-nav"></div>
+
+  <nav class="post-breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span class="sep">/</span>
+    <a href="/blog/">Blog</a>
+    <span class="sep">/</span>
+    <span>Tutorial</span>
+  </nav>
+
+  <div class="post-header-wrap">
+    <header class="post-header">
+      <span class="post-cat">Tutorial</span>
+      <h1>How to Use the Visual Builder: A 10-Minute Walkthrough</h1>
+      <p class="post-lede">Learn how to build a choose your own adventure game in Dungeon Mastron's free visual node builder. This walkthrough takes 10 minutes and needs no coding.</p>
+      <div class="post-meta-row">
+        <span class="meta-author">Dungeon Mastron</span>
+        <span class="sep">·</span>
+        <span>July 12, 2026</span>
+        <span class="sep">·</span>
+        <span>7 min read</span>
+      </div>
+    </header>
+  </div>
+
+  <!-- POST_HERO_START -->
+  <!-- POST_HERO_END -->
+
+  <div class="post-prose-wrap">
+    <article class="post-prose">
+      <p>The hardest part of building a choose-your-own-adventure game isn&#39;t the writing - it&#39;s keeping track of the branches. When your story splits into two paths, then four, then eight, a text document falls apart fast. You lose scenes, forget which choice leads where, and discover dead ends only after a player finds them first.</p>
+<p>That&#39;s why Dungeon Mastron uses a <strong>visual node builder</strong>. You build your story as a map - nodes are scenes, lines are choices - so the whole structure is visible at a glance. This post is a hands-on walkthrough. In about ten minutes you&#39;ll have a tiny working game you can play and share.</p>
+<h2>What we&#39;re building</h2>
+<p>We&#39;re going to make a micro-adventure called <em>The Locked Room</em>. It&#39;s deliberately small - five scenes - so you can finish it in one sitting and understand every part of the tool.</p>
+<p>The premise: you wake up in a locked room with a desk, a window, and a door. That&#39;s it. Three choices, a couple of branches, two endings. Small enough to hold in your head, big enough to learn the builder.</p>
+<p>Open the <a href="/builder/">Visual Builder</a> in another tab so you can follow along. It&#39;s free, runs in your browser, and needs no account.</p>
+<h2>Step 1: Create the opening scene</h2>
+<p>When the builder loads you&#39;ll see an empty canvas with a single node labeled something like &quot;Start.&quot; Click it. A panel opens where you edit the scene.</p>
+<p>In the <strong>Scene Text</strong> field, write the opening:</p>
+<blockquote>
+<p>You wake up on a cold floor. The room is bare: a wooden desk, a shuttered window, and a heavy iron door. Your head aches. You don&#39;t remember how you got here.</p>
+</blockquote>
+<p>Keep scene text short. Fifty to a hundred words is the sweet spot. Players are here to choose, not to read a novel. If a scene goes longer than a tweet, it&#39;s probably two scenes in disguise.</p>
+<p>Click <strong>Save Scene</strong>. The node now shows a preview of your text.</p>
+<h2>Step 2: Add the first choices</h2>
+<p>Every scene needs at least one choice, or it&#39;s a dead end. Click <strong>Add Choice</strong> in the scene panel.</p>
+<p>For our opening, add three choices:</p>
+<ol>
+<li>&quot;Check the desk&quot;</li>
+<li>&quot;Try the window&quot;</li>
+<li>&quot;Open the door&quot;</li>
+</ol>
+<p>Each choice has two parts: the <strong>text</strong> the player sees, and the <strong>target scene</strong> it leads to. Right now we don&#39;t have other scenes, so leave the targets blank. We&#39;ll connect them in a moment.</p>
+<p>Click <strong>Save Scene</strong> again. You&#39;ll see three little handles sticking out of the node - one for each choice. Those are the connection points.</p>
+<h2>Step 3: Build the branch scenes</h2>
+<p>Now create the scenes those choices lead to. Double-click on an empty part of the canvas to make a new node.</p>
+<p><strong>Scene: Check the desk</strong></p>
+<blockquote>
+<p>The desk has one drawer. Inside is a brass key and a folded note: &quot;The window is a trap. Trust the door.&quot; You pocket the key.</p>
+</blockquote>
+<p>Add one choice: &quot;Go back&quot; - target it back to the Start scene. (Yes, loops are allowed. They&#39;re useful.)</p>
+<p><strong>Scene: Try the window</strong></p>
+<blockquote>
+<p>The shutters crumble in your hands. Behind them is solid brick. Whoever put you here wasn&#39;t taking chances.</p>
+</blockquote>
+<p>Add one choice: &quot;Go back&quot; - target back to Start.</p>
+<p><strong>Scene: Open the door</strong></p>
+<blockquote>
+<p>The door is locked. There&#39;s a keyhole the size of the brass key from the desk.</p>
+</blockquote>
+<p>Add two choices:</p>
+<ul>
+<li>&quot;Use the key&quot; (leave target blank for now)</li>
+<li>&quot;Go back&quot; (target back to Start)</li>
+</ul>
+<h2>Step 4: Connect the nodes</h2>
+<p>This is where the visual part shines. Click and drag from a choice handle on one node to another node. Draw lines from:</p>
+<ul>
+<li>Start&#39;s &quot;Check the desk&quot; → the desk scene</li>
+<li>Start&#39;s &quot;Try the window&quot; → the window scene</li>
+<li>Start&#39;s &quot;Open the door&quot; → the door scene</li>
+<li>Each &quot;Go back&quot; choice → back to Start</li>
+</ul>
+<p>The canvas now shows your whole story as a map. You can spot problems instantly: orphaned scenes with no connections, loops that don&#39;t make sense, choices that go nowhere. In a text file these errors hide. On a canvas they glow.</p>
+<h2>Step 5: Add the endings</h2>
+<p>Every story needs to end. Create two final scenes.</p>
+<p><strong>Scene: Freedom</strong></p>
+<blockquote>
+<p>The key turns. The door swings open onto a long hallway lit by warm sunlight. You step through, not looking back.</p>
+</blockquote>
+<p><strong>Scene: Wrong turn</strong></p>
+<blockquote>
+<p>You keep searching, but the room offers nothing else. Hours pass. Eventually, you hear footsteps outside the door.</p>
+</blockquote>
+<p>Connect &quot;Use the key&quot; on the door scene to <strong>Freedom</strong>. That&#39;s your good ending.</p>
+<p>For the bad ending, add a new choice to the Start node: &quot;Wait and see what happens.&quot; Connect it to <strong>Wrong turn</strong>.</p>
+<p>Now your map has a start, three branches, two loops back, and two endings. Five scenes total. Play it through in your head once: every path should make sense.</p>
+<h2>Step 6: Test it</h2>
+<p>Click the <strong>Play</strong> button in the builder. It loads your game in the <a href="/play/">Web Player</a> right there in the same tab. Click through every path - yes, all four of them. Make sure:</p>
+<ul>
+<li>Every choice goes to the right scene</li>
+<li>There are no dead ends (except the endings)</li>
+<li>The endings feel like endings</li>
+</ul>
+<p>If something&#39;s wrong, close the player and fix it on the canvas. The loop between editing and testing should take seconds, not minutes.</p>
+<h2>Step 7: Save and share</h2>
+<p>Click <strong>Export</strong> and download your <code>game.json</code> file. That single file is your entire game - back it up, email it, post it. Anyone can drop it into the <a href="/play/">Web Player</a> and play it.</p>
+<p>If you want to edit later, just drag the same file back onto the builder canvas. Your whole map reappears exactly as you left it.</p>
+<h2>What to do next</h2>
+<p>This five-scene example fits in your head. A real game won&#39;t. Here are three habits that keep bigger projects from turning into spaghetti:</p>
+<p><strong>Name your scenes.</strong> Double-click a node title and give it a real name like &quot;desk_scene&quot; or &quot;bad_ending.&quot; When you have thirty nodes, &quot;Scene 17&quot; is useless.</p>
+<p><strong>Use the branch-and-merge pattern.</strong> Let paths split, then bring them back together. Our example loops back to Start - that&#39;s a merge. For a bigger game, merges prevent exponential growth. We wrote about this in detail in <a href="/blog/make-a-choose-your-own-adventure-game/">our branching structure guide</a>.</p>
+<p><strong>End on choices, not explanations.</strong> Every scene should build pressure that the choices release. If a scene resolves the tension and then offers a choice, the choice feels fake.</p>
+<h2>Going further</h2>
+<p>The builder can do more than this walkthrough covers: variables that track what the player found, conditional choices that only appear if certain conditions are met, and scene images for atmosphere. But the core loop - node, text, choice, connection - is always the same. Master the five-scene version first. The rest is frosting.</p>
+<p>If you&#39;d rather start with a full game and edit it down, the <a href="/ai/">AI Companion template</a> can generate a complete game file from a short description. Paste it into ChatGPT or Claude, get back a working <code>game.json</code>, then open it in the builder and start reshaping the map.</p>
+<p>And if you want to see what a finished small game looks like, browse the <a href="/library/">library</a>. Most of the games there started as experiments smaller than the one you just built.</p>
+<div class="cta">
+<p><strong>Ready to try it?</strong> Open the <a href="/builder/">Visual Builder</a> and build your first five-scene game. If you get stuck, the <a href="https://discord.gg/QFdWE9Bm" target="_blank" rel="noopener noreferrer">Discord</a> is full of people who remember what their first node looked like.</p>
+</div>
+
+      
+      <div class="post-tags"><a class="post-tag" href="/blog/?tag=tutorial">#tutorial</a><a class="post-tag" href="/blog/?tag=visual-builder">#visual-builder</a><a class="post-tag" href="/blog/?tag=cyoa">#cyoa</a><a class="post-tag" href="/blog/?tag=no-code">#no-code</a><a class="post-tag" href="/blog/?tag=beginner">#beginner</a>
+      </div>
+
+      <div class="post-cta-panel">
+        <h3>Build your own story game</h3>
+        <p>The Visual Builder is free, open source, and runs in your browser. No account needed.</p>
+        <a class="post-cta-btn" href="/builder/">Open the Visual Builder</a>
+      </div>
+
+      <a class="post-back" href="/blog/">← Back to all posts</a>
+    </article>
+  </div>
+
+  <div id="site-footer"></div>
+
+  <script src="/web_assets/site_shell.js?v=4" defer></script>
+</body>
+</html>
