@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Add Variables to Your CYOA Game — Dungeon Mastron</title>
+  <meta name="description" content="Learn how to add variables to a CYOA game in Dungeon Mastron using flags, locked choices, and simple consequences that remember what players did later." />
+  <link rel="canonical" href="https://www.dungeonmastron.com/blog/add-variables-to-cyoa-game/" />
+  <meta property="og:site_name" content="Dungeon Mastron" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="How to Add Variables to Your CYOA Game" />
+  <meta property="og:description" content="Learn how to add variables to a CYOA game in Dungeon Mastron using flags, locked choices, and simple consequences that remember what players did later." />
+  <meta property="og:url" content="https://www.dungeonmastron.com/blog/add-variables-to-cyoa-game/" />
+  <meta property="og:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="How to Add Variables to Your CYOA Game" />
+  <meta name="twitter:description" content="Learn how to add variables to a CYOA game in Dungeon Mastron using flags, locked choices, and simple consequences that remember what players did later." />
+  <meta name="twitter:image" content="https://www.dungeonmastron.com/web_assets/og-image.jpg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/web_assets/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/web_assets/apple-touch-icon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "url": "https://www.dungeonmastron.com/blog/add-variables-to-cyoa-game/",
+    "name": "How to Add Variables to Your CYOA Game",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.dungeonmastron.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.dungeonmastron.com/blog/" },
+        { "@type": "ListItem", "position": 3, "name": "How to Add Variables to Your CYOA Game", "item": "https://www.dungeonmastron.com/blog/add-variables-to-cyoa-game/" }
+      ]
+    },
+    "mainEntity": {
+      "@type": "BlogPosting",
+      "headline": "How to Add Variables to Your CYOA Game",
+      "description": "Learn how to add variables to a CYOA game in Dungeon Mastron using flags, locked choices, and simple consequences that remember what players did later.",
+      "url": "https://www.dungeonmastron.com/blog/add-variables-to-cyoa-game/",
+      "datePublished": "2026-07-19",
+      "dateModified": "2026-07-19",
+      "image": "https://www.dungeonmastron.com/web_assets/og-image.jpg",
+      "author": { "@type": "Organization", "name": "Dungeon Mastron", "url": "https://www.dungeonmastron.com/" },
+      "publisher": { "@type": "Organization", "name": "Dungeon Mastron", "url": "https://www.dungeonmastron.com/" }
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/web_assets/site_shell.css?v=3" />
+  <style>
+    /* ── Post page scoped styles · design system v3 "Ink & Ember" ── */
+    body { margin: 0; background: var(--shell-bg); color: var(--shell-text); font-family: var(--shell-font); }
+    .post-breadcrumb {
+      max-width: 800px; margin: 0 auto; padding: 26px 18px 0;
+      display: flex; align-items: center; gap: 6px;
+      font-family: var(--shell-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--shell-faint);
+    }
+    .post-breadcrumb a { color: var(--shell-faint); text-decoration: none; transition: color 0.15s; }
+    .post-breadcrumb a:hover { color: var(--shell-accent); }
+    .post-breadcrumb .sep { opacity: 0.4; }
+    .post-header-wrap { max-width: 800px; margin: 26px auto 0; padding: 0 18px; }
+    .post-header {
+      position: relative; border-radius: 0;
+      border: none;
+      border-top: 1px solid var(--shell-border-strong);
+      border-bottom: 1px solid var(--shell-border);
+      background: transparent;
+      padding: 30px 4px 26px; overflow: visible;
+    }
+    .post-header::before { content: none; }
+    @media (max-width: 640px) { .post-header { padding: 22px 2px 20px; } }
+    .post-cat {
+      font-family: var(--shell-mono); font-size: 10.5px; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--shell-accent); display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px;
+    }
+    .post-cat::before {
+      content: ""; width: 5px; height: 5px; border-radius: 999px;
+      background: currentColor; animation: dm-dot-pulse 3.6s ease-in-out infinite;
+    }
+    .post-header h1 {
+      font-family: var(--shell-serif); font-weight: 500;
+      font-size: clamp(1.9rem, 4.4vw, 3.1rem); line-height: 1.08;
+      letter-spacing: -0.015em; margin: 0 0 14px; color: var(--shell-text);
+    }
+    .post-lede { font-size: 1.05rem; line-height: 1.7; color: var(--shell-sub); margin: 0 0 20px; }
+    .post-meta-row {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 10px 16px;
+      font-family: var(--shell-mono); font-size: 10.5px; letter-spacing: 0.1em;
+      color: var(--shell-faint); text-transform: uppercase;
+    }
+    .post-meta-row .meta-author { color: var(--shell-sub); }
+    .post-meta-row .sep { opacity: 0.4; }
+    /* NOTE: keep .post-hero styles in sync with scripts/blog/sync-header-images.mjs (HERO_CSS) */
+    .post-hero-wrap { max-width: 800px; margin: 30px auto 0; padding: 0 18px; }
+    .post-hero { position: relative; margin: 0; }
+    .post-hero img { display: block; width: 100%; height: auto; border: 1px solid var(--shell-border-strong); filter: saturate(0.97); }
+    .post-hero::before, .post-hero::after { content: ""; position: absolute; width: 16px; height: 16px; pointer-events: none; border: 0 solid rgba(226,104,60,0.6); }
+    .post-hero::before { top: -6px; left: -6px; border-top-width: 1px; border-left-width: 1px; }
+    .post-hero::after { bottom: -6px; right: -6px; border-bottom-width: 1px; border-right-width: 1px; }
+    .post-prose-wrap { max-width: 800px; margin: 0 auto; padding: 0 18px 80px; }
+    .post-prose { margin-top: 38px; counter-reset: dm-h2; }
+    .post-prose h2 {
+      font-family: var(--shell-serif); font-weight: 520; font-size: 1.65rem; line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin: 52px 0 14px; color: var(--shell-text);
+    }
+    .post-prose h2::before {
+      counter-increment: dm-h2;
+      content: "№ " counter(dm-h2, decimal-leading-zero);
+      display: block;
+      font-family: var(--shell-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.2em;
+      color: var(--shell-accent);
+      margin-bottom: 10px;
+    }
+    .post-prose h3 {
+      font-family: var(--shell-heading); font-weight: 600; font-size: 1.1rem; line-height: 1.3;
+      margin: 32px 0 10px; color: var(--shell-text);
+    }
+    .post-prose p { font-size: 1rem; line-height: 1.8; color: var(--shell-sub); margin: 0 0 18px; }
+    .post-prose ul, .post-prose ol { margin: 0 0 18px; padding-left: 24px; color: var(--shell-sub); }
+    .post-prose li { line-height: 1.72; margin-bottom: 8px; }
+    .post-prose li::marker { color: var(--shell-accent); }
+    .post-prose a { color: var(--shell-green); text-decoration: underline; text-underline-offset: 2px; }
+    .post-prose a:hover { color: #8fbfaa; }
+    .post-prose strong { color: var(--shell-text); font-weight: 600; }
+    .post-prose em { color: rgba(236,230,218,0.82); }
+    .post-prose blockquote {
+      border-left: 2px solid var(--shell-accent); margin: 26px 0;
+      padding: 8px 0 8px 24px; color: rgba(236,230,218,0.8);
+      font-family: var(--shell-serif); font-style: italic; font-size: 1.15rem; line-height: 1.6;
+    }
+    .post-prose code {
+      font-family: var(--shell-mono); font-size: 0.875em;
+      background: rgba(0,0,0,0.35); padding: 2px 7px; border-radius: 3px; color: var(--shell-accent);
+    }
+    .post-prose pre {
+      background: var(--shell-bg-elev); border: 1px solid var(--shell-border-strong);
+      border-radius: 0; padding: 18px 20px; overflow-x: auto; margin: 0 0 20px;
+    }
+    .post-prose pre code { background: none; padding: 0; font-size: 0.875rem; color: var(--shell-sub); }
+    .post-prose hr { border: none; border-top: 1px solid var(--shell-border); margin: 40px 0; }
+    .post-prose .cta {
+      border: 1px solid rgba(226,104,60,0.35); border-radius: 0;
+      background: rgba(226,104,60,0.06); padding: 22px 26px; margin: 32px 0;
+    }
+    .post-prose .cta p { margin: 0; color: var(--shell-sub); }
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0 0 22px; }
+    @media (max-width: 620px) { .compare { grid-template-columns: 1fr; } }
+    .compare .col { border: 1px solid var(--shell-border); border-radius: 0; background: rgba(236,230,218,0.02); padding: 18px 20px; }
+    .compare .col h3 { margin: 0 0 10px; font-family: var(--shell-heading); font-weight: 700; font-size: 1rem; color: var(--shell-text); }
+    .compare .col ul { margin: 0; font-size: 0.9rem; }
+    .post-tags { margin-top: 44px; padding-top: 24px; border-top: 1px solid var(--shell-border); display: flex; flex-wrap: wrap; gap: 8px; }
+    .post-tag {
+      font-family: var(--shell-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--shell-faint); border: 1px solid var(--shell-border); border-radius: 0;
+      padding: 5px 12px; text-decoration: none; transition: color 0.15s, border-color 0.15s;
+    }
+    .post-tag:hover { color: var(--shell-green); border-color: rgba(107,155,127,0.45); }
+    .post-cta-panel {
+      margin-top: 48px; padding: 34px 30px;
+      border: 1px solid var(--shell-border-strong); border-radius: 0;
+      background: var(--shell-bg-elev);
+      text-align: center;
+      position: relative;
+    }
+    .post-cta-panel::before, .post-cta-panel::after {
+      content: ""; position: absolute; width: 16px; height: 16px; pointer-events: none;
+      border: 0 solid rgba(226,104,60,0.6);
+    }
+    .post-cta-panel::before { top: -6px; left: -6px; border-top-width: 1px; border-left-width: 1px; }
+    .post-cta-panel::after { bottom: -6px; right: -6px; border-bottom-width: 1px; border-right-width: 1px; }
+    .post-cta-panel h3 { font-family: var(--shell-serif); font-weight: 520; font-size: 1.5rem; margin: 0 0 10px; color: var(--shell-text); }
+    .post-cta-panel p { margin: 0 0 20px; color: var(--shell-sub); font-size: 0.9375rem; line-height: 1.6; }
+    .post-cta-btn {
+      display: inline-block; padding: 12px 24px; border-radius: 2px;
+      border: 1px solid var(--shell-text); background: var(--shell-text);
+      color: #131210; font-family: var(--shell-mono); font-size: 12px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+      transition: background 0.15s, box-shadow 0.15s;
+    }
+    .post-cta-btn:hover { background: #FFFDF7; box-shadow: 0 0 22px rgba(236,230,218,0.14); }
+    .post-back {
+      display: inline-flex; align-items: center; gap: 6px; margin-top: 40px;
+      font-family: var(--shell-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--shell-green); text-decoration: none; transition: color 0.15s;
+    }
+    .post-back:hover { color: #8fbfaa; }
+  </style>
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="XCpcDwdyAWWJPp071j6eIQ" async></script>
+</head>
+<body class="dm-surface">
+  <div id="site-nav"></div>
+
+  <nav class="post-breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span class="sep">/</span>
+    <a href="/blog/">Blog</a>
+    <span class="sep">/</span>
+    <span>Tutorial</span>
+  </nav>
+
+  <div class="post-header-wrap">
+    <header class="post-header">
+      <span class="post-cat">Tutorial</span>
+      <h1>How to Add Variables to Your CYOA Game</h1>
+      <p class="post-lede">Learn how to add variables to a CYOA game in Dungeon Mastron using flags, locked choices, and simple consequences that remember what players did later.</p>
+      <div class="post-meta-row">
+        <span class="meta-author">Dungeon Mastron</span>
+        <span class="sep">·</span>
+        <span>July 19, 2026</span>
+        <span class="sep">·</span>
+        <span>8 min read</span>
+      </div>
+    </header>
+  </div>
+
+  <!-- POST_HERO_START -->
+  <!-- POST_HERO_END -->
+
+  <div class="post-prose-wrap">
+    <article class="post-prose">
+      <p>A branching story becomes much more interesting when it remembers the player. Did they speak to the captain? Did they find the brass key? Did they promise to come back? Without variables, every scene has to pretend the past didn&#39;t happen.</p>
+<p>Dungeon Mastron handles simple story memory with <strong>flags</strong>. A flag is a small background variable that is either on or off. You can set it when a player makes a choice, require it before showing another choice, or set it automatically when the player enters a scene.</p>
+<p>This tutorial builds a tiny example: a guard lets you into a tower only if you found the captain&#39;s seal earlier. You can follow the steps in the <a href="/builder/">Visual Builder</a>, then test the result in the <a href="/play/">Web Player</a>.</p>
+<h2>What a variable does in Dungeon Mastron</h2>
+<p>In other game engines, you might hear about booleans, switches, or story state. Dungeon Mastron calls the boolean version a <strong>flag</strong>. The name can be anything useful and readable, such as:</p>
+<ul>
+<li><code>talked_to_captain</code></li>
+<li><code>found_seal</code></li>
+<li><code>promised_to_return</code></li>
+<li><code>opened_secret_door</code></li>
+</ul>
+<p>A flag starts unset. When the game sets it, its value becomes true for the rest of that playthrough. A choice can then check whether the flag is true before it becomes available.</p>
+<p>There are two important rules:</p>
+<ol>
+<li>Flags are for memory, not for numbers. Use them for facts like &quot;the player knows the password.&quot;</li>
+<li>The flag name must match exactly everywhere. <code>found_seal</code> and <code>found-seal</code> are different variables.</li>
+</ol>
+<p>Start with one flag. Most story bugs come from adding ten variables before the first one works.</p>
+<h2>Step 1: Make the discovery scene</h2>
+<p>Open the <a href="/builder/">Visual Builder</a> and create a small opening scene. Call it <code>courtyard</code> and give it two choices:</p>
+<ul>
+<li>Search the abandoned office</li>
+<li>Walk straight to the tower</li>
+</ul>
+<p>Create a second scene called <code>office</code>. Its text could be:</p>
+<blockquote>
+<p>The office is empty except for a broken desk. Beneath the loose floorboard, you find the captain&#39;s silver seal. It is cold enough to hurt your fingers.</p>
+</blockquote>
+<p>Add a choice to return to the courtyard. We aren&#39;t setting the flag yet. The player has found the seal, but the game needs an explicit instruction that this fact should be remembered.</p>
+<p>In the office scene&#39;s choice panel, add a flag under <strong>Flags</strong> or <strong>Set flags</strong>. Enter:</p>
+<pre><code class="language-json">found_seal
+</code></pre>
+<p>You don&#39;t need quotation marks in the builder field. The exported game data will represent it as a flag on that choice. Name the return choice something like <strong>Take the seal and return</strong> so the mechanical action is clear to the player.</p>
+<p>Save the scene, then connect <strong>Search the abandoned office</strong> from <code>courtyard</code> to <code>office</code>. Connect the return choice back to <code>courtyard</code>.</p>
+<h2>Step 2: Create the locked choice</h2>
+<p>Create a third scene called <code>tower_gate</code>:</p>
+<blockquote>
+<p>The tower guard lowers his spear. &quot;The captain&#39;s seal opens this door. Otherwise, find another way.&quot;</p>
+</blockquote>
+<p>Add two choices:</p>
+<ul>
+<li>Show the captain&#39;s seal</li>
+<li>Leave the tower</li>
+</ul>
+<p>For <strong>Show the captain&#39;s seal</strong>, add a required flag:</p>
+<pre><code class="language-json">found_seal
+</code></pre>
+<p>This is the key step. The choice can now appear only after the player has visited the office and selected the choice that sets <code>found_seal</code>.</p>
+<p>Create a <code>tower_interior</code> scene and connect <strong>Show the captain&#39;s seal</strong> to it. Connect <strong>Leave the tower</strong> to <code>courtyard</code> or to another scene. Finally, add a choice from <code>courtyard</code> to <code>tower_gate</code>.</p>
+<p>At this point, you have a complete memory loop:</p>
+<ol>
+<li>The player can visit the office.</li>
+<li>A choice sets <code>found_seal</code>.</li>
+<li>The player returns to the courtyard.</li>
+<li>The tower choice checks <code>found_seal</code>.</li>
+<li>The player gets inside only if the earlier action happened.</li>
+</ol>
+<h2>Step 3: Decide what the player sees before the flag is set</h2>
+<p>A required flag doesn&#39;t have to make the whole scene disappear. It locks the specific choice that needs the flag. That gives you a useful design decision.</p>
+<p>Should the player see <strong>Show the captain&#39;s seal</strong> before finding it?</p>
+<p>If yes, keep the locked choice visible. The player sees a clear goal and understands that the tower has a condition. The builder marks the choice as locked, and the player can still select another available option.</p>
+<p>If no, split the scene into two versions or route the player through a different scene. Dungeon Mastron&#39;s flag system is intentionally simple, so you design the presentation with scene structure rather than hiding every line of dialogue behind complicated rules.</p>
+<p>My preference is to show the locked choice when the missing requirement is part of the drama. &quot;The door has a seal-shaped slot&quot; is more interesting than pretending the door doesn&#39;t exist.</p>
+<h2>Step 4: Set a flag when entering a scene</h2>
+<p>Sometimes a fact should become true simply because the player reached a scene. For example, entering the captain&#39;s quarters might mean the player now knows the captain is missing.</p>
+<p>Select the scene and use <strong>Set flags on enter</strong>:</p>
+<pre><code class="language-json">entered_captains_quarters
+</code></pre>
+<p>This runs when the player enters the scene. You don&#39;t need a separate choice just to record the event.</p>
+<p>Use this sparingly. A flag set on enter means the player has learned or triggered something, not merely that the scene exists. If the player should have to inspect a desk, read a note, or make a promise, set the flag on the relevant choice instead.</p>
+<h2>Step 5: Test both timelines</h2>
+<p>Variables are easy to write and easy to misunderstand. Test at least two complete routes in the <a href="/play/">Web Player</a>:</p>
+<p><strong>The flag is set</strong></p>
+<ul>
+<li>Visit the office.</li>
+<li>Select the choice that takes the seal.</li>
+<li>Return to the courtyard.</li>
+<li>Visit the tower.</li>
+<li>Confirm that the seal choice works.</li>
+</ul>
+<p><strong>The flag is not set</strong></p>
+<ul>
+<li>Go to the tower immediately.</li>
+<li>Confirm that the seal choice is unavailable or locked.</li>
+<li>Visit the office afterward.</li>
+<li>Return to the tower.</li>
+<li>Confirm that the choice now works.</li>
+</ul>
+<p>Also test a fresh playthrough. Browser saves can preserve progress while you&#39;re editing, which is useful during development but can fool you into thinking a flag works when it was set in an earlier test. Start over whenever you change the story&#39;s conditions.</p>
+<h2>Three good uses for flags</h2>
+<p><strong>Remember a conversation.</strong> Set <code>warned_villager</code> after the player gives a warning. Later, a different choice can acknowledge it or reveal the consequence.</p>
+<p><strong>Create a knowledge gate.</strong> Set <code>learned_password</code> when the player reads a note. Require it for a choice that uses the password. This makes information feel like a real resource.</p>
+<p><strong>Track a promise or alliance.</strong> Set <code>helped_miner</code> or <code>betrayed_guard</code>. Later scenes can offer different choices without needing completely separate versions of the whole story.</p>
+<p>Avoid using flags for every tiny action. If a detail never changes a later choice, it probably doesn&#39;t need to be a variable. Story state should create consequences, not become a checklist.</p>
+<h2>When to use items instead</h2>
+<p>Use an <strong>item</strong> when the player physically carries or spends something: a key, potion, ticket, weapon, or letter. Use a <strong>flag</strong> when the important thing is knowledge, history, or a past decision.</p>
+<p>The captain&#39;s seal could be an item if the player can lose it or hand it to someone. If the story only needs to remember that the player earned permission, <code>found_seal</code> is simpler.</p>
+<p>You can combine both systems. The player might find a key item, then set <code>opened_archive</code> when they use it. That separates possession from consequence.</p>
+<h2>Keep the names boring</h2>
+<p>This is one place where clever writing hurts. Use short names in <code>snake_case</code> and make them describe the fact they store. <code>knows_the_truth_about_the_moon</code> is better than <code>moon_revelation_final_v2</code>, even if the latter feels more dramatic while you&#39;re building.</p>
+<p>When your game grows, readable flag names make the map and exported JSON much easier to debug. The <a href="/ai/">AI Companion template</a> uses the same kind of explicit story state, so clear names also make it easier to ask an AI to extend an existing game without inventing a second variable for the same idea.</p>
+<h2>The small system that makes branches feel personal</h2>
+<p>You don&#39;t need a complex quest tracker to make a CYOA remember the player. One well-named flag can turn a repeated scene into a consequence: the guard recognizes you, the old friend forgives you, or the locked door finally has a reason to open.</p>
+<p>Build one flag, test both timelines, then add another only when the story earns it. When you&#39;re ready, browse the <a href="/library/">library</a> for examples, or export your game and run it on the <a href="/console/">Raspberry Pi console</a> as a physical story cartridge.</p>
+<div class="cta">
+<p><strong>Try it yourself:</strong> open the <a href="/builder/">Visual Builder</a>, add one flag called <code>found_seal</code>, and make a later choice require it. Then share what you build in the <a href="https://discord.gg/QFdWE9Bm" target="_blank" rel="noopener noreferrer">Dungeon Mastron Discord</a>.</p>
+</div>
+
+      
+      <div class="post-tags"><a class="post-tag" href="/blog/?tag=tutorial">#tutorial</a><a class="post-tag" href="/blog/?tag=variables">#variables</a><a class="post-tag" href="/blog/?tag=cyoa">#cyoa</a><a class="post-tag" href="/blog/?tag=visual-builder">#visual-builder</a><a class="post-tag" href="/blog/?tag=beginner">#beginner</a>
+      </div>
+
+      <div class="post-cta-panel">
+        <h3>Build your own story game</h3>
+        <p>The Visual Builder is free, open source, and runs in your browser. No account needed.</p>
+        <a class="post-cta-btn" href="/builder/">Open the Visual Builder</a>
+      </div>
+
+      <a class="post-back" href="/blog/">← Back to all posts</a>
+    </article>
+  </div>
+
+  <div id="site-footer"></div>
+
+  <script src="/web_assets/site_shell.js?v=4" defer></script>
+</body>
+</html>
