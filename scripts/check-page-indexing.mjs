@@ -67,9 +67,10 @@ const serviceKey =
   process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !serviceKey) {
-  throw new Error(
-    "Missing DUNGEONMASTRON_SUPABASE_URL / DUNGEONMASTRON_SUPABASE_SERVICE_ROLE_KEY — run from dungeon_mastron/app/ with .env.local present."
-  );
+  // ⚠️ Jul 30 2026: DM Supabase retired (project repurposed for SaaS Rocket).
+  // page_index_status rows archived at data/supabase-archive-2026-07-30/.
+  console.error("check-page-indexing.mjs: DM Supabase retired Jul 30 2026 — nothing to write to. Exiting.");
+  process.exit(0);
 }
 
 const supabase = createClient(supabaseUrl, serviceKey, {

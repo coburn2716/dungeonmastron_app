@@ -41,8 +41,10 @@ const SERVICE_KEY =
   process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!SUPABASE_URL || !SERVICE_KEY) {
-  console.error("Missing DUNGEONMASTRON_SUPABASE_URL / _SERVICE_ROLE_KEY (run with --env-file=.env.local).");
-  process.exit(1);
+  // ⚠️ Jul 30 2026: DM Supabase retired (project repurposed for SaaS Rocket).
+  // Blog images are self-hosted in public/blog-images/ now — nothing to sync.
+  console.error("sync-header-images.mjs: DM Supabase retired Jul 30 2026 — images live in public/blog-images/. Exiting.");
+  process.exit(0);
 }
 
 // NOTE: keep in sync with the .post-hero styles in publish-blog-post.mjs's template.
