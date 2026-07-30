@@ -39,15 +39,20 @@ function loadEnvLocal() {
 }
 loadEnvLocal();
 
-// DM Supabase project: wppcbpbrustgcdqhfuqs
+// ⚠️ RETIRED Jul 30 2026: DM's Supabase project (wppcbpbrustgcdqhfuqs) was
+// repurposed for SaaS Rocket. seo_reports rows are archived in
+// data/supabase-archive-2026-07-30/. This script is a no-op now.
+console.error(
+  "publish-reports.mjs: DM Supabase retired Jul 30 2026 (project repurposed for SaaS Rocket). " +
+    "Nothing to publish to. Archived data: data/supabase-archive-2026-07-30/seo_reports.json",
+);
+process.exit(0);
+
 const SUPABASE_URL =
-  process.env.DUNGEONMASTRON_SUPABASE_URL ||
-  process.env.SUPABASE_URL ||
-  "https://wppcbpbrustgcdqhfuqs.supabase.co";
+  process.env.DUNGEONMASTRON_SUPABASE_URL || process.env.SUPABASE_URL;
 const SUPABASE_KEY =
   process.env.DUNGEONMASTRON_SUPABASE_SERVICE_ROLE_KEY ||
-  process.env.SUPABASE_SERVICE_ROLE_KEY ||
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndwcGNicGJydXN0Z2NkcWhmdXFzIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MzYxMDcxOCwiZXhwIjoyMDk5MTg2NzE4fQ.aI5fY1sn-EkCnFwGDZ9JHLXvgCx4dg_gfNjTbE8i7kg";
+  process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 const args = process.argv.slice(2);
 const DRY = args.includes("--dry");

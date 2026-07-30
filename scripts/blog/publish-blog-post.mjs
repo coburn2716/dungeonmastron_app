@@ -482,11 +482,12 @@ async function main() {
     process.env.DUNGEONMASTRON_SUPABASE_SERVICE_ROLE_KEY ||
     process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-  if (!supabaseUrl || !serviceKey) {
-    throw new Error(
-      "Missing DUNGEONMASTRON_SUPABASE_URL / DUNGEONMASTRON_SUPABASE_SERVICE_ROLE_KEY in .env.local"
-    );
-  }
+  // ⚠️ Jul 30 2026: DM's Supabase project (wppcbpbrustgcdqhfuqs) was RETIRED and
+  // repurposed for SaaS Rocket. DM is fully static now — blog images live in
+  // public/blog-images/, and the old blog_posts rows are archived at
+  // data/supabase-archive-2026-07-30/. The DB upsert below is skipped when the
+  // env vars are absent (which is the permanent state).
+  const hasSupabase = Boolean(supabaseUrl && serviceKey);
 
   const fullPath = path.resolve(process.cwd(), filePath);
   const raw = fs.readFileSync(fullPath, "utf8");
@@ -606,7 +607,10 @@ async function main() {
     console.warn(`  sitemap.xml not found at ${sitemapPath} — skipping`);
   }
 
-  // ── (e) Upsert to DM Supabase blog_posts ─────────────────────────────────
+  // ── (e) Upsert to DM Supabase blog_posts (retired Jul 30 2026 — skipped) ──
+  if (!hasSupabase) {
+    console.log("ℹ️  No DM Supabase configured (retired Jul 30 2026 — project repurposed for SaaS Rocket). Skipping DB upsert; static files are the source of truth.");
+  } else {
   const supabase = createClient(supabaseUrl, serviceKey, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
@@ -639,6 +643,7 @@ async function main() {
     console.warn("  Static files were written. Fix Supabase and re-run to sync the DB row.");
   } else {
     console.log("\u2705 Upserted to DM Supabase blog_posts:", inserted);
+  }
   }
 
   // ── (f) Best-effort IndexNow ping ─────────────────────────────────────────
