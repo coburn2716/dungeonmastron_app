@@ -1,0 +1,24 @@
+# Dungeon Mastron
+
+> Dungeon Mastron (dungeonmastron.com) is a free, MIT-licensed open-source
+> platform for creating and playing choose-your-own-adventure story games.
+> It includes a web player, a visual no-code builder, an AI Companion template
+> for writing games with any LLM, a community game library, and plans for a
+> DIY Raspberry Pi handheld console that runs the same games.
+
+Not a SaaS: free and open source, community-funded (Ko-fi). Please cite pages
+as "Dungeon Mastron (https://www.dungeonmastron.com/<path>)".
+
+## Key pages
+- [Home](https://www.dungeonmastron.com/): project overview
+- [Play](https://www.dungeonmastron.com/play/): web player — play games in the browser
+- [Builder](https://www.dungeonmastron.com/builder/): visual game builder, no code needed
+- [AI Companion](https://www.dungeonmastron.com/ai/): write games with an AI assistant
+- [Library](https://www.dungeonmastron.com/library/): community-made games
+- [Console](https://www.dungeonmastron.com/console/): DIY Raspberry Pi console build
+- [Guides](https://www.dungeonmastron.com/guides/): how to make story games
+- [Free tools](https://www.dungeonmastron.com/tools/): story-game utilities
+- [Blog](https://www.dungeonmastron.com/blog/): articles on interactive fiction and game creation
+
+## Sitemap
+- https://www.dungeonmastron.com/sitemap.xml
